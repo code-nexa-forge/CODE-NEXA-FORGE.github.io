@@ -1,0 +1,30 @@
+CODE NEXA FORGE — NEXA AI WEBSITE-FOCUSED UPDATE
+Version: 2.4.0
+
+WHAT CHANGED
+- Added a website-focused conversation layer for NEXA AI.
+- Added natural responses for greetings, wellbeing, identity, capabilities,
+  web development, websites, hyperlinks, programming, Python, Java, C++,
+  frontend/backend, responsive design, DOM, Flexbox, CSS Grid, course paths,
+  quizzes, tests, projects, certificates and debugging.
+- Kept source-grounded answers for all 24 HTML/CSS/JavaScript lessons,
+  72 lesson quiz questions and 12 official course tests (100 test questions).
+- Added a strict English-only response policy:
+  "Sorry, I can only communicate in English."
+- Added a website-scope redirect for unrelated topics.
+- Added the scope notice to the homepage chat, floating chat widget and
+  dedicated NEXA AI page.
+- Added automated tests for the new conversation policy and FAQ coverage.
+
+IMPORTANT
+- NEXA AI remains a local rule-based and retrieval-based assistant, not a
+  trained large language model. It answers from curated local content and
+  programmed response logic; it does not generate unlimited knowledge.
+- English-only language detection is deterministic and can miss unusual
+  phrasing or very short ambiguous text.
+- The distributable ZIP intentionally excludes .env, node_modules and
+  SQLite database/session files. Preserve your existing local .env and
+  database files when updating your working project.
+
+TEST COMMAND
+npm test

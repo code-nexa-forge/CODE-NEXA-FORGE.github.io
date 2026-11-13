@@ -1,0 +1,1799 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/html-lesson-access-gate.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNF/ | HTML Lists & Tables</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --bg:#f4f2ed;
+    --ink:#202b28;
+    --green:#176b50;
+    --lime:#c5e86c;
+    --muted:#6c7973;
+    --white:#ffffff;
+    --line:#dce2da;
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior:smooth;
+}
+
+body {
+    font-family:'Outfit',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    overflow-x:hidden;
+}
+
+a {
+    text-decoration:none;
+    color:inherit;
+}
+
+button,input,textarea {
+    font:inherit;
+}
+
+.nav {
+    padding:18px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--white);
+    border-bottom:1px solid var(--line);
+    position:relative;
+    z-index:10;
+}
+
+.logo {
+    font-size:27px;
+    font-weight:800;
+    color:var(--green);
+    letter-spacing:-2px;
+}
+
+.nav-info {
+    font-size:12px;
+    font-weight:700;
+    color:var(--muted);
+    letter-spacing:1px;
+}
+
+.back {
+    color:var(--green);
+    font-weight:700;
+    font-size:14px;
+    transition:transform .3s ease;
+}
+
+.back:hover {
+    transform:translateX(-5px);
+}
+
+/* HERO */
+
+.hero {
+    background:
+        radial-gradient(circle at 75% 45%,rgba(197,232,108,.15),transparent 27%),
+        linear-gradient(125deg,#176b50,#104c3a 70%,#123e32);
+    color:white;
+    padding:85px 8%;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after {
+    content:"06";
+    position:absolute;
+    right:5%;
+    top:-65px;
+    font-size:330px;
+    font-weight:800;
+    color:rgba(255,255,255,.055);
+    line-height:1;
+    pointer-events:none;
+    animation:numberFloat 8s ease-in-out infinite;
+}
+
+.hero::before {
+    content:"";
+    position:absolute;
+    width:420px;
+    height:420px;
+    border:1px solid rgba(197,232,108,.12);
+    border-radius:50%;
+    right:15%;
+    top:50%;
+    transform:translateY(-50%);
+    animation:ringRotate 25s linear infinite;
+}
+
+.hero-inner {
+    max-width:1150px;
+    margin:auto;
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:50px;
+}
+
+.eyebrow {
+    color:var(--lime);
+    font-weight:800;
+    letter-spacing:3px;
+    font-size:12px;
+}
+
+.hero h1 {
+    font-size:clamp(45px,6vw,75px);
+    line-height:1.05;
+    margin:18px 0;
+    letter-spacing:-3px;
+}
+
+.hero h1 span {
+    color:var(--lime);
+}
+
+.hero p {
+    color:#d1e2d9;
+    max-width:520px;
+    font-size:17px;
+}
+
+.hero-btn {
+    display:inline-block;
+    margin-top:28px;
+    background:var(--lime);
+    color:#17251d;
+    padding:13px 24px;
+    border-radius:6px;
+    font-weight:800;
+    transition:transform .3s ease,box-shadow .3s ease;
+}
+
+.hero-btn:hover {
+    transform:translateY(-5px);
+    box-shadow:0 12px 25px rgba(0,0,0,.2);
+}
+
+/* HERO VISUAL BOX — CONTINUOUS FLOAT ANIMATION */
+
+.hero-art {
+    background:linear-gradient(145deg,#f4f7ed,#e1eadb);
+    color:var(--ink);
+    padding:28px;
+    border-radius:18px;
+    box-shadow:
+        0 25px 50px rgba(0,0,0,.18),
+        0 0 0 1px rgba(255,255,255,.5) inset;
+    position:relative;
+    isolation:isolate;
+    border:1px solid rgba(255,255,255,.7);
+
+    /* The animation controls the box movement */
+    animation:artFloat 5s ease-in-out infinite;
+
+    transition:
+        box-shadow .45s ease,
+        filter .45s ease;
+    will-change:transform;
+}
+
+/* Hover changes appearance without interrupting floating */
+
+.hero-art:hover {
+    box-shadow:
+        0 35px 70px rgba(0,0,0,.25),
+        0 0 35px rgba(197,232,108,.25);
+    filter:saturate(1.08);
+}
+
+.hero-art::before {
+    content:"";
+    position:absolute;
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    background:var(--lime);
+    right:-22px;
+    top:-25px;
+    opacity:.85;
+    z-index:-1;
+    animation:orbPulse 3s ease-in-out infinite;
+    transition:transform .4s ease,opacity .4s ease;
+}
+
+.hero-art:hover::before {
+    transform:scale(1.3);
+    opacity:1;
+}
+
+.hero-art::after {
+    content:"";
+    position:absolute;
+    width:30px;
+    height:30px;
+    border:5px solid var(--green);
+    border-radius:50%;
+    left:-15px;
+    bottom:35px;
+    opacity:.6;
+    animation:orbPulse 4s ease-in-out infinite reverse;
+    transition:transform .4s ease;
+}
+
+.hero-art:hover::after {
+    transform:scale(1.3) rotate(45deg);
+}
+
+.art-label {
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:2px;
+    color:var(--green);
+    margin-bottom:18px;
+    animation:labelReveal .8s ease both;
+    transition:letter-spacing .35s ease;
+}
+
+.hero-art:hover .art-label {
+    letter-spacing:2.8px;
+}
+
+.art-list {
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:14px;
+    position:relative;
+    overflow:hidden;
+    border:1px solid #e3e9df;
+    box-shadow:0 5px 15px rgba(23,107,80,.04);
+    animation:artCardIn .8s .2s both;
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
+}
+
+.art-list::before {
+    content:"";
+    position:absolute;
+    top:0;
+    left:-110%;
+    width:70%;
+    height:100%;
+    background:linear-gradient(
+        110deg,
+        transparent,
+        rgba(197,232,108,.2),
+        transparent
+    );
+    transition:left .65s ease;
+    pointer-events:none;
+}
+
+.art-list:hover::before {
+    left:140%;
+}
+
+.art-list:hover {
+    transform:translateY(-5px);
+    box-shadow:0 12px 25px rgba(23,107,80,.12);
+    border-color:#c5e86c;
+}
+
+.art-list strong {
+    display:block;
+    margin-bottom:9px;
+    transition:color .3s ease;
+}
+
+.art-list:hover strong {
+    color:var(--green);
+}
+
+.art-list li {
+    margin-left:20px;
+    font-size:14px;
+    padding:2px 0;
+    transition:
+        color .25s ease,
+        padding-left .25s ease;
+}
+
+.art-list li:hover {
+    color:var(--green);
+    padding-left:5px;
+}
+
+.art-table {
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    font-size:12px;
+    box-shadow:0 5px 15px rgba(23,107,80,.05);
+    animation:artCardIn .8s .4s both;
+    transition:box-shadow .35s ease;
+}
+
+.art-table:hover {
+    box-shadow:0 12px 25px rgba(23,107,80,.13);
+}
+
+.art-table th {
+    background:var(--lime);
+    text-align:left;
+    transition:background .3s ease;
+}
+
+.art-table td,
+.art-table th {
+    padding:10px;
+    border:1px solid #e3e9df;
+    transition:
+        background .3s ease,
+        color .3s ease,
+        padding-left .3s ease;
+}
+
+.art-table tr:hover td {
+    background:#edf5e9;
+    color:var(--green);
+}
+
+.art-table tr:hover td:first-child {
+    padding-left:15px;
+}
+
+/* MAIN CONTENT */
+
+.container {
+    max-width:1080px;
+    padding:75px 25px;
+    margin:auto;
+}
+
+.section-head {
+    margin-bottom:30px;
+}
+
+.section-head small {
+    color:var(--green);
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.section-head h2 {
+    font-size:clamp(30px,4vw,43px);
+    letter-spacing:-1.5px;
+    margin-top:5px;
+}
+
+.section-head p {
+    color:var(--muted);
+    max-width:680px;
+    margin-top:8px;
+}
+
+.lesson-card {
+    background:white;
+    border:1px solid var(--line);
+    padding:30px;
+    border-radius:13px;
+    margin-bottom:22px;
+    box-shadow:0 8px 25px rgba(32,43,40,.035);
+    transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease;
+}
+
+.lesson-card:hover {
+    transform:translateY(-5px);
+    box-shadow:0 18px 35px rgba(32,43,40,.09);
+    border-color:#b9d1b9;
+}
+
+.lesson-card h3 {
+    font-size:23px;
+    margin-bottom:12px;
+}
+
+.lesson-card p {
+    color:var(--muted);
+    margin-bottom:12px;
+}
+
+.code {
+    background:#17231e;
+    color:#b8e9c8;
+    padding:19px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    line-height:2;
+    margin:17px 0;
+    border:1px solid rgba(197,232,108,.08);
+    transition:border-color .3s ease,box-shadow .3s ease;
+}
+
+.code:hover {
+    border-color:rgba(197,232,108,.35);
+    box-shadow:0 8px 20px rgba(23,107,80,.1);
+}
+
+.tag {
+    color:var(--green);
+    background:#e7f2e9;
+    border-radius:4px;
+    padding:2px 6px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+}
+
+.info-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:17px;
+}
+
+.info-card {
+    background:white;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:23px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .35s ease,box-shadow .35s ease;
+}
+
+.info-card::before {
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:4px;
+    height:0;
+    background:var(--green);
+    transition:height .4s ease;
+}
+
+.info-card:hover {
+    transform:translateY(-7px);
+    box-shadow:0 16px 30px rgba(32,43,40,.09);
+}
+
+.info-card:hover::before {
+    height:100%;
+}
+
+.info-card .number {
+    font-size:28px;
+    color:var(--green);
+    font-weight:800;
+}
+
+.info-card h4 {
+    margin:7px 0;
+}
+
+.info-card p {
+    color:var(--muted);
+    font-size:14px;
+}
+
+.demo-list {
+    background:#f2f6ef;
+    padding:25px;
+    border-radius:10px;
+    margin-top:17px;
+    transition:background .3s ease,transform .3s ease;
+}
+
+.demo-list:hover {
+    background:#eaf2e5;
+    transform:translateY(-3px);
+}
+
+.demo-list ul,.demo-list ol {
+    padding-left:25px;
+    margin-top:10px;
+}
+
+.demo-list li {
+    padding:3px 0;
+}
+
+.demo-list dl {
+    margin-top:12px;
+}
+
+.demo-list dd {
+    margin:3px 0 12px 18px;
+    color:var(--muted);
+}
+
+.table-wrap {
+    overflow-x:auto;
+    margin-top:18px;
+    border-radius:8px;
+}
+
+.example-table {
+    width:100%;
+    border-collapse:collapse;
+    min-width:450px;
+    background:white;
+}
+
+.example-table th {
+    background:var(--green);
+    color:white;
+    text-align:left;
+}
+
+.example-table th,.example-table td {
+    border:1px solid var(--line);
+    padding:13px 15px;
+}
+
+.example-table tr:nth-child(even) {
+    background:#f0f5ef;
+}
+
+.example-table tbody tr {
+    transition:background .25s ease;
+}
+
+.example-table tbody tr:hover {
+    background:#e4f0df;
+}
+
+.tip {
+    padding:15px 18px;
+    background:#edf6df;
+    border-left:4px solid var(--green);
+    border-radius:0 8px 8px 0;
+    margin-top:18px;
+    color:#344d3e;
+    transition:transform .3s ease;
+}
+
+.tip:hover {
+    transform:translateX(5px);
+}
+
+.challenge {
+    background:#202d27;
+    color:white;
+    border-radius:15px;
+    padding:30px;
+    margin-top:25px;
+    position:relative;
+    overflow:hidden;
+    transition:box-shadow .35s ease,transform .35s ease;
+}
+
+.challenge:hover {
+    transform:translateY(-5px);
+    box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
+
+.challenge::after {
+    content:"MISSION";
+    position:absolute;
+    right:-10px;
+    bottom:-25px;
+    font-size:75px;
+    font-weight:800;
+    color:rgba(255,255,255,.045);
+    pointer-events:none;
+}
+
+.challenge h3 {
+    color:var(--lime);
+}
+
+.challenge p {
+    color:#c5d4cc;
+    margin-top:8px;
+}
+
+.challenge li {
+    margin:10px 0 10px 22px;
+    color:#e0e9e3;
+}
+
+/* PLAYGROUND */
+
+.playground {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.panel {
+    background:white;
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    transition:transform .35s ease,box-shadow .35s ease;
+}
+
+.panel:hover {
+    transform:translateY(-5px);
+    box-shadow:0 15px 30px rgba(32,43,40,.09);
+}
+
+.panel-head {
+    padding:13px 17px;
+    background:#e8eee7;
+    color:var(--green);
+    font-weight:800;
+    font-size:13px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+#htmlEditor {
+    width:100%;
+    height:340px;
+    resize:vertical;
+    border:0;
+    outline:0;
+    padding:17px;
+    background:#17231e;
+    color:#b8e9c8;
+    font:13px/1.8 'JetBrains Mono',monospace;
+}
+
+#htmlPreview {
+    display:block;
+    width:100%;
+    height:340px;
+    border:0;
+    background:white;
+}
+
+.actions {
+    display:flex;
+    gap:12px;
+    margin-top:15px;
+}
+
+.btn {
+    border:0;
+    background:var(--green);
+    color:white;
+    padding:12px 21px;
+    border-radius:6px;
+    font-weight:800;
+    cursor:pointer;
+    font-family:inherit;
+    transition:transform .25s ease,background .25s ease,box-shadow .25s ease;
+}
+
+.btn:hover {
+    background:#10543e;
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(23,107,80,.2);
+}
+
+.btn:active {
+    transform:scale(.97);
+}
+
+.btn.secondary {
+    background:#dfe8df;
+    color:var(--green);
+}
+
+.btn.secondary:hover {
+    background:#cbdcc9;
+}
+
+/* QUIZ */
+
+.quiz-question {
+    padding:24px;
+    background:white;
+    border:1px solid var(--line);
+    border-radius:11px;
+    margin-bottom:15px;
+    transition:transform .3s ease,box-shadow .3s ease;
+}
+
+.quiz-question:hover {
+    transform:translateX(5px);
+    box-shadow:0 9px 20px rgba(32,43,40,.06);
+}
+
+.quiz-question h4 {
+    margin-bottom:12px;
+}
+
+.quiz-question label {
+    display:block;
+    padding:9px 12px;
+    margin:4px 0;
+    color:var(--muted);
+    cursor:pointer;
+    border-radius:6px;
+    transition:background .25s ease,color .25s ease;
+}
+
+.quiz-question label:hover {
+    background:#edf5e9;
+    color:var(--green);
+}
+
+.quiz-question input {
+    accent-color:var(--green);
+    margin-right:8px;
+}
+
+#quizResult {
+    margin-top:17px;
+    font-weight:800;
+    min-height:22px;
+}
+
+/* RESET QUIZ BUTTON */
+
+.cnf-quiz-reset {
+    background:#e9f1e2 !important;
+    color:#176b50 !important;
+    border:1px solid #b9d1b9 !important;
+    padding:12px 20px !important;
+    border-radius:6px !important;
+    font-family:'Outfit',sans-serif !important;
+    font-weight:800 !important;
+    cursor:pointer !important;
+    transition:all .3s ease !important;
+}
+
+.cnf-quiz-reset:hover {
+    background:#d7e9c9 !important;
+    color:#104c3a !important;
+    transform:translateY(-3px) !important;
+    box-shadow:0 8px 18px rgba(23,107,80,.12) !important;
+}
+
+#checkQuiz {
+    margin-top:8px;
+}
+
+/* COMPLETION */
+
+.completion {
+    text-align:center;
+    padding:45px 25px;
+    background:#e6efe3;
+    border:1px solid #cbdcc9;
+    border-radius:15px;
+    position:relative;
+    overflow:hidden;
+}
+
+.completion::before,
+.completion::after {
+    content:"";
+    position:absolute;
+    width:130px;
+    height:130px;
+    border:1px solid rgba(23,107,80,.12);
+    border-radius:50%;
+    pointer-events:none;
+}
+
+.completion::before {
+    left:-55px;
+    top:-55px;
+    animation:ringRotate 18s linear infinite;
+}
+
+.completion::after {
+    right:-55px;
+    bottom:-55px;
+    animation:ringRotate 18s linear infinite reverse;
+}
+
+.completion h2 {
+    font-size:32px;
+}
+
+.completion p {
+    color:var(--muted);
+    margin:10px 0 23px;
+}
+
+#completeLesson {
+    padding:14px 25px;
+    background:var(--green);
+    color:white;
+    border:2px solid var(--green);
+    border-radius:7px;
+    font-weight:800;
+    cursor:pointer;
+    transition:all .3s ease;
+}
+
+#completeLesson:hover:not(:disabled) {
+    transform:translateY(-4px);
+    background:#10543e;
+    box-shadow:0 10px 20px rgba(23,107,80,.2);
+}
+
+#completeLesson:disabled {
+    background:#d5e6d6;
+    color:var(--green);
+    cursor:default;
+    border-color:#d5e6d6;
+}
+
+#completionMessage {
+    color:var(--green);
+    font-weight:800;
+    margin-top:18px;
+}
+
+.next {
+    display:inline-block;
+    margin-top:23px;
+    color:var(--green);
+    font-weight:800;
+    transition:all .3s ease;
+}
+
+.next:hover {
+    transform:translateX(5px);
+}
+
+.next.is-locked {
+    opacity:.4;
+    pointer-events:none;
+    cursor:not-allowed;
+}
+
+/* FOOTER */
+
+footer {
+    background:#17231e;
+    color:#aebeb3;
+    padding:35px 20px;
+    text-align:center;
+}
+
+footer strong {
+    display:block;
+    color:var(--lime);
+    font-size:25px;
+    margin-bottom:5px;
+}
+
+/* SCROLL REVEAL SYSTEM */
+
+.lesson06-motion-ready .reveal-item {
+    opacity:0;
+    filter:blur(4px);
+    transform:translateY(38px);
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.2,.7,.2,1),
+        filter .8s ease;
+    transition-delay:var(--reveal-delay,0ms);
+}
+
+.lesson06-motion-ready .reveal-item[data-motion="left"] {
+    transform:translateX(-48px);
+}
+
+.lesson06-motion-ready .reveal-item[data-motion="right"] {
+    transform:translateX(48px);
+}
+
+.lesson06-motion-ready .reveal-item[data-motion="scale"] {
+    transform:scale(.91);
+}
+
+.lesson06-motion-ready .reveal-item.is-visible {
+    opacity:1;
+    filter:blur(0);
+    transform:translate(0,0) scale(1);
+}
+
+.hero-copy {
+    --reveal-delay:100ms;
+}
+
+.section-head {
+    --reveal-delay:50ms;
+}
+
+.info-card:nth-child(2),
+.lesson-card:nth-of-type(2) {
+    --reveal-delay:100ms;
+}
+
+.info-card:nth-child(3),
+.lesson-card:nth-of-type(3) {
+    --reveal-delay:200ms;
+}
+
+/* HERO BOX FLOATING KEYFRAMES */
+
+@keyframes artFloat {
+    0%,100% {
+        transform:translateY(0) rotate(-2deg);
+    }
+
+    50% {
+        transform:translateY(-18px) rotate(0deg);
+    }
+}
+
+@keyframes orbPulse {
+    0%,100% {
+        transform:scale(1);
+        opacity:.75;
+    }
+
+    50% {
+        transform:scale(1.2);
+        opacity:1;
+    }
+}
+
+@keyframes ringRotate {
+    from {
+        rotate:0deg;
+    }
+
+    to {
+        rotate:360deg;
+    }
+}
+
+@keyframes numberFloat {
+    0%,100% {
+        transform:translateY(0);
+    }
+
+    50% {
+        transform:translateY(18px);
+    }
+}
+
+@keyframes artCardIn {
+    from {
+        opacity:0;
+        transform:translateY(22px);
+    }
+
+    to {
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes labelReveal {
+    from {
+        opacity:0;
+        letter-spacing:5px;
+    }
+
+    to {
+        opacity:1;
+        letter-spacing:2px;
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px) {
+    .hero-inner,
+    .info-grid,
+    .playground {
+        grid-template-columns:1fr;
+    }
+
+    .hero {
+        padding:65px 7%;
+    }
+
+    .hero-art {
+        margin:15px 5px 0;
+    }
+
+    .nav-info {
+        display:none;
+    }
+
+    .container {
+        padding:55px 18px;
+    }
+}
+
+@media(max-width:500px) {
+    .hero h1 {
+        letter-spacing:-2px;
+    }
+
+    .hero p {
+        font-size:15px;
+    }
+
+    .hero-art {
+        padding:20px;
+    }
+
+    .lesson-card {
+        padding:21px;
+    }
+
+    .actions {
+        flex-wrap:wrap;
+    }
+
+    .completion h2 {
+        font-size:26px;
+    }
+
+    .code {
+        font-size:11px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior:auto !important;
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+    }
+
+    .lesson06-motion-ready .reveal-item {
+        opacity:1;
+        filter:none;
+        transform:none;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="nav">
+    <a href="../html.html" class="logo">CNF/</a>
+    <span class="nav-info">HTML DEVELOPMENT · LESSON 06</span>
+    <a href="05-links-images.html" class="back">← Previous Lesson</a>
+</nav>
+
+<header class="hero">
+    <div class="hero-inner">
+
+        <div class="hero-copy">
+            <span class="eyebrow">HTML COURSE / CHAPTER 06</span>
+
+            <h1>Organize<br>Your <span>Content.</span></h1>
+
+            <p>
+                Learn how to structure information using HTML lists and tables.
+                From simple shopping lists to organized data, build cleaner
+                and more meaningful webpages.
+            </p>
+
+            <a href="#lesson-content" class="hero-btn">Explore This Lesson ↓</a>
+        </div>
+
+        <!-- Floating box: intentionally excluded from reveal-item system -->
+        <div class="hero-art">
+
+            <div class="art-label">CONTENT ORGANIZATION SYSTEM</div>
+
+            <div class="art-list">
+                <strong>My Learning Roadmap</strong>
+                <ol>
+                    <li>Learn HTML</li>
+                    <li>Practice CSS</li>
+                    <li>Master JavaScript</li>
+                </ol>
+            </div>
+
+            <table class="art-table">
+                <tr><th>Subject</th><th>Status</th></tr>
+                <tr><td>HTML</td><td>Completed</td></tr>
+                <tr><td>CSS</td><td>Learning</td></tr>
+                <tr><td>JavaScript</td><td>Upcoming</td></tr>
+            </table>
+        </div>
+
+    </div>
+</header>
+
+<main class="container" id="lesson-content">
+
+    <section class="section-head">
+        <small>01 / THE FOUNDATION</small>
+        <h2>Why Do We Need Lists & Tables?</h2>
+        <p>
+            Imagine a webpage containing hundreds of items or lots of information.
+            Without organization, it would become difficult to read.
+        </p>
+    </section>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="number">01</div>
+            <h4>Lists</h4>
+            <p>Organize related items in a structured sequence or group.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="number">02</div>
+            <h4>Tables</h4>
+            <p>Display information in rows and columns for easy comparison.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="number">03</div>
+            <h4>Structure</h4>
+            <p>Make information easier to understand and navigate.</p>
+        </div>
+    </div>
+
+    <section class="section-head" style="margin-top:75px;">
+        <small>02 / HTML LISTS</small>
+        <h2>Understanding HTML Lists</h2>
+        <p>HTML provides three main types of lists for organizing content.</p>
+    </section>
+
+    <article class="lesson-card">
+        <h3>1. Unordered List</h3>
+        <p>
+            An unordered list displays items with bullet points.
+            It is useful when the order of items does not matter.
+        </p>
+
+        <div class="code">
+&lt;ul&gt;
+    &lt;li&gt;HTML&lt;/li&gt;
+    &lt;li&gt;CSS&lt;/li&gt;
+    &lt;li&gt;JavaScript&lt;/li&gt;
+&lt;/ul&gt;
+        </div>
+
+        <div class="demo-list">
+            <strong>Browser Output:</strong>
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <strong>Remember:</strong> The ul element creates the list,
+            while each li element represents an individual item.
+        </div>
+    </article>
+
+    <article class="lesson-card">
+        <h3>2. Ordered List</h3>
+        <p>
+            An ordered list displays items in a numbered or ordered sequence.
+            It is useful for instructions and step-by-step processes.
+        </p>
+
+        <div class="code">
+&lt;ol&gt;
+    &lt;li&gt;Open your browser&lt;/li&gt;
+    &lt;li&gt;Visit a website&lt;/li&gt;
+    &lt;li&gt;Start learning&lt;/li&gt;
+&lt;/ol&gt;
+        </div>
+
+        <div class="demo-list">
+            <strong>Browser Output:</strong>
+            <ol>
+                <li>Open your browser</li>
+                <li>Visit a website</li>
+                <li>Start learning</li>
+            </ol>
+        </div>
+
+        <p style="margin-top:17px;">
+            You can also use the <span class="tag">type</span> attribute
+            to change the numbering style.
+        </p>
+
+        <div class="code">
+&lt;ol type="A"&gt;
+    &lt;li&gt;First item&lt;/li&gt;
+    &lt;li&gt;Second item&lt;/li&gt;
+&lt;/ol&gt;
+        </div>
+
+        <p>Common types include 1, A, a, I and i.</p>
+    </article>
+
+    <article class="lesson-card">
+        <h3>3. Description List</h3>
+        <p>
+            A description list is used to display terms with their
+            explanations or descriptions.
+        </p>
+
+        <div class="code">
+&lt;dl&gt;
+    &lt;dt&gt;HTML&lt;/dt&gt;
+    &lt;dd&gt;Structures web content.&lt;/dd&gt;
+
+    &lt;dt&gt;CSS&lt;/dt&gt;
+    &lt;dd&gt;Styles web content.&lt;/dd&gt;
+&lt;/dl&gt;
+        </div>
+
+        <div class="demo-list">
+            <strong>Browser Output:</strong>
+            <dl>
+                <dt><b>HTML</b></dt>
+                <dd>Structures web content.</dd>
+                <dt><b>CSS</b></dt>
+                <dd>Styles web content.</dd>
+            </dl>
+        </div>
+
+        <div class="tip">
+            <strong>Important tags:</strong>
+            dl = description list, dt = description term,
+            dd = description details.
+        </div>
+    </article>
+
+    <section class="section-head" style="margin-top:75px;">
+        <small>03 / HTML TABLES</small>
+        <h2>Working with HTML Tables</h2>
+        <p>
+            Tables are useful for displaying structured data such as
+            student records, schedules, prices and results.
+        </p>
+    </section>
+
+    <article class="lesson-card">
+        <h3>What is an HTML Table?</h3>
+        <p>
+            An HTML table organizes information into rows and columns.
+            Each row contains cells that hold data or headings.
+        </p>
+
+        <div class="code">
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;th&gt;Age&lt;/th&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;Ali&lt;/td&gt;
+        &lt;td&gt;20&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+        </div>
+
+        <div class="table-wrap">
+            <table class="example-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                </tr>
+                <tr>
+                    <td>Ali</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>Ahmed</td>
+                    <td>22</td>
+                </tr>
+            </table>
+        </div>
+    </article>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="number">&lt;table&gt;</div>
+            <h4>Table Element</h4>
+            <p>Creates the main table structure.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="number">&lt;tr&gt;</div>
+            <h4>Table Row</h4>
+            <p>Creates a horizontal row inside a table.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="number">&lt;td&gt;</div>
+            <h4>Table Data</h4>
+            <p>Creates a normal data cell.</p>
+        </div>
+    </div>
+
+    <article class="lesson-card" style="margin-top:22px;">
+        <h3>Understanding Table Headings</h3>
+        <p>
+            The <span class="tag">&lt;th&gt;</span> element defines
+            a heading cell. It helps identify the meaning of each column.
+        </p>
+
+        <div class="code">
+&lt;tr&gt;
+    &lt;th&gt;Student Name&lt;/th&gt;
+    &lt;th&gt;Marks&lt;/th&gt;
+    &lt;th&gt;Grade&lt;/th&gt;
+&lt;/tr&gt;
+        </div>
+
+        <div class="tip">
+            Use meaningful table headings and consider adding a caption
+            to explain what the table represents.
+        </div>
+    </article>
+
+    <article class="lesson-card">
+        <h3>Adding More Rows and Columns</h3>
+        <p>
+            You can add as many rows and cells as required.
+            Each tr element creates another row.
+        </p>
+
+        <div class="code">
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Course&lt;/th&gt;
+        &lt;th&gt;Duration&lt;/th&gt;
+        &lt;th&gt;Level&lt;/th&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;HTML&lt;/td&gt;
+        &lt;td&gt;2 Weeks&lt;/td&gt;
+        &lt;td&gt;Beginner&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;CSS&lt;/td&gt;
+        &lt;td&gt;3 Weeks&lt;/td&gt;
+        &lt;td&gt;Beginner&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+        </div>
+    </article>
+
+    <article class="lesson-card">
+        <h3>Using Colspan and Rowspan</h3>
+        <p>
+            Sometimes you need one cell to cover multiple columns
+            or multiple rows. HTML provides two attributes for this.
+        </p>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="number">colspan</div>
+                <h4>Merge Columns</h4>
+                <p>Allows a cell to extend across multiple columns.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="number">rowspan</div>
+                <h4>Merge Rows</h4>
+                <p>Allows a cell to extend across multiple rows.</p>
+            </div>
+        </div>
+
+        <div class="code">
+&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;th colspan="2"&gt;Student Details&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Ali&lt;/td&gt;
+        &lt;td&gt;20&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+        </div>
+
+        <div class="tip">
+            Colspan and rowspan change the space occupied by a cell.
+            They do not automatically create extra cells.
+        </div>
+    </article>
+
+    <section class="challenge">
+        <h3>04 / Practical Mission</h3>
+        <p>Build a small student information page.</p>
+
+        <ul>
+            <li>Create an unordered list of your favourite subjects.</li>
+            <li>Create an ordered list of your daily learning steps.</li>
+            <li>Create a table containing three students.</li>
+            <li>Add columns for name, subject and marks.</li>
+            <li>Use table headings for each column.</li>
+        </ul>
+    </section>
+
+    <section class="section-head" style="margin-top:75px;">
+        <small>05 / BUILD IT YOURSELF</small>
+        <h2>HTML Lists & Tables Playground</h2>
+        <p>Experiment with the code and watch the browser output.</p>
+    </section>
+
+    <div class="playground">
+
+        <div class="panel">
+            <div class="panel-head">HTML EDITOR</div>
+
+            <textarea id="htmlEditor" spellcheck="false"><h1>My Learning Dashboard</h1>
+
+<h2>My Subjects</h2>
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+</ul>
+
+<h2>Learning Steps</h2>
+<ol>
+    <li>Study</li>
+    <li>Practice</li>
+    <li>Build Projects</li>
+</ol>
+
+<h2>Student Marks</h2>
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Name</th>
+        <th>Marks</th>
+    </tr>
+    <tr>
+        <td>Ali</td>
+        <td>90</td>
+    </tr>
+    <tr>
+        <td>Ahmed</td>
+        <td>85</td>
+    </tr>
+</table></textarea>
+        </div>
+
+        <div class="panel">
+            <div class="panel-head">LIVE OUTPUT</div>
+            <iframe id="htmlPreview" title="HTML output" sandbox="allow-same-origin"></iframe>
+        </div>
+
+    </div>
+
+    <div class="actions">
+        <button class="btn" id="runHTML">▶ Run Code</button>
+        <button class="btn secondary" id="resetHTML">↻ Reset</button>
+    </div>
+
+    <section class="section-head" style="margin-top:80px;">
+        <small>06 / FINAL KNOWLEDGE CHECK</small>
+        <h2>Test Your Knowledge</h2>
+        <p>Answer all questions and score 3 out of 3 to unlock completion.</p>
+    </section>
+
+    <div class="quiz-question">
+        <h4>1. Which tag creates an unordered list?</h4>
+        <label><input type="radio" name="q1" value="a"> &lt;ol&gt;</label>
+        <label><input type="radio" name="q1" value="b"> &lt;ul&gt;</label>
+        <label><input type="radio" name="q1" value="c"> &lt;li&gt;</label>
+    </div>
+
+    <div class="quiz-question">
+        <h4>2. Which HTML tag creates a table row?</h4>
+        <label><input type="radio" name="q2" value="a"> &lt;td&gt;</label>
+        <label><input type="radio" name="q2" value="b"> &lt;th&gt;</label>
+        <label><input type="radio" name="q2" value="c"> &lt;tr&gt;</label>
+    </div>
+
+    <div class="quiz-question">
+        <h4>3. Which attribute merges multiple columns?</h4>
+        <label><input type="radio" name="q3" value="a"> colspan</label>
+        <label><input type="radio" name="q3" value="b"> rowspan</label>
+        <label><input type="radio" name="q3" value="c"> merge</label>
+    </div>
+
+    <button class="btn" id="checkQuiz">Check My Answers</button>
+    <div id="quizResult" aria-live="polite"></div>
+
+    <section class="completion" style="margin-top:80px;">
+        <h2>Another Skill Unlocked.</h2>
+
+        <p>
+            You now understand HTML lists and tables.
+            Pass the quiz to mark this lesson complete.
+        </p>
+
+        <button id="completeLesson">✓ Complete Lesson 06</button>
+
+        <div id="completionMessage" aria-live="polite"></div>
+
+        <a href="07-html-forms.html" class="next is-locked" id="nextLesson" aria-disabled="true">
+            Next: Lesson 07 — HTML Forms →
+        </a>
+    </section>
+
+</main>
+
+<footer>
+    <strong>CNF/</strong>
+    <p>Build Skills. Create Experiences. Shape the Web.</p>
+    <p style="font-size:12px;margin-top:8px;">© 2026 CODE NEXA FORGE</p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    /* PLAYGROUND */
+
+    const editor = document.getElementById("htmlEditor");
+    const preview = document.getElementById("htmlPreview");
+    const runButton = document.getElementById("runHTML");
+    const resetButton = document.getElementById("resetHTML");
+
+    const starterCode = editor.value;
+
+    function runCode() {
+        preview.srcdoc = editor.value;
+    }
+
+    runButton.addEventListener("click", runCode);
+
+    resetButton.addEventListener("click", function() {
+        editor.value = starterCode;
+        runCode();
+    });
+
+    runCode();
+
+    /* QUIZ SYSTEM */
+
+    const answers = {
+        q1:"b",
+        q2:"c",
+        q3:"a"
+    };
+
+    const quizResult = document.getElementById("quizResult");
+    const checkQuiz = document.getElementById("checkQuiz");
+    const completeButton = document.getElementById("completeLesson");
+    const completionMessage = document.getElementById("completionMessage");
+    const nextLesson = document.getElementById("nextLesson");
+
+    const storageKey = "html-lesson-06-completed";
+
+    let quizPassed = false;
+
+    function lockNextLesson() {
+        nextLesson.classList.add("is-locked");
+        nextLesson.setAttribute("aria-disabled","true");
+    }
+
+    function unlockNextLesson() {
+        nextLesson.classList.remove("is-locked");
+        nextLesson.removeAttribute("aria-disabled");
+    }
+
+    function showCompleted() {
+        completeButton.disabled = true;
+        completeButton.textContent = "✓ Lesson Completed";
+
+        completionMessage.style.color = "#176b50";
+        completionMessage.textContent =
+            "Congratulations! Lesson 06 successfully completed.";
+
+        unlockNextLesson();
+    }
+
+    function resetCompletion() {
+        localStorage.removeItem(storageKey);
+
+        quizPassed = false;
+
+        completeButton.disabled = false;
+        completeButton.textContent = "✓ Complete Lesson 06";
+
+        completionMessage.textContent = "";
+        quizResult.textContent = "";
+
+        lockNextLesson();
+    }
+
+    checkQuiz.addEventListener("click", function() {
+
+        let score = 0;
+        let attempted = 0;
+
+        Object.keys(answers).forEach(function(question) {
+
+            const selected = document.querySelector(
+                'input[name="' + question + '"]:checked'
+            );
+
+            if(selected) {
+                attempted++;
+
+                if(selected.value === answers[question]) {
+                    score++;
+                }
+            }
+        });
+
+        if(attempted < 3) {
+            quizPassed = false;
+            quizResult.style.color = "#b07814";
+            quizResult.textContent =
+                "Please answer all three questions first.";
+            return;
+        }
+
+        quizResult.textContent = "Your Score: " + score + "/3";
+
+        if(score === 3) {
+            quizPassed = true;
+            quizResult.style.color = "#176b50";
+            quizResult.textContent =
+                "Excellent! 3/3 — All answers correct!";
+
+        } else {
+            quizPassed = false;
+            quizResult.style.color = "#c04444";
+            quizResult.textContent +=
+                " — Review the lesson and try again.";
+        }
+    });
+
+    /* COMPLETION SYSTEM */
+
+    if(localStorage.getItem(storageKey) === "true") {
+        quizPassed = true;
+        showCompleted();
+    } else {
+        lockNextLesson();
+    }
+
+    completeButton.addEventListener("click", function() {
+
+        if(!quizPassed) {
+            completionMessage.style.color = "#b07814";
+            completionMessage.textContent =
+                "Pass the quiz with 3/3 marks before completing this lesson.";
+            return;
+        }
+
+        localStorage.setItem(storageKey,"true");
+        showCompleted();
+    });
+
+    /* RESET BUTTON INJECTED BY THE SHARED QUIZ GUARD */
+
+    document.addEventListener("click", function(event) {
+
+        const resetControl = event.target.closest(
+            ".cnf-quiz-reset, .reset-quiz, [data-quiz-reset]"
+        );
+
+        if(!resetControl) return;
+
+        resetCompletion();
+
+        document.querySelectorAll(
+            '.quiz-question input[type="radio"]'
+        ).forEach(function(input) {
+            input.checked = false;
+        });
+
+        quizResult.textContent = "";
+    });
+
+    /* LESSON-SPECIFIC SCROLL REVEALS */
+
+    const revealTargets = [
+        ...document.querySelectorAll(
+            ".hero-copy, .section-head, .info-card, " +
+            ".lesson-card, .challenge, .playground, .panel, " +
+            ".quiz-question, #checkQuiz, #quizResult, .completion, " +
+            ".actions, .tip, .demo-list, .table-wrap"
+        )
+    ];
+
+    revealTargets.forEach(function(element,index) {
+
+        if(element.classList.contains("reveal-item")) return;
+
+        element.classList.add("reveal-item");
+
+        if(
+            element.classList.contains("panel") ||
+            element.classList.contains("completion")
+        ) {
+            element.dataset.motion = "scale";
+        } else if(index % 3 === 1) {
+            element.dataset.motion = "left";
+        } else if(index % 3 === 2) {
+            element.dataset.motion = "right";
+        }
+
+        element.style.setProperty(
+            "--reveal-delay",
+            (index % 3) * 100 + "ms"
+        );
+    });
+
+    document.documentElement.classList.add("lesson06-motion-ready");
+
+    if("IntersectionObserver" in window) {
+
+        const observer = new IntersectionObserver(function(entries) {
+
+            entries.forEach(function(entry) {
+
+                if(entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+
+            });
+
+        }, {
+            threshold:0.12,
+            rootMargin:"0px 0px -45px 0px"
+        });
+
+        revealTargets.forEach(function(element) {
+            observer.observe(element);
+        });
+
+    } else {
+
+        revealTargets.forEach(function(element) {
+            element.classList.add("is-visible");
+        });
+
+    }
+
+});
+</script>
+
+<script src="../../js/lesson-quiz-guard.js"></script>
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

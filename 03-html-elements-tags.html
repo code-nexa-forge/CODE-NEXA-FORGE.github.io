@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/html-lesson-access-gate.js"></script>
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNF/ | HTML Elements & Tags</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+    --bg: #f1f4ec;
+    --ink: #1c2821;
+    --green: #28734d;
+    --lime: #d4f28a;
+    --muted: #69776c;
+    --line: #d9e1d5;
+    --white: #fff;
+    --motion-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html { scroll-behavior:smooth; }
+
+body {
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    overflow-x:hidden;
+}
+
+a {
+    color:inherit;
+    text-decoration:none;
+}
+
+button {
+    font-family:inherit;
+    cursor:pointer;
+}
+
+/* NAVIGATION */
+
+.nav {
+    height:72px;
+    padding:0 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    background:var(--bg);
+    position:relative;
+    z-index:10;
+}
+
+.logo {
+    font:700 25px 'Space Grotesk';
+    letter-spacing:-2px;
+}
+
+.logo span { color:var(--green); }
+
+.nav-links {
+    display:flex;
+    gap:25px;
+    font-size:12px;
+    color:var(--muted);
+}
+
+.nav-links a {
+    position:relative;
+    transition:color .3s ease;
+}
+
+.nav-links a::after {
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:2px;
+    background:var(--green);
+    transition:width .3s ease;
+}
+
+.nav-links a:hover {
+    color:var(--green);
+}
+
+.nav-links a:hover::after {
+    width:100%;
+}
+
+.lesson-tag {
+    background:var(--lime);
+    padding:9px 13px;
+    border-radius:4px;
+    font:10px 'DM Mono';
+    transition:transform .3s ease, box-shadow .3s ease;
+}
+
+.lesson-tag:hover {
+    transform:translateY(-3px);
+    box-shadow:0 7px 16px rgba(40,115,77,.14);
+}
+
+/* HERO */
+
+.hero {
+    padding:75px 8% 65px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:55px;
+    align-items:center;
+}
+
+.eyebrow {
+    font:11px 'DM Mono';
+    letter-spacing:2px;
+    color:var(--green);
+    margin-bottom:22px;
+}
+
+.hero h1 {
+    font:700 clamp(44px,6vw,76px)/1.02 'Space Grotesk';
+    letter-spacing:-4px;
+}
+
+.hero h1 span {
+    color:var(--green);
+    display:inline-block;
+    animation:headingAccent 3s ease-in-out infinite;
+}
+
+.hero p {
+    margin-top:24px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.9;
+    max-width:520px;
+}
+
+.hero-button {
+    display:inline-block;
+    background:var(--ink);
+    color:white;
+    padding:15px 21px;
+    border-radius:4px;
+    font-size:12px;
+    font-weight:700;
+    margin-top:27px;
+    position:relative;
+    overflow:hidden;
+    transition:background .3s ease, transform .3s ease;
+}
+
+.hero-button::before {
+    content:'';
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:70%;
+    height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+    transform:skewX(-20deg);
+    transition:left .6s ease;
+}
+
+.hero-button:hover {
+    background:var(--green);
+    transform:translateY(-4px);
+}
+
+.hero-button:hover::before {
+    left:150%;
+}
+
+/* HERO SIDE BOX */
+
+.hero-art {
+    min-height:350px;
+    background:#dce8d5;
+    border:1px solid #cbdcc5;
+    border-radius:12px;
+    position:relative;
+    overflow:hidden;
+    display:grid;
+    place-items:center;
+    isolation:isolate;
+    box-shadow:0 20px 45px rgba(36,76,49,.08);
+    animation:heroBoxEntrance 1s var(--motion-ease) both, heroBoxFloat 5s ease-in-out 1s infinite;
+    transition:box-shadow .4s ease, border-color .4s ease;
+}
+
+.hero-art:hover {
+    border-color:#8db69a;
+    box-shadow:0 25px 55px rgba(36,76,49,.17);
+}
+
+.hero-art::before {
+    content:'';
+    position:absolute;
+    width:180%;
+    height:70px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+    transform:rotate(-35deg);
+    left:-180%;
+    top:35%;
+    animation:artLightSweep 7s ease-in-out 2s infinite;
+    z-index:2;
+}
+
+.art-circle {
+    position:absolute;
+    width:270px;
+    height:270px;
+    border:2px solid rgba(40,115,77,.2);
+    border-radius:50%;
+    animation:orbitRotate 22s linear infinite;
+}
+
+.art-circle:before,
+.art-circle:after {
+    content:'';
+    position:absolute;
+    border:1px solid rgba(40,115,77,.25);
+    border-radius:50%;
+}
+
+.art-circle:before { inset:30px; }
+.art-circle:after { inset:65px; }
+
+.art-symbol {
+    position:relative;
+    z-index:1;
+    font:700 115px 'Space Grotesk';
+    color:var(--green);
+    letter-spacing:-12px;
+    text-shadow:0 12px 25px rgba(40,115,77,.12);
+    animation:symbolFloat 4s ease-in-out infinite;
+}
+
+.art-label {
+    position:absolute;
+    bottom:20px;
+    right:23px;
+    font:10px 'DM Mono';
+    color:var(--green);
+    letter-spacing:1px;
+}
+
+.art-chip {
+    position:absolute;
+    z-index:3;
+    background:rgba(255,255,255,.85);
+    border:1px solid rgba(40,115,77,.15);
+    color:var(--green);
+    padding:9px 12px;
+    border-radius:5px;
+    font:10px 'DM Mono';
+    box-shadow:0 8px 20px rgba(30,65,40,.08);
+    backdrop-filter:blur(8px);
+}
+
+.art-chip-one {
+    top:48px;
+    left:25px;
+    animation:chipFloat 4s ease-in-out infinite;
+}
+
+.art-chip-two {
+    right:25px;
+    top:95px;
+    animation:chipFloat 4.5s ease-in-out .5s infinite;
+}
+
+.art-chip-three {
+    left:35px;
+    bottom:65px;
+    animation:chipFloat 5s ease-in-out 1s infinite;
+}
+
+/* STATS */
+
+.stats {
+    padding:24px 8%;
+    background:var(--ink);
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.stat {
+    transition:transform .3s ease;
+}
+
+.stat:hover {
+    transform:translateY(-4px);
+}
+
+.stat small {
+    display:block;
+    color:#aab9ad;
+    font:10px 'DM Mono';
+    margin-bottom:7px;
+}
+
+.stat strong {
+    font:600 20px 'Space Grotesk';
+}
+
+/* GENERAL SECTIONS */
+
+.section {
+    padding:85px 8%;
+}
+
+.section-label {
+    color:var(--green);
+    font:10px 'DM Mono';
+    letter-spacing:2px;
+    margin-bottom:14px;
+}
+
+.section h2 {
+    font:600 clamp(32px,4vw,48px)/1.1 'Space Grotesk';
+    letter-spacing:-2px;
+}
+
+.section-intro {
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.9;
+    max-width:670px;
+    margin-top:15px;
+}
+
+/* ANATOMY */
+
+.anatomy {
+    margin-top:40px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.anatomy-visual {
+    background:var(--ink);
+    border-radius:10px;
+    padding:35px;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+    transition:transform .4s ease, box-shadow .4s ease;
+}
+
+.anatomy-visual::after {
+    content:'';
+    position:absolute;
+    width:180px;
+    height:180px;
+    border:1px solid rgba(212,242,138,.12);
+    border-radius:50%;
+    right:-75px;
+    top:-75px;
+    transition:transform .7s ease;
+}
+
+.anatomy-visual:hover {
+    transform:translateY(-5px);
+    box-shadow:0 17px 35px rgba(28,40,33,.15);
+}
+
+.anatomy-visual:hover::after {
+    transform:scale(1.5);
+}
+
+.anatomy-visual small {
+    color:var(--lime);
+    font:10px 'DM Mono';
+    margin-bottom:28px;
+}
+
+.anatomy-line {
+    font:17px 'DM Mono';
+    line-height:2.3;
+    overflow-wrap:anywhere;
+}
+
+.tag-color { color:#b8e88d; }
+.text-color { color:#f0d38b; }
+
+.anatomy-explain {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.anatomy-item {
+    background:white;
+    border:1px solid var(--line);
+    border-radius:7px;
+    padding:20px;
+    transition:transform .35s var(--motion-ease), border-color .35s ease, box-shadow .35s ease;
+}
+
+.anatomy-item:hover {
+    transform:translateX(8px);
+    border-color:#91b59a;
+    box-shadow:0 9px 20px rgba(40,115,77,.07);
+}
+
+.anatomy-item strong {
+    display:block;
+    font:600 16px 'Space Grotesk';
+    margin-bottom:6px;
+}
+
+.anatomy-item p {
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.7;
+}
+
+/* ELEMENT GALLERY */
+
+.gallery-section {
+    background:#e5ebdf;
+}
+
+.gallery-top {
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.gallery-top p {
+    color:var(--muted);
+    font-size:12px;
+}
+
+.filter-row {
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin:30px 0 22px;
+}
+
+.filter-btn {
+    border:1px solid #cbd7c8;
+    background:transparent;
+    color:var(--ink);
+    padding:10px 15px;
+    border-radius:30px;
+    font-size:11px;
+    transition:background .3s ease, color .3s ease, transform .3s ease, border-color .3s ease;
+}
+
+.filter-btn:hover {
+    transform:translateY(-3px);
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background:var(--green);
+    color:white;
+    border-color:var(--green);
+}
+
+.element-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.element-card {
+    background:white;
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:21px;
+    transition:transform .35s var(--motion-ease), border-color .3s ease, box-shadow .35s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.element-card::before {
+    content:'';
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:3px;
+    background:var(--green);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .35s ease;
+}
+
+.element-card:hover {
+    transform:translateY(-7px);
+    border-color:#91b59a;
+    box-shadow:0 14px 25px rgba(40,115,77,.09);
+}
+
+.element-card:hover::before {
+    transform:scaleX(1);
+}
+
+.element-card.hide {
+    display:none;
+}
+
+.card-top {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:22px;
+}
+
+.card-icon {
+    width:39px;
+    height:39px;
+    display:grid;
+    place-items:center;
+    background:#e8f1e4;
+    color:var(--green);
+    border-radius:8px;
+    font-size:19px;
+    transition:transform .35s ease, background .35s ease;
+}
+
+.element-card:hover .card-icon {
+    transform:rotate(-8deg) scale(1.12);
+    background:var(--lime);
+}
+
+.card-type {
+    color:var(--green);
+    font:9px 'DM Mono';
+    text-transform:uppercase;
+}
+
+.element-card h3 {
+    font:600 18px 'Space Grotesk';
+    margin-bottom:9px;
+}
+
+.element-card p {
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.7;
+    min-height:56px;
+}
+
+.element-card code {
+    display:inline-block;
+    background:#f0f4ec;
+    color:var(--green);
+    padding:8px 10px;
+    border-radius:4px;
+    font:10px 'DM Mono';
+    margin-top:15px;
+    transition:background .3s ease, transform .3s ease;
+}
+
+.element-card:hover code {
+    background:#e4efd9;
+    transform:translateY(-2px);
+}
+
+/* LIVE DEMO */
+
+.demo-grid {
+    margin-top:38px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.demo-editor,
+.demo-output {
+    border:1px solid var(--line);
+    background:white;
+    border-radius:9px;
+    overflow:hidden;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+
+.demo-editor:hover,
+.demo-output:hover {
+    transform:translateY(-5px);
+    border-color:#a5bda5;
+    box-shadow:0 15px 30px rgba(40,70,45,.08);
+}
+
+.demo-head {
+    display:flex;
+    justify-content:space-between;
+    padding:16px 19px;
+    border-bottom:1px solid var(--line);
+    font:10px 'DM Mono';
+}
+
+.demo-head span {
+    color:var(--green);
+}
+
+.demo-editor textarea {
+    display:block;
+    width:100%;
+    height:290px;
+    padding:20px;
+    border:none;
+    outline:none;
+    resize:vertical;
+    background:#1c2821;
+    color:#d4f28a;
+    font:12px/1.8 'DM Mono';
+    transition:box-shadow .3s ease;
+}
+
+.demo-editor textarea:focus {
+    box-shadow:inset 0 0 0 2px var(--green);
+}
+
+.demo-output iframe {
+    display:block;
+    width:100%;
+    height:290px;
+    border:none;
+    background:white;
+}
+
+.demo-controls {
+    display:flex;
+    gap:10px;
+    padding:13px;
+}
+
+.action {
+    background:var(--green);
+    color:white;
+    border:none;
+    padding:11px 17px;
+    border-radius:4px;
+    font-size:11px;
+    font-weight:700;
+    transition:transform .25s ease, background .25s ease, box-shadow .25s ease;
+}
+
+.action:hover {
+    background:#1e5d3c;
+    transform:translateY(-3px);
+    box-shadow:0 7px 15px rgba(40,115,77,.17);
+}
+
+.action:active {
+    transform:translateY(0) scale(.97);
+}
+
+.action.light {
+    background:#e8eee4;
+    color:var(--ink);
+}
+
+.action.light:hover {
+    background:#d7e4d1;
+}
+
+/* VOID ELEMENTS */
+
+.void-section {
+    background:var(--ink);
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
+
+.void-section::before {
+    content:'';
+    position:absolute;
+    width:350px;
+    height:350px;
+    border:1px solid rgba(212,242,138,.09);
+    border-radius:50%;
+    right:-150px;
+    bottom:-200px;
+    pointer-events:none;
+}
+
+.void-section .section-intro {
+    color:#aab9ad;
+}
+
+.void-grid {
+    margin-top:35px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.void-card {
+    background:#29352c;
+    border:1px solid #415044;
+    padding:20px;
+    border-radius:8px;
+    transition:transform .35s ease, background .35s ease, border-color .35s ease;
+}
+
+.void-card:hover {
+    transform:translateY(-7px);
+    background:#334437;
+    border-color:#7b9d70;
+}
+
+.void-card code {
+    display:block;
+    color:var(--lime);
+    font:16px 'DM Mono';
+    margin-bottom:13px;
+    transition:transform .3s ease;
+}
+
+.void-card:hover code {
+    transform:translateX(5px);
+}
+
+.void-card p {
+    color:#b5c1b6;
+    font-size:11px;
+    line-height:1.7;
+}
+
+/* NESTING */
+
+.nesting-demo {
+    margin-top:35px;
+    background:#e8f0e3;
+    border:1px solid #d4e0cf;
+    border-radius:10px;
+    padding:28px;
+    transition:box-shadow .35s ease, transform .35s ease;
+}
+
+.nesting-demo:hover {
+    transform:translateY(-4px);
+    box-shadow:0 15px 30px rgba(40,115,77,.08);
+}
+
+.nest-box {
+    border:2px solid #75a77e;
+    border-radius:7px;
+    padding:18px;
+    margin-top:12px;
+    background:#f8fbf5;
+    transition:transform .35s ease, box-shadow .35s ease;
+}
+
+.nest-box:hover {
+    transform:translateX(5px);
+    box-shadow:0 8px 18px rgba(40,115,77,.08);
+}
+
+.nest-box.inner {
+    border-color:#d6a95f;
+    margin-left:25px;
+    background:#fffaf0;
+}
+
+.nest-box p {
+    color:var(--muted);
+    font-size:11px;
+    margin-top:7px;
+}
+
+.nest-tag {
+    font:11px 'DM Mono';
+    color:var(--green);
+}
+
+/* CHALLENGE */
+
+.challenge {
+    background:var(--lime);
+    border-radius:12px;
+    padding:35px;
+    margin-top:35px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:20px;
+    align-items:center;
+    overflow:hidden;
+    position:relative;
+    transition:transform .35s ease, box-shadow .35s ease;
+}
+
+.challenge:hover {
+    transform:translateY(-5px);
+    box-shadow:0 16px 30px rgba(80,115,45,.12);
+}
+
+.challenge h3 {
+    font:600 25px 'Space Grotesk';
+    margin-bottom:10px;
+}
+
+.challenge p {
+    font-size:12px;
+    color:#53643f;
+    line-height:1.8;
+    max-width:600px;
+}
+
+.challenge-mark {
+    font:700 65px 'Space Grotesk';
+    color:#52743a;
+    animation:challengeFloat 4s ease-in-out infinite;
+}
+
+/* QUIZ */
+
+.quiz-box {
+    max-width:850px;
+    margin-top:35px;
+    background:white;
+    border:1px solid var(--line);
+    padding:30px;
+    border-radius:9px;
+    transition:box-shadow .35s ease, transform .35s ease;
+}
+
+.quiz-box:hover {
+    box-shadow:0 15px 30px rgba(40,115,77,.07);
+    transform:translateY(-3px);
+}
+
+.question {
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.question h3 {
+    font-size:14px;
+    margin-bottom:13px;
+}
+
+.option {
+    display:block;
+    padding:12px 14px;
+    border:1px solid var(--line);
+    border-radius:5px;
+    margin:8px 0;
+    font-size:12px;
+    cursor:pointer;
+    transition:background .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+.option:hover {
+    border-color:var(--green);
+    background:#f5f9f1;
+    transform:translateX(4px);
+}
+
+.option:has(input:checked) {
+    border-color:var(--green);
+    background:#edf5e9;
+    color:var(--green);
+}
+
+.option input {
+    margin-right:9px;
+    accent-color:var(--green);
+}
+
+#quizResult {
+    margin-top:20px;
+    font-size:13px;
+    font-weight:700;
+    line-height:1.6;
+}
+
+/* FINISH */
+
+.finish {
+    margin:20px 8% 65px;
+    padding:35px;
+    border-radius:10px;
+    background:#1e3024;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    position:relative;
+    overflow:hidden;
+    transition:transform .35s ease, box-shadow .35s ease;
+}
+
+.finish::after {
+    content:'';
+    position:absolute;
+    width:220px;
+    height:220px;
+    border:1px solid rgba(212,242,138,.15);
+    border-radius:50%;
+    right:15%;
+    top:-150px;
+    pointer-events:none;
+    animation:finishOrbit 12s linear infinite;
+}
+
+.finish:hover {
+    transform:translateY(-4px);
+    box-shadow:0 15px 30px rgba(28,48,36,.16);
+}
+
+.finish h2 {
+    font:600 27px 'Space Grotesk';
+}
+
+.finish p {
+    color:#b8c9b9;
+    font-size:12px;
+    margin-top:9px;
+}
+
+#completeLesson {
+    border:none;
+    background:var(--lime);
+    color:#1c2821;
+    border-radius:4px;
+    padding:15px 20px;
+    font-weight:800;
+    position:relative;
+    z-index:1;
+    transition:transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+#completeLesson:hover:not(:disabled) {
+    transform:translateY(-4px);
+    background:#e2ff9e;
+    box-shadow:0 8px 20px rgba(212,242,138,.15);
+}
+
+#completeLesson:disabled {
+    opacity:.65;
+    cursor:default;
+}
+
+#completionMessage {
+    font-size:12px;
+    margin-top:10px;
+    line-height:1.6;
+}
+
+/* FOOTER */
+
+footer {
+    padding:27px 8%;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:15px;
+    font-size:11px;
+    color:var(--muted);
+}
+
+footer strong {
+    font:700 21px 'Space Grotesk';
+    color:var(--ink);
+}
+
+footer strong span {
+    color:var(--green);
+}
+
+footer a {
+    transition:color .3s ease, transform .3s ease;
+}
+
+footer a:hover {
+    color:var(--green);
+    transform:translateX(4px);
+}
+
+/* SCROLL REVEAL ANIMATIONS */
+
+.cnf-motion-ready .cnf-motion-item {
+    opacity:0;
+    transform:translateY(38px);
+    filter:blur(3px);
+    transition:
+        opacity .8s var(--motion-ease),
+        transform .8s var(--motion-ease),
+        filter .8s ease;
+}
+
+.cnf-motion-ready .cnf-motion-item.cnf-in-view {
+    opacity:1;
+    transform:translateY(0);
+    filter:blur(0);
+}
+
+/* Side box enters from the right */
+
+.cnf-motion-ready .hero-art.cnf-motion-item {
+    transform:translateX(65px) scale(.96);
+}
+
+.cnf-motion-ready .hero-art.cnf-motion-item.cnf-in-view {
+    transform:translateX(0) scale(1);
+}
+
+/* Anatomy side explanation enters from the right */
+
+.cnf-motion-ready .anatomy-explain.cnf-motion-item {
+    transform:translateX(55px);
+}
+
+.cnf-motion-ready .anatomy-explain.cnf-motion-item.cnf-in-view {
+    transform:translateX(0);
+}
+
+/* Staggered element cards */
+
+.cnf-motion-ready .element-card.cnf-motion-item {
+    transition-delay:var(--reveal-delay, 0ms);
+}
+
+/* Animation keyframes */
+
+@keyframes heroBoxEntrance {
+    from {
+        opacity:0;
+        transform:translateX(55px) scale(.94);
+    }
+    to {
+        opacity:1;
+        transform:translateX(0) scale(1);
+    }
+}
+
+@keyframes heroBoxFloat {
+    0%,100% { translate:0 0; }
+    50% { translate:0 -9px; }
+}
+
+@keyframes symbolFloat {
+    0%,100% { transform:translateY(0) rotate(-2deg); }
+    50% { transform:translateY(-12px) rotate(2deg); }
+}
+
+@keyframes orbitRotate {
+    from { transform:rotate(0deg); }
+    to { transform:rotate(360deg); }
+}
+
+@keyframes chipFloat {
+    0%,100% { transform:translateY(0); }
+    50% { transform:translateY(-8px); }
+}
+
+@keyframes artLightSweep {
+    0%,55% { left:-180%; }
+    80%,100% { left:180%; }
+}
+
+@keyframes headingAccent {
+    0%,100% { transform:translateY(0); }
+    50% { transform:translateY(-3px); }
+}
+
+@keyframes challengeFloat {
+    0%,100% { transform:translateY(0) rotate(0deg); }
+    50% { transform:translateY(-9px) rotate(-4deg); }
+}
+
+@keyframes finishOrbit {
+    from { transform:rotate(0deg); }
+    to { transform:rotate(360deg); }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:850px) {
+    .hero {
+        grid-template-columns:1fr;
+    }
+
+    .hero-art {
+        min-height:320px;
+    }
+
+    .anatomy {
+        grid-template-columns:1fr;
+    }
+
+    .element-grid {
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .void-grid {
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px) {
+    .nav {
+        padding:0 5%;
+    }
+
+    .nav-links {
+        display:none;
+    }
+
+    .hero {
+        padding:55px 6%;
+        gap:35px;
+    }
+
+    .hero h1 {
+        letter-spacing:-2px;
+    }
+
+    .hero-art {
+        min-height:280px;
+    }
+
+    .art-circle {
+        width:220px;
+        height:220px;
+    }
+
+    .art-symbol {
+        font-size:90px;
+    }
+
+    .art-chip {
+        font-size:9px;
+        padding:7px 9px;
+    }
+
+    .section {
+        padding:60px 6%;
+    }
+
+    .stats {
+        padding:23px 6%;
+    }
+
+    .element-grid,
+    .demo-grid {
+        grid-template-columns:1fr;
+    }
+
+    .void-grid {
+        grid-template-columns:1fr 1fr;
+    }
+
+    .challenge {
+        grid-template-columns:1fr;
+        padding:25px;
+    }
+
+    .challenge-mark {
+        display:none;
+    }
+
+    .quiz-box {
+        padding:20px;
+    }
+
+    .finish {
+        margin:10px 6% 45px;
+        padding:25px;
+    }
+
+    footer {
+        padding:25px 6%;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media(prefers-reduced-motion:reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior:auto !important;
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+    }
+
+    .cnf-motion-ready .cnf-motion-item,
+    .cnf-motion-ready .hero-art.cnf-motion-item,
+    .cnf-motion-ready .anatomy-explain.cnf-motion-item {
+        opacity:1 !important;
+        transform:none !important;
+        filter:none !important;
+    }
+}
+</style>
+
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="nav">
+    <a href="../html.html" class="logo">CNF<span>/</span></a>
+
+    <div class="nav-links">
+        <a href="../html.html">Course Home</a>
+        <a href="#anatomy">Anatomy</a>
+        <a href="#gallery">Elements</a>
+        <a href="#practice">Practice</a>
+        <a href="#quiz">Quiz</a>
+    </div>
+
+    <div class="lesson-tag">HTML · 03 / 08</div>
+</nav>
+
+<!-- HERO -->
+
+<header class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">HTML FUNDAMENTALS / CHAPTER 03</div>
+
+        <h1>Meet the <span>elements</span> that build the web.</h1>
+
+        <p>
+            HTML elements are the building blocks of every webpage.
+            Learn how tags work, how elements are formed, and how to
+            combine them to create meaningful content.
+        </p>
+
+        <a href="#anatomy" class="hero-button">Explore Elements ↗</a>
+    </div>
+
+    <div class="hero-art">
+        <div class="art-circle"></div>
+
+        <div class="art-chip art-chip-one">OPENING TAG</div>
+        <div class="art-chip art-chip-two">HTML / 03</div>
+        <div class="art-chip art-chip-three">CLOSING TAG</div>
+
+        <div class="art-symbol">&lt;/&gt;</div>
+        <div class="art-label">HTML ELEMENT EXPLORER</div>
+    </div>
+</header>
+
+<!-- STATS -->
+
+<div class="stats">
+    <div class="stat">
+        <small>LESSON</small>
+        <strong>03 / 08</strong>
+    </div>
+
+    <div class="stat">
+        <small>TOPIC</small>
+        <strong>Elements & Tags</strong>
+    </div>
+
+    <div class="stat">
+        <small>LEVEL</small>
+        <strong>Beginner</strong>
+    </div>
+
+    <div class="stat">
+        <small>ESTIMATED TIME</small>
+        <strong>25 Minutes</strong>
+    </div>
+</div>
+
+<!-- ANATOMY -->
+
+<section class="section" id="anatomy">
+    <div class="section-label">01 — UNDERSTAND THE ANATOMY</div>
+    <h2>What makes an HTML element?</h2>
+
+    <p class="section-intro">
+        An HTML element usually consists of an opening tag,
+        content and a closing tag. Together, these parts define
+        a piece of webpage content.
+    </p>
+
+    <div class="anatomy">
+        <div class="anatomy-visual">
+            <small>THE ANATOMY OF A PARAGRAPH</small>
+
+            <div class="anatomy-line">
+                <span class="tag-color">&lt;p&gt;</span>
+                <span class="text-color">Hello World</span>
+                <span class="tag-color">&lt;/p&gt;</span>
+            </div>
+
+            <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:25px;">
+                <span style="font:10px 'DM Mono';color:#b8e88d;">↑ Opening tag</span>
+                <span style="font:10px 'DM Mono';color:#f0d38b;">↑ Content</span>
+                <span style="font:10px 'DM Mono';color:#b8e88d;">↑ Closing tag</span>
+            </div>
+        </div>
+
+        <div class="anatomy-explain">
+            <div class="anatomy-item">
+                <strong>Opening Tag</strong>
+                <p>Starts the element. Example: &lt;p&gt;</p>
+            </div>
+
+            <div class="anatomy-item">
+                <strong>Content</strong>
+                <p>The text or other elements placed between the tags.</p>
+            </div>
+
+            <div class="anatomy-item">
+                <strong>Closing Tag</strong>
+                <p>Ends the element. Example: &lt;/p&gt;</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ELEMENT GALLERY -->
+
+<section class="section gallery-section" id="gallery">
+    <div class="gallery-top">
+        <div>
+            <div class="section-label">02 — ELEMENT LIBRARY</div>
+            <h2>Explore common HTML elements.</h2>
+        </div>
+
+        <p>Filter the library to explore different categories.</p>
+    </div>
+
+    <div class="filter-row">
+        <button class="filter-btn active" data-filter="all">All Elements</button>
+        <button class="filter-btn" data-filter="text">Text</button>
+        <button class="filter-btn" data-filter="media">Media</button>
+        <button class="filter-btn" data-filter="structure">Structure</button>
+        <button class="filter-btn" data-filter="interactive">Interactive</button>
+    </div>
+
+    <div class="element-grid">
+
+        <div class="element-card" data-category="text">
+            <div class="card-top">
+                <div class="card-icon">H</div>
+                <div class="card-type">Text</div>
+            </div>
+            <h3>Heading</h3>
+            <p>Creates headings from the most important h1 to h6.</p>
+            <code>&lt;h1&gt;Title&lt;/h1&gt;</code>
+        </div>
+
+        <div class="element-card" data-category="text">
+            <div class="card-top">
+                <div class="card-icon">¶</div>
+                <div class="card-type">Text</div>
+            </div>
+            <h3>Paragraph</h3>
+            <p>Represents a paragraph of written content.</p>
+            <code>&lt;p&gt;Text here&lt;/p&gt;</code>
+        </div>
+
+        <div class="element-card" data-category="text">
+            <div class="card-top">
+                <div class="card-icon">B</div>
+                <div class="card-type">Text</div>
+            </div>
+            <h3>Strong</h3>
+            <p>Marks text as having strong importance.</p>
+            <code>&lt;strong&gt;Important&lt;/strong&gt;</code>
+        </div>
+
+        <div class="element-card" data-category="media">
+            <div class="card-top">
+                <div class="card-icon">▧</div>
+                <div class="card-type">Media</div>
+            </div>
+            <h3>Image</h3>
+            <p>Embeds an image into the webpage.</p>
+            <code>&lt;img src="photo.jpg" alt="Photo"&gt;</code>
+        </div>
+
+        <div class="element-card" data-category="media">
+            <div class="card-top">
+                <div class="card-icon">▶</div>
+                <div class="card-type">Media</div>
+            </div>
+            <h3>Video</h3>
+            <p>Embeds video content with playback controls.</p>
+            <code>&lt;video controls&gt;</code>
+        </div>
+
+        <div class="element-card" data-category="interactive">
+            <div class="card-top">
+                <div class="card-icon">↗</div>
+                <div class="card-type">Interactive</div>
+            </div>
+            <h3>Anchor</h3>
+            <p>Creates hyperlinks to other pages or locations.</p>
+            <code>&lt;a href="#"&gt;Visit&lt;/a&gt;</code>
+        </div>
+
+        <div class="element-card" data-category="structure">
+            <div class="card-top">
+                <div class="card-icon">▤</div>
+                <div class="card-type">Structure</div>
+            </div>
+            <h3>Division</h3>
+            <p>Groups content into a generic container.</p>
+            <code>&lt;div&gt;Content&lt;/div&gt;</code>
+        </div>
+
+        <div class="element-card" data-category="structure">
+            <div class="card-top">
+                <div class="card-icon">▣</div>
+                <div class="card-type">Structure</div>
+            </div>
+            <h3>Section</h3>
+            <p>Represents a thematic section of a page.</p>
+            <code>&lt;section&gt;...&lt;/section&gt;</code>
+        </div>
+
+        <div class="element-card" data-category="interactive">
+            <div class="card-top">
+                <div class="card-icon">●</div>
+                <div class="card-type">Interactive</div>
+            </div>
+            <h3>Button</h3>
+            <p>Creates a clickable button for user actions.</p>
+            <code>&lt;button&gt;Click&lt;/button&gt;</code>
+        </div>
+
+    </div>
+</section>
+
+<!-- VOID ELEMENTS -->
+
+<section class="section void-section">
+    <div class="section-label" style="color:var(--lime);">03 — A SPECIAL CATEGORY</div>
+    <h2>Not every element needs a closing tag.</h2>
+
+    <p class="section-intro">
+        Some HTML elements are called void elements. They do not wrap
+        content and do not have separate closing tags.
+    </p>
+
+    <div class="void-grid">
+
+        <div class="void-card">
+            <code>&lt;br&gt;</code>
+            <p>Creates a line break in text.</p>
+        </div>
+
+        <div class="void-card">
+            <code>&lt;hr&gt;</code>
+            <p>Represents a thematic break between content.</p>
+        </div>
+
+        <div class="void-card">
+            <code>&lt;img&gt;</code>
+            <p>Embeds an image using its source and alternative text.</p>
+        </div>
+
+        <div class="void-card">
+            <code>&lt;input&gt;</code>
+            <p>Creates an input control for user data.</p>
+        </div>
+    </div>
+</section>
+
+<!-- NESTING -->
+
+<section class="section">
+    <div class="section-label">04 — ELEMENT RELATIONSHIPS</div>
+    <h2>HTML elements can live inside other elements.</h2>
+
+    <p class="section-intro">
+        This is called nesting. A parent element can contain child
+        elements, helping you organize complex webpage structures.
+    </p>
+
+    <div class="nesting-demo">
+        <div class="nest-tag">PARENT ELEMENT: &lt;div&gt;</div>
+
+        <div class="nest-box">
+            <div class="nest-tag">CHILD ELEMENT: &lt;h2&gt;</div>
+            <p>This heading is inside the parent div.</p>
+
+            <div class="nest-box inner">
+                <div class="nest-tag">NESTED CHILD: &lt;p&gt;</div>
+                <p>This paragraph is also inside the parent div.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRACTICE -->
+
+<section class="section" id="practice">
+    <div class="section-label">05 — PUT YOUR KNOWLEDGE TO WORK</div>
+    <h2>Build something with elements.</h2>
+
+    <p class="section-intro">
+        Use different HTML elements in the editor. Add headings,
+        paragraphs, images, links and buttons. Then run your code.
+    </p>
+
+    <div class="demo-grid">
+
+        <div class="demo-editor">
+            <div class="demo-head">
+                <strong>ELEMENT PLAYGROUND</strong>
+                <span>HTML EDITOR</span>
+            </div>
+
+            <textarea id="htmlEditor" spellcheck="false"><div>
+    <h1>My Learning Page</h1>
+    <p>I am exploring HTML elements.</p>
+    <h2>My Favourite Topics</h2>
+    <p>HTML is the foundation of the web.</p>
+    <a href="https://developer.mozilla.org/">Learn More</a>
+    <br>
+    <button>Explore HTML</button>
+</div></textarea>
+
+            <div class="demo-controls">
+                <button class="action" id="runHTML">Run Elements ↗</button>
+                <button class="action light" id="resetHTML">Reset</button>
+            </div>
+        </div>
+
+        <div class="demo-output">
+            <div class="demo-head">
+                <strong>RENDERED PAGE</strong>
+                <span>LIVE PREVIEW</span>
+            </div>
+
+            <iframe id="htmlPreview" title="HTML elements preview"></iframe>
+        </div>
+
+    </div>
+
+    <div class="challenge">
+        <div>
+            <h3>Your mini challenge.</h3>
+            <p>
+                Create a small profile section with one h1 heading,
+                one paragraph, one image and one clickable link.
+                Try using a div to group everything together.
+            </p>
+        </div>
+
+        <div class="challenge-mark">&lt;/&gt;</div>
+    </div>
+</section>
+
+<!-- QUIZ -->
+
+<section class="section" id="quiz">
+    <div class="section-label">06 — TEST YOUR SKILLS</div>
+    <h2>Can you identify the right element?</h2>
+
+    <p class="section-intro">
+        Complete this short quiz. You need 3 out of 3 correct answers
+        to mark the lesson as complete.
+    </p>
+
+    <div class="quiz-box">
+
+        <div class="question">
+            <h3>1. What are the usual parts of a normal HTML element?</h3>
+
+            <label class="option">
+                <input type="radio" name="q1" value="a">
+                Opening tag, content and closing tag
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="b">
+                Only a closing tag
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="c">
+                CSS and JavaScript
+            </label>
+        </div>
+
+        <div class="question">
+            <h3>2. Which of these is a void element?</h3>
+
+            <label class="option">
+                <input type="radio" name="q2" value="a">
+                &lt;div&gt;
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="b">
+                &lt;p&gt;
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="c">
+                &lt;img&gt;
+            </label>
+        </div>
+
+        <div class="question">
+            <h3>3. What does nesting mean in HTML?</h3>
+
+            <label class="option">
+                <input type="radio" name="q3" value="a">
+                Deleting HTML tags
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="b">
+                Placing elements inside other elements
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="c">
+                Changing a webpage background
+            </label>
+        </div>
+
+        <button class="action" id="checkQuiz">Check My Answers</button>
+        <div id="quizResult"></div>
+
+    </div>
+</section>
+
+<!-- FINISH -->
+
+<div class="finish">
+    <div>
+        <h2>You've explored the building blocks.</h2>
+        <p>Get a perfect quiz score to complete Lesson 03.</p>
+        <div id="completionMessage"></div>
+    </div>
+
+    <button id="completeLesson">Complete Lesson ↗</button>
+</div>
+
+<footer>
+    <strong>CNF<span>/</span></strong>
+    <span>CODE NEXA FORGE · HTML COURSE</span>
+    <a href="04-headings-paragraphs.html">Next: Headings & Paragraphs →</a>
+</footer>
+
+<script>
+/* ELEMENT FILTER */
+
+const filterButtons = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.element-card');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        filterButtons.forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+
+        const filter = button.dataset.filter;
+
+        cards.forEach(card => {
+            const category = card.dataset.category;
+
+            if (filter === 'all' || category === filter) {
+                card.classList.remove('hide');
+            } else {
+                card.classList.add('hide');
+            }
+        });
+    });
+});
+
+/* LIVE PLAYGROUND */
+
+const editor = document.getElementById('htmlEditor');
+const preview = document.getElementById('htmlPreview');
+
+const starterCode = `<div>
+    <h1>My Learning Page</h1>
+    <p>I am exploring HTML elements.</p>
+    <h2>My Favourite Topics</h2>
+    <p>HTML is the foundation of the web.</p>
+    <a href="https://developer.mozilla.org/">Learn More</a>
+    <br>
+    <button>Explore HTML</button>
+</div>`;
+
+function runCode() {
+    preview.srcdoc = editor.value;
+}
+
+document.getElementById('runHTML').addEventListener('click', runCode);
+
+document.getElementById('resetHTML').addEventListener('click', () => {
+    editor.value = starterCode;
+    runCode();
+});
+
+runCode();
+
+/* QUIZ */
+
+let quizPassed = false;
+
+const quizResult = document.getElementById('quizResult');
+const completeButton = document.getElementById('completeLesson');
+const completionMessage = document.getElementById('completionMessage');
+const storageKey = 'html-lesson-03-completed';
+
+document.getElementById('checkQuiz').addEventListener('click', () => {
+    const answers = {
+        q1: 'a',
+        q2: 'c',
+        q3: 'b'
+    };
+
+    let score = 0;
+    let unanswered = false;
+
+    Object.keys(answers).forEach(key => {
+        const selected = document.querySelector(
+            `input[name="${key}"]:checked`
+        );
+
+        if (!selected) {
+            unanswered = true;
+        } else if (selected.value === answers[key]) {
+            score++;
+        }
+    });
+
+    if (unanswered) {
+        quizResult.textContent = 'Please answer all three questions first.';
+        quizResult.style.color = '#b75a32';
+        quizPassed = false;
+        return;
+    }
+
+    quizResult.textContent = `Your Score: ${score}/3`;
+
+    if (score === 3) {
+        quizResult.textContent += ' — Excellent! You passed.';
+        quizResult.style.color = '#28734d';
+        quizPassed = true;
+    } else {
+        quizResult.textContent += ' — Review the lesson and try again.';
+        quizResult.style.color = '#b75a32';
+        quizPassed = false;
+    }
+});
+
+/* COMPLETION */
+
+if (localStorage.getItem(storageKey) === 'true') {
+    completeButton.disabled = true;
+    completeButton.textContent = '✓ Lesson Completed';
+    completionMessage.textContent = 'You have already completed this lesson.';
+}
+
+/* COMPLETE LESSON */
+
+completeButton.addEventListener('click', () => {
+    if (!quizPassed) {
+        completionMessage.textContent = 'First get 3/3 in the quiz.';
+        completionMessage.style.color = '#e6a06f';
+        return;
+    }
+
+    localStorage.setItem(storageKey, 'true');
+
+    completeButton.disabled = true;
+    completeButton.textContent = '✓ Lesson Completed';
+
+    completionMessage.textContent = 'Great work! Lesson 03 completed successfully.';
+    completionMessage.style.color = '#a9e88a';
+});
+
+/* LESSON 03 SCROLL ANIMATIONS */
+
+(() => {
+    const startAnimations = () => {
+        const reduceMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+        ).matches;
+
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+            return;
+        }
+
+        document.documentElement.classList.add('cnf-motion-ready');
+
+        const selectors = [
+            '.hero-content',
+            '.hero-art',
+            '.stat',
+            '#anatomy > .section-label',
+            '#anatomy > h2',
+            '#anatomy > .section-intro',
+            '.anatomy-visual',
+            '.anatomy-explain',
+            '.gallery-top',
+            '.filter-row',
+            '.element-card',
+            '.void-section > .section-label',
+            '.void-section > h2',
+            '.void-section > .section-intro',
+            '.void-card',
+            '.section:not(.gallery-section):not(.void-section)',
+            '.nesting-demo',
+            '#practice > .demo-grid',
+            '.challenge',
+            '#quiz > .section-label',
+            '#quiz > h2',
+            '#quiz > .section-intro',
+            '.quiz-box',
+            '.finish',
+            'footer'
+        ];
+
+        const elements = new Set();
+
+        selectors.forEach(selector => {
+            document.querySelectorAll(selector).forEach(element => {
+                if (
+                    !element.matches('script, style') &&
+                    element.getBoundingClientRect().height > 0
+                ) {
+                    elements.add(element);
+                }
+            });
+        });
+
+        const targets = [...elements];
+
+        targets.forEach((element, index) => {
+            element.classList.add('cnf-motion-item');
+
+            if (element.classList.contains('element-card')) {
+                const cardIndex = [...cards].indexOf(element);
+                element.style.setProperty(
+                    '--reveal-delay',
+                    `${(cardIndex % 3) * 100}ms`
+                );
+            }
+        });
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('cnf-in-view');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold:0.12,
+            rootMargin:'0px 0px -35px 0px'
+        });
+
+        targets.forEach(element => observer.observe(element));
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startAnimations, {
+            once:true
+        });
+    } else {
+        startAnimations();
+    }
+})();
+</script>
+
+<script src="../../js/lesson-quiz-guard.js"></script>
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

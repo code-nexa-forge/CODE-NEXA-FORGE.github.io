@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 07 - Animations | CNF/</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg: #10120f;
+    --surface: #191d17;
+    --surface2: #22291e;
+    --lime: #c8ff4d;
+    --lime-soft: #a7d94a;
+    --orange: #ff8a4c;
+    --white: #f5f7ed;
+    --muted: #a0a795;
+    --line: #39432d;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, select {
+    font: inherit;
+}
+
+/* NAVBAR */
+
+.navbar {
+    height: 74px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0b0d0a;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transition: background .35s ease, border-color .35s ease;
+}
+
+.navbar:hover {
+    border-bottom-color: var(--lime);
+}
+
+.logo {
+    color: var(--lime);
+    font: bold 23px 'Space Mono', monospace;
+    transition: text-shadow .3s ease, transform .3s ease;
+}
+
+.logo:hover {
+    text-shadow: 0 0 16px #c8ff4d88;
+    transform: translateY(-2px);
+}
+
+.nav-right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.nav-tag {
+    border: 1px solid #536a32;
+    color: var(--lime);
+    padding: 8px 12px;
+    font: 11px 'Space Mono', monospace;
+    transition: .3s ease;
+}
+
+.nav-tag:hover {
+    background: var(--lime);
+    color: #10120f;
+    box-shadow: 0 0 18px #c8ff4d44;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 430px;
+    padding: 75px 8%;
+    display: grid;
+    grid-template-columns: 1fr .8fr;
+    gap: 45px;
+    align-items: center;
+    background:
+        radial-gradient(circle at 75% 50%, #364b1c 0, transparent 33%),
+        linear-gradient(120deg, #10120f, #171e11);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border: 1px solid #c8ff4d12;
+    border-radius: 50%;
+    top: -190px;
+    left: -120px;
+    animation: heroRing 12s linear infinite;
+    pointer-events: none;
+}
+
+.eyebrow {
+    color: var(--lime);
+    font: 12px 'Space Mono', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 22px;
+    animation: fadeUp .7s ease both;
+}
+
+.hero h1 {
+    font-size: clamp(43px, 6vw, 73px);
+    line-height: 1.02;
+    letter-spacing: -3px;
+    margin-bottom: 22px;
+    animation: fadeUp .8s ease .1s both;
+}
+
+.hero h1 span {
+    color: var(--lime);
+    display: inline-block;
+    animation: limeGlow 3s ease-in-out infinite alternate;
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 570px;
+    animation: fadeUp .8s ease .2s both;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    animation: fadeUp .8s ease .3s both;
+}
+
+.btn {
+    border: 1px solid var(--lime);
+    background: var(--lime);
+    color: #14180e;
+    padding: 13px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease,
+        background .3s ease,
+        color .3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 9px 25px #c8ff4d35;
+}
+
+.btn:active {
+    transform: translateY(-1px) scale(.98);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: var(--lime);
+}
+
+.btn.secondary:hover {
+    background: var(--lime);
+    color: #14180e;
+}
+
+.hero-art {
+    height: 270px;
+    background: #1b2514;
+    border: 1px solid #536a32;
+    border-radius: 14px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    animation: artReveal 1s ease .25s both;
+    box-shadow: 0 15px 50px #00000030;
+}
+
+.hero-art::before,
+.hero-art::after {
+    content: '';
+    position: absolute;
+    border: 1px solid #789d3d55;
+    border-radius: 50%;
+    width: 210px;
+    height: 210px;
+    animation: ringPulse 5s ease-in-out infinite;
+}
+
+.hero-art::after {
+    width: 270px;
+    height: 270px;
+    animation-delay: 1s;
+}
+
+.hero-orb {
+    width: 100px;
+    height: 100px;
+    background: var(--lime);
+    border-radius: 30% 70% 60% 40%;
+    box-shadow: 0 0 45px #c8ff4d77;
+    animation: heroFloat 3s ease-in-out infinite alternate,
+               orbShape 6s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes heroFloat {
+    from { transform: translateY(-18px) rotate(-15deg); }
+    to { transform: translateY(18px) rotate(15deg); }
+}
+
+@keyframes orbShape {
+    0%, 100% { border-radius: 30% 70% 60% 40%; }
+    50% { border-radius: 60% 40% 35% 65%; }
+}
+
+/* MAIN */
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 65px 25px;
+}
+
+.kicker {
+    color: var(--lime);
+    font: 11px 'Space Mono', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 13px;
+}
+
+.section-title {
+    font-size: 34px;
+    margin-bottom: 14px;
+    letter-spacing: -.8px;
+}
+
+.description {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 720px;
+    margin-bottom: 32px;
+}
+
+/* CONCEPT CARDS */
+
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 65px;
+}
+
+.concept-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 26px;
+    border-radius: 9px;
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform .4s cubic-bezier(.2,.8,.2,1),
+        border-color .35s ease,
+        box-shadow .35s ease,
+        background .35s ease;
+}
+
+.concept-card::before {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 0;
+    background: var(--lime);
+    left: 0;
+    top: 0;
+    transition: height .4s ease;
+}
+
+.concept-card:hover {
+    transform: translateY(-8px);
+    border-color: #829e4d;
+    background: #1d2418;
+    box-shadow: 0 16px 35px #00000035;
+}
+
+.concept-card:hover::before {
+    height: 100%;
+}
+
+.concept-card .number {
+    color: var(--lime);
+    font: 11px 'Space Mono', monospace;
+    margin-bottom: 17px;
+}
+
+.concept-card h3 {
+    font-size: 23px;
+    margin-bottom: 12px;
+    transition: color .3s ease;
+}
+
+.concept-card:hover h3 {
+    color: var(--lime);
+}
+
+.concept-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.code {
+    background: #0b0e09;
+    color: var(--lime);
+    border: 1px solid #35432a;
+    padding: 17px;
+    margin-top: 17px;
+    border-radius: 6px;
+    font: 12px/1.9 'Space Mono', monospace;
+    overflow-x: auto;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+.concept-card:hover .code {
+    border-color: #718d42;
+    box-shadow: inset 0 0 20px #c8ff4d08;
+}
+
+/* ANIMATION LAB */
+
+.animation-lab {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .35s ease, box-shadow .35s ease;
+}
+
+.animation-lab:hover {
+    border-color: #637b3e;
+    box-shadow: 0 15px 40px #00000025;
+}
+
+.lab-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.lab-heading h3 {
+    font-size: 21px;
+}
+
+.live {
+    color: var(--lime);
+    border: 1px solid #536a32;
+    padding: 7px 10px;
+    font: 10px 'Space Mono', monospace;
+}
+
+.live::first-letter {
+    color: var(--orange);
+}
+
+.demo-stage {
+    height: 260px;
+    border: 1px dashed #526443;
+    border-radius: 8px;
+    background-color: #10170d;
+    background-image: radial-gradient(#46533b 1px, transparent 1px);
+    background-size: 18px 18px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    position: relative;
+    transition: border-color .3s ease, background-color .3s ease;
+}
+
+.demo-stage:hover {
+    border-color: var(--lime);
+    background-color: #131d0e;
+}
+
+.demo-stage::after {
+    content: "MOTION PREVIEW";
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    font: 9px 'Space Mono', monospace;
+    letter-spacing: 1px;
+    color: #71815f;
+    opacity: .7;
+}
+
+.animated-object {
+    width: 85px;
+    height: 85px;
+    background: var(--lime);
+    border-radius: 14px;
+    box-shadow: 0 0 30px #c8ff4d44;
+    transition: background .3s, border-radius .3s, box-shadow .3s;
+}
+
+.animated-object.bounce {
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.animated-object.spin {
+    animation: spin 2s linear infinite;
+}
+
+.animated-object.pulse {
+    animation: pulse 1.2s ease-in-out infinite;
+}
+
+.animated-object.slide {
+    animation: slide 2s ease-in-out infinite alternate;
+}
+
+.animated-object.color {
+    animation: colorChange 3s linear infinite alternate;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-65px); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.35); opacity: .55; }
+}
+
+@keyframes slide {
+    from { transform: translateX(-100px); }
+    to { transform: translateX(100px); }
+}
+
+@keyframes colorChange {
+    from {
+        background: #c8ff4d;
+        border-radius: 10px;
+        box-shadow: 0 0 25px #c8ff4d55;
+    }
+    to {
+        background: #4de5b2;
+        border-radius: 50%;
+        box-shadow: 0 0 35px #4de5b277;
+    }
+}
+
+.lab-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.lab-controls button {
+    border: 1px solid #536a32;
+    background: #20291a;
+    color: var(--white);
+    padding: 10px 14px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.lab-controls button:hover {
+    transform: translateY(-3px);
+    border-color: var(--lime);
+    box-shadow: 0 6px 16px #c8ff4d20;
+}
+
+.lab-controls button:active {
+    transform: scale(.96);
+}
+
+.lab-controls button.active {
+    background: var(--lime);
+    color: #10120f;
+    border-color: var(--lime);
+    font-weight: 800;
+    box-shadow: 0 0 18px #c8ff4d35;
+}
+
+.lab-controls .reset {
+    margin-left: auto;
+    border-color: #77816a;
+    color: var(--lime);
+}
+
+.lab-controls .reset:hover {
+    background: #303b27;
+    color: var(--white);
+}
+
+/* TRANSITION CARDS */
+
+.transition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+    margin-bottom: 60px;
+}
+
+.transition-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 22px;
+    border-radius: 9px;
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+
+.transition-card:hover {
+    transform: translateY(-7px);
+    border-color: #829e4d;
+    box-shadow: 0 12px 28px #00000035;
+}
+
+.transition-card h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+    transition: color .3s ease;
+}
+
+.transition-card:hover h3 {
+    color: var(--lime);
+}
+
+.transition-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.hover-demo {
+    height: 65px;
+    display: grid;
+    place-items: center;
+    margin-top: 18px;
+    border: 1px dashed #63734d;
+    border-radius: 6px;
+    color: var(--lime);
+    font-size: 12px;
+    cursor: pointer;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+.hover-demo:hover {
+    border-color: var(--lime);
+    box-shadow: 0 0 20px #c8ff4d15;
+}
+
+.hover-demo.one {
+    transition: background .3s ease, color .3s ease, transform .3s ease;
+}
+
+.hover-demo.one:hover {
+    background: var(--lime);
+    color: #10120f;
+    transform: scale(1.03);
+}
+
+.hover-demo.two {
+    transition: transform .3s ease, background .3s ease;
+}
+
+.hover-demo.two:hover {
+    transform: translateY(-8px);
+    background: #29351f;
+}
+
+.hover-demo.three {
+    transition: letter-spacing .3s ease, color .3s ease;
+}
+
+.hover-demo.three:hover {
+    letter-spacing: 4px;
+    color: #ffffff;
+}
+
+/* PROPERTY TABLE */
+
+.property-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 60px;
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.property-table th,
+.property-table td {
+    text-align: left;
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+}
+
+.property-table th {
+    background: #25311d;
+    color: var(--lime);
+    font-family: 'Space Mono', monospace;
+}
+
+.property-table td {
+    color: #c5ceba;
+    line-height: 1.6;
+    transition: color .25s ease, padding-left .25s ease, background .25s ease;
+}
+
+.property-table tbody tr {
+    transition: background .25s ease;
+}
+
+.property-table tbody tr:hover {
+    background: #242e1d;
+}
+
+.property-table tbody tr:hover td {
+    color: var(--white);
+}
+
+.property-table tbody tr:hover td:first-child {
+    padding-left: 23px;
+    color: var(--lime);
+}
+
+.property-table td:first-child {
+    color: var(--lime);
+    font-family: 'Space Mono', monospace;
+}
+
+/* QUIZ */
+
+.quiz {
+    background: #1a2116;
+    border: 1px solid #536a32;
+    padding: 30px;
+    border-radius: 12px;
+    transition: border-color .35s ease, box-shadow .35s ease;
+}
+
+.quiz:hover {
+    border-color: #829e4d;
+    box-shadow: 0 12px 35px #00000025;
+}
+
+.question {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    transition: padding-left .3s ease, border-color .3s ease;
+}
+
+.question:hover {
+    padding-left: 8px;
+    border-bottom-color: #718d42;
+}
+
+.question h4 {
+    font-size: 15px;
+    margin-bottom: 13px;
+}
+
+.question label {
+    display: block;
+    color: #c1cbb8;
+    font-size: 13px;
+    margin: 11px 0;
+    cursor: pointer;
+    transition: color .2s ease, transform .2s ease;
+}
+
+.question label:hover {
+    color: var(--lime);
+    transform: translateX(5px);
+}
+
+.question input {
+    accent-color: var(--lime);
+    margin-right: 8px;
+}
+
+.question input:checked + span {
+    color: var(--lime);
+}
+
+.quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+#completeBtn:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#quizResult {
+    color: var(--lime);
+    font-size: 13px;
+    margin-top: 18px;
+    line-height: 1.7;
+    transition: opacity .3s ease;
+}
+
+/* PREMIUM RESET QUIZ BUTTON
+   This styles the existing button injected by lesson-quiz-guard.js.
+   Do not create another reset button manually. */
+
+#resetQuiz,
+button[id="resetQuiz"],
+button.reset-quiz,
+button.reset-quiz-btn,
+button[data-quiz-reset] {
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 13px 20px 13px 38px !important;
+    background: #263020 !important;
+    color: #d9f99b !important;
+    border: 1px solid #78934b !important;
+    border-radius: 5px !important;
+    font: 800 12px 'Space Grotesk', sans-serif !important;
+    letter-spacing: .3px !important;
+    cursor: pointer !important;
+    transition:
+        transform .3s ease,
+        background .3s ease,
+        color .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease !important;
+}
+
+/* Moving orange indicator */
+
+#resetQuiz::before,
+button[id="resetQuiz"]::before,
+button.reset-quiz::before,
+button.reset-quiz-btn::before,
+button[data-quiz-reset]::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 9px var(--orange), 0 0 17px #ff8a4c88;
+    animation: orangeDotMove 1.5s ease-in-out infinite;
+}
+
+@keyframes orangeDotMove {
+    0%, 100% {
+        transform: translateY(-50%) translateX(0);
+        opacity: .65;
+    }
+    50% {
+        transform: translateY(-50%) translateX(7px);
+        opacity: 1;
+        box-shadow: 0 0 13px var(--orange), 0 0 24px #ff8a4c99;
+    }
+}
+
+#resetQuiz:hover,
+button[id="resetQuiz"]:hover,
+button.reset-quiz:hover,
+button.reset-quiz-btn:hover,
+button[data-quiz-reset]:hover {
+    background: var(--orange) !important;
+    color: #17130f !important;
+    border-color: var(--orange) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 22px #ff8a4c35 !important;
+}
+
+#resetQuiz:hover::before,
+button[id="resetQuiz"]:hover::before,
+button.reset-quiz:hover::before,
+button.reset-quiz-btn:hover::before,
+button[data-quiz-reset]:hover::before {
+    background: #17130f;
+    box-shadow: 0 0 10px #17130f;
+}
+
+/* LESSON NAVIGATION */
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 35px;
+}
+
+.lesson-navigation a {
+    border: 1px solid #536a32;
+    color: var(--lime);
+    padding: 13px 17px;
+    border-radius: 5px;
+    font-size: 12px;
+    transition:
+        background .3s ease,
+        color .3s ease,
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.lesson-navigation a:hover:not(.locked) {
+    background: var(--lime);
+    color: #10120f;
+    transform: translateY(-4px);
+    box-shadow: 0 7px 20px #c8ff4d25;
+}
+
+.lesson-navigation a.locked {
+    opacity: .35;
+    pointer-events: none;
+}
+
+/* FOOTER */
+
+footer {
+    border-top: 1px solid var(--line);
+    background: #0b0d0a;
+    padding: 25px 7%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 12px;
+    transition: border-color .3s ease;
+}
+
+footer:hover {
+    border-top-color: #718d42;
+}
+
+footer strong {
+    color: var(--lime);
+    font: bold 18px 'Space Mono', monospace;
+}
+
+/* SCROLL REVEAL */
+
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity .7s ease,
+        transform .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* KEYFRAME EFFECTS */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes artReveal {
+    from {
+        opacity: 0;
+        transform: translateX(35px) scale(.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes ringPulse {
+    0%, 100% {
+        transform: scale(.92);
+        opacity: .45;
+    }
+    50% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+}
+
+@keyframes heroRing {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes limeGlow {
+    from {
+        text-shadow: 0 0 0 transparent;
+    }
+    to {
+        text-shadow: 0 0 22px #c8ff4d55;
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 750px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 55px 7%;
+    }
+
+    .hero-art {
+        height: 220px;
+    }
+
+    .concept-grid,
+    .transition-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-right {
+        gap: 9px;
+        font-size: 10px;
+    }
+
+    .nav-tag {
+        display: none;
+    }
+
+    main {
+        padding: 45px 18px;
+    }
+
+    .animation-lab {
+        padding: 17px;
+    }
+
+    .property-table th,
+    .property-table td {
+        padding: 11px 8px;
+        font-size: 11px;
+    }
+
+    .quiz {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 29px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .lab-controls .reset {
+        margin-left: 0;
+    }
+}
+
+@media(max-width: 420px) {
+    .hero-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .lab-controls button {
+        flex: 1 1 40%;
+    }
+
+    .lesson-navigation a {
+        flex: 1 1 100%;
+        text-align: center;
+    }
+
+    .property-table th,
+    .property-table td {
+        font-size: 10px;
+        padding: 9px 6px;
+        overflow-wrap: anywhere;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media(prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+    .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
+    }
+}
+</style>
+
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="../css.html" target="_blank" rel="noopener" class="logo">CNF/</a>
+
+    <div class="nav-right">
+        <span>CSS COURSE</span>
+        <span class="nav-tag">LESSON 07 / 08</span>
+    </div>
+</nav>
+
+<header class="hero">
+    <div>
+        <div class="eyebrow">CSS MOTION STUDIO / MODULE 07</div>
+
+        <h1>Make websites <span>come alive.</span></h1>
+
+        <p>
+            Learn CSS animations, transitions, keyframes and motion effects.
+            Turn static elements into engaging interactive experiences.
+        </p>
+
+        <div class="hero-actions">
+            <a href="#learning" class="btn">Explore Animations ↓</a>
+            <a href="#playground" class="btn secondary">Try Live Demo</a>
+        </div>
+    </div>
+
+    <div class="hero-art">
+        <div class="hero-orb"></div>
+    </div>
+</header>
+
+<main id="learning">
+
+    <div class="kicker">01 / THE BASICS</div>
+    <h2 class="section-title">Animation vs Transition</h2>
+
+    <p class="description">
+        CSS transitions create smooth changes between two states, while
+        CSS animations can run through multiple stages using keyframes.
+    </p>
+
+    <div class="concept-grid">
+
+        <article class="concept-card">
+            <div class="number">CONCEPT_01</div>
+            <h3>CSS Transitions</h3>
+
+            <p>
+                A transition smoothly changes a CSS property when a state
+                changes, such as when a user hovers over a button.
+            </p>
+
+            <div class="code">
+.button {<br>
+&nbsp;&nbsp;transition: background .3s ease;<br>
+}<br><br>
+.button:hover {<br>
+&nbsp;&nbsp;background: lime;<br>
+}
+            </div>
+        </article>
+
+        <article class="concept-card">
+            <div class="number">CONCEPT_02</div>
+            <h3>CSS Animations</h3>
+
+            <p>
+                Animations use @keyframes to define different stages
+                of movement, color, size, rotation and more.
+            </p>
+
+            <div class="code">
+@keyframes move {<br>
+&nbsp;&nbsp;from { transform: translateX(0); }<br>
+&nbsp;&nbsp;to { transform: translateX(100px); }<br>
+}<br><br>
+.box { animation: move 2s infinite; }
+            </div>
+        </article>
+
+    </div>
+
+    <div id="playground" class="kicker">02 / INTERACTIVE PLAYGROUND</div>
+    <h2 class="section-title">Control the motion.</h2>
+
+    <p class="description">
+        Select an animation and watch the object change. Each button
+        demonstrates a different CSS animation technique.
+    </p>
+
+    <section class="animation-lab">
+
+        <div class="lab-heading">
+            <h3>Animation Playground</h3>
+            <span class="live">● LIVE ANIMATION</span>
+        </div>
+
+        <div class="demo-stage">
+            <div class="animated-object" id="animatedObject"></div>
+        </div>
+
+        <div class="lab-controls">
+            <button type="button" data-animation="bounce">Bounce</button>
+            <button type="button" data-animation="spin">Spin</button>
+            <button type="button" data-animation="pulse">Pulse</button>
+            <button type="button" data-animation="slide">Slide</button>
+            <button type="button" data-animation="color">Color Morph</button>
+            <button type="button" class="reset" id="resetAnimation">Reset</button>
+        </div>
+
+        <p style="color:var(--muted);font-size:12px;line-height:1.7;margin-top:17px;">
+            Try every animation. Use Reset to return the object to its original state.
+        </p>
+
+    </section>
+
+    <div class="kicker">03 / TRANSITION PRACTICE</div>
+    <h2 class="section-title">Hover to see the difference.</h2>
+
+    <p class="description">
+        Move your mouse over each box. These small effects are made with
+        CSS transitions, without JavaScript.
+    </p>
+
+    <div class="transition-grid">
+
+        <article class="transition-card">
+            <h3>Background Transition</h3>
+            <p>Changes the background color smoothly.</p>
+            <div class="hover-demo one">HOVER HERE</div>
+        </article>
+
+        <article class="transition-card">
+            <h3>Movement Transition</h3>
+            <p>Moves the element upward on hover.</p>
+            <div class="hover-demo two">HOVER HERE</div>
+        </article>
+
+        <article class="transition-card">
+            <h3>Text Transition</h3>
+            <p>Changes the spacing between letters.</p>
+            <div class="hover-demo three">HOVER HERE</div>
+        </article>
+
+    </div>
+
+    <div class="kicker">04 / IMPORTANT PROPERTIES</div>
+    <h2 class="section-title">Animation property reference.</h2>
+
+    <p class="description">
+        These properties give you control over how an animation behaves.
+    </p>
+
+    <table class="property-table">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Purpose</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>animation-name</td>
+                <td>Chooses the keyframes animation to run.</td>
+            </tr>
+            <tr>
+                <td>animation-duration</td>
+                <td>Sets how long one animation cycle takes.</td>
+            </tr>
+            <tr>
+                <td>animation-delay</td>
+                <td>Waits before the animation starts.</td>
+            </tr>
+            <tr>
+                <td>animation-iteration-count</td>
+                <td>Controls how many times the animation repeats.</td>
+            </tr>
+            <tr>
+                <td>animation-timing-function</td>
+                <td>Controls the speed pattern of the animation.</td>
+            </tr>
+            <tr>
+                <td>animation-direction</td>
+                <td>Controls whether animation runs forward, backward or alternates.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="kicker">05 / KNOWLEDGE CHECK</div>
+    <h2 class="section-title">Test your knowledge.</h2>
+
+    <p class="description">
+        Answer all three questions. You need at least 2 correct answers
+        to unlock the final CSS lesson.
+    </p>
+
+    <section class="quiz">
+
+        <div class="question">
+            <h4>1. Which CSS rule defines animation stages?</h4>
+
+            <label><input type="radio" name="q1" value="a"> @media</label>
+            <label><input type="radio" name="q1" value="b"> @keyframes</label>
+            <label><input type="radio" name="q1" value="c"> @import</label>
+        </div>
+
+        <div class="question">
+            <h4>2. Which property controls how long an animation takes?</h4>
+
+            <label><input type="radio" name="q2" value="a"> animation-duration</label>
+            <label><input type="radio" name="q2" value="b"> animation-color</label>
+            <label><input type="radio" name="q2" value="c"> animation-position</label>
+        </div>
+
+        <div class="question">
+            <h4>3. What usually triggers the hover transition in the examples?</h4>
+
+            <label><input type="radio" name="q3" value="a"> @keyframes</label>
+            <label><input type="radio" name="q3" value="b"> localStorage</label>
+            <label><input type="radio" name="q3" value="c"> :hover</label>
+        </div>
+
+        <div class="quiz-actions">
+            <button class="btn" id="submitQuiz" type="button">
+                Submit Answers
+            </button>
+
+            <button class="btn secondary" id="completeBtn" type="button" disabled>
+                Complete Lesson
+            </button>
+        </div>
+
+        <p id="quizResult" aria-live="polite"></p>
+
+    </section>
+
+    <div class="lesson-navigation">
+        <a href="06-responsive-design.html" target="_blank" rel="noopener">
+            ← Previous Lesson
+        </a>
+
+        <a href="../css.html" target="_blank" rel="noopener">
+            Course Home
+        </a>
+
+        <a href="08-final-project.html" target="_blank" rel="noopener"
+           id="nextLesson" class="locked">
+            Final Lesson →
+        </a>
+    </div>
+
+</main>
+
+<footer>
+    <strong>CNF/</strong>
+    <span>CODE NEXA FORGE · CSS MOTION STUDIO</span>
+</footer>
+
+<script>
+// ANIMATION PLAYGROUND
+
+const animatedObject = document.getElementById('animatedObject');
+const animationButtons = document.querySelectorAll('[data-animation]');
+const resetAnimation = document.getElementById('resetAnimation');
+
+function clearAnimations() {
+    animatedObject.classList.remove(
+        'bounce', 'spin', 'pulse', 'slide', 'color'
+    );
+
+    animationButtons.forEach(button => {
+        button.classList.remove('active');
+    });
+}
+
+animationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        clearAnimations();
+
+        const animation = button.dataset.animation;
+
+        animatedObject.classList.remove(animation);
+
+        // Restart the selected animation smoothly.
+        void animatedObject.offsetWidth;
+
+        animatedObject.classList.add(animation);
+        button.classList.add('active');
+    });
+});
+
+resetAnimation.addEventListener('click', () => {
+    clearAnimations();
+});
+
+
+// QUIZ SYSTEM
+
+const correctAnswers = {
+    q1: 'b',
+    q2: 'a',
+    q3: 'c'
+};
+
+const submitQuiz = document.getElementById('submitQuiz');
+const completeBtn = document.getElementById('completeBtn');
+const nextLesson = document.getElementById('nextLesson');
+const quizResult = document.getElementById('quizResult');
+
+let quizPassed = false;
+
+submitQuiz.addEventListener('click', () => {
+    let score = 0;
+    let unanswered = false;
+
+    for (const question in correctAnswers) {
+        const selected = document.querySelector(
+            `input[name="${question}"]:checked`
+        );
+
+        if (!selected) {
+            unanswered = true;
+        } else if (selected.value === correctAnswers[question]) {
+            score++;
+        }
+    }
+
+    if (unanswered) {
+        quizResult.textContent =
+            'Please answer all three questions first.';
+
+        quizResult.style.color = 'var(--orange)';
+        return;
+    }
+
+    if (score >= 2) {
+        quizPassed = true;
+        completeBtn.disabled = false;
+
+        quizResult.style.color = 'var(--lime)';
+        quizResult.textContent =
+            `Excellent! You scored ${score}/3. Complete this lesson to unlock the final project.`;
+
+    } else {
+        quizPassed = false;
+        completeBtn.disabled = true;
+
+        quizResult.style.color = 'var(--orange)';
+        quizResult.textContent =
+            `You scored ${score}/3. You need at least 2 correct answers. Try again!`;
+    }
+});
+
+completeBtn.addEventListener('click', () => {
+    if (!quizPassed) return;
+
+    localStorage.setItem('css-lesson-07-completed', 'true');
+
+    completeBtn.textContent = '✓ Lesson Completed';
+    completeBtn.disabled = true;
+
+    nextLesson.classList.remove('locked');
+
+    quizResult.style.color = 'var(--lime)';
+    quizResult.textContent =
+        'Congratulations! Lesson 7 completed. Your final CSS lesson is unlocked.';
+});
+
+
+// RESTORE COMPLETION STATE
+
+if (localStorage.getItem('css-lesson-07-completed') === 'true') {
+    completeBtn.textContent = '✓ Lesson Completed';
+    completeBtn.disabled = true;
+    nextLesson.classList.remove('locked');
+
+    quizResult.textContent =
+        'You have already completed this lesson. Final lesson is unlocked!';
+}
+
+
+// SCROLL REVEAL ANIMATIONS
+
+const revealElements = document.querySelectorAll(
+    '.kicker, .section-title, .description, .concept-card, ' +
+    '.animation-lab, .transition-card, .property-table, .quiz, .lesson-navigation'
+);
+
+revealElements.forEach(element => {
+    element.classList.add('reveal-on-scroll');
+});
+
+if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -35px 0px'
+    });
+
+    revealElements.forEach(element => {
+        revealObserver.observe(element);
+    });
+
+} else {
+    revealElements.forEach(element => {
+        element.classList.add('is-visible');
+    });
+}
+
+</script>
+
+<script src="../../js/lesson-quiz-guard.js"></script>
+
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

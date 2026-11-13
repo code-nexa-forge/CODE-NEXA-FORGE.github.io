@@ -1,0 +1,1046 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/html-lesson-access-gate.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNF/ | Mini Website Project</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --dark:#10151f;
+    --panel:#171f2c;
+    --panel2:#202b3a;
+    --lime:#c8f169;
+    --white:#f4f5ed;
+    --muted:#9aa7b8;
+    --border:#303b4b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    margin:0;background:var(--dark);color:var(--white);
+    font-family:'DM Sans',sans-serif;overflow-x:hidden
+}
+button,textarea{font:inherit}
+
+/* NAVIGATION */
+.navbar{
+    min-height:70px;padding:0 6%;display:flex;justify-content:space-between;
+    align-items:center;border-bottom:1px solid var(--border);
+    background:rgba(16,21,31,.94);position:relative;z-index:10;
+    animation:navDrop .8s ease both
+}
+.brand{
+    color:var(--lime);font:500 23px 'DM Mono',monospace;
+    text-decoration:none;transition:.3s
+}
+.brand:hover{transform:translateY(-2px);text-shadow:0 0 18px #c8f16988}
+.nav-right{display:flex;gap:20px;align-items:center;color:var(--muted);font-size:12px}
+.status{color:var(--lime);border:1px solid #53633a;padding:7px 11px;border-radius:20px}
+
+/* HERO */
+.hero{
+    padding:65px 8% 55px;position:relative;overflow:hidden;
+    background:radial-gradient(circle at 80% 20%,#c8f16919,transparent 30%),
+    linear-gradient(120deg,#171f2c,#10151f)
+}
+.hero::before{
+    content:"";position:absolute;width:360px;height:360px;right:-130px;top:-180px;
+    border:1px solid #c8f16920;border-radius:50%;
+    box-shadow:0 0 0 35px #c8f16908,0 0 0 70px #c8f16905;
+    animation:orbitSlow 18s linear infinite;pointer-events:none
+}
+.hero-layout{
+    max-width:1350px;margin:auto;display:grid;
+    grid-template-columns:minmax(0,1fr) 320px;gap:55px;
+    align-items:center;position:relative;z-index:1
+}
+.hero-copy{animation:heroEnter .9s .1s both}
+.eyebrow,.section-number{
+    color:var(--lime);font:11px 'DM Mono',monospace;letter-spacing:2px
+}
+.hero h1{
+    max-width:850px;font:700 clamp(42px,7vw,76px)/1.04 'Space Grotesk',sans-serif;
+    letter-spacing:-3px;margin:20px 0
+}
+.hero h1 span{color:var(--lime);display:inline-block;animation:titleGlow 4s infinite}
+.hero p{max-width:650px;color:var(--muted);line-height:1.8;font-size:16px}
+.hero-bottom{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero-tag{
+    border:1px solid var(--border);color:#bdc7d3;border-radius:5px;
+    padding:9px 13px;font:11px 'DM Mono',monospace;transition:.3s
+}
+.hero-tag:hover{
+    border-color:var(--lime);color:var(--lime);
+    transform:translateY(-5px);background:#c8f1690f
+}
+
+/* INDEPENDENT FLOATING HERO BOX */
+.hero-art-float{
+    position:relative;
+    animation:heroBoxFloat 4s ease-in-out infinite !important;
+    will-change:transform;
+}
+.hero-art{
+    position:relative;min-height:290px;padding:25px;
+    border:1px solid #c8f16959;border-radius:20px;
+    background:radial-gradient(circle at 85% 10%,#c8f16926,transparent 40%),
+    linear-gradient(145deg,#26342c,#17221f 70%);
+    box-shadow:0 25px 70px #00000047,inset 0 1px 0 #ffffff0f;
+    transform:none !important;
+    animation:none !important;
+    transform-origin:center
+}
+.hero-art::before{
+    content:"";position:absolute;inset:10px;border:1px solid #c8f16920;
+    border-radius:14px;pointer-events:none
+}
+.art-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;position:relative}
+.art-label{font:10px 'DM Mono',monospace;color:var(--lime);letter-spacing:1.5px}
+.art-live{
+    width:8px;height:8px;border-radius:50%;background:var(--lime);
+    box-shadow:0 0 13px var(--lime);animation:livePulse 1.6s infinite
+}
+.art-icon{
+    width:65px;height:65px;display:grid;place-items:center;
+    border:1px solid #c8f16966;border-radius:18px;color:var(--lime);
+    font-size:30px;background:#c8f16912;margin-bottom:18px;
+    animation:iconTurn 7s ease-in-out infinite
+}
+.hero-art h3{font:700 23px 'Space Grotesk',sans-serif;margin:0 0 8px}
+.hero-art p{color:#b8c4b2;font-size:12px;line-height:1.7;margin:0}
+.art-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:25px;padding-top:15px;border-top:1px solid #c8f16930;
+    color:#a9b7a4;font:10px 'DM Mono',monospace
+}
+.art-bottom strong{color:var(--lime)}
+
+/* GENERAL LAYOUT */
+.container{width:min(1150px,88%);margin:55px auto}
+.section-top{
+    display:flex;justify-content:space-between;gap:15px;
+    align-items:end;flex-wrap:wrap;margin-bottom:22px
+}
+.section-title{
+    font:700 clamp(26px,4vw,36px) 'Space Grotesk',sans-serif;
+    margin:8px 0;letter-spacing:-1px
+}
+.section-description{color:var(--muted);line-height:1.8;max-width:720px;font-size:14px}
+
+/* PROGRESS */
+.progress-card{
+    background:var(--panel);border:1px solid var(--border);
+    padding:23px;border-radius:13px;transition:.35s
+}
+.progress-card:hover{
+    border-color:#c8f16980;transform:translateY(-4px);
+    box-shadow:0 15px 35px #0003
+}
+.progress-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:13px;font-size:13px}
+.progress-head strong{color:var(--lime)}
+.progress-track{height:8px;background:#303b4b;border-radius:20px;overflow:hidden}
+.progress-fill{
+    height:100%;width:0%;background:linear-gradient(90deg,#9fce43,#d8ff82);
+    border-radius:20px;transition:width .6s;box-shadow:0 0 15px #c8f16959
+}
+.milestones{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.milestone{
+    background:var(--panel);border:1px solid var(--border);padding:17px;
+    border-radius:10px;transition:.35s;position:relative;overflow:hidden
+}
+.milestone::after{
+    content:"";position:absolute;width:90px;height:90px;border-radius:50%;
+    background:#c8f1690f;right:-45px;bottom:-55px;transition:.4s
+}
+.milestone:hover{transform:translateY(-7px);border-color:#c8f16980;box-shadow:0 14px 28px #0003}
+.milestone:hover::after{transform:scale(1.7)}
+.milestone.done{border-color:#819d46;background:#202b24}
+.milestone .step{color:var(--lime);font:11px 'DM Mono',monospace}
+.milestone h3{font-size:14px;margin:10px 0 5px}
+.milestone p{color:var(--muted);font-size:11px;line-height:1.5;margin:0}
+
+/* PROJECT BRIEF */
+.brief{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}
+.brief-main,.brief-side{
+    padding:27px;border:1px solid var(--border);
+    border-radius:13px;background:var(--panel);transition:.35s
+}
+.brief-main:hover,.brief-side:hover{transform:translateY(-6px);box-shadow:0 18px 35px #0004}
+.brief-main:hover{border-color:#c8f16959}
+.brief-main h3{font:700 23px 'Space Grotesk',sans-serif;margin:0 0 12px}
+.brief-main p{color:var(--muted);line-height:1.8;font-size:14px}
+.requirements{list-style:none;padding:0;margin:20px 0 0}
+.requirements li{
+    padding:11px 0;border-bottom:1px solid var(--border);
+    color:#d2d9e2;font-size:13px;transition:.25s
+}
+.requirements li:hover{color:var(--lime);padding-left:8px}
+.requirements li:last-child{border:0}
+.requirements li::before{content:"✓";color:var(--lime);margin-right:10px}
+.brief-side{
+    background:#202b24;border-color:#4a6038;position:relative;overflow:hidden
+}
+.brief-side::after{
+    content:"";position:absolute;width:180px;height:180px;
+    border:1px solid #c8f16926;border-radius:50%;
+    right:-90px;bottom:-100px;transition:.5s
+}
+.brief-side:hover::after{transform:scale(1.4)}
+.brief-side .big-icon{font-size:34px;color:var(--lime);display:inline-block;animation:iconFloat 3s infinite}
+.brief-side h3{margin:15px 0 8px}
+.brief-side p{color:#b8c4b2;line-height:1.7;font-size:13px}
+.brief-side .tag{
+    display:inline-block;padding:7px 10px;border:1px solid #536b3d;
+    border-radius:4px;color:var(--lime);font-size:10px;margin:5px 4px 0 0;transition:.3s
+}
+.brief-side .tag:hover{background:var(--lime);color:#17200f;transform:translateY(-3px)}
+
+/* WORKSPACE */
+.workspace{
+    border:1px solid var(--border);border-radius:14px;overflow:hidden;
+    background:var(--panel);transition:.4s;box-shadow:0 15px 40px #0002
+}
+.workspace:hover{border-color:#c8f16959;box-shadow:0 20px 50px #0004}
+.workspace-bar{
+    padding:15px 19px;display:flex;align-items:center;justify-content:space-between;
+    gap:12px;flex-wrap:wrap;background:#202b3a;border-bottom:1px solid var(--border)
+}
+.window-dots{display:flex;gap:6px}
+.window-dots i{width:9px;height:9px;background:#667386;border-radius:50%;transition:.3s}
+.window-dots i:nth-child(1){background:#ff6b6b}
+.window-dots i:nth-child(2){background:#f5c451}
+.window-dots i:nth-child(3){background:#83d78b}
+.workspace:hover .window-dots i{transform:scale(1.2)}
+.workspace-label{font:11px 'DM Mono',monospace;color:#bdc8d7}
+.workspace-grid{display:grid;grid-template-columns:1fr 1fr}
+.editor-panel{padding:20px;border-right:1px solid var(--border)}
+.editor-panel label,.preview-panel label{
+    display:block;color:var(--lime);font:11px 'DM Mono',monospace;margin-bottom:12px
+}
+.editor-panel textarea{
+    display:block;width:100%;min-height:470px;resize:vertical;padding:18px;
+    background:#0c121c;border:1px solid #364354;border-radius:8px;
+    outline:none;color:#c6e0ff;font:12px/1.8 'DM Mono',monospace;
+    tab-size:2;transition:.3s
+}
+.editor-panel textarea:focus{border-color:var(--lime);box-shadow:0 0 0 3px #c8f1691a}
+.editor-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.action-btn{
+    border:1px solid #50613a;background:var(--lime);color:#18200f;
+    padding:10px 15px;border-radius:6px;font-weight:800;cursor:pointer;
+    font-size:12px;transition:.3s
+}
+.action-btn:hover{transform:translateY(-4px);box-shadow:0 8px 20px #c8f16933;filter:brightness(1.06)}
+.action-btn:active{transform:scale(.97)}
+.action-btn.secondary{background:transparent;color:#d2d9e2;border-color:var(--border)}
+.action-btn.secondary:hover{color:var(--lime);border-color:var(--lime);background:#c8f1690f}
+.preview-panel{padding:20px;background:#e9edf1;color:#17202d}
+.preview-panel label{color:#667487}
+.preview-frame{width:100%;height:470px;border:0;border-radius:8px;background:white;transition:.3s}
+.preview-frame:hover{box-shadow:0 10px 25px #0003}
+
+/* BUILDING GUIDE */
+.guide{
+    display:grid;grid-template-columns:65px 1fr;gap:17px;
+    padding:22px 0;border-bottom:1px solid var(--border);transition:.3s
+}
+.guide:hover{padding-left:10px;border-bottom-color:#c8f16959}
+.guide:last-child{border:0}
+.guide-number{
+    width:45px;height:45px;display:grid;place-items:center;
+    border:1px solid #617a40;color:var(--lime);border-radius:9px;
+    font:13px 'DM Mono',monospace;transition:.35s
+}
+.guide:hover .guide-number{
+    transform:rotate(-8deg) scale(1.08);background:#c8f1691a;
+    box-shadow:0 0 20px #c8f1691a
+}
+.guide h3{margin:0 0 7px;font-size:16px}
+.guide p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+.guide code{color:var(--lime);background:#273128;padding:2px 5px;border-radius:4px;transition:.2s}
+.guide code:hover{background:var(--lime);color:#17200f}
+
+/* CHECKLIST */
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.check-item{
+    display:flex;gap:12px;align-items:flex-start;background:var(--panel);
+    border:1px solid var(--border);border-radius:9px;padding:15px;
+    color:#c5ceda;font-size:13px;line-height:1.6;cursor:pointer;transition:.3s
+}
+.check-item:hover{
+    transform:translateX(5px);border-color:#c8f16973;background:#1b2632
+}
+.check-item input{
+    accent-color:#c8f169;margin-top:3px;width:16px;height:16px;
+    flex-shrink:0;cursor:pointer
+}
+.check-item:has(input:checked){border-color:#819d46;color:var(--lime);background:#c8f1690e}
+
+/* QUIZ */
+.quiz-box{
+    background:linear-gradient(145deg,#1b2634,#151e2a);
+    border:1px solid #46563d;border-radius:15px;padding:27px;
+    position:relative;overflow:hidden
+}
+.quiz-box::after{
+    content:"?";position:absolute;right:25px;top:-25px;
+    font:900 150px 'Space Grotesk',sans-serif;color:#c8f16909;pointer-events:none
+}
+.quiz-intro{color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 22px}
+.quiz-question{
+    position:relative;z-index:1;padding:20px;margin:14px 0;
+    border:1px solid var(--border);border-radius:10px;background:#101923;
+    transition:.3s
+}
+.quiz-question:hover{border-color:#c8f16966;transform:translateX(4px)}
+.question-title{font-weight:700;font-size:14px;margin:0 0 15px}
+.option{
+    display:flex;align-items:center;gap:10px;padding:10px 12px;
+    margin:7px 0;border:1px solid #303b4b;border-radius:7px;
+    color:#c4ced9;font-size:13px;cursor:pointer;transition:.25s
+}
+.option:hover{border-color:#c8f169;color:var(--lime);background:#c8f1690b}
+.option input{accent-color:var(--lime);width:15px;height:15px}
+.quiz-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:20px}
+.quiz-result{
+    display:none;padding:13px 16px;border-radius:8px;
+    font-size:13px;line-height:1.6;margin-top:17px;
+    background:#101923;border:1px solid var(--border)
+}
+.quiz-result.show{display:block;animation:resultPop .35s ease both}
+.quiz-result.success{color:var(--lime);border-color:#718b43}
+.quiz-result.error{color:#ffcc75;border-color:#8b6635}
+
+/* COMPLETION */
+.final-panel{
+    padding:30px;background:linear-gradient(120deg,#202b24,#18251e);
+    border:1px solid #526b3c;border-radius:14px;position:relative;
+    overflow:hidden;transition:.4s
+}
+.final-panel::after{
+    content:"✓";position:absolute;right:35px;top:10px;
+    font-size:110px;font-weight:800;color:#c8f1690b;pointer-events:none;transition:.5s
+}
+.final-panel:hover{transform:translateY(-5px);box-shadow:0 20px 40px #0003;border-color:var(--lime)}
+.final-panel:hover::after{transform:rotate(12deg) scale(1.1)}
+.final-panel h3{font:700 24px 'Space Grotesk',sans-serif;margin:10px 0 8px}
+.final-panel p{color:#b7c5b1;font-size:13px;line-height:1.7}
+.finish-btn{
+    background:var(--lime);color:#17200f;border:0;padding:13px 19px;
+    border-radius:7px;cursor:pointer;font-weight:800;margin-top:12px;transition:.3s
+}
+.finish-btn:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 10px 25px #c8f16933}
+.finish-btn:active{transform:scale(.97)}
+.finish-message{color:var(--lime);margin-top:15px;font-weight:700;font-size:13px;line-height:1.7}
+
+/* FOOTER */
+footer{
+    padding:30px 7%;border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;flex-wrap:wrap;
+    gap:15px;color:var(--muted);font-size:12px
+}
+footer strong{font:18px 'DM Mono',monospace;color:var(--lime);transition:.3s}
+footer strong:hover{text-shadow:0 0 15px #c8f16999}
+
+/* SCROLL REVEALS */
+.cnf-reveal{
+    opacity:0;transform:translateY(32px);
+    transition:opacity .75s ease,transform .75s cubic-bezier(.2,.7,.2,1);
+    transition-delay:var(--reveal-delay,0ms)
+}
+.cnf-reveal.cnf-visible{opacity:1;transform:translateY(0)}
+.cnf-reveal-left{transform:translateX(-35px)}
+.cnf-reveal-right{transform:translateX(35px)}
+.cnf-reveal-scale{transform:translateY(20px) scale(.96)}
+.cnf-reveal-left.cnf-visible,.cnf-reveal-right.cnf-visible{transform:translateX(0)}
+.cnf-reveal-scale.cnf-visible{transform:translateY(0) scale(1)}
+
+/* ANIMATIONS */
+@keyframes navDrop{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes heroEnter{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+@keyframes heroBoxFloat{
+    0%,100%{transform:translate3d(0,0,0) rotate(-1deg)}
+    50%{transform:translate3d(0,-22px,0) rotate(1deg)}
+}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes iconTurn{0%,100%{transform:rotate(0) scale(1)}50%{transform:rotate(7deg) scale(1.06)}}
+@keyframes livePulse{0%,100%{opacity:1;box-shadow:0 0 13px var(--lime)}50%{opacity:.45;box-shadow:0 0 3px var(--lime)}}
+@keyframes orbitSlow{to{transform:rotate(360deg)}}
+@keyframes titleGlow{0%,100%{text-shadow:0 0 0 #c8f16900}50%{text-shadow:0 0 24px #c8f16933}}
+@keyframes resultPop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:950px){
+    .hero-layout{grid-template-columns:minmax(0,1fr) 270px;gap:30px}
+    .hero-art{min-height:270px}
+}
+@media(max-width:850px){
+    .hero-layout{grid-template-columns:1fr}
+    .hero-art-float{width:min(100%,420px);margin:20px auto 0}
+    .milestones{grid-template-columns:1fr 1fr}
+    .brief{grid-template-columns:1fr}
+    .workspace-grid{grid-template-columns:1fr}
+    .editor-panel{border-right:0;border-bottom:1px solid var(--border)}
+}
+@media(max-width:600px){
+    .container{width:90%}
+    .hero{padding:50px 6%}
+    .hero h1{letter-spacing:-1.5px}
+    .milestones,.checklist{grid-template-columns:1fr}
+    .editor-panel textarea{min-height:360px}
+    .preview-frame{height:390px}
+    .guide{grid-template-columns:48px 1fr}
+    .nav-right{font-size:10px;gap:8px}
+    .hero-art{padding:22px}
+    .final-panel,.quiz-box{padding:22px}
+    footer{padding:25px 6%}
+}
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation-duration:.01ms!important;animation-iteration-count:1!important;
+        scroll-behavior:auto!important;transition-duration:.01ms!important
+    }
+    .cnf-reveal{opacity:1;transform:none}
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="../html.html" class="brand">CNF/</a>
+    <div class="nav-right">
+        <span>HTML COURSE</span>
+        <span class="status">FINAL PROJECT</span>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-layout">
+        <div class="hero-copy">
+            <div class="eyebrow">CAPSTONE PROJECT / HTML 08</div>
+            <h1>From learner to <span>builder.</span></h1>
+            <p>
+                You've learned the building blocks of HTML. Now combine them to create
+                a complete personal portfolio website. Plan it, build it, test it and
+                complete your first HTML project.
+            </p>
+            <div class="hero-bottom">
+                <span class="hero-tag">PROJECT 01</span>
+                <span class="hero-tag">BEGINNER FRIENDLY</span>
+                <span class="hero-tag">HANDS-ON BUILD</span>
+                <span class="hero-tag">EST. 35–45 MIN</span>
+            </div>
+        </div>
+
+        <div class="hero-art-float">
+            <aside class="hero-art">
+                <div class="art-top">
+                    <span class="art-label">YOUR FIRST BUILD</span>
+                    <span class="art-live"></span>
+                </div>
+                <div class="art-icon">⌘</div>
+                <h3>Build something real.</h3>
+                <p>
+                    Turn your HTML knowledge into a working personal portfolio.
+                    Write the structure, test your code and launch your first project.
+                </p>
+                <div class="art-bottom">
+                    <span>PROJECT STATUS</span>
+                    <strong>READY TO BUILD</strong>
+                </div>
+            </aside>
+        </div>
+    </div>
+</header>
+
+<main>
+
+<section class="container">
+    <div class="section-top">
+        <div>
+            <div class="section-number">01 / PROJECT TRACKER</div>
+            <h2 class="section-title">Your building progress</h2>
+            <div class="section-description">
+                Complete the project milestones, quiz and final checklist to finish your HTML course project.
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-card">
+        <div class="progress-head">
+            <span>PROJECT COMPLETION</span>
+            <strong id="progressText">0% COMPLETE</strong>
+        </div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <div class="milestones">
+        <div class="milestone" id="milestone1">
+            <span class="step">STEP 01</span>
+            <h3>Understand the brief</h3>
+            <p>Know what you're building.</p>
+        </div>
+        <div class="milestone" id="milestone2">
+            <span class="step">STEP 02</span>
+            <h3>Write the structure</h3>
+            <p>Create the HTML document.</p>
+        </div>
+        <div class="milestone" id="milestone3">
+            <span class="step">STEP 03</span>
+            <h3>Build the sections</h3>
+            <p>Add portfolio content.</p>
+        </div>
+        <div class="milestone" id="milestone4">
+            <span class="step">STEP 04</span>
+            <h3>Test your website</h3>
+            <p>Review the live preview.</p>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-top">
+        <div>
+            <div class="section-number">02 / THE BRIEF</div>
+            <h2 class="section-title">What are we building?</h2>
+        </div>
+    </div>
+
+    <div class="brief">
+        <div class="brief-main">
+            <h3>Personal Portfolio Website</h3>
+            <p>
+                Imagine you're introducing yourself to the world. Your portfolio
+                should tell visitors who you are, what you do, what you've built
+                and how they can contact you.
+            </p>
+            <ul class="requirements">
+                <li>A page title and a main heading</li>
+                <li>An About Me section with a paragraph</li>
+                <li>A Skills section using an HTML list</li>
+                <li>A Projects section with project descriptions</li>
+                <li>A Contact section with useful links</li>
+                <li>Correct HTML document structure</li>
+            </ul>
+        </div>
+
+        <aside class="brief-side">
+            <div class="big-icon">⌘</div>
+            <h3>Your project mission</h3>
+            <p>
+                Create a clean, organized website using only HTML.
+                Focus on meaningful structure, readable content and working links.
+                CSS styling will come in the next stage of your journey.
+            </p>
+            <span class="tag">HTML5</span>
+            <span class="tag">SEMANTIC ELEMENTS</span>
+            <span class="tag">LINKS</span>
+            <span class="tag">LISTS</span>
+        </aside>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-top">
+        <div>
+            <div class="section-number">03 / BUILD YOUR PROJECT</div>
+            <h2 class="section-title">The project workspace</h2>
+            <div class="section-description">
+                Edit the HTML on the left and press Run Preview. Your website will appear on the right.
+            </div>
+        </div>
+    </div>
+
+    <div class="workspace">
+        <div class="workspace-bar">
+            <div class="window-dots"><i></i><i></i><i></i></div>
+            <span class="workspace-label">portfolio.html</span>
+            <span class="workspace-label">HTML EDITOR</span>
+        </div>
+
+        <div class="workspace-grid">
+            <div class="editor-panel">
+                <label for="projectCode">01 — WRITE YOUR HTML</label>
+                <textarea id="projectCode" spellcheck="false"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+</head>
+<body>
+
+    <header>
+        <h1>Hi, I'm Your Name!</h1>
+        <p>Welcome to my personal portfolio.</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>About Me</h2>
+            <p>I am a beginner web developer learning HTML.</p>
+        </section>
+
+        <section>
+            <h2>My Skills</h2>
+            <ul>
+                <li>HTML</li>
+                <li>Problem Solving</li>
+                <li>Creative Thinking</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>My Projects</h2>
+            <h3>My First Website</h3>
+            <p>A simple website built using HTML.</p>
+        </section>
+
+        <section>
+            <h2>Contact Me</h2>
+            <p>Email: <a href="mailto:hello@example.com">Send me an email</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 My Portfolio</p>
+    </footer>
+
+</body>
+</html></textarea>
+
+                <div class="editor-actions">
+                    <button class="action-btn" onclick="runPreview()">▶ Run Preview</button>
+                    <button class="action-btn secondary" onclick="resetCode()">Reset Code</button>
+                </div>
+            </div>
+
+            <div class="preview-panel">
+                <label>02 — LIVE WEBSITE PREVIEW</label>
+                <iframe class="preview-frame" id="previewFrame"
+                    title="Portfolio website preview" sandbox="allow-scripts"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-top">
+        <div>
+            <div class="section-number">04 / BUILDING GUIDE</div>
+            <h2 class="section-title">How to build it properly</h2>
+            <div class="section-description">
+                Understand the job of every important section before you customize your portfolio.
+            </div>
+        </div>
+    </div>
+
+    <div class="guide-list">
+        <div class="guide">
+            <div class="guide-number">01</div>
+            <div>
+                <h3>Start with the document structure</h3>
+                <p>Use <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> to create a valid HTML document.</p>
+            </div>
+        </div>
+        <div class="guide">
+            <div class="guide-number">02</div>
+            <div>
+                <h3>Introduce yourself</h3>
+                <p>Use a main <code>&lt;h1&gt;</code> heading and a short paragraph to tell visitors who you are.</p>
+            </div>
+        </div>
+        <div class="guide">
+            <div class="guide-number">03</div>
+            <div>
+                <h3>Organize your skills</h3>
+                <p>Use <code>&lt;ul&gt;</code> and <code>&lt;li&gt;</code> to present skills in a clear list.</p>
+            </div>
+        </div>
+        <div class="guide">
+            <div class="guide-number">04</div>
+            <div>
+                <h3>Show your projects</h3>
+                <p>Add project names with <code>&lt;h3&gt;</code> headings and explain each project using paragraphs.</p>
+            </div>
+        </div>
+        <div class="guide">
+            <div class="guide-number">05</div>
+            <div>
+                <h3>Make contact possible</h3>
+                <p>Use an anchor tag with a useful <code>href</code> value to let visitors contact you.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HTML QUIZ -->
+<section class="container" id="projectQuiz">
+    <div class="section-top">
+        <div>
+            <div class="section-number">05 / KNOWLEDGE CHECK</div>
+            <h2 class="section-title">Test your HTML knowledge.</h2>
+            <div class="section-description">
+                Answer all three questions. You need a perfect score to unlock project completion.
+            </div>
+        </div>
+    </div>
+
+    <div class="quiz-box">
+        <p class="quiz-intro">
+            Choose one answer for each question, then select Check My Answers.
+            You must score 3 out of 3 to pass.
+        </p>
+
+        <div class="quiz-question">
+            <p class="question-title">1. Which HTML element represents the main content of a page?</p>
+            <label class="option"><input type="radio" name="q1" value="a"> &lt;section&gt;</label>
+            <label class="option"><input type="radio" name="q1" value="b"> &lt;main&gt;</label>
+            <label class="option"><input type="radio" name="q1" value="c"> &lt;footer&gt;</label>
+            <label class="option"><input type="radio" name="q1" value="d"> &lt;aside&gt;</label>
+        </div>
+
+        <div class="quiz-question">
+            <p class="question-title">2. Which attribute specifies the destination of a link?</p>
+            <label class="option"><input type="radio" name="q2" value="a"> src</label>
+            <label class="option"><input type="radio" name="q2" value="b"> alt</label>
+            <label class="option"><input type="radio" name="q2" value="c"> href</label>
+            <label class="option"><input type="radio" name="q2" value="d"> target</label>
+        </div>
+
+        <div class="quiz-question">
+            <p class="question-title">3. Which HTML element creates an unordered list?</p>
+            <label class="option"><input type="radio" name="q3" value="a"> &lt;ol&gt;</label>
+            <label class="option"><input type="radio" name="q3" value="b"> &lt;li&gt;</label>
+            <label class="option"><input type="radio" name="q3" value="c"> &lt;dl&gt;</label>
+            <label class="option"><input type="radio" name="q3" value="d"> &lt;ul&gt;</label>
+        </div>
+
+        <div class="quiz-actions">
+            <button class="action-btn" id="checkQuiz" type="button" onclick="checkQuiz()">Check My Answers</button>
+            <span class="workspace-label">PASS MARK: 3 / 3</span>
+        </div>
+
+        <div class="quiz-result" id="quizResult" aria-live="polite"></div>
+    </div>
+</section>
+
+<!-- FINAL CHECKLIST -->
+<section class="container">
+    <div class="section-top">
+        <div>
+            <div class="section-number">06 / FINAL QUALITY CHECK</div>
+            <h2 class="section-title">Inspect your work.</h2>
+            <div class="section-description">
+                Check each item after building your portfolio. All eight items must be selected.
+            </div>
+        </div>
+    </div>
+
+    <div class="checklist">
+        <label class="check-item"><input type="checkbox" class="project-check"><span>My HTML document has the correct structure.</span></label>
+        <label class="check-item"><input type="checkbox" class="project-check"><span>My page contains a clear main heading.</span></label>
+        <label class="check-item"><input type="checkbox" class="project-check"><span>I created an About Me section.</span></label>
+        <label class="check-item"><input type="checkbox" class="project-check"><span>I added a list of my skills.</span></label>
+        <label class="check-item"><input type="checkbox" class="project-check"><span>I included at least one project.</span></label>
+        <label class="check-item"><input type="checkbox" class="project-check"><span>My contact link has a working href.</span></label>
+        <label class="check-item"><input type="checkbox" class="project-check"><span>I tested my website in the live preview.</span></label>
+        <label class="check-item"><input type="checkbox" class="project-check"><span>I reviewed the page for missing or broken tags.</span></label>
+    </div>
+</section>
+
+<!-- COMPLETION -->
+<section class="container">
+    <div class="final-panel">
+        <div class="section-number">07 / PROJECT COMPLETION</div>
+        <h3>You've built your first HTML project.</h3>
+        <p>
+            Pass the HTML quiz and complete all eight checklist items.
+            Then submit your project completion to finish the HTML fundamentals course.
+        </p>
+
+        <button class="finish-btn" id="completeLesson" onclick="finishProject()">
+            Complete HTML Project ✓
+        </button>
+
+        <div class="finish-message" id="completionMessage" aria-live="polite"></div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <strong>CNF/</strong>
+    <span>CODE NEXA FORGE · Learn. Build. Create.</span>
+    <span>HTML COURSE / 08</span>
+</footer>
+
+<script>
+const codeEditor = document.getElementById('projectCode');
+const starterCode = codeEditor.value;
+
+let quizPassed = false;
+
+const correctAnswers = {
+    q1: 'b',
+    q2: 'c',
+    q3: 'd'
+};
+
+/* LIVE PREVIEW */
+function runPreview() {
+    const code = codeEditor.value;
+    document.getElementById('previewFrame').srcdoc = code;
+
+    updateMilestone(2);
+    updateMilestone(3);
+    updateMilestone(4);
+    updateProgress();
+}
+
+function resetCode() {
+    codeEditor.value = starterCode;
+    runPreview();
+}
+
+/* MILESTONES */
+function updateMilestone(number) {
+    const item = document.getElementById('milestone' + number);
+    if (item) item.classList.add('done');
+}
+
+/* PROGRESS TRACKER */
+function updateProgress() {
+    const checks = document.querySelectorAll('.project-check');
+    const checked = document.querySelectorAll('.project-check:checked').length;
+
+    const totalTasks = checks.length + 1;
+    const completedTasks = checked + (quizPassed ? 1 : 0);
+    const percent = Math.round((completedTasks / totalTasks) * 100);
+
+    document.getElementById('progressFill').style.width = percent + '%';
+    document.getElementById('progressText').textContent = percent + '% COMPLETE';
+
+    if (checked === checks.length) {
+        updateMilestone(1);
+        updateMilestone(2);
+        updateMilestone(3);
+        updateMilestone(4);
+    }
+}
+
+/* QUIZ */
+function checkQuiz() {
+    const questions = ['q1', 'q2', 'q3'];
+    let score = 0;
+    let unanswered = false;
+
+    questions.forEach(question => {
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if (!selected) {
+            unanswered = true;
+        } else if (selected.value === correctAnswers[question]) {
+            score++;
+        }
+    });
+
+    const result = document.getElementById('quizResult');
+    result.className = 'quiz-result show';
+
+    if (unanswered) {
+        quizPassed = false;
+        result.classList.add('error');
+        result.textContent = 'Please answer all three questions before submitting.';
+    } else if (score === 3) {
+        quizPassed = true;
+        result.classList.add('success');
+        result.textContent = 'Excellent! You scored 3/3. You passed the HTML quiz!';
+    } else {
+        quizPassed = false;
+        result.classList.add('error');
+        result.textContent = 'You scored ' + score + '/3. You need 3/3 to pass. Review the lesson and try again.';
+    }
+
+    updateProgress();
+}
+
+/* CHANGING AN ANSWER REQUIRES A NEW QUIZ SUBMISSION */
+document.querySelectorAll('input[name^="q"]').forEach(input => {
+    input.addEventListener('change', () => {
+        quizPassed = false;
+
+        const result = document.getElementById('quizResult');
+        result.className = 'quiz-result show error';
+        result.textContent = 'Your answers have changed. Select Check My Answers to submit again.';
+
+        updateProgress();
+    });
+});
+
+/* CHECKLIST */
+document.querySelectorAll('.project-check').forEach(check => {
+    check.addEventListener('change', updateProgress);
+});
+
+/* COMPLETE PROJECT */
+function finishProject() {
+    const checks = document.querySelectorAll('.project-check');
+    const checked = document.querySelectorAll('.project-check:checked').length;
+    const message = document.getElementById('completionMessage');
+
+    if (!quizPassed) {
+        message.textContent = 'Pass the HTML quiz with a perfect score of 3/3 first.';
+        message.style.color = '#ffcc75';
+        return;
+    }
+
+    if (checked !== checks.length) {
+        message.textContent =
+            'Complete all 8 checklist items first. You have completed ' +
+            checked + '/8.';
+        message.style.color = '#ffcc75';
+        return;
+    }
+
+    localStorage.setItem('html-lesson-08-completed', 'true');
+    localStorage.setItem('html-course-completed', 'true');
+
+    message.textContent =
+        'Congratulations! Your HTML project is complete. You finished all 8 HTML lessons!';
+    message.style.color = '#c8f169';
+
+    document.getElementById('completeLesson').textContent = 'Project Completed ✓';
+
+    updateProgress();
+}
+
+/* RESTORE PREVIOUS COMPLETION */
+function restoreProjectState() {
+    if (localStorage.getItem('html-lesson-08-completed') === 'true') {
+        document.querySelectorAll('.project-check').forEach(check => {
+            check.checked = true;
+        });
+
+        quizPassed = true;
+
+        document.getElementById('quizResult').className = 'quiz-result show success';
+        document.getElementById('quizResult').textContent =
+            'This project was previously completed successfully.';
+
+        document.getElementById('completionMessage').textContent =
+            'Congratulations! This project has already been completed. Well done!';
+
+        document.getElementById('completeLesson').textContent = 'Project Completed ✓';
+
+        updateProgress();
+    }
+}
+
+/* RESET BUTTON INJECTED BY THE SHARED QUIZ GUARD */
+document.addEventListener('click', function(event) {
+    const resetButton = event.target.closest('.cnf-quiz-reset');
+
+    if (!resetButton) return;
+
+    quizPassed = false;
+
+    document.querySelectorAll('input[name^="q"]').forEach(input => {
+        input.checked = false;
+    });
+
+    document.querySelectorAll('.project-check').forEach(check => {
+        check.checked = false;
+    });
+
+    document.getElementById('quizResult').className = 'quiz-result';
+    document.getElementById('quizResult').textContent = '';
+
+    document.getElementById('completionMessage').textContent = '';
+    document.getElementById('completeLesson').textContent = 'Complete HTML Project ✓';
+
+    localStorage.removeItem('html-lesson-08-completed');
+    localStorage.removeItem('html-course-completed');
+
+    updateProgress();
+});
+
+/* PAGE INITIALIZATION */
+runPreview();
+restoreProjectState();
+
+/* PAGE-WIDE SCROLL ANIMATIONS */
+document.addEventListener('DOMContentLoaded', () => {
+    const revealSelectors = [
+        '.section-top',
+        '.progress-card',
+        '.milestone',
+        '.brief-main',
+        '.brief-side',
+        '.workspace',
+        '.editor-panel',
+        '.preview-panel',
+        '.guide',
+        '.quiz-box',
+        '.quiz-question',
+        '.check-item',
+        '.final-panel',
+        'footer'
+    ];
+
+    const revealElements = document.querySelectorAll(revealSelectors.join(','));
+
+    revealElements.forEach((element, index) => {
+        element.classList.add('cnf-reveal');
+
+        if (element.matches('.brief-side, .preview-panel')) {
+            element.classList.add('cnf-reveal-right');
+        }
+
+        if (element.matches('.milestone, .check-item, .quiz-question')) {
+            element.classList.add('cnf-reveal-scale');
+        }
+
+        element.style.setProperty('--reveal-delay', (index % 4) * 80 + 'ms');
+    });
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('cnf-visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -35px 0px'
+        });
+
+        revealElements.forEach(element => observer.observe(element));
+    } else {
+        revealElements.forEach(element => element.classList.add('cnf-visible'));
+    }
+});
+</script>
+
+<script src="../../js/lesson-quiz-guard.js"></script>
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+<script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

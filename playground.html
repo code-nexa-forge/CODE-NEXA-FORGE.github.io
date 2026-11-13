@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10100e">
+
+<title>Code Playground | CODE NEXA FORGE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #10100e;
+    --panel: #191a17;
+    --panel2: #20221d;
+    --green: #c5ff4a;
+    --orange: #ff914d;
+    --purple: #bd91ff;
+    --text: #f4f5ed;
+    --muted: #999d8e;
+    --border: rgba(255,255,255,.09);
+    --danger: #ff6464;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    color: var(--text);
+    background:
+        radial-gradient(ellipse at 10% 10%, rgba(197,255,74,.08), transparent 35%),
+        radial-gradient(ellipse at 90% 70%, rgba(189,145,255,.08), transparent 35%),
+        var(--bg);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .12;
+    background-image: radial-gradient(#c5ff4a 1px, transparent 1px);
+    background-size: 35px 35px;
+    animation: backgroundMove 35s linear infinite;
+    z-index: -1;
+}
+
+@keyframes backgroundMove {
+    from { background-position: 0 0; }
+    to { background-position: 350px 350px; }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow {
+    0%,100% { box-shadow: 0 0 8px rgba(197,255,74,.1); }
+    50% { box-shadow: 0 0 22px rgba(197,255,74,.27); }
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: .45; }
+}
+
+@keyframes shine {
+    from { background-position: -200% center; }
+    to { background-position: 200% center; }
+}
+
+header {
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    border-bottom: 1px solid var(--border);
+    background: rgba(16,16,14,.85);
+    backdrop-filter: blur(18px);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.brand {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -.7px;
+}
+
+.brand span {
+    color: var(--green);
+}
+
+.brand small {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 3px;
+    margin-top: 3px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.status {
+    color: var(--green);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    height: 8px;
+    width: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+.back-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: .3s;
+}
+
+.back-link:hover {
+    color: var(--green);
+}
+
+main {
+    max-width: 1500px;
+    margin: auto;
+    padding: 40px 5%;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 35px;
+    animation: fadeUp .7s ease both;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 5vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+}
+
+.hero h1 span {
+    color: var(--green);
+    text-shadow: 0 0 25px rgba(197,255,74,.2);
+}
+
+.hero p {
+    color: var(--muted);
+    margin-top: 13px;
+    font-size: 14px;
+    max-width: 600px;
+    line-height: 1.7;
+}
+
+.hero-card {
+    background: var(--panel);
+    border: 1px solid rgba(197,255,74,.2);
+    padding: 18px 22px;
+    border-radius: 16px;
+    animation: float 4s ease-in-out infinite;
+    min-width: 175px;
+}
+
+.hero-card strong {
+    color: var(--green);
+    display: block;
+    font-size: 24px;
+}
+
+.hero-card small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    padding: 15px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 15px 15px 0 0;
+}
+
+.btn {
+    border: 1px solid var(--border);
+    padding: 11px 17px;
+    border-radius: 9px;
+    background: var(--panel2);
+    color: var(--text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    transition: .3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    border-color: var(--green);
+    box-shadow: 0 5px 20px rgba(197,255,74,.13);
+}
+
+.btn:active {
+    transform: scale(.96);
+}
+
+.btn.run {
+    color: #15170e;
+    background: var(--green);
+    border-color: var(--green);
+    animation: glow 3s infinite;
+}
+
+.btn.run:hover {
+    background: #d8ff83;
+}
+
+.btn.reset:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+}
+
+.btn.clear:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.btn.download:hover {
+    border-color: var(--purple);
+    color: var(--purple);
+}
+
+.toolbar-spacer {
+    flex: 1;
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--border);
+    border-top: 0;
+    border-radius: 0 0 15px 15px;
+    overflow: hidden;
+    min-height: 570px;
+    background: var(--panel);
+}
+
+.left-side {
+    min-width: 0;
+    border-right: 1px solid var(--border);
+}
+
+.editor-tabs {
+    display: flex;
+    background: #151612;
+    border-bottom: 1px solid var(--border);
+}
+
+.tab {
+    flex: 1;
+    padding: 16px 5px;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.tab:hover {
+    color: white;
+    background: rgba(255,255,255,.03);
+}
+
+.tab.active {
+    color: var(--green);
+    border-bottom-color: var(--green);
+    background: rgba(197,255,74,.05);
+}
+
+.tab[data-tab="css"].active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+}
+
+.tab[data-tab="js"].active {
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+}
+
+.editor-heading {
+    padding: 13px 17px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.editor-heading span:last-child {
+    color: var(--green);
+}
+
+.editor-wrap {
+    display: none;
+    height: 490px;
+    position: relative;
+}
+
+.editor-wrap.active {
+    display: block;
+    animation: fadeUp .3s ease;
+}
+
+textarea.editor {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: 0;
+    outline: none;
+    padding: 22px;
+    background: #12130f;
+    color: #e9efdc;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    tab-size: 4;
+    caret-color: var(--green);
+}
+
+textarea.editor:focus {
+    box-shadow: inset 0 0 0 1px rgba(197,255,74,.12);
+}
+
+.right-side {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-heading {
+    height: 48px;
+    padding: 0 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: #151612;
+}
+
+.preview-heading strong {
+    font-size: 12px;
+}
+
+.preview-heading span {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.preview-frame {
+    flex: 1;
+    min-height: 300px;
+    background: white;
+    position: relative;
+}
+
+iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 490px;
+    background: white;
+    border: 0;
+}
+
+.bottom-panel {
+    background: #141510;
+    border-top: 1px solid var(--border);
+}
+
+.bottom-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+}
+
+.bottom-tab {
+    background: transparent;
+    color: var(--muted);
+    border: 0;
+    padding: 13px 18px;
+    font-size: 11px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.bottom-tab.active {
+    color: var(--green);
+    border-bottom: 2px solid var(--green);
+}
+
+.panel-content {
+    display: none;
+    padding: 17px;
+    min-height: 115px;
+    max-height: 260px;
+    overflow: auto;
+}
+
+.panel-content.active {
+    display: block;
+    animation: fadeUp .3s ease;
+}
+
+.console-line {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    line-height: 1.8;
+    padding: 3px 0;
+    color: #d6ddcb;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.console-line.error {
+    color: #ff8585;
+}
+
+.console-line.warn {
+    color: #ffd17a;
+}
+
+.console-line.info {
+    color: #a9d8ff;
+}
+
+.empty-message {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.error-card {
+    border: 1px solid rgba(255,100,100,.25);
+    background: rgba(255,100,100,.05);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    animation: fadeUp .4s ease;
+}
+
+.error-card h3 {
+    font-size: 13px;
+    color: #ff8585;
+    margin-bottom: 9px;
+}
+
+.error-card p {
+    font-size: 12px;
+    line-height: 1.7;
+    color: #d5d6ce;
+    margin: 5px 0;
+}
+
+.error-card pre {
+    background: #11120f;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-top: 9px;
+    color: var(--green);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.error-success {
+    color: var(--green);
+    font-size: 12px;
+}
+
+.section-title {
+    margin: 42px 0 18px;
+    font-size: 19px;
+    animation: fadeUp .7s ease both;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+}
+
+.tip-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 14px;
+    transition: .35s;
+    animation: fadeUp .7s ease both;
+}
+
+.tip-card:nth-child(2) { animation-delay: .1s; }
+.tip-card:nth-child(3) { animation-delay: .2s; }
+
+.tip-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(197,255,74,.4);
+    box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+.tip-icon {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.tip-card h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.tip-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 35px 15px;
+    font-size: 11px;
+    border-top: 1px solid var(--border);
+    margin-top: 55px;
+}
+
+footer span {
+    color: var(--green);
+}
+
+@media(max-width: 900px) {
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .left-side {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .editor-wrap {
+        height: 350px;
+    }
+
+    iframe {
+        min-height: 400px;
+    }
+}
+
+@media(max-width: 600px) {
+    header {
+        padding: 0 4%;
+        height: 65px;
+    }
+
+    .brand {
+        font-size: 16px;
+    }
+
+    .status {
+        display: none;
+    }
+
+    main {
+        padding: 28px 4%;
+    }
+
+    .hero {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .hero h1 {
+        font-size: 37px;
+    }
+
+    .hero-card {
+        display: none;
+    }
+
+    .toolbar {
+        gap: 7px;
+    }
+
+    .btn {
+        padding: 10px 11px;
+        font-size: 10px;
+    }
+
+    .toolbar-spacer {
+        display: none;
+    }
+
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .editor-wrap {
+        height: 300px;
+    }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        CODE NEXA <span>FORGE</span>
+        <small>INTERACTIVE CODE LAB</small>
+    </div>
+
+    <div class="header-right">
+        <div class="status">
+            <span class="status-dot"></span>
+            PLAYGROUND READY
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div>
+            <div class="eyebrow">YOUR CREATIVE CODING SPACE</div>
+
+            <h1>Build. Test. <span>Experiment.</span></h1>
+
+            <p>
+                Write HTML, CSS and JavaScript, run your code instantly,
+                explore live results and learn how to fix coding errors.
+            </p>
+        </div>
+
+        <div class="hero-card">
+            <strong>01 / LAB</strong>
+            <small>YOUR CODING WORKSPACE</small>
+        </div>
+    </section>
+
+    <section class="toolbar">
+
+        <button class="btn run" id="runBtn">▶ RUN CODE</button>
+
+        <button class="btn reset" id="resetBtn">↻ RESET</button>
+
+        <button class="btn clear" id="clearBtn">✕ CLEAR ALL</button>
+
+        <button class="btn download" id="downloadBtn">↓ DOWNLOAD</button>
+
+        <div class="toolbar-spacer"></div>
+
+        <button class="btn" id="fullscreenBtn">⛶ FULLSCREEN</button>
+
+    </section>
+
+    <section class="workspace">
+
+        <div class="left-side">
+
+            <div class="editor-tabs">
+
+                <button class="tab active" data-tab="html">HTML</button>
+
+                <button class="tab" data-tab="css">CSS</button>
+
+                <button class="tab" data-tab="js">JAVASCRIPT</button>
+
+            </div>
+
+            <div class="editor-heading">
+                <span id="editorFile">index.html</span>
+                <span>● EDITABLE</span>
+            </div>
+
+            <div class="editor-wrap active" data-editor="html">
+                <textarea
+                    class="editor"
+                    id="htmlCode"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    autocomplete="off"
+                ></textarea>
+            </div>
+
+            <div class="editor-wrap" data-editor="css">
+                <textarea
+                    class="editor"
+                    id="cssCode"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    autocomplete="off"
+                ></textarea>
+            </div>
+
+            <div class="editor-wrap" data-editor="js">
+                <textarea
+                    class="editor"
+                    id="jsCode"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    autocomplete="off"
+                ></textarea>
+            </div>
+
+        </div>
+
+        <div class="right-side">
+
+            <div class="preview-heading">
+                <strong>LIVE PREVIEW</strong>
+                <span id="previewStatus">WAITING FOR CODE</span>
+            </div>
+
+            <div class="preview-frame" id="previewContainer">
+                <iframe
+                    id="preview"
+                    title="Code Preview"
+                    sandbox="allow-scripts allow-forms allow-modals"
+                ></iframe>
+            </div>
+
+            <div class="bottom-panel">
+
+                <div class="bottom-tabs">
+                    <button class="bottom-tab active" data-panel="console">
+                        CONSOLE
+                    </button>
+
+                    <button class="bottom-tab" data-panel="errors">
+                        ERROR ASSISTANT
+                    </button>
+                </div>
+
+                <div class="panel-content active" id="consolePanel">
+                    <div class="empty-message">
+                        Your console messages will appear here after running code.
+                    </div>
+                </div>
+
+                <div class="panel-content" id="errorsPanel">
+                    <div class="empty-message">
+                        No errors detected yet. Run your code to check it.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <h2 class="section-title">Explore Your Coding Lab</h2>
+
+    <section class="tips-grid">
+
+        <div class="tip-card">
+            <div class="tip-icon">⚡</div>
+            <h3>Instant Preview</h3>
+            <p>Run your code and see your website update directly in the live preview.</p>
+        </div>
+
+        <div class="tip-card">
+            <div class="tip-icon">🔍</div>
+            <h3>Smart Error Assistant</h3>
+            <p>Understand common coding errors, why they happen and how to fix them.</p>
+        </div>
+
+        <div class="tip-card">
+            <div class="tip-icon">🚀</div>
+            <h3>Keep Experimenting</h3>
+            <p>Try new ideas, change your code and build your own creative projects.</p>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <span>CODE NEXA FORGE</span> | <a href="/contact-support.html">Contact Support</a> | Learn. Build. Master.
+</footer>
+
+<script>
+"use strict";
+
+/* =====================================
+   CODE NEXA FORGE - PLAYGROUND
+===================================== */
+
+const htmlEditor = document.getElementById("htmlCode");
+const cssEditor = document.getElementById("cssCode");
+const jsEditor = document.getElementById("jsCode");
+
+const preview = document.getElementById("preview");
+const consolePanel = document.getElementById("consolePanel");
+const errorsPanel = document.getElementById("errorsPanel");
+
+const editorFile = document.getElementById("editorFile");
+const previewStatus = document.getElementById("previewStatus");
+
+const defaultHTML = `<!DOCTYPE html>
+<html>
+<head>
+    <title>My First Website</title>
+</head>
+<body>
+
+    <h1>Hello, World!</h1>
+
+    <p>Welcome to my first website.</p>
+
+    <button id="myButton">Click Me</button>
+
+</body>
+</html>`;
+
+const defaultCSS = `body {
+    background: #f0f4f8;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+}
+
+h1 {
+    color: #222;
+}
+
+p {
+    color: #555;
+}
+
+button {
+    background: #222;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+button:hover {
+    background: #c5ff4a;
+    color: #111;
+}`;
+
+const defaultJS = `const button = document.getElementById("myButton");
+
+button.addEventListener("click", function() {
+    alert("Your JavaScript is working!");
+});
+
+console.log("Playground is ready!");`;
+
+htmlEditor.value = defaultHTML;
+cssEditor.value = defaultCSS;
+jsEditor.value = defaultJS;
+
+/* =====================================
+   TAB SWITCHING
+===================================== */
+
+document.querySelectorAll(".tab").forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+        document.querySelectorAll(".tab").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        document.querySelectorAll(".editor-wrap").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        tab.classList.add("active");
+
+        const selected = tab.dataset.tab;
+
+        document.querySelector(
+            `[data-editor="${selected}"]`
+        ).classList.add("active");
+
+        const filenames = {
+            html: "index.html",
+            css: "style.css",
+            js: "script.js"
+        };
+
+        editorFile.textContent = filenames[selected];
+
+    });
+
+});
+
+/* =====================================
+   CONSOLE DISPLAY
+===================================== */
+
+function addConsole(message, type = "log") {
+
+    const line = document.createElement("div");
+
+    line.className = "console-line " + type;
+
+    line.textContent = message;
+
+    consolePanel.appendChild(line);
+
+}
+
+/* =====================================
+   ERROR ASSISTANT
+===================================== */
+
+function showError(title, type, reason, solution, example = "") {
+
+    const card = document.createElement("div");
+
+    card.className = "error-card";
+
+    const heading = document.createElement("h3");
+    heading.textContent = "⚠ " + title;
+
+    const typeText = document.createElement("p");
+    typeText.textContent = "Error Type: " + type;
+
+    const reasonText = document.createElement("p");
+    reasonText.textContent = "Why it happened: " + reason;
+
+    const solutionText = document.createElement("p");
+    solutionText.textContent = "How to fix: " + solution;
+
+    card.appendChild(heading);
+    card.appendChild(typeText);
+    card.appendChild(reasonText);
+    card.appendChild(solutionText);
+
+    if (example) {
+
+        const code = document.createElement("pre");
+        code.textContent = example;
+
+        card.appendChild(code);
+
+    }
+
+    errorsPanel.appendChild(card);
+
+}
+
+function analyzeError(message) {
+
+    const msg = String(message);
+
+    if (/Unexpected token|Unexpected end of input|missing/i.test(msg)) {
+
+        showError(
+            "JavaScript Syntax Error",
+            "SyntaxError",
+            "JavaScript found invalid or incomplete code.",
+            "Check brackets, parentheses, quotation marks and semicolons.",
+            'Example: console.log("Hello World");'
+        );
+
+    } else if (/is not defined/i.test(msg)) {
+
+        const variable = msg.match(/([A-Za-z_$][\w$]*) is not defined/);
+
+        showError(
+            "Undefined Variable",
+            "ReferenceError",
+            "Your code is trying to use a variable that does not exist or is not accessible.",
+            "Declare the variable before using it and check its spelling.",
+            'let userName = "Student";\nconsole.log(userName);'
+        );
+
+    } else if (/Cannot read properties of null|Cannot read property/i.test(msg)) {
+
+        showError(
+            "Element Not Found",
+            "TypeError",
+            "JavaScript tried to access a property of a null value. An HTML element may be missing.",
+            "Check your HTML element ID and make sure the script runs after the element exists.",
+            'const button = document.getElementById("myButton");\n\nif (button) {\n    button.textContent = "Ready";\n}'
+        );
+
+    } else if (/is not a function/i.test(msg)) {
+
+        showError(
+            "Function Error",
+            "TypeError",
+            "You tried to call something as a function, but it is not a function.",
+            "Check the function name, spelling and variable value.",
+            'function sayHello() {\n    console.log("Hello!");\n}\n\nsayHello();'
+        );
+
+    } else if (/already been declared/i.test(msg)) {
+
+        showError(
+            "Duplicate Variable",
+            "SyntaxError",
+            "A let or const variable with the same name was declared more than once in the same scope.",
+            "Rename the variable or remove the duplicate declaration.",
+            'let score = 10;\nscore = 20;'
+        );
+
+    } else {
+
+        showError(
+            "JavaScript Error",
+            "Runtime Error",
+            msg,
+            "Read the error message carefully. Check the line number, variable names, functions and brackets. Fix the issue and run your code again."
+        );
+
+    }
+
+}
+
+/* =====================================
+   CSS / HTML BASIC DIAGNOSTICS
+===================================== */
+
+function checkHTML(code) {
+
+    const problems = [];
+
+    const pairs = [
+        ["div", "div"],
+        ["p", "p"],
+        ["h1", "h1"],
+        ["h2", "h2"],
+        ["section", "section"],
+        ["button", "button"],
+        ["ul", "ul"],
+        ["li", "li"]
+    ];
+
+    pairs.forEach(([tag, closeTag]) => {
+
+        const opening = (code.match(new RegExp("<" + tag + "(?:\\s|>)", "gi")) || []).length;
+
+        const closing = (code.match(new RegExp("</" + closeTag + "\\s*>", "gi")) || []).length;
+
+        if (opening > closing) {
+            problems.push(
+                "You may have a missing </" + closeTag + "> closing tag."
+            );
+        }
+
+    });
+
+    if (problems.length) {
+
+        problems.forEach(problem => {
+
+            showError(
+                "Possible HTML Issue",
+                "HTML Structure",
+                problem,
+                "Add the missing closing tag and make sure opening and closing tags are properly nested."
+            );
+
+        });
+
+    }
+
+}
+
+function checkCSS(code) {
+
+    const open = (code.match(/{/g) || []).length;
+    const close = (code.match(/}/g) || []).length;
+
+    if (open > close) {
+
+        showError(
+            "Missing CSS Closing Brace",
+            "CSS Syntax",
+            "One or more CSS blocks may not have a closing curly brace.",
+            "Add a } after the CSS declarations.",
+            "h1 {\n    color: red;\n}"
+        );
+
+    } else if (close > open) {
+
+        showError(
+            "Extra CSS Closing Brace",
+            "CSS Syntax",
+            "There may be an extra closing curly brace.",
+            "Remove the extra } and check your CSS blocks."
+        );
+
+    }
+
+}
+
+/* =====================================
+   RUN CODE
+===================================== */
+
+function runCode() {
+
+    const html = htmlEditor.value;
+    const css = cssEditor.value;
+    const js = jsEditor.value;
+
+    consolePanel.innerHTML = "";
+    errorsPanel.innerHTML = "";
+
+    previewStatus.textContent = "RUNNING...";
+
+    addConsole("Starting code execution...", "info");
+
+    checkHTML(html);
+    checkCSS(css);
+
+    const safeCSS = JSON.stringify(css);
+    const safeJS = JSON.stringify(js);
+
+    const bridge = `
+        <script>
+        (function() {
+
+            function send(type, data) {
+
+                parent.postMessage({
+                    source: "CNF_PLAYGROUND",
+                    type: type,
+                    data: data
+                }, "*");
+
+            }
+
+            const originalLog = console.log;
+            const originalWarn = console.warn;
+            const originalError = console.error;
+
+            console.log = function(...args) {
+                send("log", args.map(String).join(" "));
+                originalLog.apply(console, args);
+            };
+
+            console.warn = function(...args) {
+                send("warn", args.map(String).join(" "));
+                originalWarn.apply(console, args);
+            };
+
+            console.error = function(...args) {
+                send("error", args.map(String).join(" "));
+                originalError.apply(console, args);
+            };
+
+            window.addEventListener("error", function(event) {
+
+                send("runtime-error", {
+                    message: event.message,
+                    line: event.lineno,
+                    column: event.colno
+                });
+
+            });
+
+            window.addEventListener("unhandledrejection", function(event) {
+
+                send("runtime-error", {
+                    message: "Unhandled Promise Rejection: " + String(event.reason)
+                });
+
+            });
+
+            window.addEventListener("load", function() {
+                send("ready", "Preview loaded successfully.");
+            });
+
+        })();
+        <\/script>
+    `;
+
+    const documentHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <style>${css.replace(/<\/style/gi, "<\\/style")}</style>
+        </head>
+        <body>
+
+            ${html
+                .replace(/<!DOCTYPE[^>]*>/gi, "")
+                .replace(/<\/?html[^>]*>/gi, "")
+                .replace(/<\/?head[^>]*>/gi, "")
+                .replace(/<\/?body[^>]*>/gi, "")
+                .replace(/<title[^>]*>[\s\S]*?<\/title>/gi, "")
+                .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+                .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+            }
+
+            ${bridge}
+
+            <script>
+            try {
+                const userCode = ${safeJS};
+                (new Function(userCode))();
+            } catch(error) {
+                parent.postMessage({
+                    source: "CNF_PLAYGROUND",
+                    type: "runtime-error",
+                    data: {
+                        message: error.message,
+                        line: error.lineNumber || null
+                    }
+                }, "*");
+            }
+            <\/script>
+
+        </body>
+        </html>
+    `;
+
+    preview.srcdoc = documentHTML;
+
+    previewStatus.textContent = "CODE EXECUTED";
+
+    addConsole("Preview updated.", "info");
+
+    if (!errorsPanel.children.length) {
+
+        const success = document.createElement("p");
+
+        success.className = "error-success";
+
+        success.textContent =
+            "✓ No basic HTML/CSS issues detected. Check the preview and console for runtime problems.";
+
+        errorsPanel.appendChild(success);
+
+    }
+
+}
+
+/* =====================================
+   RECEIVE PREVIEW MESSAGES
+===================================== */
+
+window.addEventListener("message", event => {
+
+    if (event.source !== preview.contentWindow) return;
+
+    const message = event.data;
+
+    if (!message || message.source !== "CNF_PLAYGROUND") return;
+
+    if (message.type === "log") {
+        addConsole(message.data);
+    }
+
+    if (message.type === "warn") {
+        addConsole("Warning: " + message.data, "warn");
+    }
+
+    if (message.type === "error") {
+        addConsole("Error: " + message.data, "error");
+    }
+
+    if (message.type === "ready") {
+        addConsole(message.data, "info");
+        previewStatus.textContent = "PREVIEW READY";
+    }
+
+    if (message.type === "runtime-error") {
+
+        const data = message.data || {};
+
+        const errorMessage = data.message || "Unknown error";
+
+        addConsole(
+            "ERROR: " + errorMessage,
+            "error"
+        );
+
+        if (data.line) {
+            addConsole("Line: " + data.line, "error");
+        }
+
+        analyzeError(errorMessage);
+
+        document.querySelector(
+            '[data-panel="errors"]'
+        ).click();
+
+        previewStatus.textContent = "ERROR DETECTED";
+
+    }
+
+});
+
+/* =====================================
+   RESET CODE
+===================================== */
+
+function resetCode() {
+
+    if (!confirm("Reset all editors to the original starter code?")) {
+        return;
+    }
+
+    htmlEditor.value = defaultHTML;
+    cssEditor.value = defaultCSS;
+    jsEditor.value = defaultJS;
+
+    localStorage.removeItem("cnf_playground_html");
+    localStorage.removeItem("cnf_playground_css");
+    localStorage.removeItem("cnf_playground_js");
+
+    runCode();
+
+    addConsole("Starter code restored.", "info");
+
+}
+
+/* =====================================
+   CLEAR ALL
+===================================== */
+
+function clearAll() {
+
+    if (!confirm("Are you sure you want to clear all code?")) {
+        return;
+    }
+
+    htmlEditor.value = "";
+    cssEditor.value = "";
+    jsEditor.value = "";
+
+    consolePanel.innerHTML = "";
+    errorsPanel.innerHTML = "";
+
+    preview.srcdoc = "";
+
+    previewStatus.textContent = "EMPTY WORKSPACE";
+
+    saveCode();
+
+}
+
+/* =====================================
+   AUTO SAVE
+===================================== */
+
+function saveCode() {
+
+    localStorage.setItem(
+        "cnf_playground_html",
+        htmlEditor.value
+    );
+
+    localStorage.setItem(
+        "cnf_playground_css",
+        cssEditor.value
+    );
+
+    localStorage.setItem(
+        "cnf_playground_js",
+        jsEditor.value
+    );
+
+}
+
+function loadSavedCode() {
+
+    const savedHTML = localStorage.getItem("cnf_playground_html");
+    const savedCSS = localStorage.getItem("cnf_playground_css");
+    const savedJS = localStorage.getItem("cnf_playground_js");
+
+    if (savedHTML !== null) htmlEditor.value = savedHTML;
+    if (savedCSS !== null) cssEditor.value = savedCSS;
+    if (savedJS !== null) jsEditor.value = savedJS;
+
+}
+
+[htmlEditor, cssEditor, jsEditor].forEach(editor => {
+
+    editor.addEventListener("input", saveCode);
+
+});
+
+/* =====================================
+   DOWNLOAD PROJECT
+===================================== */
+
+function downloadProject() {
+
+    const html = htmlEditor.value;
+    const css = cssEditor.value;
+    const js = jsEditor.value;
+
+    const finalHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Project</title>
+<style>
+${css}
+</style>
+</head>
+<body>
+${html}
+<script>
+${js}
+<\/script>
+</body>
+</html>`;
+
+    const blob = new Blob(
+        [finalHTML],
+        { type: "text/html" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "my-cnf-project.html";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+/* =====================================
+   FULLSCREEN PREVIEW
+===================================== */
+
+function fullscreenPreview() {
+
+    const container = document.getElementById("previewContainer");
+
+    if (container.requestFullscreen) {
+        container.requestFullscreen();
+    } else {
+        alert("Fullscreen is not supported by this browser.");
+    }
+
+}
+
+/* =====================================
+   CONSOLE / ERROR TABS
+===================================== */
+
+document.querySelectorAll(".bottom-tab").forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+        document.querySelectorAll(".bottom-tab").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        document.querySelectorAll(".panel-content").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        tab.classList.add("active");
+
+        document.getElementById(
+            tab.dataset.panel + "Panel"
+        ).classList.add("active");
+
+    });
+
+});
+
+/* =====================================
+   BUTTON EVENTS
+===================================== */
+
+document.getElementById("runBtn").addEventListener("click", runCode);
+
+document.getElementById("resetBtn").addEventListener("click", resetCode);
+
+document.getElementById("clearBtn").addEventListener("click", clearAll);
+
+document.getElementById("downloadBtn").addEventListener("click", downloadProject);
+
+document.getElementById("fullscreenBtn").addEventListener("click", fullscreenPreview);
+
+/* =====================================
+   INITIALIZE
+===================================== */
+
+loadSavedCode();
+runCode();
+
+</script>
+
+<script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

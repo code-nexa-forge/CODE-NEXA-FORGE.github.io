@@ -1,0 +1,2305 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 04 — Loops | CNF/</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+
+:root {
+    --cream: #f4eddf;
+    --paper: #fffaf0;
+    --ink: #24231f;
+    --muted: #77736b;
+    --orange: #d66b35;
+    --orange-dark: #a84922;
+    --yellow: #e9b85e;
+    --line: #ded3c1;
+    --green: #47765b;
+    --red: #b64d42;
+    --mono: 'DM Mono', monospace;
+    --body: 'DM Sans', sans-serif;
+    --display: 'Playfair Display', serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* =================================
+   GLOBAL ANIMATION SYSTEM
+================================= */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeRight {
+    from {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes floatBox {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-16px);
+    }
+}
+
+@keyframes floatSmall {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(214,107,53,0);
+    }
+    50% {
+        box-shadow: 0 0 28px rgba(214,107,53,.25);
+    }
+}
+
+@keyframes orbit {
+    from {
+        transform: rotate(0deg) translateX(120px) rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg) translateX(120px) rotate(-360deg);
+    }
+}
+
+@keyframes lineMove {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 200px 0;
+    }
+}
+
+.navbar {
+    animation: fadeDown .8s ease both;
+}
+
+.hero-copy > * {
+    animation: fadeUp .8s ease both;
+}
+
+.hero-copy .eyebrow {
+    animation-delay: .1s;
+}
+
+.hero-copy h1 {
+    animation-delay: .2s;
+}
+
+.hero-description {
+    animation-delay: .35s;
+}
+
+.hero-info {
+    animation-delay: .5s;
+}
+
+.hero-art {
+    animation: fadeRight 1s ease both;
+}
+
+.hero-art-wrap {
+    animation: floatBox 5s ease-in-out infinite;
+}
+
+.loop-point {
+    animation: floatSmall 2.5s ease-in-out infinite;
+}
+
+.point-two {
+    animation-delay: .3s;
+}
+
+.point-three {
+    animation-delay: .6s;
+}
+
+.point-four {
+    animation-delay: .9s;
+}
+
+.intro-strip {
+    animation: fadeUp .9s ease both;
+}
+
+.motion-ready .reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.2,.7,.2,1);
+}
+
+.motion-ready .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.motion-ready .reveal-left {
+    opacity: 0;
+    transform: translateX(-35px);
+    transition: opacity .8s ease, transform .8s ease;
+}
+
+.motion-ready .reveal-left.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.motion-ready .reveal-right {
+    opacity: 0;
+    transform: translateX(35px);
+    transition: opacity .8s ease, transform .8s ease;
+}
+
+.motion-ready .reveal-right.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.concept-card,
+.rule-card,
+.cycle-step,
+.type-row,
+.code-panel,
+.simulator,
+.quiz-box,
+.comparison {
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
+}
+
+.concept-card:hover {
+    transform: translateY(-9px);
+    box-shadow: 0 16px 35px rgba(65,47,27,.10);
+    border-color: #d4a47d;
+}
+
+.cycle-step:hover {
+    transform: translateY(-6px);
+    border-color: var(--yellow);
+    background: rgba(233,184,94,.07);
+}
+
+.rule-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 14px 28px rgba(65,47,27,.10);
+}
+
+.type-row:hover {
+    background: rgba(255,250,240,.55);
+    padding-left: 18px;
+}
+
+.code-panel:hover {
+    box-shadow: 0 15px 35px rgba(37,35,31,.14);
+}
+
+.simulator:hover {
+    border-color: #d7a17c;
+    box-shadow: 0 15px 35px rgba(65,47,27,.09);
+}
+
+.primary-btn,
+.reset-btn,
+.nav-button {
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        color .25s ease,
+        box-shadow .25s ease;
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(168,73,34,.25);
+}
+
+.reset-btn:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,.08);
+}
+
+.nav-button:hover:not(.locked) {
+    transform: translateY(-3px);
+}
+
+/* NAVIGATION */
+
+.navbar {
+    min-height: 72px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    z-index: 5;
+}
+
+.brand {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.brand span {
+    color: var(--yellow);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-size: 12px;
+    color: #d2c7b7;
+}
+
+.nav-right a {
+    transition: color .25s ease;
+}
+
+.nav-right a:hover {
+    color: var(--yellow);
+}
+
+.lesson-number {
+    font-family: var(--mono);
+    color: var(--yellow);
+    border: 1px solid #62503a;
+    padding: 7px 11px;
+}
+
+/* HERO */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1fr .85fr;
+    min-height: 570px;
+    background: var(--paper);
+}
+
+.hero-copy {
+    padding: 75px 8% 70px 13%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.eyebrow {
+    font-family: var(--mono);
+    color: var(--orange-dark);
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-family: var(--display);
+    font-size: clamp(55px, 7vw, 88px);
+    line-height: .99;
+    letter-spacing: -3px;
+    max-width: 600px;
+}
+
+.hero h1 span {
+    color: var(--orange);
+    font-style: italic;
+}
+
+.hero-description {
+    max-width: 490px;
+    color: var(--muted);
+    font-size: 15px;
+    margin: 25px 0;
+}
+
+.hero-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.hero-info span {
+    background: #f0e5d3;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 3px;
+    transition: transform .3s ease, background .3s ease;
+}
+
+.hero-info span:hover {
+    transform: translateY(-4px);
+    background: #e9d6bb;
+}
+
+.hero-art-wrap {
+    background: #25231f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 45px 7%;
+    overflow: hidden;
+}
+
+.hero-art {
+    width: 100%;
+    min-height: 420px;
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-art::before {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border: 1px solid rgba(233,184,94,.12);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+}
+
+.art-label {
+    font-family: var(--mono);
+    color: var(--yellow);
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.loop-circle {
+    width: 240px;
+    height: 240px;
+    border: 2px solid var(--orange);
+    border-radius: 50%;
+    margin: 0 auto 25px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.loop-circle::before {
+    content: "";
+    position: absolute;
+    inset: 22px;
+    border: 1px dashed #77614b;
+    border-radius: 50%;
+    animation: rotateSlow 22s linear infinite;
+}
+
+.loop-center {
+    text-align: center;
+    z-index: 1;
+}
+
+.loop-center strong {
+    display: block;
+    font-family: var(--display);
+    font-size: 35px;
+    color: var(--yellow);
+}
+
+.loop-center small {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #c4b9a8;
+    letter-spacing: 2px;
+}
+
+.loop-point {
+    position: absolute;
+    background: var(--orange);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,.25);
+}
+
+.point-one { top: -17px; left: calc(50% - 18px); }
+.point-two { right: -17px; top: calc(50% - 18px); }
+.point-three { bottom: -17px; left: calc(50% - 18px); }
+.point-four { left: -17px; top: calc(50% - 18px); }
+
+.art-caption {
+    text-align: center;
+    color: #c5b9a7;
+    font-size: 12px;
+}
+
+/* INTRO STRIP */
+
+.intro-strip {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: #eee3d1;
+}
+
+.strip-label {
+    padding: 25px 10%;
+    border-right: 1px solid var(--line);
+    font-family: var(--mono);
+    color: var(--orange-dark);
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.strip-text {
+    padding: 25px 7%;
+    font-size: 14px;
+    color: #5f5a51;
+}
+
+/* MAIN CONTENT */
+
+.main-layout {
+    max-width: 1400px;
+    margin: auto;
+    padding: 75px 7%;
+}
+
+.chapter {
+    margin-bottom: 95px;
+    scroll-margin-top: 35px;
+}
+
+.chapter-heading {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 30px;
+}
+
+.chapter-index {
+    font-family: var(--mono);
+    color: var(--orange-dark);
+    font-size: 12px;
+    padding-top: 9px;
+}
+
+.chapter h2 {
+    font-family: var(--display);
+    font-size: clamp(30px, 4vw, 43px);
+    line-height: 1.15;
+}
+
+.chapter-intro {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 720px;
+    margin: 12px 0 0;
+}
+
+/* CONCEPT GRID */
+
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.concept-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 24px;
+    min-height: 175px;
+}
+
+.concept-card .symbol {
+    color: var(--orange);
+    font-family: var(--mono);
+    font-size: 25px;
+    margin-bottom: 13px;
+    transition: transform .3s ease;
+}
+
+.concept-card:hover .symbol {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.concept-card h3 {
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+.concept-card p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* CODE */
+
+.code-panel {
+    background: #25231f;
+    color: #f9f0df;
+    margin-top: 25px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.04);
+}
+
+.code-top {
+    padding: 12px 18px;
+    border-bottom: 1px solid #51473b;
+    display: flex;
+    justify-content: space-between;
+    color: #c7b9a4;
+    font-family: var(--mono);
+    font-size: 10px;
+}
+
+.code-panel pre {
+    padding: 23px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 2;
+}
+
+.code-orange { color: #f0a16f; }
+.code-yellow { color: #e9c47b; }
+.code-green { color: #a5ca92; }
+.code-blue { color: #9bbce0; }
+
+/* LOOP CYCLE */
+
+.cycle-board {
+    background: #25231f;
+    padding: 30px;
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+}
+
+.cycle-board::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, var(--orange), var(--yellow), transparent);
+    background-size: 200px 100%;
+    animation: lineMove 4s linear infinite;
+}
+
+.cycle-top {
+    font-family: var(--mono);
+    color: var(--yellow);
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.cycle-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.cycle-step {
+    border: 1px solid #655340;
+    padding: 19px 14px;
+    position: relative;
+}
+
+.cycle-step small {
+    color: var(--yellow);
+    font-family: var(--mono);
+    font-size: 10px;
+}
+
+.cycle-step h3 {
+    font-size: 14px;
+    margin: 9px 0 5px;
+}
+
+.cycle-step p {
+    color: #c3b8a8;
+    font-size: 11px;
+}
+
+/* LOOP TYPES */
+
+.type-list {
+    border-top: 1px solid var(--line);
+}
+
+.type-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 25px;
+    padding: 25px 10px;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+}
+
+.type-name {
+    font-family: var(--display);
+    font-size: 22px;
+    color: var(--orange-dark);
+}
+
+.type-description {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.type-use {
+    background: #eee3d1;
+    padding: 12px 15px;
+    font-size: 12px;
+    color: #60584d;
+}
+
+/* COMPARISON */
+
+.comparison {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    font-size: 13px;
+}
+
+.comparison th,
+.comparison td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid var(--line);
+}
+
+.comparison th {
+    background: var(--ink);
+    color: var(--yellow);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.comparison td:first-child {
+    color: var(--orange-dark);
+    font-weight: 800;
+}
+
+.comparison tbody tr {
+    transition: background .25s ease;
+}
+
+.comparison tbody tr:hover {
+    background: #f2e5d2;
+}
+
+/* SIMULATOR */
+
+.simulator {
+    background: #fffaf0;
+    border: 1px solid var(--line);
+    padding: 30px;
+}
+
+.simulator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.simulator-header h3 {
+    font-family: var(--display);
+    font-size: 25px;
+}
+
+.simulator-label {
+    font-family: var(--mono);
+    color: var(--orange-dark);
+    font-size: 10px;
+    border: 1px solid #d9b69c;
+    padding: 6px 9px;
+}
+
+.sim-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    align-items: end;
+}
+
+.field label {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--line);
+    background: white;
+    color: var(--ink);
+    outline: none;
+    transition: border .25s ease, box-shadow .25s ease;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(214,107,53,.12);
+}
+
+.primary-btn {
+    background: var(--orange);
+    border: none;
+    color: white;
+    padding: 13px 18px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.primary-btn:hover {
+    background: var(--orange-dark);
+}
+
+.sim-output {
+    margin-top: 22px;
+    background: #25231f;
+    color: #f9f0df;
+    padding: 20px;
+    min-height: 100px;
+    animation: fadeUp .4s ease both;
+}
+
+.sim-output-title {
+    color: var(--yellow);
+    font-family: var(--mono);
+    font-size: 10px;
+    margin-bottom: 12px;
+}
+
+.iteration-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.iteration {
+    border: 1px solid #756044;
+    color: #f2c88a;
+    padding: 7px 11px;
+    font-family: var(--mono);
+    font-size: 12px;
+    animation: fadeUp .35s ease both;
+}
+
+.sim-note {
+    color: #c4b9a8;
+    font-size: 11px;
+    margin-top: 13px;
+}
+
+/* BREAK AND CONTINUE */
+
+.rule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.rule-card {
+    background: #eee3d1;
+    padding: 24px;
+    border-left: 4px solid var(--orange);
+}
+
+.rule-card h3 {
+    font-family: var(--display);
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.rule-card p {
+    font-size: 13px;
+    color: #696156;
+}
+
+.rule-card code {
+    display: inline-block;
+    margin-top: 13px;
+    font-family: var(--mono);
+    color: var(--orange-dark);
+    font-size: 12px;
+}
+
+/* QUIZ */
+
+.quiz-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 35px;
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-box::before {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border: 1px solid rgba(233,184,94,.10);
+    border-radius: 50%;
+    right: -100px;
+    top: -100px;
+    pointer-events: none;
+}
+
+.quiz-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.quiz-heading h3 {
+    font-family: var(--display);
+    font-size: 29px;
+}
+
+.quiz-heading span {
+    font-family: var(--mono);
+    color: var(--yellow);
+    font-size: 10px;
+}
+
+.question {
+    padding: 22px 0;
+    border-top: 1px solid #51473b;
+    position: relative;
+}
+
+.question h4 {
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.question label {
+    display: block;
+    padding: 7px 9px;
+    margin: 3px 0;
+    color: #c9bead;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background .25s ease, color .25s ease;
+}
+
+.question label:hover {
+    background: rgba(255,255,255,.06);
+    color: white;
+}
+
+.question input {
+    accent-color: var(--yellow);
+    margin-right: 8px;
+}
+
+.quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+    position: relative;
+}
+
+.reset-btn {
+    border: 1px solid #74644f;
+    background: transparent;
+    color: var(--paper);
+    padding: 12px 18px;
+    font-size: 12px;
+}
+
+.quiz-result {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background: #353128;
+    font-size: 13px;
+    border-left: 3px solid var(--yellow);
+    animation: fadeUp .35s ease both;
+}
+
+/* NAVIGATION */
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-top: 1px solid var(--line);
+    padding-top: 30px;
+    margin-top: 55px;
+}
+
+.nav-button {
+    display: inline-block;
+    border: 1px solid #b9a991;
+    background: transparent;
+    color: var(--ink);
+    padding: 12px 17px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.nav-button:hover:not(.locked) {
+    background: var(--ink);
+    color: var(--paper);
+}
+
+.nav-button.locked {
+    opacity: .35;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.nav-button.completed {
+    color: var(--green);
+    border-color: var(--green);
+}
+
+.footer {
+    background: var(--ink);
+    color: #c5b9a8;
+    padding: 28px 7%;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-size: 12px;
+}
+
+.footer strong {
+    color: var(--yellow);
+    font-size: 18px;
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-copy {
+        padding: 60px 8%;
+    }
+
+    .hero-art-wrap {
+        min-height: 430px;
+    }
+
+    .cycle-steps {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .type-row {
+        grid-template-columns: 140px 1fr;
+    }
+
+    .type-use {
+        grid-column: 2;
+    }
+}
+
+@media(max-width: 600px) {
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-right {
+        gap: 9px;
+        font-size: 10px;
+    }
+
+    .brand {
+        font-size: 18px;
+    }
+
+    .hero h1 {
+        font-size: 57px;
+    }
+
+    .hero-copy {
+        padding: 55px 6%;
+    }
+
+    .hero-art-wrap {
+        min-height: 380px;
+        padding: 30px 5%;
+    }
+
+    .intro-strip {
+        grid-template-columns: 1fr;
+    }
+
+    .strip-label {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .main-layout {
+        padding: 55px 5%;
+    }
+
+    .chapter-heading {
+        grid-template-columns: 55px 1fr;
+        gap: 10px;
+    }
+
+    .concept-grid,
+    .rule-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cycle-steps {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .type-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .type-use {
+        grid-column: auto;
+    }
+
+    .sim-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .simulator {
+        padding: 20px;
+    }
+
+    .quiz-box {
+        padding: 23px 18px;
+    }
+
+    .quiz-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .comparison th,
+    .comparison td {
+        padding: 10px 7px;
+        font-size: 11px;
+    }
+
+    .loop-circle {
+        width: 210px;
+        height: 210px;
+    }
+
+    .lesson-navigation {
+        align-items: stretch;
+    }
+
+    .lesson-navigation > a,
+    .lesson-navigation > div {
+        width: 100%;
+    }
+
+    .lesson-navigation > div {
+        display: flex;
+    }
+
+    .lesson-navigation .nav-button {
+        text-align: center;
+    }
+
+    .footer {
+        padding: 25px 5%;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="#" class="brand">CNF/</a>
+
+    <div class="nav-right">
+        <a href="../javascript.html" target="_blank">Course Home</a>
+        <span class="lesson-number">04 / 08</span>
+    </div>
+</nav>
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="hero-copy">
+        <div class="eyebrow">JAVASCRIPT / CONTROL FLOW</div>
+
+        <h1>Repeat.<br>Refine.<br><span>Repeat.</span></h1>
+
+        <p class="hero-description">
+            Why write the same instruction again and again?
+            Learn how loops automate repetition and make your
+            JavaScript programs smarter and more efficient.
+        </p>
+
+        <div class="hero-info">
+            <span>25–35 MIN</span>
+            <span>BEGINNER</span>
+            <span>LIVE SIMULATOR</span>
+        </div>
+    </div>
+
+    <div class="hero-art-wrap">
+        <div class="hero-art">
+
+            <div class="art-label">THE LOOP CYCLE / 04</div>
+
+            <div class="loop-circle">
+                <div class="loop-center">
+                    <strong>LOOP</strong>
+                    <small>REPEAT PROCESS</small>
+                </div>
+
+                <div class="loop-point point-one">01</div>
+                <div class="loop-point point-two">02</div>
+                <div class="loop-point point-three">03</div>
+                <div class="loop-point point-four">04</div>
+            </div>
+
+            <p class="art-caption">
+                Start → Check → Execute → Update → Repeat
+            </p>
+
+        </div>
+    </div>
+
+</header>
+
+<div class="intro-strip">
+    <div class="strip-label">TODAY'S OBJECTIVE</div>
+    <div class="strip-text">
+        Understand repetition, control loop execution, and build
+        your own loop using a live JavaScript simulator.
+    </div>
+</div>
+
+<main class="main-layout">
+
+    <!-- SECTION 1 -->
+
+    <section class="chapter reveal" id="intro">
+
+        <div class="chapter-heading">
+            <div class="chapter-index">01 / 08</div>
+
+            <div>
+                <h2>Why do we need loops?</h2>
+
+                <p class="chapter-intro">
+                    Imagine printing numbers from 1 to 100.
+                    Writing 100 separate console.log() statements
+                    would be slow and unnecessary. Loops solve this problem.
+                </p>
+            </div>
+        </div>
+
+        <div class="concept-grid">
+
+            <div class="concept-card reveal">
+                <div class="symbol">01</div>
+                <h3>Repetition</h3>
+                <p>Run the same instructions multiple times without rewriting code.</p>
+            </div>
+
+            <div class="concept-card reveal">
+                <div class="symbol">02</div>
+                <h3>Automation</h3>
+                <p>Let JavaScript handle repetitive tasks automatically.</p>
+            </div>
+
+            <div class="concept-card reveal">
+                <div class="symbol">03</div>
+                <h3>Efficiency</h3>
+                <p>Write shorter, cleaner and easier-to-maintain programs.</p>
+            </div>
+
+        </div>
+
+        <div class="code-panel reveal">
+            <div class="code-top">
+                <span>without-loop.js</span>
+                <span>OLD APPROACH</span>
+            </div>
+
+            <pre>console.log(1);
+console.log(2);
+console.log(3);
+console.log(4);
+console.log(5);</pre>
+        </div>
+
+        <div class="code-panel reveal">
+            <div class="code-top">
+                <span>with-loop.js</span>
+                <span>SMART APPROACH</span>
+            </div>
+
+            <pre><span class="code-orange">for</span> (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+
+<span class="code-green">// Output: 1 2 3 4 5</span></pre>
+        </div>
+
+    </section>
+
+    <!-- SECTION 2 -->
+
+    <section class="chapter reveal" id="cycle">
+
+        <div class="chapter-heading">
+            <div class="chapter-index">02 / 08</div>
+
+            <div>
+                <h2>How does a loop work?</h2>
+
+                <p class="chapter-intro">
+                    Most loops follow a repeating process. A starting
+                    value is created, a condition is checked, the code
+                    runs, and the value is updated.
+                </p>
+            </div>
+        </div>
+
+        <div class="cycle-board reveal">
+
+            <div class="cycle-top">ANATOMY OF A LOOP</div>
+
+            <div class="cycle-steps">
+
+                <div class="cycle-step">
+                    <small>STEP 01</small>
+                    <h3>Initialize</h3>
+                    <p>Create the starting variable.</p>
+                </div>
+
+                <div class="cycle-step">
+                    <small>STEP 02</small>
+                    <h3>Condition</h3>
+                    <p>Check if the loop should continue.</p>
+                </div>
+
+                <div class="cycle-step">
+                    <small>STEP 03</small>
+                    <h3>Execute</h3>
+                    <p>Run the statements inside the loop.</p>
+                </div>
+
+                <div class="cycle-step">
+                    <small>STEP 04</small>
+                    <h3>Update</h3>
+                    <p>Change the variable and check again.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="code-panel reveal">
+            <div class="code-top">
+                <span>loop-structure.js</span>
+                <span>BREAKDOWN</span>
+            </div>
+
+            <pre><span class="code-orange">for</span> (
+    let i = 1;    <span class="code-green">// Initialize</span>
+    i <= 5;       <span class="code-green">// Condition</span>
+    i++           <span class="code-green">// Update</span>
+) {
+    console.log(i); <span class="code-green">// Execute</span>
+}</pre>
+        </div>
+
+    </section>
+
+    <!-- SECTION 3 -->
+
+    <section class="chapter reveal" id="for-loop">
+
+        <div class="chapter-heading">
+            <div class="chapter-index">03 / 08</div>
+
+            <div>
+                <h2>The for loop</h2>
+
+                <p class="chapter-intro">
+                    A for loop is useful when you know how many times
+                    you want to repeat a task.
+                </p>
+            </div>
+        </div>
+
+        <div class="type-list">
+
+            <div class="type-row reveal">
+                <div class="type-name">Initialize</div>
+                <div class="type-description">
+                    <strong>let i = 1</strong><br>
+                    Creates a variable and sets its starting value.
+                </div>
+                <div class="type-use">The loop begins with i equal to 1.</div>
+            </div>
+
+            <div class="type-row reveal">
+                <div class="type-name">Condition</div>
+                <div class="type-description">
+                    <strong>i <= 5</strong><br>
+                    The loop continues while this condition is true.
+                </div>
+                <div class="type-use">When i becomes 6, the loop stops.</div>
+            </div>
+
+            <div class="type-row reveal">
+                <div class="type-name">Update</div>
+                <div class="type-description">
+                    <strong>i++</strong><br>
+                    Increases the value of i by one after each iteration.
+                </div>
+                <div class="type-use">The next iteration uses the updated value.</div>
+            </div>
+
+        </div>
+
+        <div class="code-panel reveal">
+            <div class="code-top">
+                <span>for-loop.js</span>
+                <span>EXAMPLE</span>
+            </div>
+
+            <pre><span class="code-orange">for</span> (let i = 1; i <= 5; i++) {
+    console.log("Welcome to JavaScript");
+}
+
+<span class="code-green">// Prints the message five times.</span></pre>
+        </div>
+
+    </section>
+
+    <!-- SECTION 4 -->
+
+    <section class="chapter reveal" id="while-loop">
+
+        <div class="chapter-heading">
+            <div class="chapter-index">04 / 08</div>
+
+            <div>
+                <h2>The while loop</h2>
+
+                <p class="chapter-intro">
+                    A while loop repeats a block of code as long as
+                    its condition remains true. It is useful when the
+                    number of repetitions is not known in advance.
+                </p>
+            </div>
+        </div>
+
+        <div class="code-panel reveal">
+            <div class="code-top">
+                <span>while-loop.js</span>
+                <span>EXAMPLE</span>
+            </div>
+
+            <pre>let count = 1;
+
+<span class="code-orange">while</span> (count <= 5) {
+    console.log(count);
+    count++;
+}
+
+<span class="code-green">// Output: 1 2 3 4 5</span></pre>
+        </div>
+
+        <p class="chapter-intro reveal">
+            Important: Remember to update the variable inside the loop.
+            Otherwise, the condition may stay true forever and create
+            an infinite loop.
+        </p>
+
+    </section>
+
+    <!-- SECTION 5 -->
+
+    <section class="chapter reveal" id="do-while">
+
+        <div class="chapter-heading">
+            <div class="chapter-index">05 / 08</div>
+
+            <div>
+                <h2>The do...while loop</h2>
+
+                <p class="chapter-intro">
+                    This loop executes its code block at least once,
+                    then checks the condition. Even if the condition
+                    is false initially, the code runs once.
+                </p>
+            </div>
+        </div>
+
+        <div class="code-panel reveal">
+            <div class="code-top">
+                <span>do-while.js</span>
+                <span>EXAMPLE</span>
+            </div>
+
+            <pre>let number = 1;
+
+<span class="code-orange">do</span> {
+    console.log(number);
+    number++;
+} <span class="code-orange">while</span> (number <= 5);
+
+<span class="code-green">// Output: 1 2 3 4 5</span></pre>
+        </div>
+
+        <div class="concept-grid">
+
+            <div class="concept-card reveal">
+                <div class="symbol">A</div>
+                <h3>do</h3>
+                <p>Executes the code block first.</p>
+            </div>
+
+            <div class="concept-card reveal">
+                <div class="symbol">B</div>
+                <h3>while</h3>
+                <p>Checks the condition after execution.</p>
+            </div>
+
+            <div class="concept-card reveal">
+                <div class="symbol">C</div>
+                <h3>Repeat</h3>
+                <p>Runs again if the condition is true.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECTION 6 -->
+
+    <section class="chapter reveal" id="comparison">
+
+        <div class="chapter-heading">
+            <div class="chapter-index">06 / 08</div>
+
+            <div>
+                <h2>Compare the three loops</h2>
+
+                <p class="chapter-intro">
+                    All three loops repeat code, but each has a
+                    different use case.
+                </p>
+            </div>
+        </div>
+
+        <table class="comparison reveal">
+            <thead>
+                <tr>
+                    <th>LOOP</th>
+                    <th>BEST USED WHEN</th>
+                    <th>RUNS AT LEAST ONCE?</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>for</td>
+                    <td>Repetition count is known</td>
+                    <td>No</td>
+                </tr>
+
+                <tr>
+                    <td>while</td>
+                    <td>Condition controls repetition</td>
+                    <td>No</td>
+                </tr>
+
+                <tr>
+                    <td>do...while</td>
+                    <td>Code must run before checking</td>
+                    <td>Yes</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+
+    <!-- SECTION 7 -->
+
+    <section class="chapter reveal" id="simulator">
+
+        <div class="chapter-heading">
+            <div class="chapter-index">07 / 08</div>
+
+            <div>
+                <h2>Build your own loop</h2>
+
+                <p class="chapter-intro">
+                    Choose a loop type, enter a starting number and
+                    decide how many times it should repeat.
+                    Run it and inspect the output.
+                </p>
+            </div>
+        </div>
+
+        <div class="simulator reveal">
+
+            <div class="simulator-header">
+                <h3>Loop simulator</h3>
+                <span class="simulator-label">LIVE WORKSPACE</span>
+            </div>
+
+            <div class="sim-controls">
+
+                <div class="field">
+                    <label for="loopType">Loop type</label>
+                    <select id="loopType">
+                        <option value="for">for loop</option>
+                        <option value="while">while loop</option>
+                        <option value="do">do...while loop</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="startValue">Starting number</label>
+                    <input type="number" id="startValue" value="1" min="-1000" max="1000">
+                </div>
+
+                <div class="field">
+                    <label for="repeatCount">Repeat count</label>
+                    <input type="number" id="repeatCount" value="5" min="1" max="30">
+                </div>
+
+            </div>
+
+            <div style="margin-top:18px">
+                <button class="primary-btn" type="button" id="runLoopBtn">
+                    RUN LOOP →
+                </button>
+            </div>
+
+            <div class="sim-output" id="simOutput" aria-live="polite">
+                <div class="sim-output-title">OUTPUT / WAITING FOR EXECUTION</div>
+                Your loop output will appear here.
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECTION 8 -->
+
+    <section class="chapter reveal" id="control">
+
+        <div class="chapter-heading">
+            <div class="chapter-index">08 / 08</div>
+
+            <div>
+                <h2>Control your loop</h2>
+
+                <p class="chapter-intro">
+                    JavaScript gives you special statements to change
+                    the normal flow of a loop.
+                </p>
+            </div>
+        </div>
+
+        <div class="rule-grid">
+
+            <div class="rule-card reveal">
+                <h3>break</h3>
+                <p>
+                    Stops the entire loop immediately, even if the
+                    condition is still true.
+                </p>
+                <code>if (i === 3) break;</code>
+            </div>
+
+            <div class="rule-card reveal">
+                <h3>continue</h3>
+                <p>
+                    Skips the current iteration and moves to the
+                    next iteration.
+                </p>
+                <code>if (i === 3) continue;</code>
+            </div>
+
+        </div>
+
+        <div class="code-panel reveal">
+            <div class="code-top">
+                <span>break-example.js</span>
+                <span>STOP THE LOOP</span>
+            </div>
+
+            <pre><span class="code-orange">for</span> (let i = 1; i <= 5; i++) {
+
+    <span class="code-orange">if</span> (i === 3) {
+        <span class="code-orange">break</span>;
+    }
+
+    console.log(i);
+}
+
+<span class="code-green">// Output: 1 2</span></pre>
+        </div>
+
+        <div class="code-panel reveal">
+            <div class="code-top">
+                <span>continue-example.js</span>
+                <span>SKIP ONE ITERATION</span>
+            </div>
+
+            <pre><span class="code-orange">for</span> (let i = 1; i <= 5; i++) {
+
+    <span class="code-orange">if</span> (i === 3) {
+        <span class="code-orange">continue</span>;
+    }
+
+    console.log(i);
+}
+
+<span class="code-green">// Output: 1 2 4 5</span></pre>
+        </div>
+
+        <div class="chapter reveal" style="margin-top:70px;margin-bottom:0">
+
+            <h2 style="font-size:30px">Nested loops</h2>
+
+            <p class="chapter-intro">
+                A nested loop is a loop placed inside another loop.
+                The inner loop completes its repetitions for every
+                single iteration of the outer loop.
+            </p>
+
+            <div class="code-panel reveal">
+                <div class="code-top">
+                    <span>nested-loop.js</span>
+                    <span>EXAMPLE</span>
+                </div>
+
+                <pre><span class="code-orange">for</span> (let i = 1; i <= 2; i++) {
+
+    <span class="code-orange">for</span> (let j = 1; j <= 3; j++) {
+        console.log(i, j);
+    }
+
+}
+
+<span class="code-green">// Output: (1,1) (1,2) (1,3)
+//         (2,1) (2,2) (2,3)</span></pre>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- QUIZ -->
+
+    <section class="chapter reveal" id="quiz">
+
+        <div class="quiz-box">
+
+            <div class="quiz-heading">
+                <h3>Lesson 04 Challenge</h3>
+                <span>KNOWLEDGE CHECK / 03 QUESTIONS</span>
+            </div>
+
+            <form id="quizForm">
+
+                <div class="question">
+                    <h4>Q1. Which loop is commonly used when the number of repetitions is known?</h4>
+
+                    <label><input type="radio" name="q1" value="a"> while loop</label>
+                    <label><input type="radio" name="q1" value="b"> for loop</label>
+                    <label><input type="radio" name="q1" value="c"> do...while loop</label>
+                </div>
+
+                <div class="question">
+                    <h4>Q2. Which loop always executes its block at least once?</h4>
+
+                    <label><input type="radio" name="q2" value="a"> do...while loop</label>
+                    <label><input type="radio" name="q2" value="b"> for loop</label>
+                    <label><input type="radio" name="q2" value="c"> while loop</label>
+                </div>
+
+                <div class="question">
+                    <h4>Q3. What does the continue statement do?</h4>
+
+                    <label><input type="radio" name="q3" value="a"> Stops the entire loop</label>
+                    <label><input type="radio" name="q3" value="b"> Restarts the program</label>
+                    <label><input type="radio" name="q3" value="c"> Skips the current iteration</label>
+                </div>
+
+                <div class="quiz-actions">
+
+                    <button type="button" class="primary-btn" id="submitQuizBtn">
+                        SUBMIT ANSWERS →
+                    </button>
+
+                    <button type="button" class="reset-btn" id="resetQuizBtn">
+                        RESET QUIZ
+                    </button>
+
+                </div>
+
+            </form>
+
+            <div class="quiz-result" id="quizResult" aria-live="polite"></div>
+
+        </div>
+
+    </section>
+
+    <!-- NAVIGATION -->
+
+    <div class="lesson-navigation reveal">
+
+        <a href="03-operators-conditions.html"
+           target="_blank" class="nav-button">
+            ← Previous Lesson
+        </a>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+
+            <button id="completeBtn"
+                    class="nav-button locked"
+                    type="button"
+                    disabled>
+                Complete Lesson ✓
+            </button>
+
+            <a id="nextBtn"
+               href="05-functions.html"
+               target="_blank"
+               class="nav-button locked"
+               aria-disabled="true"
+               tabindex="-1">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer class="footer">
+    <strong>CNF/</strong>
+    <span>Learn. Build. Create. Repeat.</span>
+    <span>JavaScript Course — Lesson 04</span>
+</footer>
+
+<script>
+
+/* =================================
+   SCROLL REVEAL ANIMATIONS
+================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const revealElements = document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+
+        document.body.classList.add("motion-ready");
+
+        const observer = new IntersectionObserver((entries, observerInstance) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("is-visible");
+                    observerInstance.unobserve(entry.target);
+
+                }
+
+            });
+
+        }, {
+            threshold: 0.08,
+            rootMargin: "0px 0px -35px 0px"
+        });
+
+        revealElements.forEach(element => {
+            observer.observe(element);
+        });
+
+    } else {
+
+        revealElements.forEach(element => {
+            element.classList.add("is-visible");
+        });
+
+    }
+
+});
+
+
+/* =================================
+   LOOP SIMULATOR
+================================= */
+
+function runLoop() {
+
+    const type = document.getElementById("loopType").value;
+    const startInput = document.getElementById("startValue").value;
+    const countInput = document.getElementById("repeatCount").value;
+    const output = document.getElementById("simOutput");
+
+    if (startInput.trim() === "" || countInput.trim() === "") {
+
+        output.innerHTML = `
+            <div class="sim-output-title">INPUT ERROR</div>
+            Please enter both starting number and repeat count.
+        `;
+
+        return;
+    }
+
+    const start = Number(startInput);
+    const count = Number(countInput);
+
+    if (
+        !Number.isInteger(start) ||
+        !Number.isInteger(count) ||
+        start < -1000 ||
+        start > 1000 ||
+        count < 1 ||
+        count > 30
+    ) {
+
+        output.innerHTML = `
+            <div class="sim-output-title">INVALID INPUT</div>
+            Starting number must be an integer between -1000 and 1000.
+            Repeat count must be between 1 and 30.
+        `;
+
+        return;
+    }
+
+    const values = [];
+
+    if (type === "for") {
+
+        for (let i = 0; i < count; i++) {
+            values.push(start + i);
+        }
+
+    } else if (type === "while") {
+
+        let i = start;
+        let counter = 0;
+
+        while (counter < count) {
+            values.push(i);
+            i++;
+            counter++;
+        }
+
+    } else if (type === "do") {
+
+        let i = start;
+        let counter = 0;
+
+        do {
+            values.push(i);
+            i++;
+            counter++;
+        } while (counter < count);
+
+    }
+
+    const list = document.createElement("div");
+    list.className = "iteration-list";
+
+    values.forEach(value => {
+
+        const chip = document.createElement("span");
+
+        chip.className = "iteration";
+        chip.textContent = value;
+
+        list.appendChild(chip);
+
+    });
+
+    output.replaceChildren();
+
+    const title = document.createElement("div");
+    title.className = "sim-output-title";
+    title.textContent = `OUTPUT / ${type.toUpperCase()} LOOP`;
+
+    const note = document.createElement("p");
+    note.className = "sim-note";
+    note.textContent = `${values.length} iterations completed successfully.`;
+
+    output.append(title, list, note);
+
+}
+
+document.getElementById("runLoopBtn").addEventListener("click", runLoop);
+
+
+/* =================================
+   QUIZ AND LESSON PROGRESS
+================================= */
+
+const completionKey = "javascript-lesson-04-completed";
+
+let quizPassed = false;
+let lessonCompleted = false;
+
+const completeBtn = document.getElementById("completeBtn");
+const nextBtn = document.getElementById("nextBtn");
+const quizResult = document.getElementById("quizResult");
+
+function unlockCompleteButton() {
+
+    completeBtn.classList.remove("locked");
+    completeBtn.disabled = false;
+
+}
+
+function lockCompleteButton() {
+
+    completeBtn.classList.add("locked");
+    completeBtn.disabled = true;
+
+}
+
+function unlockNextButton() {
+
+    nextBtn.classList.remove("locked");
+    nextBtn.setAttribute("aria-disabled", "false");
+    nextBtn.removeAttribute("tabindex");
+
+}
+
+function lockNextButton() {
+
+    nextBtn.classList.add("locked");
+    nextBtn.setAttribute("aria-disabled", "true");
+    nextBtn.setAttribute("tabindex", "-1");
+
+}
+
+
+/* SUBMIT QUIZ */
+
+function submitQuiz() {
+
+    const answers = {
+        q1: "b",
+        q2: "a",
+        q3: "c"
+    };
+
+    let score = 0;
+    let answered = 0;
+
+    for (const question in answers) {
+
+        const selected = document.querySelector(
+            `input[name="${question}"]:checked`
+        );
+
+        if (selected) {
+
+            answered++;
+
+            if (selected.value === answers[question]) {
+                score++;
+            }
+
+        }
+
+    }
+
+    quizResult.style.display = "block";
+
+    if (answered < 3) {
+
+        quizResult.style.color = "#e9b85e";
+        quizResult.textContent =
+            `You answered ${answered}/3 questions. Please answer all three questions.`;
+
+        return;
+
+    }
+
+    if (score >= 2) {
+
+        quizPassed = true;
+
+        quizResult.style.color = "#a5ca92";
+        quizResult.textContent =
+            `Congratulations! You scored ${score}/3. Quiz passed! Click Complete Lesson to unlock the next lesson.`;
+
+        unlockCompleteButton();
+
+    } else {
+
+        quizPassed = false;
+
+        quizResult.style.color = "#f08c7f";
+        quizResult.textContent =
+            `You scored ${score}/3. You need at least 2 correct answers. Try again!`;
+
+        if (!lessonCompleted) {
+            lockCompleteButton();
+            lockNextButton();
+        }
+
+    }
+
+}
+
+
+/* RESET QUIZ */
+
+function resetQuiz() {
+
+    document.getElementById("quizForm").reset();
+
+    quizResult.style.display = "none";
+    quizResult.textContent = "";
+
+    quizPassed = false;
+    lessonCompleted = false;
+
+    localStorage.removeItem(completionKey);
+
+    completeBtn.textContent = "Complete Lesson ✓";
+    completeBtn.classList.remove("completed");
+
+    lockCompleteButton();
+    lockNextButton();
+
+}
+
+
+/* COMPLETE LESSON */
+
+function completeLesson() {
+
+    if (!quizPassed || lessonCompleted) {
+        return;
+    }
+
+    lessonCompleted = true;
+
+    localStorage.setItem(completionKey, "true");
+
+    completeBtn.textContent = "Lesson Completed ✓";
+    completeBtn.classList.add("completed");
+
+    completeBtn.disabled = true;
+    completeBtn.classList.remove("locked");
+
+    unlockNextButton();
+
+}
+
+
+/* RESTORE SAVED COMPLETION */
+
+function restoreLessonProgress() {
+
+    const savedCompletion = localStorage.getItem(completionKey);
+
+    if (savedCompletion === "true") {
+
+        lessonCompleted = true;
+        quizPassed = true;
+
+        completeBtn.textContent = "Lesson Completed ✓";
+        completeBtn.classList.add("completed");
+        completeBtn.disabled = true;
+
+        completeBtn.classList.remove("locked");
+
+        unlockNextButton();
+
+    } else {
+
+        lessonCompleted = false;
+        quizPassed = false;
+
+        lockCompleteButton();
+        lockNextButton();
+
+    }
+
+}
+
+
+/* QUIZ BUTTON EVENTS */
+
+document.getElementById("submitQuizBtn").addEventListener("click", submitQuiz);
+
+document.getElementById("resetQuizBtn").addEventListener("click", resetQuiz);
+
+completeBtn.addEventListener("click", completeLesson);
+
+
+/* INITIALIZE */
+
+restoreLessonProgress();
+
+</script>
+
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1587 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 05 - Flexbox & Grid | CNF/</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #07111f;
+    --panel: #0d1d31;
+    --panel2: #10263d;
+    --blue: #398cff;
+    --cyan: #36e0e8;
+    --white: #eff8ff;
+    --muted: #91a9c1;
+    --line: #1e3a56;
+    --green: #48e5ad;
+    --danger: #ff7185;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.navbar {
+    height: 76px;
+    padding: 0 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    background: rgba(7,17,31,.94);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(15px);
+    animation: navDrop .7s ease both;
+}
+
+.logo {
+    font-family: 'DM Mono', monospace;
+    color: var(--cyan);
+    font-size: 23px;
+    font-weight: bold;
+    transition: .3s ease;
+}
+
+.logo:hover {
+    text-shadow: 0 0 18px #36e0e8aa;
+    transform: translateY(-2px);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.lesson-tag {
+    border: 1px solid #28557d;
+    padding: 8px 13px;
+    border-radius: 5px;
+    color: var(--cyan);
+    font-family: 'DM Mono', monospace;
+    box-shadow: 0 0 18px #36e0e80d;
+}
+
+/* HERO SECTION */
+
+.hero {
+    min-height: 440px;
+    padding: 75px 8%;
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    align-items: center;
+    gap: 50px;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 80% 35%, #123c65 0, transparent 32%),
+        linear-gradient(120deg, #07111f, #0b1d32);
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: #36e0e8;
+    filter: blur(150px);
+    opacity: .08;
+    right: 10%;
+    top: 5%;
+    animation: heroGlow 7s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+.hero > div:first-child {
+    position: relative;
+    z-index: 2;
+    animation: heroTextIn .9s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 2px;
+    font-size: 12px;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 5vw, 65px);
+    line-height: 1.05;
+    max-width: 650px;
+    margin-bottom: 22px;
+}
+
+.hero h1 span {
+    color: var(--cyan);
+    text-shadow: 0 0 28px #36e0e82a;
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 550px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 13px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 20px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    border: 1px solid var(--blue);
+    background: var(--blue);
+    color: white;
+    cursor: pointer;
+    transition: transform .3s ease, box-shadow .3s ease,
+                background .3s ease, border-color .3s ease;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px #398cff45;
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(-1px) scale(.98);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: var(--cyan);
+    border-color: #28557d;
+}
+
+.btn.secondary:hover:not(:disabled) {
+    background: #36e0e810;
+    border-color: var(--cyan);
+    box-shadow: 0 10px 28px #36e0e81c;
+}
+
+.btn:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ANIMATED HERO VISUAL */
+
+.hero-visual {
+    min-height: 280px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid #245079;
+    background: linear-gradient(145deg, #102b46, #0c2036);
+    border-radius: 15px;
+    padding: 22px;
+    transform: rotate(2deg);
+    box-shadow: 0 25px 70px #0008;
+    animation: visualEntrance 1s cubic-bezier(.2,.8,.2,1) .15s both,
+               visualFloat 6s ease-in-out 1.2s infinite;
+    transition: border-color .4s ease, box-shadow .4s ease;
+}
+
+.hero-visual::before {
+    content: "";
+    position: absolute;
+    inset: -60%;
+    z-index: -2;
+    background: conic-gradient(
+        transparent 0deg,
+        transparent 245deg,
+        #398cff 285deg,
+        #36e0e8 320deg,
+        transparent 360deg
+    );
+    animation: visualBorderSpin 8s linear infinite;
+}
+
+.hero-visual::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #102b46, #0c2036);
+}
+
+.hero-visual:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 25px 80px #36e0e82b;
+}
+
+.visual-top {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font: 11px 'DM Mono', monospace;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.visual-top span:last-child {
+    color: var(--green);
+    animation: activeBlink 2s ease-in-out infinite;
+}
+
+.visual-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    height: 190px;
+    position: relative;
+    z-index: 2;
+    perspective: 500px;
+}
+
+.visual-grid div {
+    border-radius: 6px;
+    background: linear-gradient(140deg, #398cff, #36e0e8);
+    opacity: .85;
+    box-shadow: 0 0 18px #36e0e81c;
+    animation: gridBlockIn .7s cubic-bezier(.2,.8,.2,1) both,
+               gridBlockPulse 3s ease-in-out infinite;
+    transition: transform .35s ease, filter .35s ease;
+}
+
+.visual-grid div:nth-child(1) { animation-delay: .2s, 1.2s; }
+.visual-grid div:nth-child(2) { animation-delay: .3s, 1.5s; }
+.visual-grid div:nth-child(3) { animation-delay: .4s, 1.8s; }
+.visual-grid div:nth-child(4) { animation-delay: .5s, 2.1s; }
+.visual-grid div:nth-child(5) { animation-delay: .6s, 2.4s; }
+.visual-grid div:nth-child(6) { animation-delay: .7s, 2.7s; }
+.visual-grid div:nth-child(7) { animation-delay: .8s, 3s; }
+.visual-grid div:nth-child(8) { animation-delay: .9s, 3.3s; }
+.visual-grid div:nth-child(9) { animation-delay: 1s, 3.6s; }
+
+.visual-grid div:nth-child(2),
+.visual-grid div:nth-child(5) {
+    opacity: .35;
+}
+
+.hero-visual:hover .visual-grid div {
+    filter: brightness(1.35);
+    transform: translateY(-5px) scale(1.025);
+}
+
+/* MAIN CONTENT */
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 65px 25px;
+}
+
+.section-label {
+    color: var(--cyan);
+    font: 12px 'DM Mono', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 13px;
+}
+
+.section-title {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.section-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 700px;
+    margin-bottom: 35px;
+}
+
+/* CONCEPT CARDS */
+
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-bottom: 60px;
+}
+
+.concept-card {
+    background: linear-gradient(145deg, #10263d, #0d1d31);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .4s cubic-bezier(.2,.8,.2,1),
+                border-color .4s ease, box-shadow .4s ease;
+    animation: cardEntrance .8s ease both;
+}
+
+.concept-card:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.concept-card::before {
+    content: "";
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    right: -80px;
+    top: -80px;
+    border-radius: 50%;
+    background: var(--cyan);
+    filter: blur(75px);
+    opacity: 0;
+    transition: opacity .4s ease;
+}
+
+.concept-card:hover {
+    transform: translateY(-9px);
+    border-color: #36e0e86b;
+    box-shadow: 0 18px 45px #0005, 0 0 25px #36e0e810;
+}
+
+.concept-card:hover::before {
+    opacity: .15;
+}
+
+.concept-card .number {
+    color: var(--cyan);
+    font: 12px 'DM Mono', monospace;
+    margin-bottom: 18px;
+}
+
+.concept-card h3 {
+    font-size: 23px;
+    margin-bottom: 12px;
+    transition: color .3s ease;
+}
+
+.concept-card:hover h3 {
+    color: var(--cyan);
+}
+
+.concept-card p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.code {
+    background: #050c16;
+    border: 1px solid #203c57;
+    padding: 17px;
+    border-radius: 8px;
+    color: #8ee8f0;
+    font: 13px/1.9 'DM Mono', monospace;
+    margin-top: 18px;
+    overflow-x: auto;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+.concept-card:hover .code {
+    border-color: #36e0e86b;
+    box-shadow: 0 0 20px #36e0e80c;
+}
+
+/* INTERACTIVE LABS */
+
+.lab {
+    background: linear-gradient(145deg, #10263d, #0d1d31);
+    border: 1px solid #21415e;
+    border-radius: 14px;
+    padding: 27px;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .35s ease, box-shadow .35s ease;
+}
+
+.lab::before {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    top: -150px;
+    right: -100px;
+    background: var(--blue);
+    filter: blur(100px);
+    opacity: .1;
+    pointer-events: none;
+}
+
+.lab:hover {
+    border-color: #398cff72;
+    box-shadow: 0 15px 45px #0003;
+}
+
+.lab-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.lab-heading h3 {
+    font-size: 22px;
+}
+
+.live-tag {
+    font: 11px 'DM Mono', monospace;
+    color: var(--cyan);
+    border: 1px solid #28657a;
+    padding: 7px 10px;
+    border-radius: 5px;
+    background: #36e0e808;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 22px;
+    position: relative;
+}
+
+.control {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 150px;
+}
+
+.control label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.control select {
+    width: 100%;
+    background: #071626;
+    color: var(--cyan);
+    border: 1px solid #2b4d6a;
+    border-radius: 6px;
+    padding: 11px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+.control select:hover,
+.control select:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px #36e0e812;
+}
+
+/* FLEXBOX PLAYGROUND */
+
+.flex-stage {
+    min-height: 260px;
+    background-color: #081727;
+    background-image: radial-gradient(#28445e 1px, transparent 1px);
+    background-size: 18px 18px;
+    border: 1px dashed #42617c;
+    border-radius: 9px;
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s ease, background-color .3s ease;
+}
+
+.flex-stage:hover {
+    border-color: var(--cyan);
+}
+
+.flex-item {
+    min-width: 48px;
+    min-height: 65px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, #398cff, #2362bd);
+    color: white;
+    border: 1px solid #77b6ff;
+    border-radius: 7px;
+    font: 14px 'DM Mono', monospace;
+    box-shadow: 0 7px 20px #398cff25;
+    transition: box-shadow .3s ease, border-color .3s ease;
+    will-change: transform;
+}
+
+.flex-item:nth-child(2) {
+    background: linear-gradient(145deg, #20c7d2, #117f9d);
+    border-color: #6beaf0;
+}
+
+.flex-item:nth-child(3) {
+    background: linear-gradient(145deg, #607eff, #454ac3);
+    border-color: #a2adff;
+}
+
+.flex-item:hover {
+    box-shadow: 0 0 25px #36e0e85c;
+    border-color: white;
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 14px;
+    line-height: 1.6;
+}
+
+/* GRID PLAYGROUND */
+
+.grid-stage {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    min-height: 280px;
+    background: #081727;
+    padding: 13px;
+    border: 1px dashed #42617c;
+    border-radius: 9px;
+    overflow: hidden;
+    transition: border-color .3s ease;
+}
+
+.grid-stage:hover {
+    border-color: var(--cyan);
+}
+
+.grid-item {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, #398cff, #2362bd);
+    border: 1px solid #77b6ff;
+    border-radius: 7px;
+    min-height: 65px;
+    font: 14px 'DM Mono', monospace;
+    box-shadow: 0 7px 20px #398cff20;
+    will-change: transform;
+    transition: box-shadow .3s ease, border-color .3s ease;
+}
+
+.grid-item:nth-child(even) {
+    background: linear-gradient(145deg, #20c7d2, #117f9d);
+    border-color: #6beaf0;
+}
+
+.grid-item:hover {
+    box-shadow: 0 0 25px #36e0e84a;
+    border-color: white;
+}
+
+/* COMPARISON */
+
+.comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 60px;
+}
+
+.compare-box {
+    background: linear-gradient(145deg, #10263d, #0c2036);
+    border: 1px solid var(--line);
+    padding: 23px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .35s ease, border-color .35s ease,
+                box-shadow .35s ease;
+}
+
+.compare-box::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    transition: width .45s ease;
+}
+
+.compare-box:hover {
+    transform: translateY(-7px);
+    border-color: #36e0e86b;
+    box-shadow: 0 15px 35px #0004;
+}
+
+.compare-box:hover::after {
+    width: 100%;
+}
+
+.compare-box h3 {
+    color: var(--cyan);
+    margin-bottom: 12px;
+}
+
+.compare-box p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+/* QUIZ */
+
+.quiz {
+    background: linear-gradient(140deg, #102d4a, #0b1b2e);
+    border: 1px solid #2c5b80;
+    border-radius: 14px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 45px #0003;
+}
+
+.quiz::before {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    right: -130px;
+    top: -130px;
+    border-radius: 50%;
+    background: var(--cyan);
+    filter: blur(110px);
+    opacity: .09;
+    pointer-events: none;
+}
+
+.quiz-question {
+    padding: 20px 0;
+    border-bottom: 1px solid #28435c;
+    position: relative;
+    animation: questionIn .6s ease both;
+}
+
+.quiz-question:nth-child(2) {
+    animation-delay: .1s;
+}
+
+.quiz-question:nth-child(3) {
+    animation-delay: .2s;
+}
+
+.quiz-question h4 {
+    margin-bottom: 13px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.quiz-question label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #b8cadd;
+    margin: 10px 0;
+    font-size: 14px;
+    cursor: pointer;
+    width: fit-content;
+    padding: 7px 11px;
+    border-radius: 6px;
+    transition: color .25s ease, background .25s ease,
+                transform .25s ease;
+}
+
+.quiz-question label:hover {
+    color: white;
+    background: #36e0e80d;
+    transform: translateX(5px);
+}
+
+.quiz-question input {
+    accent-color: var(--cyan);
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.quiz-question label:has(input:checked) {
+    color: var(--cyan);
+    background: #36e0e812;
+}
+
+.quiz-actions {
+    display: flex;
+    gap: 13px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 23px;
+    position: relative;
+}
+
+/* Style the reset button created by the quiz guard.
+   No second reset button is manually added in this lesson. */
+
+.quiz-actions #resetQuiz,
+.quiz-actions button[id*="reset"],
+.quiz-actions button[class*="reset"] {
+    appearance: none;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #ff9aa9 !important;
+    border: 1px solid #854452 !important;
+    border-radius: 6px !important;
+    padding: 13px 20px !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    transition: .3s ease !important;
+}
+
+.quiz-actions #resetQuiz:hover,
+.quiz-actions button[id*="reset"]:hover,
+.quiz-actions button[class*="reset"]:hover {
+    background: #ff718512 !important;
+    border-color: var(--danger) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px #ff71851c !important;
+}
+
+#quizResult {
+    color: var(--cyan);
+    font-size: 14px;
+    margin-top: 18px;
+    line-height: 1.7;
+    min-height: 24px;
+    position: relative;
+}
+
+#quizResult.success {
+    color: var(--green);
+    animation: resultPop .4s ease both;
+}
+
+#quizResult.error {
+    color: #ff9aa9;
+    animation: resultPop .4s ease both;
+}
+
+/* LESSON NAVIGATION */
+
+.lesson-footer {
+    margin-top: 35px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.lesson-footer a {
+    border: 1px solid #2b506f;
+    padding: 13px 17px;
+    border-radius: 6px;
+    color: var(--cyan);
+    font-size: 13px;
+    transition: transform .3s ease, background .3s ease,
+                border-color .3s ease, box-shadow .3s ease;
+}
+
+.lesson-footer a:hover:not(.locked) {
+    transform: translateY(-3px);
+    background: #36e0e80d;
+    border-color: var(--cyan);
+    box-shadow: 0 8px 22px #36e0e812;
+}
+
+.lesson-footer a.locked {
+    opacity: .35;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+footer {
+    border-top: 1px solid var(--line);
+    padding: 25px 7%;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+footer strong {
+    color: var(--cyan);
+    font-family: 'DM Mono', monospace;
+}
+
+/* ANIMATION KEYFRAMES */
+
+@keyframes navDrop {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroTextIn {
+    from { opacity: 0; transform: translateX(-35px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes heroGlow {
+    from { transform: scale(.8); opacity: .05; }
+    to { transform: scale(1.3); opacity: .14; }
+}
+
+@keyframes visualEntrance {
+    from {
+        opacity: 0;
+        transform: translateX(65px) rotate(10deg) scale(.88);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(2deg) scale(1);
+    }
+}
+
+@keyframes visualFloat {
+    0%, 100% { transform: translateY(0) rotate(2deg); }
+    50% { transform: translateY(-9px) rotate(0deg); }
+}
+
+@keyframes visualBorderSpin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes activeBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .4; }
+}
+
+@keyframes gridBlockIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) rotateX(25deg) scale(.8);
+    }
+    to {
+        opacity: .85;
+        transform: translateY(0) rotateX(0) scale(1);
+    }
+}
+
+@keyframes gridBlockPulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+@keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes questionIn {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes resultPop {
+    from { opacity: 0; transform: translateY(7px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 750px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 55px 7%;
+        gap: 35px;
+    }
+
+    .hero-visual {
+        transform: none;
+        animation: visualEntrance 1s ease .15s both,
+                   mobileVisualFloat 6s ease-in-out 1.2s infinite;
+    }
+
+    .concept-grid,
+    .comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-right {
+        gap: 10px;
+        font-size: 11px;
+    }
+
+    .lesson-tag {
+        display: none;
+    }
+
+    main {
+        padding: 45px 18px;
+    }
+
+    .lab {
+        padding: 17px;
+    }
+
+    .flex-stage {
+        min-height: 230px;
+    }
+
+    .section-title {
+        font-size: 28px;
+    }
+
+    .quiz {
+        padding: 20px;
+    }
+}
+
+@keyframes mobileVisualFloat {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-7px) rotate(0); }
+}
+
+@media(max-width: 450px) {
+    .hero h1 {
+        font-size: 39px;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+    }
+
+    .quiz-actions .btn {
+        width: 100%;
+    }
+
+    .lesson-footer a {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .visual-grid {
+        height: 160px;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media(prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="../css.html" target="_blank" rel="noopener" class="logo">CNF/</a>
+    <div class="nav-right">
+        <span>CSS COURSE</span>
+        <span class="lesson-tag">LESSON 05 / 08</span>
+    </div>
+</nav>
+
+<header class="hero">
+    <div>
+        <div class="eyebrow">CSS SPATIAL DESIGN / MODULE 05</div>
+        <h1>Build layouts with <span>Flexbox & Grid.</span></h1>
+        <p>
+            Learn how to arrange elements, create responsive layouts,
+            control alignment and build professional website structures.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#learning" class="btn">Explore Lesson ↓</a>
+            <a href="#playground" class="btn secondary">Open Playground</a>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="visual-top">
+            <span>LAYOUT_SYSTEM.exe</span>
+            <span>ACTIVE</span>
+        </div>
+        <div class="visual-grid">
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+            <div></div><div></div><div></div>
+        </div>
+    </div>
+</header>
+
+<main id="learning">
+
+    <div class="section-label">01 / THE CONCEPT</div>
+    <h2 class="section-title">Two powerful layout systems.</h2>
+    <p class="section-desc">
+        Flexbox and Grid are CSS layout systems. They help you position
+        elements without using difficult floats or unnecessary positioning.
+    </p>
+
+    <div class="concept-grid">
+        <article class="concept-card">
+            <div class="number">SYSTEM_01</div>
+            <h3>Flexbox</h3>
+            <p>
+                Flexbox is a one-dimensional layout system. It arranges
+                elements in a row or a column. Use it for navigation bars,
+                buttons, cards and aligning items.
+            </p>
+            <div class="code">
+.container {<br>
+&nbsp;&nbsp;display: flex;<br>
+&nbsp;&nbsp;justify-content: center;<br>
+&nbsp;&nbsp;align-items: center;<br>
+}
+            </div>
+        </article>
+
+        <article class="concept-card">
+            <div class="number">SYSTEM_02</div>
+            <h3>CSS Grid</h3>
+            <p>
+                Grid is a two-dimensional layout system. It controls rows
+                and columns together. Use it for galleries, dashboards
+                and complete page layouts.
+            </p>
+            <div class="code">
+.container {<br>
+&nbsp;&nbsp;display: grid;<br>
+&nbsp;&nbsp;grid-template-columns:<br>
+&nbsp;&nbsp;repeat(3, 1fr);<br>
+}
+            </div>
+        </article>
+    </div>
+
+    <div id="playground" class="section-label">02 / INTERACTIVE LAB</div>
+    <h2 class="section-title">Flexbox Playground</h2>
+    <p class="section-desc">
+        Change the controls below and watch the boxes rearrange instantly.
+        Experiment with different alignment and direction settings.
+    </p>
+
+    <section class="lab">
+        <div class="lab-heading">
+            <h3>Flexbox Control Panel</h3>
+            <span class="live-tag">● LIVE PREVIEW</span>
+        </div>
+
+        <div class="controls">
+            <div class="control">
+                <label for="direction">Flex Direction</label>
+                <select id="direction">
+                    <option value="row">Row</option>
+                    <option value="column">Column</option>
+                    <option value="row-reverse">Row Reverse</option>
+                    <option value="column-reverse">Column Reverse</option>
+                </select>
+            </div>
+
+            <div class="control">
+                <label for="justify">Justify Content</label>
+                <select id="justify">
+                    <option value="flex-start">Flex Start</option>
+                    <option value="center">Center</option>
+                    <option value="flex-end">Flex End</option>
+                    <option value="space-between">Space Between</option>
+                    <option value="space-around">Space Around</option>
+                    <option value="space-evenly">Space Evenly</option>
+                </select>
+            </div>
+
+            <div class="control">
+                <label for="align">Align Items</label>
+                <select id="align">
+                    <option value="center">Center</option>
+                    <option value="flex-start">Flex Start</option>
+                    <option value="flex-end">Flex End</option>
+                    <option value="stretch">Stretch</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex-stage" id="flexStage">
+            <div class="flex-item">01</div>
+            <div class="flex-item">02</div>
+            <div class="flex-item">03</div>
+        </div>
+
+        <p class="hint">
+            Try changing Flex Direction to Column, then change Justify Content
+            to Center. Notice how the boxes move.
+        </p>
+    </section>
+
+    <div class="section-label">03 / GRID EXPERIMENT</div>
+    <h2 class="section-title">CSS Grid Playground</h2>
+    <p class="section-desc">
+        Choose the number of columns and gap size. See how Grid distributes
+        items across a two-dimensional layout.
+    </p>
+
+    <section class="lab">
+        <div class="lab-heading">
+            <h3>Grid Control Panel</h3>
+            <span class="live-tag">● LIVE PREVIEW</span>
+        </div>
+
+        <div class="controls">
+            <div class="control">
+                <label for="columns">Number of Columns</label>
+                <select id="columns">
+                    <option value="2">2 Columns</option>
+                    <option value="3" selected>3 Columns</option>
+                    <option value="4">4 Columns</option>
+                    <option value="5">5 Columns</option>
+                </select>
+            </div>
+
+            <div class="control">
+                <label for="gridGap">Grid Gap</label>
+                <select id="gridGap">
+                    <option value="5px">Small</option>
+                    <option value="12px" selected>Medium</option>
+                    <option value="22px">Large</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid-stage" id="gridStage">
+            <div class="grid-item">01</div>
+            <div class="grid-item">02</div>
+            <div class="grid-item">03</div>
+            <div class="grid-item">04</div>
+            <div class="grid-item">05</div>
+            <div class="grid-item">06</div>
+        </div>
+
+        <p class="hint">
+            Change the columns to 2, 3, 4 or 5 and observe the layout.
+        </p>
+    </section>
+
+    <div class="section-label">04 / WHEN TO USE WHAT?</div>
+    <h2 class="section-title">Flexbox vs Grid</h2>
+
+    <div class="comparison">
+        <div class="compare-box">
+            <h3>Choose Flexbox</h3>
+            <p>
+                When you need to arrange items in one direction, such as
+                a navbar, a row of buttons, or vertically aligned content.
+            </p>
+        </div>
+
+        <div class="compare-box">
+            <h3>Choose Grid</h3>
+            <p>
+                When you need rows and columns together, such as a photo
+                gallery, product listing or dashboard layout.
+            </p>
+        </div>
+    </div>
+
+    <div class="section-label">05 / KNOWLEDGE CHECK</div>
+    <h2 class="section-title">Test your understanding.</h2>
+    <p class="section-desc">
+        Answer all three questions. You need at least 2 correct answers
+        to unlock lesson completion.
+    </p>
+
+    <section class="quiz">
+
+        <div class="quiz-question">
+            <h4>1. Flexbox is mainly a ______ dimensional layout system.</h4>
+            <label><input type="radio" name="q1" value="a"> Two</label>
+            <label><input type="radio" name="q1" value="b"> One</label>
+            <label><input type="radio" name="q1" value="c"> Three</label>
+        </div>
+
+        <div class="quiz-question">
+            <h4>2. Which CSS property activates Grid layout?</h4>
+            <label><input type="radio" name="q2" value="a"> position: grid</label>
+            <label><input type="radio" name="q2" value="b"> grid: on</label>
+            <label><input type="radio" name="q2" value="c"> display: grid</label>
+        </div>
+
+        <div class="quiz-question">
+            <h4>3. Which Flexbox property controls spacing along the main axis?</h4>
+            <label><input type="radio" name="q3" value="a"> justify-content</label>
+            <label><input type="radio" name="q3" value="b"> font-size</label>
+            <label><input type="radio" name="q3" value="c"> border-radius</label>
+        </div>
+
+        <div class="quiz-actions">
+            <button class="btn" id="submitQuiz" type="button">
+                Submit Answers
+            </button>
+
+            <!-- Reset Quiz is supplied by lesson-quiz-guard.js -->
+
+            <button class="btn secondary" id="completeBtn" type="button" disabled>
+                Complete Lesson
+            </button>
+        </div>
+
+        <p id="quizResult" aria-live="polite"></p>
+    </section>
+
+    <div class="lesson-footer">
+        <a href="04-box-model.html" target="_blank" rel="noopener">← Previous Lesson</a>
+        <a href="../css.html" target="_blank" rel="noopener">Course Home</a>
+        <a href="06-responsive-design.html" target="_blank" rel="noopener"
+           id="nextLesson" class="locked">Next Lesson →</a>
+    </div>
+
+</main>
+
+<footer>
+    <strong>CNF/</strong>
+    <span>CODE NEXA FORGE · CSS LEARNING LAB</span>
+</footer>
+
+<script>
+// FLEXBOX PLAYGROUND
+
+const flexStage = document.getElementById('flexStage');
+
+function animateLayout(container, updateFunction) {
+    const items = [...container.children];
+
+    const previousPositions = items.map(item =>
+        item.getBoundingClientRect()
+    );
+
+    updateFunction();
+
+    requestAnimationFrame(() => {
+        items.forEach((item, index) => {
+            const newPosition = item.getBoundingClientRect();
+            const oldPosition = previousPositions[index];
+
+            const deltaX = oldPosition.left - newPosition.left;
+            const deltaY = oldPosition.top - newPosition.top;
+
+            if (deltaX || deltaY) {
+                item.animate(
+                    [
+                        {
+                            transform: `translate(${deltaX}px, ${deltaY}px)`
+                        },
+                        {
+                            transform: 'translate(0, 0)'
+                        }
+                    ],
+                    {
+                        duration: 500,
+                        easing: 'cubic-bezier(.2,.8,.2,1)'
+                    }
+                );
+            }
+        });
+    });
+}
+
+function updateFlex(animate = false) {
+    const applyChanges = () => {
+        flexStage.style.flexDirection =
+            document.getElementById('direction').value;
+
+        flexStage.style.justifyContent =
+            document.getElementById('justify').value;
+
+        flexStage.style.alignItems =
+            document.getElementById('align').value;
+    };
+
+    if (animate) {
+        animateLayout(flexStage, applyChanges);
+    } else {
+        applyChanges();
+    }
+}
+
+['direction', 'justify', 'align'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => {
+        updateFlex(true);
+    });
+});
+
+updateFlex();
+
+
+// GRID PLAYGROUND
+
+const gridStage = document.getElementById('gridStage');
+
+function updateGrid(animate = false) {
+    const applyChanges = () => {
+        const columns = document.getElementById('columns').value;
+        const gap = document.getElementById('gridGap').value;
+
+        gridStage.style.gridTemplateColumns =
+            `repeat(${columns}, minmax(0, 1fr))`;
+
+        gridStage.style.gap = gap;
+    };
+
+    if (animate) {
+        animateLayout(gridStage, applyChanges);
+    } else {
+        applyChanges();
+    }
+}
+
+['columns', 'gridGap'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => {
+        updateGrid(true);
+    });
+});
+
+updateGrid();
+
+
+// QUIZ SYSTEM
+
+const answers = {
+    q1: 'b',
+    q2: 'c',
+    q3: 'a'
+};
+
+const submitQuiz = document.getElementById('submitQuiz');
+const completeBtn = document.getElementById('completeBtn');
+const nextLesson = document.getElementById('nextLesson');
+const quizResult = document.getElementById('quizResult');
+
+const completionKey = 'css-lesson-05-completed';
+
+let quizPassed = false;
+let lessonCompleted = false;
+
+function showQuizMessage(message, type = '') {
+    quizResult.textContent = message;
+    quizResult.className = type;
+}
+
+function lockNextLesson() {
+    nextLesson.classList.add('locked');
+    nextLesson.setAttribute('aria-disabled', 'true');
+}
+
+function unlockNextLesson() {
+    nextLesson.classList.remove('locked');
+    nextLesson.removeAttribute('aria-disabled');
+}
+
+
+// SUBMIT QUIZ
+
+submitQuiz.addEventListener('click', function() {
+    let score = 0;
+    let unanswered = false;
+
+    for (const question in answers) {
+        const selected = document.querySelector(
+            `input[name="${question}"]:checked`
+        );
+
+        if (!selected) {
+            unanswered = true;
+        } else if (selected.value === answers[question]) {
+            score++;
+        }
+    }
+
+    if (unanswered) {
+        quizPassed = false;
+        completeBtn.disabled = true;
+
+        showQuizMessage(
+            'Please answer all three questions first.',
+            'error'
+        );
+        return;
+    }
+
+    if (score >= 2) {
+        quizPassed = true;
+
+        completeBtn.disabled = false;
+        completeBtn.textContent = 'Complete Lesson';
+
+        showQuizMessage(
+            `Excellent! Your score is ${score}/3. You can now complete this lesson.`,
+            'success'
+        );
+    } else {
+        quizPassed = false;
+        completeBtn.disabled = true;
+
+        showQuizMessage(
+            `You scored ${score}/3. You need at least 2 correct answers. Try again!`,
+            'error'
+        );
+    }
+});
+
+
+// COMPLETE LESSON
+
+completeBtn.addEventListener('click', function() {
+    if (!quizPassed || lessonCompleted) return;
+
+    lessonCompleted = true;
+
+    localStorage.setItem(completionKey, 'true');
+
+    completeBtn.textContent = '✓ Lesson Completed';
+    completeBtn.disabled = true;
+
+    unlockNextLesson();
+
+    showQuizMessage(
+        'Lesson completed successfully! Your next lesson is now unlocked.',
+        'success'
+    );
+});
+
+
+// IF ANSWERS CHANGE AFTER SUBMISSION
+
+document.querySelectorAll('.quiz-question input').forEach(input => {
+    input.addEventListener('change', function() {
+        if (lessonCompleted) {
+            lessonCompleted = false;
+            localStorage.removeItem(completionKey);
+            lockNextLesson();
+
+            completeBtn.textContent = 'Complete Lesson';
+            completeBtn.disabled = true;
+
+            showQuizMessage(
+                'Your answers have changed. Submit the quiz again to complete this lesson.',
+                ''
+            );
+        } else if (quizPassed) {
+            quizPassed = false;
+            completeBtn.disabled = true;
+
+            showQuizMessage(
+                'Your answers have changed. Submit the quiz again.',
+                ''
+            );
+        }
+    });
+});
+
+
+// RESTORE COMPLETION STATE
+
+if (localStorage.getItem(completionKey) === 'true') {
+    lessonCompleted = true;
+    quizPassed = true;
+
+    completeBtn.textContent = '✓ Lesson Completed';
+    completeBtn.disabled = true;
+
+    unlockNextLesson();
+
+    showQuizMessage(
+        'You have already completed this lesson. Next lesson is unlocked!',
+        'success'
+    );
+} else {
+    lockNextLesson();
+}
+
+
+// SMOOTH SCROLL
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(event) {
+        const target = document.querySelector(this.getAttribute('href'));
+
+        if (target) {
+            event.preventDefault();
+
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+</script>
+
+<script src="../../js/lesson-quiz-guard.js"></script>
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

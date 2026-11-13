@@ -1,0 +1,366 @@
+
+/* =========================================
+   NEXA AI GLOBAL FLOATING WIDGET
+========================================= */
+
+#nexa-global-widget {
+    --nexa-cyan: #00e5ff;
+    --nexa-purple: #9b5cff;
+    --nexa-bg: #0b1020;
+    --nexa-card: #111a2e;
+    --nexa-text: #f5f7ff;
+    --nexa-muted: #9ba8c7;
+
+    position: fixed;
+    right: 28px;
+    bottom: 25px;
+    z-index: 999999;
+    font-family: Arial, sans-serif;
+}
+
+/* Floating launcher */
+
+#nexa-global-widget .nexa-global-launcher {
+    width: 66px;
+    height: 66px;
+    border: 2px solid rgba(0, 229, 255, 0.7);
+    border-radius: 50%;
+    background: linear-gradient(135deg, #111a2e, #25204a);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.35),
+                0 0 35px rgba(155, 92, 255, 0.2);
+    animation: nexaGlobalFloat 3s ease-in-out infinite,
+               nexaGlobalGlow 2.5s ease-in-out infinite alternate;
+    transition: transform 0.3s ease;
+}
+
+#nexa-global-widget .nexa-global-launcher:hover {
+    transform: scale(1.12) rotate(8deg);
+}
+
+/* Launcher animations */
+
+@keyframes nexaGlobalFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-9px); }
+}
+
+@keyframes nexaGlobalGlow {
+    from {
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+    }
+    to {
+        box-shadow: 0 0 30px rgba(0, 229, 255, 0.65),
+                    0 0 45px rgba(155, 92, 255, 0.3);
+    }
+}
+
+/* Chat panel */
+
+#nexa-global-widget .nexa-global-chat {
+    position: absolute;
+    right: 0;
+    bottom: 82px;
+    width: 355px;
+    max-width: calc(100vw - 35px);
+    height: 490px;
+    max-height: calc(100vh - 130px);
+    background: var(--nexa-bg);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.94);
+    transform-origin: bottom right;
+    transition: opacity 0.3s ease,
+                transform 0.3s ease,
+                visibility 0.3s ease;
+    box-shadow: 0 15px 55px rgba(0, 0, 0, 0.55),
+                0 0 25px rgba(0, 229, 255, 0.12);
+}
+
+#nexa-global-widget .nexa-global-chat.nexa-global-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* Chat header */
+
+#nexa-global-widget .nexa-global-header {
+    padding: 17px;
+    background: linear-gradient(110deg, #10263b, #251849);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+#nexa-global-widget .nexa-global-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+#nexa-global-widget .nexa-global-avatar {
+    width: 39px;
+    height: 39px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--nexa-cyan), var(--nexa-purple));
+    color: #08111f;
+    font-size: 20px;
+}
+
+#nexa-global-widget .nexa-global-title {
+    color: var(--nexa-text);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+#nexa-global-widget .nexa-global-status {
+    color: #6dffc0;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+#nexa-global-widget .nexa-global-actions {
+    display: flex;
+    gap: 7px;
+}
+
+#nexa-global-widget .nexa-global-actions button {
+    width: 29px;
+    height: 29px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.09);
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#nexa-global-widget .nexa-global-actions button:hover {
+    background: rgba(0,229,255,0.2);
+    transform: scale(1.1);
+}
+
+/* Messages */
+
+#nexa-global-widget .nexa-global-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#nexa-global-widget .nexa-global-message {
+    max-width: 85%;
+    padding: 11px 13px;
+    border-radius: 13px;
+    color: var(--nexa-text);
+    font-size: 13px;
+    line-height: 1.55;
+    animation: nexaGlobalMessage 0.3s ease both;
+    overflow-wrap: anywhere;
+}
+
+@keyframes nexaGlobalMessage {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#nexa-global-widget .nexa-global-bot {
+    align-self: flex-start;
+    background: #18243b;
+    border: 1px solid rgba(0,229,255,0.12);
+}
+
+#nexa-global-widget .nexa-global-user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #176c91, #6540a5);
+}
+
+/* Suggestions */
+
+#nexa-global-widget .nexa-global-suggestions {
+    padding: 0 14px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+#nexa-global-widget .nexa-global-suggestions button {
+    border: 1px solid rgba(0,229,255,0.35);
+    background: rgba(0,229,255,0.06);
+    color: #a8efff;
+    padding: 7px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#nexa-global-widget .nexa-global-suggestions button:hover {
+    background: rgba(0,229,255,0.2);
+    transform: translateY(-2px);
+}
+
+/* Input area */
+
+#nexa-global-widget .nexa-global-input-area {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    background: #10182a;
+}
+
+#nexa-global-widget .nexa-global-input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid rgba(0,229,255,0.2);
+    outline: none;
+    border-radius: 11px;
+    padding: 12px;
+    background: #19243a;
+    color: white;
+    font-size: 13px;
+}
+
+#nexa-global-widget .nexa-global-input:focus {
+    border-color: var(--nexa-cyan);
+}
+
+#nexa-global-widget .nexa-global-send {
+    width: 43px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--nexa-cyan), var(--nexa-purple));
+    color: #07101d;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#nexa-global-widget .nexa-global-send:hover {
+    transform: scale(1.08);
+}
+
+/* Typing indicator */
+
+#nexa-global-widget .nexa-global-typing {
+    display: flex;
+    gap: 4px;
+    align-self: flex-start;
+    padding: 12px;
+    background: #18243b;
+    border-radius: 12px;
+}
+
+#nexa-global-widget .nexa-global-typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--nexa-cyan);
+    animation: nexaGlobalTyping 0.8s infinite alternate;
+}
+
+#nexa-global-widget .nexa-global-typing span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+#nexa-global-widget .nexa-global-typing span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes nexaGlobalTyping {
+    to { opacity: 0.25; transform: translateY(-4px); }
+}
+
+/* Full AI page link */
+
+#nexa-global-widget .nexa-global-full-link {
+    display: block;
+    text-align: center;
+    padding: 9px;
+    color: #9cefff;
+    font-size: 11px;
+    text-decoration: none;
+    background: rgba(0,229,255,0.04);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.2s ease;
+}
+
+#nexa-global-widget .nexa-global-full-link:hover {
+    background: rgba(0,229,255,0.12);
+}
+
+/* Minimized state */
+
+#nexa-global-widget.nexa-global-minimized .nexa-global-chat {
+    display: none;
+}
+
+/* Mobile responsive */
+
+@media (max-width: 480px) {
+    #nexa-global-widget {
+        right: 15px;
+        bottom: 15px;
+    }
+
+    #nexa-global-widget .nexa-global-launcher {
+        width: 58px;
+        height: 58px;
+    }
+
+    #nexa-global-widget .nexa-global-chat {
+        position: fixed;
+        right: 12px;
+        bottom: 85px;
+        width: calc(100vw - 24px);
+        max-width: 400px;
+        height: min(490px, calc(100vh - 110px));
+        max-height: calc(100vh - 110px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #nexa-global-widget *,
+    #nexa-global-widget *::before,
+    #nexa-global-widget *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* CNF-only assistant scope notice */
+.nexa-global-scope {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 11px 14px;
+    border-bottom: 1px solid rgba(0,217,255,.16);
+    background: linear-gradient(110deg,rgba(0,217,255,.07),rgba(168,85,247,.07));
+    color: #aebbd0;
+    font-size: 11px;
+    line-height: 1.5;
+}
+.nexa-global-scope strong {
+    color: #00d9ff;
+    font-size: 11px;
+    letter-spacing: .04em;
+}

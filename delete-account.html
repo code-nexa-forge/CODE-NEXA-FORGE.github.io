@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b14">
+
+<title>Delete Account | CODE NEXA FORGE</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(239,68,68,0.12), transparent 35%),
+        radial-gradient(circle at 85% 85%, rgba(124,58,237,0.12), transparent 35%),
+        #080b14;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 38px;
+    background: rgba(17, 24, 39, 0.88);
+    border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 22px;
+    box-shadow: 0 20px 70px rgba(0,0,0,0.4);
+    animation: appear 0.7s ease both;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.icon {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 22px;
+    border-radius: 22px;
+    background: rgba(239,68,68,0.12);
+    border: 1px solid rgba(239,68,68,0.3);
+    font-size: 34px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(239,68,68,0.25);
+    }
+    50% {
+        box-shadow: 0 0 0 13px rgba(239,68,68,0);
+    }
+}
+
+h1 {
+    text-align: center;
+    font-size: 27px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #9ca3af;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.warning {
+    padding: 17px;
+    margin-bottom: 27px;
+    border-radius: 12px;
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.22);
+    color: #fca5a5;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.warning strong {
+    display: block;
+    color: #f87171;
+    margin-bottom: 5px;
+}
+
+label {
+    display: block;
+    color: #d1d5db;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 9px;
+}
+
+.password-wrapper {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+input {
+    width: 100%;
+    padding: 15px 75px 15px 15px;
+    background: #0b1120;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    outline: none;
+    color: white;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+}
+
+.toggle-password {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 12px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.delete-btn,
+.cancel-btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.delete-btn {
+    color: white;
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    border: 1px solid rgba(248,113,113,0.5);
+    animation: buttonGlow 2.5s infinite;
+}
+
+@keyframes buttonGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(239,68,68,0);
+    }
+    50% {
+        box-shadow: 0 0 22px rgba(239,68,68,0.25);
+    }
+}
+
+.delete-btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+}
+
+.delete-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.cancel-btn {
+    margin-top: 12px;
+    color: #d1d5db;
+    background: transparent;
+    border: 1px solid #374151;
+}
+
+.cancel-btn:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: #6b7280;
+}
+
+.message {
+    display: none;
+    margin-top: 17px;
+    padding: 12px;
+    border-radius: 9px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.message.error {
+    display: block;
+    color: #fca5a5;
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.25);
+}
+
+.message.success {
+    display: block;
+    color: #86efac;
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.25);
+}
+
+.brand {
+    margin-top: 28px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+@media(max-width: 500px) {
+    .container {
+        padding: 27px 21px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="icon">⚠️</div>
+
+    <h1>Delete Your Account</h1>
+
+    <p class="subtitle">
+        We're sorry to see you go. Please verify your identity before continuing.
+    </p>
+
+    <div class="warning">
+        <strong>⚠️ Important: Permanent Action</strong>
+        Deleting your account will permanently remove your account and associated learning progress. This action cannot be undone.
+    </div>
+
+    <form id="deleteForm">
+
+        <label for="currentPassword">Enter Your Current Password</label>
+
+        <div class="password-wrapper">
+            <input
+                type="password"
+                id="currentPassword"
+                placeholder="Enter your current password"
+                autocomplete="current-password"
+                required
+            >
+
+            <span class="toggle-password" id="togglePassword">
+                SHOW
+            </span>
+        </div>
+
+        <button type="submit" class="delete-btn" id="deleteBtn">
+            Permanently Delete Account
+        </button>
+
+        <button
+            type="button"
+            class="cancel-btn"
+            onclick="window.location.href='/profile.html'"
+        >
+            Cancel and Go Back
+        </button>
+
+        <div class="message" id="message"></div>
+
+    </form>
+
+    <div class="brand">CODE NEXA FORGE</div>
+
+</div>
+
+<script>
+const passwordInput = document.getElementById('currentPassword');
+const togglePassword = document.getElementById('togglePassword');
+const deleteForm = document.getElementById('deleteForm');
+const deleteBtn = document.getElementById('deleteBtn');
+const message = document.getElementById('message');
+
+togglePassword.addEventListener('click', function () {
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        togglePassword.textContent = 'HIDE';
+    } else {
+        passwordInput.type = 'password';
+        togglePassword.textContent = 'SHOW';
+    }
+});
+
+deleteForm.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    message.className = 'message';
+    message.textContent = '';
+
+    const password = passwordInput.value.trim();
+
+    if (!password) {
+        message.textContent = 'Please enter your current password.';
+        message.className = 'message error';
+        return;
+    }
+
+    const confirmed = confirm(
+        'Are you absolutely sure? Your account and learning progress will be permanently deleted.'
+    );
+
+    if (!confirmed) return;
+
+    deleteBtn.disabled = true;
+    deleteBtn.textContent = 'Processing...';
+
+    try {
+        const response = await fetch('/api/auth/delete-account', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Unable to delete your account.');
+        }
+
+        message.textContent = data.message || 'Your account has been deleted.';
+        message.className = 'message success';
+
+        passwordInput.value = '';
+
+        setTimeout(function () {
+            window.location.href = '/login.html';
+        }, 1800);
+
+    } catch (error) {
+        message.textContent = error.message || 'Something went wrong. Please try again.';
+        message.className = 'message error';
+
+        deleteBtn.disabled = false;
+        deleteBtn.textContent = 'Permanently Delete Account';
+    }
+});
+</script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

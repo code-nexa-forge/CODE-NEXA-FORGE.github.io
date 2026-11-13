@@ -1,0 +1,1326 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#160606">
+
+<title>Contact Support | CODE NEXA FORGE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ==========================================
+   CODE NEXA FORGE
+   PREMIUM ELECTRIC RED SUPPORT EXPERIENCE
+========================================== */
+
+:root {
+    --red: #ff2424;
+    --red-light: #ff5555;
+    --red-dark: #a80000;
+
+    --green: #42f477;
+    --yellow: #ffdf42;
+
+    --bg: #160606;
+    --panel: rgba(32, 12, 12, .88);
+    --panel-light: #291111;
+
+    --white: #ffffff;
+    --muted: #c4aaaa;
+
+    --border: rgba(255, 65, 65, .24);
+
+    --font: "DM Sans", sans-serif;
+    --heading: "Space Grotesk", sans-serif;
+}
+
+/* GLOBAL RESET */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-wrap: anywhere;
+
+    background: var(--bg);
+    color: var(--white);
+
+    font-family: var(--font);
+    position: relative;
+    isolation: isolate;
+}
+
+/* ==========================================
+   MOVING ELECTRIC RED BACKGROUND
+========================================== */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: -30%;
+
+    z-index: -2;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 20% 25%,
+            rgba(255, 20, 20, .38),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(180, 0, 0, .35),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255, 65, 65, .12),
+            transparent 45%
+        );
+
+    animation: electricBackground 14s ease-in-out infinite alternate;
+}
+
+@keyframes electricBackground {
+    0% {
+        transform: translate(-4%, -3%) scale(1);
+        filter: hue-rotate(0deg);
+    }
+
+    50% {
+        transform: translate(3%, 4%) scale(1.13);
+        filter: hue-rotate(12deg);
+    }
+
+    100% {
+        transform: translate(-2%, 5%) scale(1.08);
+        filter: hue-rotate(-12deg);
+    }
+}
+
+/* Animated grid */
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    z-index: -1;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 65, 65, .055) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 65, 65, .055) 1px,
+            transparent 1px
+        );
+
+    background-size: 48px 48px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 95%
+        );
+
+    animation: gridMovement 25s linear infinite;
+}
+
+@keyframes gridMovement {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 48px 48px;
+    }
+}
+
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+.navbar {
+    width: 100%;
+    min-height: 76px;
+    height: auto;
+
+    padding: 14px max(5%, calc((100% - 1080px) / 2));
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+
+    background: rgba(20, 5, 5, .82);
+    backdrop-filter: blur(20px);
+
+    border-bottom: 1px solid var(--border);
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    animation: navbarEnter .8s ease both;
+}
+
+@keyframes navbarEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.brand {
+    font-family: var(--heading);
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+
+    color: var(--white);
+    overflow-wrap: anywhere;
+}
+
+.brand span {
+    color: var(--green);
+    text-shadow: 0 0 15px rgba(66, 244, 119, .5);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-width: 0;
+}
+
+/* Navigation buttons */
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-width: 0;
+    max-width: 100%;
+
+    padding: 10px 17px;
+
+    border-radius: 10px;
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+
+    transition:
+        transform .35s ease,
+        background .35s ease,
+        box-shadow .35s ease,
+        color .35s ease;
+}
+
+.profile-btn {
+    color: #07180d;
+    background: linear-gradient(120deg, #42f477, #a4ff70);
+
+    border: 1px solid var(--green);
+
+    box-shadow: 0 0 15px rgba(66, 244, 119, .15);
+}
+
+.profile-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(66, 244, 119, .35);
+    color: #07180d;
+}
+
+.back-btn {
+    color: var(--yellow);
+    background: rgba(255, 36, 36, .12);
+    border: 1px solid rgba(255, 65, 65, .45);
+}
+
+.back-btn:hover {
+    background: var(--red);
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(255, 36, 36, .3);
+}
+
+/* ==========================================
+   MAIN LAYOUT
+========================================== */
+
+main {
+    width: min(100% - 40px, 1040px);
+    max-width: 100%;
+
+    margin: 55px auto 75px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, .85fr)
+        minmax(0, 1.15fr);
+
+    align-items: start;
+    gap: clamp(20px, 3vw, 36px);
+
+    animation: pageEnter 1s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+main > section {
+    min-width: 0;
+    max-width: 100%;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* ==========================================
+   LEFT INFORMATION PANEL
+========================================== */
+
+.eyebrow {
+    display: inline-block;
+
+    color: var(--green);
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+
+    margin-bottom: 17px;
+
+    animation: eyebrowGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes eyebrowGlow {
+    from {
+        text-shadow: 0 0 3px rgba(66, 244, 119, .2);
+    }
+
+    to {
+        text-shadow: 0 0 15px rgba(66, 244, 119, .65);
+    }
+}
+
+h1 {
+    max-width: 100%;
+
+    font-family: var(--heading);
+    font-size: clamp(35px, 4.5vw, 55px);
+    line-height: 1.12;
+    font-weight: 800;
+
+    letter-spacing: -1.8px;
+
+    margin-bottom: 18px;
+
+    overflow-wrap: anywhere;
+}
+
+.gradient {
+    background:
+        linear-gradient(
+            110deg,
+            var(--yellow),
+            var(--red-light),
+            var(--green),
+            var(--yellow)
+        );
+
+    background-size: 300% 300%;
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    animation: gradientText 6s ease infinite;
+}
+
+@keyframes gradientText {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.intro {
+    max-width: 430px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    line-height: 1.9;
+
+    overflow-wrap: anywhere;
+}
+
+/* Information card */
+
+.info {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    margin-top: 25px;
+    padding: 18px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(48, 13, 13, .94),
+        rgba(25, 8, 8, .96)
+    );
+
+    border: 1px solid rgba(66, 244, 119, .25);
+    border-radius: 15px;
+
+    transition:
+        transform .4s ease,
+        border-color .4s ease,
+        box-shadow .4s ease;
+}
+
+.info:hover {
+    transform: translateY(-5px);
+    border-color: var(--green);
+
+    box-shadow:
+        0 12px 35px rgba(66, 244, 119, .12),
+        0 0 20px rgba(66, 244, 119, .08);
+}
+
+.info strong {
+    display: block;
+
+    color: var(--yellow);
+
+    font-family: var(--heading);
+    font-size: 14px;
+
+    margin-bottom: 8px;
+}
+
+.info p {
+    color: var(--muted);
+
+    font-size: 12px;
+    line-height: 1.8;
+
+    overflow-wrap: anywhere;
+}
+
+/* ==========================================
+   SUPPORT FORM CARD
+========================================== */
+
+.form-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: clamp(19px, 3vw, 28px);
+
+    background: linear-gradient(
+        145deg,
+        rgba(43, 12, 12, .96),
+        rgba(22, 8, 8, .97)
+    );
+
+    border: 1px solid rgba(255, 65, 65, .35);
+    border-radius: 19px;
+
+    box-shadow:
+        0 20px 65px rgba(0, 0, 0, .35),
+        0 0 25px rgba(255, 36, 36, .08);
+
+    position: relative;
+    overflow: hidden;
+
+    animation: cardEnter 1s .15s both;
+
+    transition:
+        border-color .4s ease,
+        box-shadow .4s ease,
+        transform .4s ease;
+}
+
+.form-card:hover {
+    border-color: rgba(255, 223, 66, .55);
+
+    box-shadow:
+        0 25px 75px rgba(0, 0, 0, .4),
+        0 0 30px rgba(255, 36, 36, .12);
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Card top light */
+
+.form-card::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 60%;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--yellow),
+        var(--green),
+        transparent
+    );
+
+    animation: cardLight 5s ease-in-out infinite;
+}
+
+@keyframes cardLight {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+.form-card h2 {
+    color: var(--yellow);
+
+    font-family: var(--heading);
+    font-size: 22px;
+
+    margin-bottom: 7px;
+    overflow-wrap: anywhere;
+}
+
+.form-card > p {
+    color: var(--muted);
+
+    font-size: 12px;
+    line-height: 1.7;
+
+    margin-bottom: 22px;
+}
+
+/* ==========================================
+   FORM ELEMENTS
+========================================== */
+
+#supportForm {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.field {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    margin-bottom: 16px;
+}
+
+.field label {
+    display: block;
+    max-width: 100%;
+
+    color: var(--yellow);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    line-height: 1.5;
+
+    margin-bottom: 7px;
+
+    transition: color .3s ease;
+}
+
+.field label:hover {
+    color: var(--green);
+}
+
+/* Inputs */
+
+.field input,
+.field select,
+.field textarea {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 12px 13px;
+
+    border: 1px solid rgba(255, 65, 65, .35);
+    border-radius: 10px;
+
+    background: rgba(12, 5, 5, .95);
+
+    color: var(--white);
+
+    outline: none;
+
+    font-family: var(--font);
+    font-size: 13px;
+    line-height: 1.55;
+
+    transition:
+        border-color .35s ease,
+        box-shadow .35s ease,
+        transform .35s ease,
+        background .35s ease;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+    color: #927777;
+    opacity: 1;
+}
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+    border-color: var(--yellow);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--green);
+
+    background: #190b0b;
+
+    box-shadow:
+        0 0 0 3px rgba(66, 244, 119, .10),
+        0 0 20px rgba(66, 244, 119, .12);
+
+    transform: translateY(-2px);
+}
+
+.field textarea {
+    min-height: 125px;
+    resize: vertical;
+    overflow-wrap: anywhere;
+}
+
+/* Select option */
+
+.field select {
+    cursor: pointer;
+}
+
+.field select option {
+    background: #1b0808;
+    color: white;
+}
+
+/* ==========================================
+   SUBMIT BUTTON
+========================================== */
+
+.submit {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--red);
+    border-radius: 11px;
+
+    background: linear-gradient(
+        110deg,
+        #ff2424,
+        #bd0808
+    );
+
+    color: white;
+
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 800;
+
+    line-height: 1.5;
+    white-space: normal;
+
+    cursor: pointer;
+
+    position: relative;
+    overflow: hidden;
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        background .35s ease;
+}
+
+/* Shine */
+
+.submit::before {
+    content: "";
+    position: absolute;
+
+    top: -100%;
+    left: -120%;
+
+    width: 65%;
+    height: 300%;
+
+    transform: rotate(25deg);
+
+    background: rgba(255, 255, 255, .25);
+
+    transition: left .7s ease;
+}
+
+.submit:hover::before {
+    left: 150%;
+}
+
+.submit:hover {
+    transform: translateY(-4px);
+
+    background: linear-gradient(
+        110deg,
+        #42f477,
+        #a4ff70
+    );
+
+    color: #07180d;
+
+    border-color: var(--green);
+
+    box-shadow:
+        0 12px 30px rgba(66, 244, 119, .22);
+}
+
+.submit:active {
+    transform: scale(.97);
+}
+
+.submit:disabled {
+    opacity: .6;
+    cursor: wait;
+    transform: none;
+}
+
+/* ==========================================
+   FORM STATUS
+========================================== */
+
+.status {
+    display: none;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 15px;
+    padding: 13px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+}
+
+.status.show {
+    display: block;
+    animation: statusEnter .4s ease both;
+}
+
+.status.success {
+    background: rgba(66, 244, 119, .09);
+
+    border: 1px solid rgba(66, 244, 119, .3);
+
+    color: var(--green);
+}
+
+.status.error {
+    background: rgba(255, 36, 36, .09);
+
+    border: 1px solid rgba(255, 36, 36, .35);
+
+    color: #ff9292;
+}
+
+@keyframes statusEnter {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Honeypot */
+
+.hp {
+    position: absolute !important;
+
+    left: -10000px !important;
+
+    width: 1px !important;
+    height: 1px !important;
+
+    overflow: hidden !important;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 23px 20px;
+
+    text-align: center;
+
+    border-top: 1px solid rgba(255, 65, 65, .2);
+
+    background: rgba(18, 5, 5, .7);
+
+    color: #b49a9a;
+
+    font-size: 11px;
+    line-height: 1.8;
+
+    overflow-wrap: anywhere;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #160606;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        var(--red),
+        var(--yellow),
+        var(--green)
+    );
+
+    border-radius: 20px;
+}
+
+/* Text selection */
+
+::selection {
+    background: var(--red);
+    color: white;
+}
+
+/* ==========================================
+   RESPONSIVE TABLET
+========================================== */
+
+@media (max-width: 800px) {
+
+    main {
+        grid-template-columns: minmax(0, 1fr);
+
+        width: min(100% - 36px, 620px);
+
+        margin: 40px auto 55px;
+
+        gap: 25px;
+    }
+
+    .intro {
+        max-width: 100%;
+    }
+
+    .navbar {
+        min-height: 68px;
+        padding: 12px 4%;
+    }
+
+    .brand {
+        font-size: 16px;
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+    .navbar {
+        align-items: center;
+        gap: 10px;
+    }
+
+    .brand {
+        font-size: 14px;
+    }
+
+    .nav-actions {
+        gap: 7px;
+    }
+
+    .nav-btn {
+        padding: 9px 11px;
+        font-size: 11px;
+    }
+
+    main {
+        width: calc(100% - 28px);
+        margin: 30px auto 45px;
+        gap: 22px;
+    }
+
+    h1 {
+        font-size: clamp(34px, 10vw, 43px);
+        letter-spacing: -1.3px;
+    }
+
+    .form-card {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .form-card h2 {
+        font-size: 20px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+        font-size: 16px;
+    }
+
+}
+
+/* ==========================================
+   ACCESSIBILITY
+========================================== */
+
+:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav class="navbar">
+
+    <a href="/" class="brand">
+        CODE NEXA <span>FORGE</span>
+    </a>
+
+    <div class="nav-actions">
+
+        <a href="/profile.html" class="nav-btn profile-btn">
+            <span>◉</span>
+            Profile
+        </a>
+
+        <a href="/" class="nav-btn back-btn">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- MAIN CONTENT -->
+
+<main>
+
+    <!-- LEFT INFORMATION -->
+
+    <section>
+
+        <div class="eyebrow">
+            WE'RE HERE TO HELP
+        </div>
+
+        <h1>
+            Let's solve it
+            <span class="gradient">together.</span>
+        </h1>
+
+        <p class="intro">
+            Having trouble with your account, a lesson, a quiz,
+            NEXA AI or the NEXA Library? Send our support team
+            a message and we'll get back to you by email.
+        </p>
+
+        <div class="info">
+
+            <strong>Student Support</strong>
+
+            <p>
+                Share clear details about the issue, including
+                the page or lesson where it happened.
+                Please do not include your password or
+                other confidential information.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- SUPPORT FORM -->
+
+    <section class="form-card">
+
+        <h2>Contact Support</h2>
+
+        <p>
+            Complete the form below. All fields are required.
+        </p>
+
+        <form id="supportForm" novalidate>
+
+            <!-- NAME -->
+
+            <div class="field">
+
+                <label for="name">
+                    Your Name
+                </label>
+
+                <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    minlength="2"
+                    maxlength="80"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="field">
+
+                <label for="email">
+                    Your Email
+                </label>
+
+                <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    maxlength="254"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="field">
+
+                <label for="category">
+                    Problem Category
+                </label>
+
+                <select
+                    id="category"
+                    name="category"
+                    required
+                >
+
+                    <option value="">
+                        Select a category
+                    </option>
+
+                    <option>Account &amp; Login</option>
+
+                    <option>Course / Lesson</option>
+
+                    <option>Quiz &amp; Progress</option>
+
+                    <option>NEXA Library</option>
+
+                    <option>NEXA AI</option>
+
+                    <option>Technical Issue</option>
+
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div class="field">
+
+                <label for="message">
+                    Describe Your Problem
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    minlength="15"
+                    maxlength="3000"
+                    placeholder="Tell us what happened and what you expected..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- HONEYPOT -->
+
+            <div class="hp" aria-hidden="true">
+
+                <label for="website">
+                    Leave this field empty
+                </label>
+
+                <input
+                    id="website"
+                    name="website"
+                    type="text"
+                    tabindex="-1"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                class="submit"
+                id="submitButton"
+                type="submit"
+            >
+                Send Support Request ↗
+            </button>
+
+
+            <!-- STATUS -->
+
+            <div
+                class="status"
+                id="formStatus"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+    © 2026 CODE NEXA FORGE · Learn. Build. Master.
+</footer>
+
+
+<!-- SUPPORT FORM JAVASCRIPT -->
+
+<script>
+
+"use strict";
+
+const form = document.getElementById("supportForm");
+
+const button = document.getElementById("submitButton");
+
+const statusBox = document.getElementById("formStatus");
+
+
+form.addEventListener("submit", async event => {
+
+    event.preventDefault();
+
+    statusBox.className = "status";
+
+    statusBox.textContent = "";
+
+    if (!form.reportValidity()) {
+        return;
+    }
+
+    const payload = Object.fromEntries(
+        new FormData(form).entries()
+    );
+
+    button.disabled = true;
+
+    button.textContent = "Sending securely...";
+
+    try {
+
+        const response = await fetch(
+            "/api/support/contact",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(payload)
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+
+            throw new Error(
+                result.message || "Unable to send your request."
+            );
+
+        }
+
+        statusBox.textContent = result.message;
+
+        statusBox.className = "status success show";
+
+        form.reset();
+
+    } catch (error) {
+
+        statusBox.textContent =
+            error.message ||
+            "Something went wrong. Please try again.";
+
+        statusBox.className = "status error show";
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent = "Send Support Request ↗";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

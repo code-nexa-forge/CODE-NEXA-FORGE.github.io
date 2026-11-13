@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/html-lesson-access-gate.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNF/ | Links & Images</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #09141d;
+    --panel: #10232e;
+    --panel2: #142b37;
+    --ink: #edf8fa;
+    --muted: #9bb2bc;
+    --cyan: #51e1d0;
+    --blue: #64a8ff;
+    --line: rgba(176,220,229,.13);
+}
+
+* { box-sizing: border-box; }
+
+html {
+    scroll-behavior: smooth;
+    overflow-y: auto;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+button, input, textarea, select { font: inherit; }
+
+.navbar {
+    height: 72px;
+    padding: 0 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #071018;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    z-index: 10;
+}
+
+.brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 23px;
+    font-weight: 500;
+    color: var(--cyan);
+    text-decoration: none;
+    transition: .3s ease;
+}
+
+.brand:hover {
+    text-shadow: 0 0 18px rgba(81,225,208,.55);
+}
+
+.nav-info {
+    color: #9bb2bc;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* HERO */
+
+.hero {
+    padding: 75px 8% 65px;
+    background:
+        radial-gradient(circle at 78% 25%, rgba(81,225,208,.17), transparent 26%),
+        radial-gradient(circle at 90% 80%, rgba(100,168,255,.12), transparent 28%),
+        #0c1d28;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-inner {
+    width: min(1250px, 100%);
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    align-items: center;
+    gap: 55px;
+}
+
+.hero-copy {
+    position: relative;
+    z-index: 2;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    font-weight: 800;
+}
+
+.hero h1 {
+    max-width: 800px;
+    margin: 20px 0 15px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(43px, 6vw, 75px);
+    line-height: 1.02;
+    letter-spacing: -3px;
+}
+
+.hero h1 span { color: var(--cyan); }
+
+.hero p {
+    max-width: 600px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.hero-bottom {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    color: #b3c8d0;
+    font-size: 12px;
+}
+
+.hero-bottom span { color: var(--cyan); }
+
+/* HERO VISUAL BOX */
+
+.hero-art {
+    min-height: 365px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    perspective: 1000px;
+}
+
+.hero-orbit {
+    position: absolute;
+    width: 310px;
+    height: 310px;
+    border: 1px solid rgba(81,225,208,.22);
+    border-radius: 50%;
+    animation: orbitRotate 18s linear infinite;
+}
+
+.hero-orbit::before,
+.hero-orbit::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(100,168,255,.18);
+    border-radius: 50%;
+}
+
+.hero-orbit::before {
+    inset: 25px;
+}
+
+.hero-orbit::after {
+    inset: 55px;
+}
+
+.orbit-dot {
+    position: absolute;
+    top: 35px;
+    left: 38px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 20px var(--cyan);
+}
+
+.hero-code-card {
+    width: min(100%, 365px);
+    position: relative;
+    z-index: 2;
+    padding: 22px;
+    border: 1px solid rgba(81,225,208,.25);
+    border-radius: 18px;
+    background: linear-gradient(145deg, rgba(20,43,55,.96), rgba(7,19,28,.96));
+    box-shadow: 0 25px 70px rgba(0,0,0,.35), 0 0 40px rgba(81,225,208,.08);
+    transform: rotateY(-8deg) rotateX(3deg);
+}
+
+.hero-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+}
+
+.hero-card-top strong {
+    font-family: 'DM Mono', monospace;
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.hero-card-top span {
+    color: #8da8b3;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+}
+
+.hero-link-demo {
+    padding: 19px 0 13px;
+}
+
+.hero-link-demo small {
+    display: block;
+    color: #78939d;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+
+.hero-link-demo a {
+    color: var(--cyan);
+    font-size: 17px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.hero-link-demo a span {
+    color: var(--blue);
+}
+
+.hero-image-demo {
+    height: 105px;
+    margin-top: 13px;
+    border-radius: 10px;
+    background:
+        radial-gradient(circle at 70% 25%, rgba(255,255,255,.35), transparent 15%),
+        linear-gradient(140deg, #51e1d0, #277d9c 48%, #263f78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-image-demo::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 50%;
+    animation: imagePulse 4s ease-in-out infinite;
+}
+
+.hero-image-demo strong {
+    position: relative;
+    z-index: 1;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 27px;
+    letter-spacing: 5px;
+    color: white;
+}
+
+.hero-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 17px;
+    color: #9bb2bc;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+}
+
+.hero-card-bottom span:first-child {
+    color: var(--cyan);
+}
+
+.hero-floating-tag {
+    position: absolute;
+    z-index: 3;
+    padding: 10px 14px;
+    border: 1px solid rgba(81,225,208,.25);
+    background: #102b37;
+    border-radius: 9px;
+    color: var(--cyan);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+.hero-floating-tag.tag-one {
+    top: 35px;
+    right: 0;
+    animation: tagFloat 4s ease-in-out infinite;
+}
+
+.hero-floating-tag.tag-two {
+    bottom: 28px;
+    left: -8px;
+    color: var(--blue);
+    border-color: rgba(100,168,255,.3);
+    animation: tagFloat 5s ease-in-out infinite reverse;
+}
+
+/* GENERAL */
+
+.container {
+    width: min(1120px, 88%);
+    margin: 65px auto;
+}
+
+.section-kicker {
+    color: var(--cyan);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+}
+
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 12px 0;
+    letter-spacing: -1.5px;
+}
+
+.section-description {
+    max-width: 700px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* WORKSHOP */
+
+.workshop,
+.demo-box {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.demo-box {
+    grid-template-columns: 1fr 1fr;
+}
+
+.concept-panel,
+.visual-panel {
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--panel);
+    overflow: hidden;
+    transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease;
+}
+
+.concept-panel:hover,
+.visual-panel:hover {
+    border-color: rgba(81,225,208,.38);
+    box-shadow: 0 16px 38px rgba(0,0,0,.18);
+    transform: translateY(-5px);
+}
+
+.panel-heading {
+    padding: 19px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.panel-heading strong {
+    font-size: 13px;
+    letter-spacing: .5px;
+}
+
+.panel-heading span {
+    color: var(--cyan);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+}
+
+.concept-content { padding: 25px; }
+
+.concept-content h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    margin: 0 0 12px;
+}
+
+.concept-content p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 13px;
+}
+
+.code-line {
+    padding: 15px;
+    background: #07131c;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    color: #9ce8df;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-top: 17px;
+    transition: border-color .3s ease, background .3s ease;
+}
+
+.code-line:hover {
+    border-color: rgba(81,225,208,.4);
+    background: #0a1b26;
+}
+
+.visual-content { padding: 23px; }
+
+.browser-bar {
+    height: 37px;
+    background: #07131c;
+    border: 1px solid var(--line);
+    border-radius: 9px 9px 0 0;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 6px;
+}
+
+.browser-dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background: #42616b;
+}
+
+.browser-address {
+    flex: 1;
+    text-align: center;
+    color: #78939d;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+}
+
+.browser-screen {
+    min-height: 190px;
+    padding: 25px;
+    background: #f5fbfc;
+    color: #132934;
+    border-radius: 0 0 9px 9px;
+}
+
+.demo-link {
+    display: inline-block;
+    color: #087f9b;
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+    transition: color .25s ease;
+}
+
+.demo-link:hover { color: #7655e8; }
+
+.browser-screen p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #546b76;
+}
+
+.demo-image {
+    width: 100%;
+    height: 120px;
+    margin-top: 13px;
+    border-radius: 9px;
+    background:
+        linear-gradient(130deg, rgba(3,33,45,.1), rgba(3,33,45,.5)),
+        linear-gradient(45deg, #51e1d0, #4d88d9 55%, #8d76db);
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.demo-image::after {
+    content: "";
+    position: absolute;
+    width: 150%;
+    height: 100%;
+    top: 0;
+    left: -150%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.2), transparent);
+    animation: imageShine 5s ease-in-out infinite;
+}
+
+.note {
+    margin-top: 16px;
+    padding: 15px;
+    border-left: 3px solid var(--cyan);
+    background: rgba(81,225,208,.06);
+    color: #b7cbd2;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* URL MAP */
+
+.url-map {
+    margin-top: 28px;
+    padding: 27px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: #10232e;
+    transition: border-color .3s ease, transform .3s ease;
+}
+
+.url-map:hover {
+    border-color: rgba(81,225,208,.35);
+    transform: translateY(-3px);
+}
+
+.url-map h3 { margin-top: 0; }
+
+.url-parts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.url-part {
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    background: #07131c;
+    border: 1px solid var(--line);
+    transition: transform .3s ease, border-color .3s ease;
+}
+
+.url-part:hover {
+    transform: translateY(-5px);
+    border-color: rgba(81,225,208,.4);
+}
+
+.url-part:nth-child(1) { color: #51e1d0; }
+.url-part:nth-child(2) { color: #8ab8ff; }
+.url-part:nth-child(3) { color: #e8c47e; }
+.url-part:nth-child(4) { color: #d5a5ff; }
+
+.url-explanation {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 17px;
+}
+
+.url-explanation div {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* GALLERY */
+
+.gallery {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr .8fr;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.gallery-card {
+    min-height: 205px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 19px;
+    border: 1px solid var(--line);
+    transition: transform .4s ease, border-color .4s ease, box-shadow .4s ease;
+}
+
+.gallery-card:hover {
+    transform: translateY(-8px) scale(1.015);
+    border-color: rgba(81,225,208,.4);
+    box-shadow: 0 18px 35px rgba(0,0,0,.2);
+}
+
+.gallery-card:first-child {
+    background: linear-gradient(145deg, #1b827d, #123d56 70%, #101c35);
+}
+
+.gallery-card:nth-child(2) {
+    background: linear-gradient(145deg, #5c4caa, #25345f);
+}
+
+.gallery-card:nth-child(3) {
+    background: linear-gradient(145deg, #a65c48, #55354e);
+}
+
+.gallery-art {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 55px;
+    opacity: .8;
+    transition: transform .4s ease;
+}
+
+.gallery-card:hover .gallery-art {
+    transform: scale(1.2) rotate(-8deg);
+}
+
+.gallery-card h3,
+.gallery-card p {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.gallery-card p {
+    color: #d1e0e5;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.gallery-card h3 { font-size: 17px; }
+
+.image-rules {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 13px;
+    margin-top: 20px;
+}
+
+.rule {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 20px;
+    border-radius: 12px;
+    transition: transform .3s ease, border-color .3s ease;
+}
+
+.rule:hover {
+    transform: translateY(-5px);
+    border-color: rgba(81,225,208,.35);
+}
+
+.rule strong {
+    display: block;
+    color: var(--cyan);
+    margin-bottom: 8px;
+}
+
+.rule p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* PATH LAB */
+
+.path-lab {
+    margin-top: 25px;
+    padding: 27px;
+    border-radius: 16px;
+    background: #10232e;
+    border: 1px solid var(--line);
+    transition: border-color .3s ease, transform .3s ease;
+}
+
+.path-lab:hover {
+    border-color: rgba(81,225,208,.35);
+    transform: translateY(-3px);
+}
+
+.path-lab h3 { margin-top: 0; }
+
+.path-tree {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.path-folder {
+    padding: 13px 16px;
+    border-radius: 8px;
+    background: #07131c;
+    border: 1px solid var(--line);
+    color: #9ce8df;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    transition: transform .3s ease, border-color .3s ease;
+}
+
+.path-folder:hover {
+    transform: translateY(-5px);
+    border-color: var(--cyan);
+}
+
+.path-arrow {
+    color: #6d8993;
+    animation: arrowPulse 1.8s ease-in-out infinite;
+}
+
+.path-lab p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* PLAYGROUND */
+
+.playground {
+    margin-top: 27px;
+    background: #10232e;
+    border: 1px solid var(--line);
+    border-radius: 17px;
+    overflow: hidden;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+.playground:hover {
+    border-color: rgba(81,225,208,.35);
+    box-shadow: 0 15px 40px rgba(0,0,0,.15);
+}
+
+.playground-head {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+.playground-head h3 { margin: 0; }
+
+.run-btn {
+    border: 0;
+    border-radius: 7px;
+    background: var(--cyan);
+    color: #06201f;
+    padding: 11px 17px;
+    font-size: 12px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+.run-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(81,225,208,.2);
+    background: #76f1e2;
+}
+
+.run-btn:active { transform: scale(.96); }
+
+.playground-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.editor-side,
+.result-side { padding: 22px; }
+
+.result-side {
+    border-left: 1px solid var(--line);
+}
+
+.small-label {
+    display: block;
+    margin-bottom: 12px;
+    color: #8da8b3;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+}
+
+#codeEditor {
+    width: 100%;
+    min-height: 245px;
+    resize: vertical;
+    padding: 16px;
+    background: #07131c;
+    border: 1px solid #29434e;
+    border-radius: 9px;
+    color: #a5e8dd;
+    outline: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+#codeEditor:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(81,225,208,.08);
+}
+
+#result {
+    min-height: 245px;
+    padding: 17px;
+    border-radius: 9px;
+    background: white;
+    color: #162b35;
+    overflow-wrap: anywhere;
+}
+
+#result a { color: #087f9b; }
+#result img { max-width: 100%; }
+
+/* QUIZ */
+
+.quiz {
+    margin-top: 26px;
+    background: #10232e;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 27px;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+.quiz:hover {
+    border-color: rgba(81,225,208,.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,.12);
+}
+
+.quiz-question {
+    padding: 17px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.quiz-question:last-of-type { border-bottom: 0; }
+
+.quiz-question p {
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.quiz-question label {
+    display: block;
+    padding: 10px 12px;
+    margin: 7px 0;
+    border-radius: 8px;
+    background: #0a1b25;
+    color: #b6cbd2;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+.quiz-question label:hover {
+    background: #142d39;
+    border-color: rgba(81,225,208,.3);
+    transform: translateX(4px);
+}
+
+.quiz-question input {
+    margin-right: 8px;
+    accent-color: var(--cyan);
+}
+
+.check-btn {
+    padding: 12px 19px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--cyan);
+    color: #06201f;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.check-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(81,225,208,.2);
+}
+
+#quizFeedback {
+    margin-top: 17px;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* COMPLETION */
+
+.completion {
+    margin-top: 30px;
+    padding: 27px;
+    background: linear-gradient(120deg, #123e47, #17324d);
+    border: 1px solid rgba(81,225,208,.2);
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.completion:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 35px rgba(0,0,0,.2);
+}
+
+.completion h3 { margin: 0 0 7px; }
+
+.completion p {
+    margin: 0;
+    color: #a7c1ca;
+    font-size: 12px;
+}
+
+.next-btn {
+    padding: 13px 18px;
+    border-radius: 8px;
+    background: var(--cyan);
+    color: #06201f;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 900;
+    transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease;
+}
+
+.next-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(81,225,208,.2);
+}
+
+.next-btn.is-locked {
+    pointer-events: none;
+    opacity: .4;
+    filter: grayscale(.4);
+}
+
+footer {
+    padding: 30px 8%;
+    background: #060e15;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    color: #8199a4;
+    font-size: 11px;
+}
+
+.footer-brand {
+    color: var(--cyan);
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+}
+
+/* LESSON 05 SCROLL REVEAL */
+
+.lesson05-motion-ready .reveal-item {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(38px);
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.2,.7,.2,1),
+        filter .8s ease;
+}
+
+.lesson05-motion-ready .reveal-item[data-motion="left"] {
+    transform: translateX(-48px);
+}
+
+.lesson05-motion-ready .reveal-item[data-motion="right"] {
+    transform: translateX(48px);
+}
+
+.lesson05-motion-ready .reveal-item[data-motion="scale"] {
+    transform: scale(.9);
+}
+
+.lesson05-motion-ready .reveal-item.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(0,0) scale(1);
+}
+
+.reveal-delay-1 { transition-delay: .12s !important; }
+.reveal-delay-2 { transition-delay: .24s !important; }
+.reveal-delay-3 { transition-delay: .36s !important; }
+
+.hero-art.is-visible .hero-code-card {
+    animation: heroCardFloat 6s ease-in-out infinite;
+}
+
+.hero-art.is-visible .hero-orbit {
+    animation: orbitRotate 18s linear infinite;
+}
+
+@keyframes heroCardFloat {
+    0%,100% { transform: translateY(0) rotateY(-8deg) rotateX(3deg); }
+    50% { transform: translateY(-12px) rotateY(-5deg) rotateX(2deg); }
+}
+
+@keyframes orbitRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes tagFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-11px); }
+}
+
+@keyframes imagePulse {
+    0%,100% { transform: scale(.75); opacity: .25; }
+    50% { transform: scale(1.15); opacity: .8; }
+}
+
+@keyframes imageShine {
+    0%,65% { left: -150%; }
+    100% { left: 150%; }
+}
+
+@keyframes arrowPulse {
+    0%,100% { opacity: .45; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(4px); }
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 900px) {
+    .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .hero-art {
+        min-height: 330px;
+        margin-top: 5px;
+    }
+
+    .hero-copy { max-width: 750px; }
+}
+
+@media(max-width: 800px) {
+    .workshop,
+    .demo-box { grid-template-columns: 1fr; }
+
+    .gallery { grid-template-columns: 1fr 1fr; }
+
+    .gallery-card:first-child { grid-column: 1 / -1; }
+
+    .url-explanation { grid-template-columns: 1fr 1fr; }
+
+    .image-rules { grid-template-columns: 1fr; }
+
+    .playground-body { grid-template-columns: 1fr; }
+
+    .result-side {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+    }
+}
+
+@media(max-width: 480px) {
+    .navbar { padding: 0 5%; }
+
+    .nav-info {
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+
+    .hero { padding: 55px 7%; }
+
+    .hero h1 { letter-spacing: -1.5px; }
+
+    .hero-art {
+        min-height: 300px;
+        transform: scale(.94);
+    }
+
+    .hero-orbit {
+        width: 260px;
+        height: 260px;
+    }
+
+    .hero-code-card { padding: 17px; }
+
+    .hero-floating-tag.tag-one { right: -5px; }
+
+    .hero-floating-tag.tag-two { left: -10px; }
+
+    .container {
+        width: 90%;
+        margin: 48px auto;
+    }
+
+    .gallery { grid-template-columns: 1fr; }
+
+    .gallery-card:first-child { grid-column: auto; }
+
+    .url-explanation { grid-template-columns: 1fr 1fr; }
+
+    .editor-side,
+    .result-side { padding: 15px; }
+
+    .completion { padding: 21px; }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+    .lesson05-motion-ready .reveal-item {
+        opacity: 1;
+        filter: none;
+        transform: none;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a class="brand" href="../html.html">CNF/</a>
+    <span class="nav-info">HTML COURSE / LESSON 05</span>
+</nav>
+
+<header class="hero">
+    <div class="hero-inner">
+
+        <div class="hero-copy">
+            <div class="eyebrow">HTML VISUAL WORKSHOP · 05 / 08</div>
+
+            <h1>Connect ideas.<br><span>Show the world.</span></h1>
+
+            <p>
+                Links connect one page to another. Images bring visual meaning to your
+                content. In this lesson, you will learn how to use both like a real web developer.
+            </p>
+
+            <div class="hero-bottom">
+                <div><span>◷</span> 25 MINUTES</div>
+                <div><span>✦</span> BEGINNER LEVEL</div>
+                <div><span>⌘</span> HANDS-ON PRACTICE</div>
+            </div>
+        </div>
+
+        <div class="hero-art reveal-item" data-motion="right">
+            <div class="hero-orbit">
+                <span class="orbit-dot"></span>
+            </div>
+
+            <div class="hero-floating-tag tag-one">HTML / LINKS</div>
+            <div class="hero-floating-tag tag-two">IMG / VISUALS</div>
+
+            <div class="hero-code-card">
+                <div class="hero-card-top">
+                    <strong>CNF / BROWSER</strong>
+                    <span>LIVE PREVIEW</span>
+                </div>
+
+                <div class="hero-link-demo">
+                    <small>CLICKABLE CONNECTION</small>
+                    <a href="#link-section">Explore the web <span>↗</span></a>
+                </div>
+
+                <div class="hero-image-demo">
+                    <strong>VISUAL WORLD</strong>
+                </div>
+
+                <div class="hero-card-bottom">
+                    <span>● HTML READY</span>
+                    <span>LESSON 05</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+<main>
+
+<section class="container" id="link-section">
+    <div class="section-kicker reveal-item">01 / LINKS</div>
+    <h2 class="section-title reveal-item">A link is a doorway.</h2>
+    <p class="section-description reveal-item">
+        The anchor element creates a clickable connection. Its href attribute
+        tells the browser where that connection should lead.
+    </p>
+
+    <div class="workshop">
+        <article class="concept-panel reveal-item" data-motion="left">
+            <div class="panel-heading">
+                <strong>THE CONCEPT</strong>
+                <span>ANCHOR ELEMENT</span>
+            </div>
+            <div class="concept-content">
+                <h3>Meet the &lt;a&gt; tag.</h3>
+                <p>
+                    The anchor tag wraps around text or another element.
+                    When a visitor clicks it, the browser follows the destination
+                    written inside the href attribute.
+                </p>
+                <div class="code-line">
+                    &lt;a href="https://example.com"&gt;Visit website&lt;/a&gt;
+                </div>
+                <div class="note">
+                    <strong>Remember:</strong> href means Hypertext Reference.
+                    It contains the destination address of your link.
+                </div>
+            </div>
+        </article>
+
+        <article class="visual-panel reveal-item" data-motion="right">
+            <div class="panel-heading">
+                <strong>IN THE BROWSER</strong>
+                <span>LIVE EXAMPLE</span>
+            </div>
+            <div class="visual-content">
+                <div class="browser-bar">
+                    <i class="browser-dot"></i>
+                    <i class="browser-dot"></i>
+                    <i class="browser-dot"></i>
+                    <span class="browser-address">your-website.com</span>
+                </div>
+                <div class="browser-screen">
+                    <h2>Welcome to my website!</h2>
+                    <p>Explore useful learning resources and discover something new.</p>
+                    <a class="demo-link" href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer">
+                        Explore HTML documentation ↗
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-kicker reveal-item">02 / UNDERSTAND THE ADDRESS</div>
+    <h2 class="section-title reveal-item">What's inside a URL?</h2>
+    <p class="section-description reveal-item">
+        A URL is the address of a resource on the internet. Different parts
+        help the browser locate the correct website and page.
+    </p>
+
+    <div class="url-map reveal-item" data-motion="scale">
+        <h3>Example URL</h3>
+
+        <div class="url-parts">
+            <span class="url-part">https://</span>
+            <span class="url-part">www.example.com</span>
+            <span class="url-part">/courses</span>
+            <span class="url-part">/html.html</span>
+        </div>
+
+        <div class="url-explanation">
+            <div><strong style="color:#51e1d0">Protocol</strong><br>How the browser communicates securely.</div>
+            <div><strong style="color:#8ab8ff">Domain</strong><br>The website's main address.</div>
+            <div><strong style="color:#e8c47e">Folder</strong><br>A section inside the website.</div>
+            <div><strong style="color:#d5a5ff">File</strong><br>The particular page being requested.</div>
+        </div>
+    </div>
+
+    <div class="workshop">
+        <article class="concept-panel reveal-item" data-motion="left">
+            <div class="panel-heading">
+                <strong>ABSOLUTE LINK</strong>
+                <span>EXTERNAL ADDRESS</span>
+            </div>
+            <div class="concept-content">
+                <h3>Go anywhere.</h3>
+                <p>An absolute URL contains the complete web address, including its protocol and domain.</p>
+                <div class="code-line">&lt;a href="https://google.com"&gt;Google&lt;/a&gt;</div>
+            </div>
+        </article>
+
+        <article class="concept-panel reveal-item" data-motion="right">
+            <div class="panel-heading">
+                <strong>RELATIVE LINK</strong>
+                <span>LOCAL ADDRESS</span>
+            </div>
+            <div class="concept-content">
+                <h3>Move within your site.</h3>
+                <p>A relative URL points to a file or folder based on the current page's location.</p>
+                <div class="code-line">&lt;a href="about.html"&gt;About&lt;/a&gt;</div>
+            </div>
+        </article>
+    </div>
+
+    <div class="path-lab reveal-item" data-motion="scale">
+        <h3>Understand a relative path</h3>
+        <div class="path-tree">
+            <span class="path-folder">website/</span>
+            <span class="path-arrow">→</span>
+            <span class="path-folder">pages/</span>
+            <span class="path-arrow">→</span>
+            <span class="path-folder">about.html</span>
+        </div>
+        <p>
+            If your current page is inside the <strong>pages</strong> folder,
+            the link <code>about.html</code> points to another file in that same folder.
+            Use <code>../</code> to move one folder level upward.
+        </p>
+        <div class="code-line">
+            &lt;a href="../index.html"&gt;Back to Home&lt;/a&gt;
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-kicker reveal-item">03 / LINK BEHAVIOUR</div>
+    <h2 class="section-title reveal-item">Choose how a link opens.</h2>
+
+    <div class="demo-box">
+        <article class="concept-panel reveal-item" data-motion="left">
+            <div class="panel-heading">
+                <strong>SAME TAB</strong>
+                <span>DEFAULT</span>
+            </div>
+            <div class="concept-content">
+                <h3>Stay in the same tab.</h3>
+                <p>This is the normal browser behaviour when no target attribute is specified.</p>
+                <div class="code-line">&lt;a href="about.html"&gt;About&lt;/a&gt;</div>
+            </div>
+        </article>
+
+        <article class="concept-panel reveal-item" data-motion="right">
+            <div class="panel-heading">
+                <strong>NEW TAB</strong>
+                <span>_BLANK</span>
+            </div>
+            <div class="concept-content">
+                <h3>Open another tab.</h3>
+                <p>Use target="_blank" when you want the destination to open in a new tab.</p>
+                <div class="code-line">&lt;a href="..." target="_blank" rel="noopener noreferrer"&gt;Open&lt;/a&gt;</div>
+            </div>
+        </article>
+    </div>
+
+    <div class="note reveal-item">
+        <strong>Security tip:</strong> When using target="_blank", include
+        rel="noopener noreferrer" as a good security and privacy practice.
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-kicker reveal-item">04 / IMAGES</div>
+    <h2 class="section-title reveal-item">Turn information into visuals.</h2>
+    <p class="section-description reveal-item">
+        The image element displays a picture on your webpage. It uses src
+        for the image location and alt for a meaningful text alternative.
+    </p>
+
+    <div class="workshop">
+        <article class="concept-panel reveal-item" data-motion="left">
+            <div class="panel-heading">
+                <strong>IMAGE ELEMENT</strong>
+                <span>IMG</span>
+            </div>
+            <div class="concept-content">
+                <h3>Meet the &lt;img&gt; tag.</h3>
+                <p>
+                    Unlike most HTML elements, img is a void element.
+                    It does not need a closing tag.
+                </p>
+                <div class="code-line">
+                    &lt;img src="photo.jpg" alt="Mountain view"&gt;
+                </div>
+                <div class="note">
+                    <strong>Important:</strong> Always write useful alt text
+                    so people using screen readers can understand the image.
+                </div>
+            </div>
+        </article>
+
+        <article class="visual-panel reveal-item" data-motion="right">
+            <div class="panel-heading">
+                <strong>VISUAL EXAMPLE</strong>
+                <span>IMAGE PREVIEW</span>
+            </div>
+            <div class="visual-content">
+                <div class="browser-bar">
+                    <i class="browser-dot"></i>
+                    <i class="browser-dot"></i>
+                    <i class="browser-dot"></i>
+                    <span class="browser-address">image-preview.html</span>
+                </div>
+                <div class="browser-screen">
+                    <h3>Explore the outdoors</h3>
+                    <div class="demo-image">NATURE</div>
+                    <p>A visual element can make a webpage more engaging and informative.</p>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <div class="gallery">
+        <article class="gallery-card reveal-item" data-motion="left">
+            <span class="gallery-art">🏔️</span>
+            <h3>src attribute</h3>
+            <p>Points to the image file or image URL.</p>
+        </article>
+
+        <article class="gallery-card reveal-item" data-motion="up">
+            <span class="gallery-art">📝</span>
+            <h3>alt attribute</h3>
+            <p>Describes the image in text.</p>
+        </article>
+
+        <article class="gallery-card reveal-item" data-motion="right">
+            <span class="gallery-art">📐</span>
+            <h3>Dimensions</h3>
+            <p>Width and height control displayed size.</p>
+        </article>
+    </div>
+
+    <div class="image-rules">
+        <div class="rule reveal-item" data-motion="left">
+            <strong>01 — Meaningful alt</strong>
+            <p>Describe what matters in the image instead of writing generic words like "photo".</p>
+        </div>
+
+        <div class="rule reveal-item" data-motion="up">
+            <strong>02 — Correct path</strong>
+            <p>Make sure the image location is correct or the browser cannot load it.</p>
+        </div>
+
+        <div class="rule reveal-item" data-motion="right">
+            <strong>03 — Responsive size</strong>
+            <p>CSS such as max-width: 100% helps images fit smaller screens.</p>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-kicker reveal-item">05 / YOUR WORKBENCH</div>
+    <h2 class="section-title reveal-item">Create a visual webpage.</h2>
+    <p class="section-description reveal-item">
+        Try the code below. Change the link destination, image source,
+        or alternative text and run your own example.
+    </p>
+
+    <div class="playground reveal-item" data-motion="scale">
+        <div class="playground-head">
+            <h3>⌘ Link & Image Playground</h3>
+            <button class="run-btn" onclick="runCode()">RUN CODE ↗</button>
+        </div>
+
+        <div class="playground-body">
+            <div class="editor-side reveal-item" data-motion="left">
+                <span class="small-label">HTML EDITOR</span>
+
+                <textarea id="codeEditor" spellcheck="false"><h2>My Favourite Place</h2>
+
+<p>Discover beautiful places around the world.</p>
+
+<a href="https://www.wikipedia.org/" target="_blank" rel="noopener noreferrer">
+    Explore more
+</a>
+
+<br><br>
+
+<img
+    src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=700"
+    alt="Beautiful natural landscape"
+    width="300"
+>
+
+<p>Learning HTML is fun!</p></textarea>
+            </div>
+
+            <div class="result-side reveal-item" data-motion="right">
+                <span class="small-label">LIVE BROWSER PREVIEW</span>
+                <div id="result">
+                    Your webpage will appear here.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-kicker reveal-item">06 / FINAL CHECK</div>
+    <h2 class="section-title reveal-item">Test your knowledge.</h2>
+
+    <div class="quiz reveal-item" data-motion="scale">
+        <div class="quiz-question">
+            <p>1. Which attribute defines the destination of a link?</p>
+            <label><input type="radio" name="q1" value="a"> src</label>
+            <label><input type="radio" name="q1" value="b"> href</label>
+            <label><input type="radio" name="q1" value="c"> alt</label>
+        </div>
+
+        <div class="quiz-question">
+            <p>2. Why is the alt attribute used in an image?</p>
+            <label><input type="radio" name="q2" value="a"> To change image colour</label>
+            <label><input type="radio" name="q2" value="b"> To make image clickable</label>
+            <label><input type="radio" name="q2" value="c"> To provide a text alternative</label>
+        </div>
+
+        <div class="quiz-question">
+            <p>3. Which attribute opens a link in a new tab?</p>
+            <label><input type="radio" name="q3" value="a"> target="_blank"</label>
+            <label><input type="radio" name="q3" value="b"> new="tab"</label>
+            <label><input type="radio" name="q3" value="c"> open="new"</label>
+        </div>
+
+        <button class="check-btn" onclick="checkQuiz()">CHECK MY ANSWERS</button>
+        <div id="quizFeedback" aria-live="polite"></div>
+    </div>
+
+    <div class="completion reveal-item" data-motion="up">
+        <div>
+            <h3 id="completionTitle">Ready for the next challenge?</h3>
+            <p id="completionText">Score 3/3 in the quiz to complete this lesson.</p>
+        </div>
+
+        <a id="nextLesson" class="next-btn is-locked"
+           href="06-lists-tables.html"
+           aria-disabled="true">
+            NEXT LESSON →
+        </a>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <span class="footer-brand">CNF/</span>
+    <span>CODE NEXA FORGE · Learn. Build. Create.</span>
+    <span>HTML LESSON 05 / 08</span>
+</footer>
+
+<script>
+const lessonStorageKey = 'html-lesson-05-completed';
+
+function runCode() {
+    const code = document.getElementById('codeEditor').value;
+    document.getElementById('result').innerHTML = code;
+}
+
+runCode();
+
+function lockNextLesson() {
+    const next = document.getElementById('nextLesson');
+
+    next.classList.add('is-locked');
+    next.style.pointerEvents = 'none';
+    next.style.opacity = '.4';
+    next.setAttribute('aria-disabled', 'true');
+
+    document.getElementById('completionTitle').textContent =
+        'Ready for the next challenge?';
+
+    document.getElementById('completionText').textContent =
+        'Score 3/3 in the quiz to complete this lesson.';
+}
+
+function unlockNextLesson() {
+    const next = document.getElementById('nextLesson');
+
+    next.classList.remove('is-locked');
+    next.style.pointerEvents = 'auto';
+    next.style.opacity = '1';
+    next.removeAttribute('aria-disabled');
+
+    document.getElementById('completionTitle').textContent =
+        'Lesson 05 completed!';
+
+    document.getElementById('completionText').textContent =
+        'Great work. You are ready to learn HTML lists and tables.';
+}
+
+function checkQuiz() {
+    const answers = {
+        q1: 'b',
+        q2: 'c',
+        q3: 'a'
+    };
+
+    let score = 0;
+    let attempted = 0;
+
+    for (const question in answers) {
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if (selected) {
+            attempted++;
+
+            if (selected.value === answers[question]) {
+                score++;
+            }
+        }
+    }
+
+    const feedback = document.getElementById('quizFeedback');
+
+    if (attempted < 3) {
+        feedback.style.color = '#e8c47e';
+        feedback.textContent = 'Please answer all 3 questions first.';
+        return;
+    }
+
+    if (score === 3) {
+        feedback.style.color = '#51e1d0';
+        feedback.textContent = 'Perfect score! You got 3/3. Lesson completed.';
+        completeLesson();
+    } else {
+        feedback.style.color = '#ff9c87';
+        feedback.textContent = 'You scored ' + score + '/3. Try again!';
+        localStorage.removeItem(lessonStorageKey);
+        lockNextLesson();
+    }
+}
+
+function completeLesson() {
+    localStorage.setItem(lessonStorageKey, 'true');
+    unlockNextLesson();
+}
+
+/* RESTORE COMPLETION STATE */
+
+if (localStorage.getItem(lessonStorageKey) === 'true') {
+    unlockNextLesson();
+} else {
+    lockNextLesson();
+}
+
+/* SCROLL REVEAL ANIMATIONS */
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.documentElement.classList.add('lesson05-motion-ready');
+
+    const revealElements = document.querySelectorAll('.reveal-item');
+
+    if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -35px 0px'
+        });
+
+        revealElements.forEach(element => {
+            revealObserver.observe(element);
+        });
+    } else {
+        revealElements.forEach(element => {
+            element.classList.add('is-visible');
+        });
+    }
+});
+
+/* RESET QUIZ STATE WHEN THE SHARED RESET BUTTON IS USED */
+
+document.addEventListener('click', function(event) {
+    const resetButton = event.target.closest(
+        '.cnf-quiz-reset, .quiz-reset, [data-quiz-reset]'
+    );
+
+    if (!resetButton) return;
+
+    localStorage.removeItem(lessonStorageKey);
+    lockNextLesson();
+
+    document.querySelectorAll('.quiz input[type="radio"]').forEach(input => {
+        input.checked = false;
+    });
+
+    const feedback = document.getElementById('quizFeedback');
+
+    if (feedback) {
+        feedback.textContent = '';
+    }
+});
+</script>
+
+<script src="../../js/lesson-quiz-guard.js"></script>
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

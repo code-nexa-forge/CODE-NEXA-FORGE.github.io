@@ -1,0 +1,747 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b14">
+    <title>My Profile | CODE NEXA FORGE</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #080b14;
+            --panel: #101625;
+            --primary: #8b5cf6;
+            --cyan: #22d3ee;
+            --text: #f4f5fb;
+            --muted: #929bb0;
+            --border: rgba(255,255,255,0.09);
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(139,92,246,0.14), transparent 35%),
+                radial-gradient(circle at 90% 90%, rgba(34,211,238,0.10), transparent 35%),
+                var(--bg);
+            color: var(--text);
+            font-family: "DM Sans", sans-serif;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        .navbar {
+            min-height: 76px;
+            padding: 0 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(8,11,20,0.8);
+            backdrop-filter: blur(15px);
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+            opacity: 0.85;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), #536eea);
+            font-size: 20px;
+        }
+
+        .logo span {
+            color: var(--cyan);
+        }
+
+        .logout-btn {
+            padding: 11px 19px;
+            border: 1px solid rgba(251,113,133,0.3);
+            border-radius: 9px;
+            background: rgba(251,113,133,0.08);
+            color: #fb7185;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(251,113,133,0.17);
+            transform: translateY(-2px);
+        }
+
+        .logout-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1050px;
+            margin: 65px auto;
+            animation: appear 0.7s ease both;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome {
+            margin-bottom: 35px;
+        }
+
+        .welcome-label {
+            color: var(--cyan);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .welcome h1 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(30px, 5vw, 43px);
+            letter-spacing: -1.5px;
+            margin-bottom: 10px;
+        }
+
+        .welcome h1 span {
+            background: linear-gradient(90deg, #a78bfa, #22d3ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .welcome p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 330px 1fr;
+            gap: 22px;
+        }
+
+        .card {
+            background: rgba(16,22,37,0.9);
+            border: 1px solid var(--border);
+            border-radius: 19px;
+            padding: 28px;
+            box-shadow: 0 20px 55px rgba(0,0,0,0.15);
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(139,92,246,0.3);
+            transform: translateY(-3px);
+        }
+
+        .profile-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #7547e8, #22a6d5);
+            border: 4px solid rgba(255,255,255,0.08);
+            box-shadow: 0 0 35px rgba(139,92,246,0.2);
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .profile-card h2 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 22px;
+            overflow-wrap: anywhere;
+            margin-bottom: 8px;
+        }
+
+        .profile-card .email {
+            color: var(--muted);
+            font-size: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .account-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 13px;
+            margin-top: 19px;
+            border-radius: 30px;
+            color: #34d399;
+            background: rgba(52,211,153,0.08);
+            border: 1px solid rgba(52,211,153,0.18);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .account-badge span {
+            width: 6px;
+            height: 6px;
+            background: #34d399;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #34d399;
+        }
+
+        .details-card h2 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 21px;
+            margin-bottom: 7px;
+        }
+
+        .details-card > p {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 25px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .detail-value {
+            font-size: 12px;
+            font-weight: 700;
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .learning-card {
+            margin-top: 22px;
+            padding: 25px 28px;
+            border-radius: 17px;
+            background: linear-gradient(115deg, rgba(117,71,232,0.15), rgba(34,211,238,0.06));
+            border: 1px solid rgba(139,92,246,0.2);
+            transition: 0.3s ease;
+        }
+
+        .learning-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(34,211,238,0.3);
+        }
+
+        .learning-card h3 {
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 18px;
+            margin-bottom: 9px;
+        }
+
+        .learning-card p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .learning-card a {
+            display: inline-block;
+            margin-top: 17px;
+            padding: 11px 17px;
+            background: linear-gradient(110deg, #7547e8, #536eea);
+            border-radius: 8px;
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .learning-card a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(117,71,232,0.3);
+        }
+
+        /* DANGER ZONE */
+
+        .danger-card {
+            margin-top: 22px;
+            padding: 25px 28px;
+            border-radius: 17px;
+            background: linear-gradient(
+                115deg,
+                rgba(239,68,68,0.10),
+                rgba(127,29,29,0.04)
+            );
+            border: 1px solid rgba(248,113,113,0.23);
+            position: relative;
+            overflow: hidden;
+            transition: 0.35s ease;
+        }
+
+        .danger-card::before {
+            content: "";
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            top: -70px;
+            right: -50px;
+            border-radius: 50%;
+            background: rgba(239,68,68,0.12);
+            filter: blur(20px);
+            transition: 0.4s ease;
+        }
+
+        .danger-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(248,113,113,0.55);
+            box-shadow: 0 15px 35px rgba(239,68,68,0.09);
+        }
+
+        .danger-card:hover::before {
+            transform: scale(1.5);
+        }
+
+        .danger-card h3 {
+            position: relative;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 18px;
+            color: #fca5a5;
+            margin-bottom: 9px;
+        }
+
+        .danger-card p {
+            position: relative;
+            max-width: 550px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .delete-account-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 13px 20px;
+            border: 1px solid rgba(248,113,113,0.45);
+            border-radius: 9px;
+            background: linear-gradient(110deg, #dc2626, #991b1b);
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 7px 22px rgba(220,38,38,0.20);
+            transition: 0.35s ease;
+            animation: deletePulse 2.8s ease-in-out infinite;
+        }
+
+        .delete-account-btn:hover {
+            transform: translateY(-4px) scale(1.025);
+            background: linear-gradient(110deg, #ef4444, #b91c1c);
+            box-shadow: 0 12px 30px rgba(220,38,38,0.35);
+        }
+
+        .delete-account-btn:active {
+            transform: scale(0.97);
+        }
+
+        .delete-icon {
+            font-size: 16px;
+            transition: 0.3s ease;
+        }
+
+        .delete-account-btn:hover .delete-icon {
+            transform: rotate(-12deg) scale(1.15);
+        }
+
+        @keyframes deletePulse {
+            0%, 100% {
+                box-shadow: 0 7px 22px rgba(220,38,38,0.18);
+            }
+            50% {
+                box-shadow: 0 7px 28px rgba(220,38,38,0.35);
+            }
+        }
+
+        .footer {
+            padding: 25px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: #667187;
+            font-size: 11px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 100px 20px;
+            color: var(--muted);
+        }
+
+        .loader {
+            width: 35px;
+            height: 35px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--cyan);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 18px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 750px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                margin: 40px auto;
+            }
+
+            .navbar {
+                padding: 0 5%;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .logo {
+                font-size: 15px;
+                gap: 8px;
+            }
+
+            .logo-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .logout-btn {
+                padding: 9px 12px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .detail-item {
+                align-items: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <a href="/" class="logo" aria-label="Go to Home Page">
+            <div class="logo-icon">C</div>
+            <div>CODE NEXA <span>FORGE</span></div>
+        </a>
+
+        <button class="logout-btn" id="logoutBtn">
+            LOG OUT ↗
+        </button>
+
+    </nav>
+
+    <div id="loadingScreen" class="loading">
+        <div class="loader"></div>
+        Loading your profile...
+    </div>
+
+    <main class="container" id="profileContent" hidden>
+
+        <section class="welcome">
+            <div class="welcome-label">YOUR PERSONAL SPACE</div>
+
+            <h1>
+                Welcome, <span id="welcomeName">Student</span>!
+            </h1>
+
+            <p>
+                Your account is ready. Continue your learning journey with CODE NEXA FORGE.
+            </p>
+        </section>
+
+        <section class="profile-layout">
+
+            <div class="card profile-card">
+
+                <div class="avatar" id="userAvatar">S</div>
+
+                <h2 id="profileName">Student Name</h2>
+
+                <p class="email" id="profileEmail">student@email.com</p>
+
+                <div class="account-badge">
+                    <span></span>
+                    ACTIVE ACCOUNT
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="card details-card">
+
+                    <h2>Account Information</h2>
+
+                    <p>Your personal account details.</p>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Full Name</span>
+                        <span class="detail-value" id="detailName">—</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Email Address</span>
+                        <span class="detail-value" id="detailEmail">—</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Account ID</span>
+                        <span class="detail-value" id="detailId">—</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Member Since</span>
+                        <span class="detail-value" id="detailDate">—</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Account Status</span>
+                        <span class="detail-value" style="color:#34d399;">
+                            Active
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="learning-card">
+
+                    <h3>Ready to Learn Something New?</h3>
+
+                    <p>
+                        Explore your courses, practice coding, and keep building your development skills.
+                    </p>
+
+                    <a href="/">EXPLORE LEARNING PLATFORM →</a>
+
+                </div>
+
+                <!-- DELETE ACCOUNT DANGER ZONE -->
+
+                <div class="danger-card">
+
+                    <h3>⚠ Danger Zone</h3>
+
+                    <p>
+                        Permanently delete your CODE NEXA FORGE account.
+                        You will be asked to verify your current password
+                        before this action can proceed.
+                    </p>
+
+                    <a href="/delete-account.html" class="delete-account-btn">
+                        <span class="delete-icon">✕</span>
+                        DELETE ACCOUNT
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <a href="/contact-support.html">CONTACT SUPPORT</a> · © 2026 CODE NEXA FORGE. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        "use strict";
+
+        const loadingScreen = document.getElementById("loadingScreen");
+        const profileContent = document.getElementById("profileContent");
+
+        async function loadProfile() {
+
+            try {
+
+                const response = await fetch("/api/auth/me", {
+                    method: "GET",
+                    credentials: "same-origin"
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success || !result.user) {
+                    window.location.replace("/login.html");
+                    return;
+                }
+
+                const user = result.user;
+
+                const name = user.name || "Student";
+                const email = user.email || "Not available";
+
+                document.getElementById("welcomeName").textContent = name;
+                document.getElementById("profileName").textContent = name;
+                document.getElementById("profileEmail").textContent = email;
+
+                document.getElementById("detailName").textContent = name;
+                document.getElementById("detailEmail").textContent = email;
+
+                document.getElementById("detailId").textContent =
+                    user.id !== undefined ? "#" + user.id : "Available";
+
+                document.getElementById("userAvatar").textContent =
+                    name.trim().charAt(0).toUpperCase() || "S";
+
+                if (user.created_at) {
+
+                    const date = new Date(user.created_at);
+
+                    document.getElementById("detailDate").textContent =
+                        isNaN(date.getTime())
+                            ? user.created_at
+                            : date.toLocaleDateString("en-US", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric"
+                            });
+
+                } else {
+
+                    document.getElementById("detailDate").textContent =
+                        "Recently joined";
+
+                }
+
+                loadingScreen.style.display = "none";
+                profileContent.hidden = false;
+
+            } catch (error) {
+
+                console.error("PROFILE ERROR:", error);
+
+                loadingScreen.textContent =
+                    "Unable to load your profile. Please refresh the page.";
+
+            }
+
+        }
+
+        // LOGOUT
+
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+
+            const button = document.getElementById("logoutBtn");
+
+            button.disabled = true;
+            button.textContent = "LOGGING OUT...";
+
+            try {
+
+                const response = await fetch("/api/auth/logout", {
+                    method: "POST",
+                    credentials: "same-origin"
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error("Logout failed.");
+                }
+
+                window.location.replace("/login.html");
+
+            } catch (error) {
+
+                console.error("LOGOUT ERROR:", error);
+
+                button.disabled = false;
+                button.textContent = "LOG OUT ↗";
+
+                alert("Unable to log out. Please try again.");
+
+            }
+
+        });
+
+        loadProfile();
+
+    </script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

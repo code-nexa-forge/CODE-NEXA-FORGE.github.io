@@ -1,0 +1,1270 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Learn JavaScript step by step with CODE NEXA FORGE.">
+<title>JavaScript Lab | CODE NEXA FORGE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg:#10110e;
+    --panel:#191b15;
+    --panel2:#22241b;
+    --yellow:#eaff57;
+    --green:#a3e635;
+    --white:#f5f5e9;
+    --muted:#a5a795;
+    --border:rgba(255,255,255,.1);
+}
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior:smooth;
+    scroll-padding-top:90px;
+}
+
+body {
+    background:var(--bg);
+    color:var(--white);
+    font-family:'Space Grotesk',sans-serif;
+    overflow-x:hidden;
+    animation:pageEnter .8s ease both;
+}
+
+a {
+    text-decoration:none;
+    color:inherit;
+}
+
+/* ANIMATIONS */
+
+@keyframes pageEnter {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+@keyframes navDrop {
+    from { opacity:0; transform:translateY(-35px); }
+    to { opacity:1; transform:translateY(0); }
+}
+
+@keyframes heroLeft {
+    from { opacity:0; transform:translateX(-55px); }
+    to { opacity:1; transform:translateX(0); }
+}
+
+@keyframes heroRight {
+    from { opacity:0; transform:translateX(55px); }
+    to { opacity:1; transform:translateX(0); }
+}
+
+@keyframes editorFloat {
+    0%,100% {
+        transform:translateY(0) rotate(1deg);
+    }
+    50% {
+        transform:translateY(-16px) rotate(1deg);
+    }
+}
+
+@keyframes glowPulse {
+    0%,100% {
+        box-shadow:0 25px 80px rgba(0,0,0,.4),0 0 15px rgba(234,255,87,.08);
+    }
+    50% {
+        box-shadow:0 25px 80px rgba(0,0,0,.4),0 0 38px rgba(234,255,87,.23);
+    }
+}
+
+@keyframes gradientFlow {
+    0% { background-position:0% 50%; }
+    100% { background-position:200% 50%; }
+}
+
+@keyframes outputBlink {
+    50% { opacity:.35; }
+}
+
+@keyframes shine {
+    from { left:-120%; }
+    to { left:150%; }
+}
+
+@keyframes footerReveal {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+/* NAVBAR */
+
+.navbar {
+    min-height:75px;
+    padding:0 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid var(--border);
+    background:rgba(16,17,14,.95);
+    position:sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter:blur(15px);
+    animation:navDrop .8s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.logo {
+    font-size:21px;
+    font-weight:700;
+    letter-spacing:-1px;
+    transition:.3s;
+}
+
+.logo:hover {
+    transform:scale(1.04);
+}
+
+.logo span {
+    color:var(--yellow);
+    transition:.3s;
+}
+
+.logo:hover span {
+    text-shadow:0 0 18px rgba(234,255,87,.7);
+}
+
+.nav-links {
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.nav-links a {
+    font-size:13px;
+    color:var(--muted);
+    transition:.3s;
+    position:relative;
+}
+
+.nav-links a:not(.home-link)::after {
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-7px;
+    width:0;
+    height:2px;
+    background:var(--yellow);
+    transition:width .3s;
+}
+
+.nav-links a:hover {
+    color:var(--yellow);
+}
+
+.nav-links a:hover::after {
+    width:100%;
+}
+
+.home-link {
+    border:1px solid var(--border);
+    padding:10px 15px;
+    border-radius:6px;
+}
+
+.home-link:hover {
+    background:var(--yellow);
+    color:#11130b !important;
+    border-color:var(--yellow);
+    transform:translateY(-3px);
+}
+
+/* HERO */
+
+.hero {
+    min-height:620px;
+    padding:90px 8%;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    align-items:center;
+    gap:65px;
+    background:
+        radial-gradient(circle at 85% 35%,rgba(234,255,87,.10),transparent 30%),
+        radial-gradient(circle at 10% 90%,rgba(163,230,53,.06),transparent 30%);
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::before {
+    content:"";
+    position:absolute;
+    width:350px;
+    height:350px;
+    border:1px solid rgba(234,255,87,.07);
+    border-radius:50%;
+    right:-120px;
+    top:-120px;
+    pointer-events:none;
+    animation:editorFloat 8s ease-in-out infinite;
+}
+
+.hero > div:first-child {
+    animation:heroLeft 1s .15s both;
+}
+
+.tag {
+    display:inline-block;
+    padding:9px 13px;
+    border:1px solid rgba(234,255,87,.3);
+    color:var(--yellow);
+    font-family:'DM Mono',monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    margin-bottom:25px;
+    transition:.3s;
+}
+
+.tag:hover {
+    background:rgba(234,255,87,.08);
+    box-shadow:0 0 22px rgba(234,255,87,.12);
+    transform:translateY(-3px);
+}
+
+.hero h1 {
+    font-size:clamp(48px,6vw,82px);
+    line-height:1.04;
+    letter-spacing:-5px;
+    margin-bottom:25px;
+}
+
+.hero h1 span {
+    color:var(--yellow);
+    background:linear-gradient(90deg,#eaff57,#a3e635,#eaff57);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:gradientFlow 4s linear infinite;
+}
+
+.hero-text {
+    max-width:510px;
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.9;
+}
+
+.hero-buttons {
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:35px;
+}
+
+.btn {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:14px 21px;
+    border-radius:6px;
+    font-size:13px;
+    font-weight:700;
+    transition:transform .3s,background .3s,box-shadow .3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.btn::before {
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:70%;
+    height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+    transform:skewX(-20deg);
+}
+
+.btn:hover::before {
+    animation:shine .7s ease;
+}
+
+.btn:hover {
+    transform:translateY(-4px);
+}
+
+.btn-primary {
+    background:var(--yellow);
+    color:#11130b;
+}
+
+.btn-primary:hover {
+    box-shadow:0 9px 28px rgba(234,255,87,.2);
+}
+
+.btn-secondary {
+    border:1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    border-color:var(--yellow);
+    color:var(--yellow);
+}
+
+/* FLOATING CODE EDITOR */
+
+.editor {
+    background:#171912;
+    border:1px solid rgba(234,255,87,.18);
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 25px 80px rgba(0,0,0,.4);
+    transform:rotate(1deg);
+
+    /* Entrance + continuous floating + glow */
+    animation:
+        heroRight 1s .25s both,
+        editorFloat 4s 1.3s ease-in-out infinite,
+        glowPulse 5s 1.3s ease-in-out infinite;
+
+    transition:border-color .4s;
+    will-change:transform;
+}
+
+.editor:hover {
+    border-color:rgba(234,255,87,.5);
+}
+
+.editor-top {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:17px 20px;
+    background:#22241b;
+    border-bottom:1px solid var(--border);
+}
+
+.editor-dot {
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#eaff57;
+    transition:transform .3s;
+}
+
+.editor:hover .editor-dot {
+    transform:scale(1.25);
+}
+
+.editor-dot:nth-child(2) {
+    background:#fb923c;
+}
+
+.editor-dot:nth-child(3) {
+    background:#4ade80;
+}
+
+.editor-name {
+    margin-left:10px;
+    color:var(--muted);
+    font-family:'DM Mono',monospace;
+    font-size:11px;
+}
+
+.editor-body {
+    padding:28px;
+    font-family:'DM Mono',monospace;
+    font-size:13px;
+    line-height:2.2;
+    overflow-x:auto;
+}
+
+.editor-body div {
+    transition:background .25s,padding-left .25s;
+    border-radius:4px;
+}
+
+.editor-body div:hover {
+    background:rgba(234,255,87,.06);
+    padding-left:8px;
+}
+
+.keyword {color:#c084fc;}
+.variable {color:#eaff57;}
+.string {color:#86efac;}
+.function {color:#67e8f9;}
+.comment {color:#858b75;}
+
+.output {
+    margin:0 25px 25px;
+    padding:18px;
+    background:#25291a;
+    border-left:3px solid var(--yellow);
+    border-radius:5px;
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    color:var(--yellow);
+    transition:.3s;
+}
+
+.output:hover {
+    background:#303621;
+    transform:translateX(5px);
+}
+
+.output::after {
+    content:"";
+    display:inline-block;
+    width:7px;
+    height:13px;
+    background:var(--yellow);
+    margin-left:5px;
+    vertical-align:middle;
+    animation:outputBlink 1s steps(2) infinite;
+}
+
+/* INFO STRIP */
+
+.info-strip {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    padding:35px 8%;
+    background:#171912;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+}
+
+.info-item {
+    text-align:center;
+    border-right:1px solid var(--border);
+    transition:transform .3s;
+}
+
+.info-item:hover {
+    transform:translateY(-5px);
+}
+
+.info-item:last-child {
+    border:none;
+}
+
+.info-item h2 {
+    color:var(--yellow);
+    font-size:29px;
+    transition:text-shadow .3s;
+}
+
+.info-item:hover h2 {
+    text-shadow:0 0 20px rgba(234,255,87,.5);
+}
+
+.info-item p {
+    color:var(--muted);
+    font-size:12px;
+    margin-top:5px;
+}
+
+/* COMMON SECTION */
+
+.section {
+    padding:100px 8%;
+}
+
+.section-header {
+    margin-bottom:50px;
+}
+
+.section-label {
+    font-family:'DM Mono',monospace;
+    color:var(--yellow);
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:15px;
+}
+
+.section-header h2 {
+    font-size:clamp(32px,4vw,48px);
+    letter-spacing:-2px;
+}
+
+.section-header p {
+    color:var(--muted);
+    font-size:14px;
+    margin-top:12px;
+    line-height:1.8;
+}
+
+/* SCROLL REVEAL */
+
+.reveal {
+    opacity:0;
+    transform:translateY(35px);
+    transition:opacity .75s ease,transform .75s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.visible {
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* LESSONS */
+
+.lesson-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:17px;
+}
+
+.lesson {
+    min-height:245px;
+    padding:24px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:9px;
+    display:flex;
+    flex-direction:column;
+    transition:transform .4s,border-color .4s,background .4s,box-shadow .4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.lesson::before {
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:rgba(234,255,87,.07);
+    top:-100px;
+    right:-100px;
+    transition:all .5s;
+}
+
+.lesson:hover::before {
+    width:230px;
+    height:230px;
+    top:-100px;
+    right:-100px;
+}
+
+.lesson:hover {
+    transform:translateY(-9px);
+    border-color:var(--yellow);
+    background:var(--panel2);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+.lesson-no {
+    font-family:'DM Mono',monospace;
+    font-size:11px;
+    color:var(--yellow);
+    position:relative;
+    z-index:1;
+}
+
+.lesson-icon {
+    font-size:29px;
+    margin:24px 0 15px;
+    transition:transform .4s;
+    transform-origin:center;
+    position:relative;
+    z-index:1;
+}
+
+.lesson:hover .lesson-icon {
+    transform:scale(1.2) rotate(-8deg);
+}
+
+.lesson h3 {
+    font-size:17px;
+    margin-bottom:10px;
+    position:relative;
+    z-index:1;
+}
+
+.lesson p {
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.7;
+    margin-bottom:20px;
+    position:relative;
+    z-index:1;
+}
+
+.lesson-link {
+    color:var(--yellow);
+    font-family:'DM Mono',monospace;
+    font-size:11px;
+    margin-top:auto;
+    transition:letter-spacing .3s;
+    position:relative;
+    z-index:1;
+}
+
+.lesson:hover .lesson-link {
+    letter-spacing:1px;
+}
+
+/* PRACTICE AREA */
+
+.practice {
+    background:#171912;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+}
+
+.practice-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.practice-card {
+    min-height:350px;
+    padding:35px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    transition:transform .4s,border-color .4s,box-shadow .4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.practice-card::after {
+    content:"";
+    position:absolute;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    border:1px solid rgba(234,255,87,.09);
+    right:-120px;
+    bottom:-130px;
+    transition:transform .5s;
+}
+
+.practice-card:hover::after {
+    transform:scale(1.6);
+}
+
+.practice-card:hover {
+    transform:translateY(-8px);
+    border-color:var(--yellow);
+    box-shadow:0 18px 40px rgba(0,0,0,.2);
+}
+
+.test-card {
+    background:linear-gradient(145deg,#25291a,#171912);
+}
+
+.project-card {
+    background:linear-gradient(145deg,#1c2820,#171912);
+}
+
+.practice-icon {
+    font-size:35px;
+    margin-bottom:25px;
+    transition:transform .4s;
+}
+
+.practice-card:hover .practice-icon {
+    transform:scale(1.15) rotate(-8deg);
+}
+
+.practice-label {
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    color:var(--yellow);
+    letter-spacing:2px;
+    margin-bottom:13px;
+}
+
+.practice-card h3 {
+    font-size:27px;
+    margin-bottom:13px;
+}
+
+.practice-card p {
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.9;
+    margin-bottom:25px;
+    max-width:430px;
+}
+
+.feature-list {
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+}
+
+.feature-list span {
+    padding:7px 10px;
+    background:rgba(255,255,255,.06);
+    border:1px solid var(--border);
+    border-radius:4px;
+    color:#d8dbc9;
+    font-size:10px;
+    transition:.3s;
+}
+
+.feature-list span:hover {
+    background:rgba(234,255,87,.1);
+    border-color:rgba(234,255,87,.4);
+    color:var(--yellow);
+    transform:translateY(-3px);
+}
+
+.practice-btn {
+    margin-top:auto;
+    width:fit-content;
+}
+
+/* BOTTOM CTA */
+
+.cta {
+    margin:0 8% 90px;
+    padding:45px;
+    background:var(--yellow);
+    color:#15170e;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:25px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .4s,box-shadow .4s;
+}
+
+.cta:hover {
+    transform:translateY(-5px);
+    box-shadow:0 18px 45px rgba(234,255,87,.12);
+}
+
+.cta::before {
+    content:"";
+    position:absolute;
+    width:250px;
+    height:250px;
+    border:1px solid rgba(21,23,14,.12);
+    border-radius:50%;
+    right:20%;
+    top:-170px;
+    transition:transform .6s;
+}
+
+.cta:hover::before {
+    transform:scale(1.5);
+}
+
+.cta h2 {
+    font-size:30px;
+    letter-spacing:-1px;
+    margin-bottom:10px;
+}
+
+.cta p {
+    font-size:13px;
+    color:#454b2c;
+    line-height:1.7;
+}
+
+.cta .btn {
+    background:#15170e;
+    color:var(--yellow);
+    white-space:nowrap;
+    z-index:1;
+}
+
+.cta .btn:hover {
+    background:#292e1a;
+}
+
+/* FOOTER */
+
+footer {
+    padding:28px 8%;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+    color:var(--muted);
+    font-size:12px;
+    animation:footerReveal 1s ease both;
+}
+
+footer span {
+    transition:color .3s;
+}
+
+footer span:hover {
+    color:var(--yellow);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px) {
+    .lesson-grid {
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .hero {
+        gap:35px;
+    }
+}
+
+@media(max-width:700px) {
+    .navbar {
+        padding:15px 5%;
+        flex-wrap:wrap;
+        gap:13px;
+    }
+
+    .logo {
+        font-size:18px;
+    }
+
+    .nav-links {
+        width:100%;
+        justify-content:space-between;
+        gap:8px;
+        flex-wrap:wrap;
+    }
+
+    .nav-links a {
+        font-size:11px;
+    }
+
+    .home-link {
+        padding:7px 9px;
+    }
+
+    .hero {
+        grid-template-columns:1fr;
+        padding:70px 6%;
+    }
+
+    .hero h1 {
+        letter-spacing:-2px;
+    }
+
+    .editor {
+        transform:none;
+    }
+
+    .info-strip {
+        padding:28px 4%;
+    }
+
+    .info-item h2 {
+        font-size:23px;
+    }
+
+    .info-item p {
+        font-size:10px;
+    }
+
+    .section {
+        padding:75px 6%;
+    }
+
+    .lesson-grid {
+        gap:12px;
+    }
+
+    .lesson {
+        padding:17px;
+        min-height:235px;
+    }
+
+    .lesson h3 {
+        font-size:15px;
+    }
+
+    .practice-grid {
+        grid-template-columns:1fr;
+    }
+
+    .practice-card {
+        padding:27px;
+        min-height:320px;
+    }
+
+    .cta {
+        margin:0 6% 65px;
+        padding:30px 24px;
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .cta h2 {
+        font-size:25px;
+    }
+
+    footer {
+        padding:25px 6%;
+    }
+}
+
+@media(max-width:390px) {
+    .lesson-grid {
+        grid-template-columns:1fr;
+    }
+
+    .info-strip {
+        grid-template-columns:1fr;
+        gap:18px;
+    }
+
+    .info-item {
+        border-right:none;
+        border-bottom:1px solid var(--border);
+        padding-bottom:15px;
+    }
+
+    .info-item:last-child {
+        border:none;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media(prefers-reduced-motion:reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+    }
+
+    .reveal {
+        opacity:1;
+        transform:none;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <a href="../index.html" class="logo">
+        CODE NEXA <span>FORGE.</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="#lessons">Lessons</a>
+        <a href="#tests">Tests</a>
+        <a href="#projects">Projects</a>
+        <a href="../index.html" class="home-link">Main Home ↗</a>
+    </div>
+
+</nav>
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div>
+
+        <div class="tag">// JAVASCRIPT DEVELOPMENT LAB</div>
+
+        <h1>Make Things <span>Happen.</span></h1>
+
+        <p class="hero-text">
+            Learn JavaScript and bring websites to life.
+            Explore programming fundamentals, logic, functions,
+            interactive web pages and real-world development projects.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="#lessons" class="btn btn-primary">Start Learning →</a>
+            <a href="../index.html" class="btn btn-secondary">Main Website ↗</a>
+        </div>
+
+    </div>
+
+    <div class="editor">
+
+        <div class="editor-top">
+            <span class="editor-dot"></span>
+            <span class="editor-dot"></span>
+            <span class="editor-dot"></span>
+            <span class="editor-name">script.js</span>
+        </div>
+
+        <div class="editor-body">
+            <div><span class="comment">// Your first JavaScript code</span></div>
+            <div><span class="keyword">const</span> <span class="variable">future</span> = <span class="string">"Developer"</span>;</div>
+            <div></div>
+            <div><span class="keyword">function</span> <span class="function">buildFuture</span>() {</div>
+            <div>&nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"Keep Learning!"</span>;</div>
+            <div>}</div>
+            <div></div>
+            <div><span class="function">console</span>.log(<span class="function">buildFuture</span>());</div>
+        </div>
+
+        <div class="output">
+            &gt; Keep Learning!_
+        </div>
+
+    </div>
+
+</header>
+
+<!-- STATS -->
+
+<section class="info-strip">
+
+    <div class="info-item">
+        <h2>08</h2>
+        <p>Learning Modules</p>
+    </div>
+
+    <div class="info-item">
+        <h2>100%</h2>
+        <p>Hands-on Learning</p>
+    </div>
+
+    <div class="info-item">
+        <h2>∞</h2>
+        <p>Ideas to Build</p>
+    </div>
+
+</section>
+
+<!-- LESSONS -->
+
+<main class="section" id="lessons">
+
+    <div class="section-header reveal">
+        <div class="section-label">01 / LEARNING PATH</div>
+        <h2>Explore JavaScript</h2>
+        <p>Eight learning modules to take you from beginner to confident JavaScript developer.</p>
+    </div>
+
+    <div class="lesson-grid">
+
+        <a class="lesson reveal" href="javascript-topics/01-javascript-foundation.html" target="_blank" rel="noopener">
+            <span class="lesson-no">MODULE 01</span>
+            <div class="lesson-icon">⚡</div>
+            <h3>JavaScript Foundation</h3>
+            <p>Understand JavaScript, its role and how it works with HTML and CSS.</p>
+            <span class="lesson-link">OPEN LESSON ↗</span>
+        </a>
+
+        <a class="lesson reveal" href="javascript-topics/02-variables-data-types.html" target="_blank" rel="noopener">
+            <span class="lesson-no">MODULE 02</span>
+            <div class="lesson-icon">📦</div>
+            <h3>Variables & Data Types</h3>
+            <p>Learn let, const, var, strings, numbers, booleans and more.</p>
+            <span class="lesson-link">OPEN LESSON ↗</span>
+        </a>
+
+        <a class="lesson reveal" href="javascript-topics/03-operators-conditions.html" target="_blank" rel="noopener">
+            <span class="lesson-no">MODULE 03</span>
+            <div class="lesson-icon">🔀</div>
+            <h3>Operators & Conditions</h3>
+            <p>Make decisions using operators, if, else and switch statements.</p>
+            <span class="lesson-link">OPEN LESSON ↗</span>
+        </a>
+
+        <a class="lesson reveal" href="javascript-topics/04-loops.html" target="_blank" rel="noopener">
+            <span class="lesson-no">MODULE 04</span>
+            <div class="lesson-icon">🔁</div>
+            <h3>Loops</h3>
+            <p>Understand for, while and do-while loops to repeat tasks.</p>
+            <span class="lesson-link">OPEN LESSON ↗</span>
+        </a>
+
+        <a class="lesson reveal" href="javascript-topics/05-functions.html" target="_blank" rel="noopener">
+            <span class="lesson-no">MODULE 05</span>
+            <div class="lesson-icon">🧠</div>
+            <h3>Functions</h3>
+            <p>Create reusable code with parameters, return values and arrow functions.</p>
+            <span class="lesson-link">OPEN LESSON ↗</span>
+        </a>
+
+        <a class="lesson reveal" href="javascript-topics/06-arrays-objects.html" target="_blank" rel="noopener">
+            <span class="lesson-no">MODULE 06</span>
+            <div class="lesson-icon">🗂️</div>
+            <h3>Arrays & Objects</h3>
+            <p>Store, organize and work with collections of JavaScript data.</p>
+            <span class="lesson-link">OPEN LESSON ↗</span>
+        </a>
+
+        <a class="lesson reveal" href="javascript-topics/07-dom-events.html" target="_blank" rel="noopener">
+            <span class="lesson-no">MODULE 07</span>
+            <div class="lesson-icon">🖱️</div>
+            <h3>DOM & Events</h3>
+            <p>Make web pages interactive by selecting elements and handling events.</p>
+            <span class="lesson-link">OPEN LESSON ↗</span>
+        </a>
+
+        <a class="lesson reveal" href="javascript-topics/08-async-final-project.html" target="_blank" rel="noopener">
+            <span class="lesson-no">MODULE 08</span>
+            <div class="lesson-icon">🚀</div>
+            <h3>Async JS & Final Project</h3>
+            <p>Explore asynchronous JavaScript and build a practical final project.</p>
+            <span class="lesson-link">OPEN LESSON ↗</span>
+        </a>
+
+    </div>
+
+</main>
+
+<!-- TESTS AND PROJECTS -->
+
+<section class="section practice" id="tests">
+
+    <div class="section-header reveal">
+        <div class="section-label">02 / KNOWLEDGE CHECK</div>
+        <h2>Test Your Skills</h2>
+        <p>Check your understanding before moving to practical development.</p>
+    </div>
+
+    <div class="practice-grid">
+
+        <div class="practice-card test-card reveal">
+
+            <div class="practice-icon">🧪</div>
+
+            <div class="practice-label">JAVASCRIPT ASSESSMENT</div>
+
+            <h3>JavaScript Tests</h3>
+
+            <p>
+                Challenge yourself with JavaScript quizzes, timed assessments
+                and a final test. Review your answers and track your performance.
+            </p>
+
+            <div class="feature-list">
+                <span>MCQ Questions</span>
+                <span>Timed Tests</span>
+                <span>Result Reports</span>
+            </div>
+
+            <a href="javascript-tests.html" target="_blank" rel="noopener" class="btn btn-primary practice-btn">
+                Start Testing ↗
+            </a>
+
+        </div>
+
+        <div class="practice-card project-card reveal" id="projects">
+
+            <div class="practice-icon">💻</div>
+
+            <div class="practice-label">REAL-WORLD PRACTICE</div>
+
+            <h3>JavaScript Projects</h3>
+
+            <p>
+                Turn programming concepts into working applications.
+                Practice your skills through creative challenges and
+                build projects step by step.
+            </p>
+
+            <div class="feature-list">
+                <span>Practical Tasks</span>
+                <span>Mini Applications</span>
+                <span>Skill Building</span>
+            </div>
+
+            <a href="javascript-projects.html" target="_blank" rel="noopener" class="btn btn-primary practice-btn">
+                Explore Projects ↗
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="cta reveal">
+
+    <div>
+        <h2>Your Next Step Starts Here.</h2>
+        <p>Learn the fundamentals, practice your logic and become a JavaScript creator.</p>
+    </div>
+
+    <a href="javascript-topics/01-javascript-foundation.html" target="_blank" rel="noopener" class="btn">
+        Start Module 01 →
+    </a>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+    <span>© 2026 CODE NEXA FORGE</span>
+    <span>Think. Code. Create.</span>
+</footer>
+
+<!-- SCROLL ANIMATION SCRIPT -->
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const revealElements = document.querySelectorAll(".reveal");
+
+    if ("IntersectionObserver" in window) {
+
+        const observer = new IntersectionObserver((entries, observerInstance) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observerInstance.unobserve(entry.target);
+                }
+
+            });
+
+        }, {
+            threshold: 0.12,
+            rootMargin: "0px 0px -35px 0px"
+        });
+
+        revealElements.forEach(element => {
+            observer.observe(element);
+        });
+
+    } else {
+
+        revealElements.forEach(element => {
+            element.classList.add("visible");
+        });
+
+    }
+
+    // Stagger lesson card entrance
+
+    document.querySelectorAll(".lesson").forEach((lesson, index) => {
+        lesson.style.transitionDelay = `${(index % 4) * 90}ms`;
+    });
+
+});
+</script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

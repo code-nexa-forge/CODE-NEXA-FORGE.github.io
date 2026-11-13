@@ -1,0 +1,27 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Local databases and session stores
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+
+# Private uploads and runtime files
+storage/
+*.log
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+!storage/
+!storage/library/
+!storage/library/.gitkeep
+
+storage/*

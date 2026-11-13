@@ -1,0 +1,1855 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXA LIBRARY | CODE NEXA FORGE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #080b14;
+    --panel: #111827;
+    --cyan: #00d9ff;
+    --purple: #a855f7;
+    --lime: #b5f550;
+    --orange: #ff914d;
+    --text: #f3f5ff;
+    --muted: #929bb0;
+    --border: rgba(255,255,255,.09);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    background:var(--bg);
+    color:var(--text);
+    font-family:'DM Sans',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+body::before {
+    content:"";
+    position:fixed;
+    width:450px;
+    height:450px;
+    background:var(--purple);
+    filter:blur(180px);
+    opacity:.12;
+    top:-180px;
+    right:-120px;
+    pointer-events:none;
+    z-index:-1;
+}
+
+body::after {
+    content:"";
+    position:fixed;
+    width:400px;
+    height:400px;
+    background:var(--cyan);
+    filter:blur(180px);
+    opacity:.09;
+    bottom:-180px;
+    left:-120px;
+    pointer-events:none;
+    z-index:-1;
+}
+
+a { color:inherit; text-decoration:none; }
+
+.navbar {
+    height:76px;
+    padding:0 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid var(--border);
+    background:rgba(8,11,20,.85);
+    backdrop-filter:blur(16px);
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.logo {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:23px;
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+.logo span { color:var(--cyan); }
+
+.nav-links {
+    display:flex;
+    align-items:center;
+    gap:25px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.nav-links a:hover { color:var(--cyan); }
+
+.back-btn {
+    padding:10px 17px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    transition:.3s;
+}
+
+.back-btn:hover {
+    border-color:var(--cyan);
+    color:var(--cyan);
+    transform:translateY(-2px);
+}
+
+.hero {
+    max-width:1100px;
+    margin:75px auto 45px;
+    padding:0 25px;
+    text-align:center;
+    animation:fadeUp .8s ease both;
+}
+
+.eyebrow {
+    display:inline-block;
+    padding:8px 15px;
+    border:1px solid rgba(0,217,255,.25);
+    background:rgba(0,217,255,.07);
+    color:var(--cyan);
+    border-radius:30px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:2px;
+    margin-bottom:22px;
+}
+
+.hero h1 {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(38px,6vw,66px);
+    line-height:1.1;
+    margin-bottom:18px;
+}
+
+.gradient-text {
+    background:linear-gradient(90deg,var(--cyan),var(--purple),var(--orange));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.hero p {
+    color:var(--muted);
+    max-width:620px;
+    margin:auto;
+    line-height:1.8;
+    font-size:15px;
+}
+
+.stats {
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+.stat {
+    padding:12px 20px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:rgba(255,255,255,.025);
+    color:var(--muted);
+    font-size:13px;
+}
+
+.stat strong { color:var(--text); }
+
+.container {
+    width:min(950px,90%);
+    margin:0 auto 90px;
+}
+
+.section-heading {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.section-heading h2 {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:25px;
+}
+
+.section-heading p {
+    color:var(--muted);
+    font-size:13px;
+    margin-top:5px;
+}
+
+.category {
+    margin-bottom:17px;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+    background:rgba(17,24,39,.76);
+    transition:border-color .3s,transform .3s,box-shadow .3s;
+    animation:fadeUp .7s ease both;
+}
+
+.category:hover {
+    transform:translateY(-3px);
+    border-color:rgba(255,255,255,.2);
+}
+
+.category.html:hover { box-shadow:0 10px 35px rgba(255,145,77,.08); }
+.category.css:hover { box-shadow:0 10px 35px rgba(168,85,247,.1); }
+.category.js:hover { box-shadow:0 10px 35px rgba(181,245,80,.08); }
+
+.category-header {
+    width:100%;
+    padding:23px 25px;
+    background:transparent;
+    border:0;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    gap:17px;
+    text-align:left;
+    cursor:pointer;
+}
+
+.category-icon {
+    width:52px;
+    height:52px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    font-size:22px;
+    font-weight:800;
+    flex-shrink:0;
+}
+
+.html .category-icon { background:rgba(255,145,77,.13); color:var(--orange); }
+.css .category-icon { background:rgba(168,85,247,.14); color:var(--purple); }
+.js .category-icon { background:rgba(181,245,80,.12); color:var(--lime); }
+
+.category-info { flex:1; }
+
+.category-info h3 {
+    font-family:'Space Grotesk',sans-serif;
+    font-size:19px;
+    margin-bottom:5px;
+}
+
+.category-info p {
+    color:var(--muted);
+    font-size:13px;
+}
+
+.resource-count {
+    color:var(--muted);
+    font-size:12px;
+    margin-right:12px;
+}
+
+.arrow {
+    font-size:20px;
+    color:var(--muted);
+    transition:transform .35s;
+}
+
+.category.open .arrow { transform:rotate(180deg); }
+
+.category-content {
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .4s ease;
+}
+
+.category.open .category-content { grid-template-rows:1fr; }
+
+.category-inner { overflow:hidden; }
+
+.resource-list {
+    padding:0 23px 22px;
+    border-top:1px solid var(--border);
+}
+
+.resource-card {
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:16px;
+    margin-top:13px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:rgba(255,255,255,.025);
+    transition:.25s;
+    flex-wrap:wrap;
+}
+
+.resource-card:hover {
+    background:rgba(255,255,255,.05);
+    transform:translateX(4px);
+}
+
+.pdf-icon {
+    width:42px;
+    height:45px;
+    display:grid;
+    place-items:center;
+    background:rgba(255,80,80,.12);
+    color:#ff7777;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.resource-info { flex:1; min-width:150px; }
+
+.resource-info h4 { font-size:14px; margin-bottom:5px; }
+
+.resource-info p {
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.5;
+}
+
+.resource-actions {
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.btn {
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
+    font-family:inherit;
+}
+
+.btn:hover { transform:translateY(-2px); filter:brightness(1.12); }
+
+.view-btn { background:rgba(0,217,255,.12); color:var(--cyan); }
+.download-btn { background:rgba(181,245,80,.12); color:var(--lime); }
+.delete-btn { background:rgba(255,80,80,.12); color:#ff7777; }
+
+.empty-state {
+    text-align:center;
+    padding:30px 15px;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.8;
+}
+
+.empty-state .empty-icon {
+    font-size:28px;
+    display:block;
+    margin-bottom:10px;
+}
+
+.admin-panel {
+    display:none;
+    margin-bottom:30px;
+    padding:25px;
+    border:1px solid rgba(168,85,247,.35);
+    background:linear-gradient(135deg,rgba(168,85,247,.09),rgba(0,217,255,.04));
+    border-radius:17px;
+    animation:fadeUp .6s ease both;
+}
+
+.admin-panel h2 {
+    font-family:'Space Grotesk',sans-serif;
+    margin-bottom:7px;
+}
+
+.admin-panel > p {
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.form-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.field { display:flex; flex-direction:column; gap:8px; }
+
+.field.full { grid-column:1/-1; }
+
+.field label {
+    color:#c6cce0;
+    font-size:12px;
+    font-weight:700;
+}
+
+.field input, .field select, .field textarea {
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    outline:none;
+    background:#0b1120;
+    color:white;
+    font-family:inherit;
+    font-size:13px;
+}
+
+.field input:focus, .field select:focus, .field textarea:focus {
+    border-color:var(--purple);
+    box-shadow:0 0 0 3px rgba(168,85,247,.1);
+}
+
+
+/* =====================================
+   PREMIUM ANIMATED PDF FILE PICKER
+===================================== */
+
+.field input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(168,85,247,.35);
+    border-radius: 12px;
+    background: linear-gradient(
+        120deg,
+        rgba(168,85,247,.12),
+        rgba(0,217,255,.09)
+    );
+    color: #dce5ff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: .35s ease;
+    box-shadow: 0 0 0 rgba(168,85,247,0);
+}
+
+.field input[type="file"]::file-selector-button {
+    padding: 12px 20px;
+    margin-right: 15px;
+    border: none;
+    border-radius: 9px;
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .3px;
+    cursor: pointer;
+
+    background: linear-gradient(
+        110deg,
+        #a855f7,
+        #7044db,
+        #00bfe8
+    );
+    background-size: 200% 200%;
+
+    box-shadow: 0 4px 18px rgba(168,85,247,.28);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease,
+        background-position .5s ease;
+}
+
+.field input[type="file"]::-webkit-file-upload-button {
+    padding: 12px 20px;
+    margin-right: 15px;
+    border: none;
+    border-radius: 9px;
+    color: white;
+    font-weight: 800;
+    background: linear-gradient(110deg,#a855f7,#7044db,#00bfe8);
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.field input[type="file"]:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 22px rgba(0,217,255,.16);
+    transform: translateY(-2px);
+}
+
+.field input[type="file"]:hover::file-selector-button {
+    background-position: 100% 50%;
+    transform: scale(1.06);
+    box-shadow: 0 0 25px rgba(168,85,247,.55);
+}
+
+.field input[type="file"]:active::file-selector-button {
+    transform: scale(.94);
+}
+
+/* Animated glow */
+@keyframes filePickerGlow {
+    0%, 100% {
+        box-shadow: 0 0 8px rgba(168,85,247,.12);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0,217,255,.22);
+    }
+}
+
+.field input[type="file"] {
+    animation: filePickerGlow 3s ease-in-out infinite;
+}
+
+
+.upload-btn {
+    background:linear-gradient(90deg,var(--purple),#7044db);
+    color:white;
+    padding:13px 20px;
+    margin-top:17px;
+}
+
+.upload-btn:disabled { opacity:.55; cursor:wait; }
+
+.message {
+    display:none;
+    padding:13px;
+    margin-top:15px;
+    border-radius:9px;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.message.show { display:block; }
+.message.error { background:rgba(255,80,80,.1); color:#ff8888; }
+.message.success { background:rgba(181,245,80,.1); color:var(--lime); }
+
+.login-notice {
+    display:none;
+    padding:20px;
+    border:1px solid rgba(255,145,77,.25);
+    border-radius:13px;
+    background:rgba(255,145,77,.06);
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.8;
+    margin-bottom:25px;
+}
+
+.login-notice a { color:var(--orange); font-weight:700; }
+
+.viewer {
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(0,0,0,.88);
+    backdrop-filter:blur(10px);
+    padding:20px;
+}
+
+.viewer.show {
+    display:flex;
+    flex-direction:column;
+    animation:fadeIn .25s ease;
+}
+
+.viewer-top {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:13px;
+    background:#111827;
+    border-radius:12px 12px 0 0;
+}
+
+.viewer-top strong {
+    font-size:13px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.close-viewer {
+    border:0;
+    border-radius:8px;
+    background:rgba(255,80,80,.15);
+    color:#ff8888;
+    padding:9px 14px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.viewer iframe {
+    width:100%;
+    flex:1;
+    border:0;
+    background:white;
+    border-radius:0 0 12px 12px;
+}
+
+footer {
+    text-align:center;
+    border-top:1px solid var(--border);
+    padding:30px 15px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+footer strong { color:var(--cyan); }
+
+@keyframes fadeUp {
+    from { opacity:0; transform:translateY(22px); }
+    to { opacity:1; transform:translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity:0; }
+    to { opacity:1; }
+}
+
+@media(max-width:650px) {
+    .navbar { padding:0 5%; height:65px; }
+    .logo { font-size:19px; }
+    .nav-links { gap:10px; font-size:12px; }
+    .hero { margin-top:55px; }
+    .category-header { padding:18px 15px; gap:12px; }
+    .category-icon { width:44px; height:44px; }
+    .category-info h3 { font-size:16px; }
+    .category-info p { font-size:11px; }
+    .resource-count { display:none; }
+    .resource-list { padding:0 13px 15px; }
+    .resource-card { padding:12px; }
+    .resource-actions { width:100%; }
+    .resource-actions .btn { flex:1; }
+    .form-grid { grid-template-columns:1fr; }
+    .field.full { grid-column:auto; }
+    .section-heading h2 { font-size:21px; }
+}
+
+/* =========================================
+   NEXA LIBRARY — ADVANCED ANIMATION PACK
+========================================= */
+
+/* Animated background glow */
+body::before {
+    animation: purpleGlow 9s ease-in-out infinite alternate;
+}
+
+body::after {
+    animation: cyanGlow 11s ease-in-out infinite alternate;
+}
+
+@keyframes purpleGlow {
+    0% { transform: translate(0, 0) scale(1); opacity: .10; }
+    100% { transform: translate(-80px, 70px) scale(1.3); opacity: .19; }
+}
+
+@keyframes cyanGlow {
+    0% { transform: translate(0, 0) scale(1); opacity: .07; }
+    100% { transform: translate(80px, -60px) scale(1.25); opacity: .16; }
+}
+
+/* Navbar animation */
+.navbar {
+    animation: navDrop .8s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes navDrop {
+    from { opacity: 0; transform: translateY(-35px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-links a {
+    transition: color .3s, transform .3s;
+}
+
+.nav-links a:hover {
+    color: var(--cyan);
+    transform: translateY(-3px);
+}
+
+/* Hero entrance */
+.hero {
+    animation: heroReveal 1s cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes heroReveal {
+    from { opacity: 0; transform: translateY(45px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.eyebrow {
+    animation: eyebrowPulse 3s ease-in-out infinite;
+}
+
+@keyframes eyebrowPulse {
+    0%, 100% { box-shadow: 0 0 0 rgba(0,217,255,0); }
+    50% { box-shadow: 0 0 22px rgba(0,217,255,.18); }
+}
+
+.gradient-text {
+    background-size: 200% auto;
+    animation: gradientFlow 5s linear infinite;
+}
+
+@keyframes gradientFlow {
+    to { background-position: 200% center; }
+}
+
+/* Floating stats */
+.stat {
+    transition: transform .35s, border-color .35s, box-shadow .35s;
+    animation: statFloat 4s ease-in-out infinite;
+}
+
+.stat:nth-child(2) { animation-delay: .5s; }
+.stat:nth-child(3) { animation-delay: 1s; }
+
+@keyframes statFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.stat:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 20px rgba(0,217,255,.12);
+    transform: translateY(-5px) scale(1.04);
+}
+
+/* Scroll reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity .8s ease, transform .8s cubic-bezier(.16,1,.3,1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Category cards */
+.category {
+    position: relative;
+    isolation: isolate;
+}
+
+.category::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity .4s;
+    background: linear-gradient(120deg,
+        rgba(0,217,255,.07),
+        rgba(168,85,247,.08),
+        rgba(181,245,80,.05));
+}
+
+.category:hover::before {
+    opacity: 1;
+}
+
+.category-header {
+    transition: background .35s, padding .35s;
+}
+
+.category-header:hover {
+    background: rgba(255,255,255,.025);
+}
+
+.category-icon {
+    transition: transform .4s cubic-bezier(.2,.8,.2,1),
+                box-shadow .4s;
+}
+
+.category:hover .category-icon {
+    transform: rotate(-7deg) scale(1.1);
+}
+
+.category.open .category-icon {
+    animation: iconPop .45s ease;
+}
+
+@keyframes iconPop {
+    0% { transform: scale(.8) rotate(-12deg); }
+    60% { transform: scale(1.17) rotate(5deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+.arrow {
+    transition: transform .4s cubic-bezier(.2,.8,.2,1), color .3s;
+}
+
+.category.open .arrow {
+    color: var(--cyan);
+}
+
+/* Resource card entrance */
+.resource-card {
+    animation: resourceEnter .55s cubic-bezier(.16,1,.3,1) both;
+    position: relative;
+    overflow: hidden;
+}
+
+.resource-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255,255,255,.055),
+        transparent);
+    transform: skewX(-20deg);
+    transition: left .7s;
+    pointer-events: none;
+}
+
+.resource-card:hover::before {
+    left: 150%;
+}
+
+@keyframes resourceEnter {
+    from {
+        opacity: 0;
+        transform: translateY(22px) scale(.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.resource-card:hover {
+    border-color: rgba(0,217,255,.35);
+    box-shadow: 0 8px 25px rgba(0,0,0,.2);
+    transform: translateX(5px) translateY(-2px);
+}
+
+.pdf-icon {
+    transition: transform .35s, box-shadow .35s;
+}
+
+.resource-card:hover .pdf-icon {
+    transform: rotate(5deg) scale(1.08);
+    box-shadow: 0 0 18px rgba(255,100,100,.16);
+}
+
+/* Buttons */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 60%;
+    height: 200%;
+    transform: rotate(25deg);
+    background: rgba(255,255,255,.18);
+    transition: left .5s;
+}
+
+.btn:hover::after {
+    left: 150%;
+}
+
+.btn:active {
+    transform: scale(.95);
+}
+
+.upload-btn {
+    box-shadow: 0 5px 20px rgba(168,85,247,.2);
+    transition: transform .3s, box-shadow .3s, filter .3s;
+}
+
+.upload-btn:hover {
+    box-shadow: 0 8px 30px rgba(168,85,247,.4);
+    transform: translateY(-4px);
+}
+
+/* Admin panel */
+.admin-panel {
+    animation: adminReveal .8s cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes adminReveal {
+    from { opacity: 0; transform: translateY(35px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.field input, .field select, .field textarea {
+    transition: border-color .3s, box-shadow .3s, transform .3s;
+}
+
+.field input:focus, .field select:focus, .field textarea:focus {
+    transform: translateY(-2px);
+}
+
+/* Empty state */
+.empty-state {
+    animation: fadeUp .7s ease both;
+}
+
+.empty-icon {
+    animation: bookFloat 3s ease-in-out infinite;
+}
+
+@keyframes bookFloat {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-9px) rotate(5deg); }
+}
+
+/* PDF viewer */
+.viewer {
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+
+.viewer.show {
+    opacity: 1;
+}
+
+.viewer-top {
+    animation: viewerTop .4s ease both;
+}
+
+@keyframes viewerTop {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-viewer {
+    transition: transform .3s, background .3s;
+}
+
+.close-viewer:hover {
+    transform: rotate(-5deg) scale(1.06);
+    background: rgba(255,80,80,.28);
+}
+
+/* Footer */
+footer {
+    transition: border-color .4s;
+    animation: fadeUp 1s ease both;
+}
+
+footer strong {
+    transition: text-shadow .3s;
+}
+
+footer:hover strong {
+    text-shadow: 0 0 15px rgba(0,217,255,.55);
+}
+
+/* Login notice */
+.login-notice {
+    animation: fadeUp .6s ease both;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+/* ============================================
+   NEXA LIBRARY V2 — MIDNIGHT EMERALD THEME
+============================================ */
+
+:root {
+    --bg: #080d12;
+    --panel: #111b20;
+    --cyan: #38e6bd;
+    --purple: #a78bfa;
+    --lime: #c4ff72;
+    --orange: #ffb86b;
+    --text: #f1fff9;
+    --muted: #94aaa5;
+    --border: rgba(112, 255, 213, .13);
+}
+
+/* New page background */
+body {
+    background:
+        radial-gradient(ellipse at 10% 15%, rgba(35,190,145,.13), transparent 35%),
+        radial-gradient(ellipse at 90% 55%, rgba(139,92,246,.12), transparent 35%),
+        #080d12;
+    background-attachment: fixed;
+    transition: background .5s ease;
+}
+
+/* Animated background lighting */
+body::before {
+    background: #00d9a5;
+    opacity: .12;
+    animation: emeraldAura 10s ease-in-out infinite alternate;
+}
+
+body::after {
+    background: #9060ff;
+    opacity: .12;
+    animation: violetAura 12s ease-in-out infinite alternate;
+}
+
+@keyframes emeraldAura {
+    from { transform: translate(0,0) scale(.9); }
+    to { transform: translate(-90px,80px) scale(1.35); }
+}
+
+@keyframes violetAura {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(80px,-80px) scale(1.3); }
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(8,13,18,.88);
+    border-bottom-color: rgba(56,230,189,.2);
+    box-shadow: 0 8px 30px rgba(0,0,0,.2);
+}
+
+.logo span {
+    color: var(--cyan);
+    text-shadow: 0 0 15px rgba(56,230,189,.7);
+}
+
+.back-btn:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 18px rgba(56,230,189,.2);
+}
+
+/* Hero section */
+.eyebrow {
+    background: rgba(56,230,189,.09);
+    border-color: rgba(56,230,189,.35);
+    color: var(--cyan);
+    box-shadow: 0 0 20px rgba(56,230,189,.08);
+}
+
+.gradient-text {
+    background-image: linear-gradient(
+        90deg,
+        #38e6bd,
+        #a78bfa,
+        #c4ff72,
+        #38e6bd
+    );
+    background-size: 300% auto;
+    animation: newGradient 6s linear infinite;
+}
+
+@keyframes newGradient {
+    to { background-position: 300% center; }
+}
+
+/* Stats */
+.stat {
+    background: rgba(17,34,35,.7);
+    border-color: rgba(56,230,189,.17);
+    backdrop-filter: blur(10px);
+}
+
+.stat strong {
+    color: var(--cyan);
+}
+
+/* ============================================
+   ADMIN RESOURCE MANAGER — NEW OUTER BOX
+============================================ */
+
+.admin-panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 30px;
+    border: 1px solid rgba(56,230,189,.35);
+    border-radius: 22px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(20,55,48,.92),
+            rgba(24,25,43,.94),
+            rgba(18,35,39,.92));
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.3),
+        0 0 25px rgba(56,230,189,.07);
+
+    animation: adminGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes adminGlow {
+    from {
+        box-shadow: 0 12px 35px rgba(0,0,0,.25),
+                    0 0 15px rgba(56,230,189,.08);
+        border-color: rgba(56,230,189,.25);
+    }
+    to {
+        box-shadow: 0 15px 45px rgba(0,0,0,.3),
+                    0 0 32px rgba(167,139,250,.17);
+        border-color: rgba(167,139,250,.5);
+    }
+}
+
+/* Decorative animated light inside admin box */
+.admin-panel::before {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    top: -150px;
+    right: -90px;
+    background: #38e6bd;
+    opacity: .12;
+    filter: blur(85px);
+    border-radius: 50%;
+    z-index: -1;
+    animation: adminOrb 7s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes adminOrb {
+    from { transform: translate(0,0); }
+    to { transform: translate(-100px,130px); }
+}
+
+.admin-panel h2 {
+    color: #e8fff8;
+    text-shadow: 0 0 18px rgba(56,230,189,.15);
+    animation: fadeUp .7s ease both;
+}
+
+.admin-panel > p {
+    color: #a7c1b8;
+}
+
+/* ============================================
+   TITLE, CATEGORY, DESCRIPTION AND PDF BOXES
+============================================ */
+
+.field {
+    position: relative;
+}
+
+.field label {
+    color: #a9f5d9;
+    letter-spacing: 1px;
+    transition: color .3s;
+}
+
+.field:focus-within label {
+    color: var(--cyan);
+    text-shadow: 0 0 12px rgba(56,230,189,.4);
+}
+
+.field input,
+.field select,
+.field textarea {
+    background: linear-gradient(
+        135deg,
+        rgba(9,24,28,.95),
+        rgba(21,29,43,.95)
+    );
+
+    color: #edfff8;
+    border: 1px solid rgba(56,230,189,.2);
+    border-radius: 12px;
+    padding: 15px;
+
+    box-shadow: inset 0 2px 10px rgba(0,0,0,.15);
+
+    transition:
+        border-color .35s,
+        box-shadow .35s,
+        transform .35s,
+        background .35s;
+}
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+    border-color: rgba(56,230,189,.5);
+    background: rgba(17,38,39,.98);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: #38e6bd;
+    background: #102521;
+    box-shadow:
+        0 0 0 3px rgba(56,230,189,.12),
+        0 0 22px rgba(56,230,189,.12);
+    transform: translateY(-3px);
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+    color: #718b84;
+}
+
+/* Category dropdown */
+.field select option {
+    background: #111d21;
+    color: #edfff8;
+}
+
+/* ============================================
+   PDF FILE PICKER — MATCH NEW THEME
+============================================ */
+
+.field input[type="file"] {
+    background: linear-gradient(
+        120deg,
+        rgba(56,230,189,.10),
+        rgba(167,139,250,.10)
+    );
+    border: 1px dashed rgba(56,230,189,.5);
+    color: #d9fff1;
+    border-radius: 13px;
+    padding: 12px;
+}
+
+.field input[type="file"]::file-selector-button {
+    color: #071a17;
+    font-weight: 800;
+    border: 0;
+    border-radius: 9px;
+    padding: 12px 20px;
+    margin-right: 15px;
+    cursor: pointer;
+
+    background: linear-gradient(110deg,#38e6bd,#c4ff72);
+    box-shadow: 0 4px 18px rgba(56,230,189,.22);
+
+    transition: .35s ease;
+}
+
+.field input[type="file"]::file-selector-button:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 25px rgba(56,230,189,.5);
+}
+
+/* Upload button */
+.upload-btn {
+    background: linear-gradient(110deg,#38bfa0,#7654d9);
+    background-size: 200% auto;
+    color: white;
+    border-radius: 11px;
+    padding: 14px 24px;
+    box-shadow: 0 6px 22px rgba(56,230,189,.2);
+    transition: .4s ease;
+}
+
+.upload-btn:hover {
+    background-position: right center;
+    box-shadow: 0 8px 30px rgba(56,230,189,.35);
+    transform: translateY(-4px) scale(1.03);
+}
+
+/* ============================================
+   CATEGORY CARDS
+============================================ */
+
+.category {
+    background: linear-gradient(
+        120deg,
+        rgba(18,34,36,.94),
+        rgba(22,24,42,.94)
+    );
+    border-color: rgba(56,230,189,.14);
+    border-radius: 19px;
+    transition: .4s cubic-bezier(.2,.8,.2,1);
+}
+
+.category.html:hover {
+    border-color: rgba(255,184,107,.55);
+    box-shadow: 0 12px 35px rgba(255,184,107,.12);
+}
+
+.category.css:hover {
+    border-color: rgba(167,139,250,.55);
+    box-shadow: 0 12px 35px rgba(167,139,250,.13);
+}
+
+.category.js:hover {
+    border-color: rgba(196,255,114,.55);
+    box-shadow: 0 12px 35px rgba(196,255,114,.12);
+}
+
+.category-header {
+    transition: background .35s, padding .35s;
+}
+
+.category-header:hover {
+    background: rgba(56,230,189,.045);
+}
+
+.category-icon {
+    transition: transform .4s, box-shadow .4s;
+}
+
+.category:hover .category-icon {
+    transform: rotate(-8deg) scale(1.12);
+    box-shadow: 0 0 22px rgba(56,230,189,.12);
+}
+
+.category.open .arrow {
+    color: var(--cyan);
+}
+
+/* Resource cards */
+.resource-card {
+    background: rgba(10,25,28,.8);
+    border-color: rgba(56,230,189,.15);
+    border-radius: 14px;
+    transition: .35s ease;
+}
+
+.resource-card:hover {
+    background: rgba(22,43,43,.95);
+    border-color: rgba(56,230,189,.45);
+    box-shadow: 0 8px 25px rgba(0,0,0,.22);
+    transform: translateX(5px) translateY(-3px);
+}
+
+.view-btn {
+    background: rgba(56,230,189,.13);
+    color: #55f0c6;
+}
+
+.download-btn {
+    background: rgba(196,255,114,.12);
+    color: #c4ff72;
+}
+
+.delete-btn {
+    background: rgba(255,100,120,.12);
+    color: #ff8295;
+}
+
+/* Section heading */
+.section-heading h2 {
+    color: #e8fff8;
+}
+
+.section-heading p {
+    color: #91aaa2;
+}
+
+/* PDF viewer */
+.viewer {
+    background: rgba(3,10,12,.93);
+}
+
+.viewer-top {
+    background: #122321;
+    border: 1px solid rgba(56,230,189,.2);
+}
+
+.close-viewer {
+    background: rgba(255,100,120,.15);
+}
+
+/* Footer */
+footer {
+    border-top-color: rgba(56,230,189,.2);
+    background: rgba(8,15,18,.5);
+}
+
+footer strong {
+    color: var(--cyan);
+}
+
+/* Smooth page movement */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Mobile adjustments */
+@media(max-width:650px) {
+    .admin-panel {
+        padding: 19px;
+        border-radius: 17px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+        padding: 13px;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="index.html" class="logo">
+    CODE <span>NEXA</span> FORGE
+</a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="contact-support.html">Support</a>
+        <a href="login.html" class="back-btn" id="accountLink">Login</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="eyebrow">KNOWLEDGE • RESOURCES • GROWTH</div>
+
+    <h1>Welcome to <span class="gradient-text">NEXA LIBRARY</span></h1>
+
+    <p>
+        Your learning resource hub. Explore carefully organized PDF
+        resources, strengthen your skills, and take your development
+        journey to the next level.
+    </p>
+
+    <div class="stats">
+        <div class="stat"><strong>03</strong> Learning Categories</div>
+        <div class="stat"><strong id="totalResources">0</strong> PDF Resources</div>
+        <div class="stat"><strong>24/7</strong> Learning Access</div>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="admin-panel" id="adminPanel">
+        <h2>⚡ Admin Resource Manager</h2>
+        <p>Upload PDF learning materials for your students.</p>
+
+        <form id="uploadForm">
+            <div class="form-grid">
+
+                <div class="field">
+                    <label for="pdfTitle">RESOURCE TITLE</label>
+                    <input id="pdfTitle" name="title" type="text"
+                        maxlength="120" placeholder="e.g. HTML Complete Notes" required>
+                </div>
+
+                <div class="field">
+                    <label for="pdfCategory">CATEGORY</label>
+                    <select id="pdfCategory" name="category" required>
+                        <option value="HTML">HTML Resources</option>
+                        <option value="CSS">CSS Resources</option>
+                        <option value="JavaScript">JavaScript Resources</option>
+                    </select>
+                </div>
+
+                <div class="field full">
+                    <label for="pdfDescription">DESCRIPTION</label>
+                    <textarea id="pdfDescription" name="description"
+                        rows="2" maxlength="500"
+                        placeholder="Briefly describe this resource..."></textarea>
+                </div>
+
+                <div class="field full">
+                    <label for="pdfFile">SELECT PDF FILE (MAX 20 MB)</label>
+                    <input id="pdfFile" name="pdf" type="file"
+                        accept=".pdf,application/pdf" required>
+                </div>
+
+            </div>
+
+            <button class="btn upload-btn" id="uploadButton" type="submit">
+                ↑ Upload Resource
+            </button>
+
+            <div class="message" id="uploadMessage" role="status"></div>
+        </form>
+    </section>
+
+    <div class="login-notice" id="loginNotice">
+        Please <a href="login.html">log in to your account</a> to access
+        the learning resources in NEXA LIBRARY.
+    </div>
+
+    <div class="section-heading">
+        <div>
+            <h2>Explore Resources</h2>
+            <p>Select a category to discover its PDF materials.</p>
+        </div>
+    </div>
+
+    <section class="category html" data-category="HTML">
+        <button class="category-header" type="button" aria-expanded="false">
+            <div class="category-icon">5</div>
+            <div class="category-info">
+                <h3>HTML Resources</h3>
+                <p>Structure the web with HTML</p>
+            </div>
+            <span class="resource-count">0 Resources</span>
+            <span class="arrow">⌄</span>
+        </button>
+        <div class="category-content">
+            <div class="category-inner">
+                <div class="resource-list" id="list-HTML"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category css" data-category="CSS">
+        <button class="category-header" type="button" aria-expanded="false">
+            <div class="category-icon">#</div>
+            <div class="category-info">
+                <h3>CSS Resources</h3>
+                <p>Design beautiful and responsive interfaces</p>
+            </div>
+            <span class="resource-count">0 Resources</span>
+            <span class="arrow">⌄</span>
+        </button>
+        <div class="category-content">
+            <div class="category-inner">
+                <div class="resource-list" id="list-CSS"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="category js" data-category="JavaScript">
+        <button class="category-header" type="button" aria-expanded="false">
+            <div class="category-icon">JS</div>
+            <div class="category-info">
+                <h3>JavaScript Resources</h3>
+                <p>Bring websites to life with JavaScript</p>
+            </div>
+            <span class="resource-count">0 Resources</span>
+            <span class="arrow">⌄</span>
+        </button>
+        <div class="category-content">
+            <div class="category-inner">
+                <div class="resource-list" id="list-JavaScript"></div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<div class="viewer" id="pdfViewer" role="dialog" aria-modal="true"
+    aria-label="PDF viewer">
+    <div class="viewer-top">
+        <strong id="viewerTitle">PDF Preview</strong>
+        <button class="close-viewer" id="closeViewer" type="button">
+            ✕ Close
+        </button>
+    </div>
+    <iframe id="pdfFrame" title="PDF document viewer"></iframe>
+</div>
+
+<footer>
+    <p><a href="contact-support.html">Contact Support</a></p>
+    <p>© 2026 <strong>CODE NEXA FORGE</strong> — Learn. Build. Master.</p>
+    <p style="margin-top:8px;">Your knowledge. Your journey. Your future.</p>
+</footer>
+
+<script>
+"use strict";
+
+const API = "/api/library";
+const categories = ["HTML", "CSS", "JavaScript"];
+
+const adminPanel = document.getElementById("adminPanel");
+const loginNotice = document.getElementById("loginNotice");
+const accountLink = document.getElementById("accountLink");
+const totalResources = document.getElementById("totalResources");
+const uploadForm = document.getElementById("uploadForm");
+const uploadButton = document.getElementById("uploadButton");
+const uploadMessage = document.getElementById("uploadMessage");
+
+let currentUser = null;
+let resources = [];
+
+async function apiRequest(url, options = {}) {
+    const response = await fetch(url, {
+        credentials: "same-origin",
+        ...options
+    });
+
+    let data;
+
+    try {
+        data = await response.json();
+    } catch {
+        throw new Error("The server returned an unexpected response.");
+    }
+
+    if (!response.ok || data.success === false) {
+        if (response.status === 401) {
+            loginNotice.style.display = "block";
+        }
+
+        throw new Error(data.message || "Something went wrong.");
+    }
+
+    return data;
+}
+
+function showMessage(element, message, type) {
+    element.textContent = message;
+    element.className = "message show " + type;
+}
+
+function createElement(tag, className, text) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+}
+
+function renderResources() {
+    let total = resources.length;
+    totalResources.textContent = total;
+
+    categories.forEach(category => {
+        const list = document.getElementById("list-" + category);
+        const section = document.querySelector(
+            `.category[data-category="${category}"]`
+        );
+
+        const count = resources.filter(
+            item => item.category === category
+        ).length;
+
+        section.querySelector(".resource-count").textContent =
+            count + (count === 1 ? " Resource" : " Resources");
+
+        list.replaceChildren();
+
+        const categoryResources = resources.filter(
+            item => item.category === category
+        );
+
+        if (categoryResources.length === 0) {
+            const empty = createElement("div", "empty-state");
+            empty.append(
+                createElement("span", "empty-icon", "📚"),
+                createElement("strong", "", "No resources available yet"),
+                createElement("p", "", "New PDF materials will appear here.")
+            );
+            list.appendChild(empty);
+            return;
+        }
+
+        categoryResources.forEach(resource => {
+            const card = createElement("article", "resource-card");
+
+            const icon = createElement("div", "pdf-icon", "PDF");
+
+            const info = createElement("div", "resource-info");
+            info.append(
+                createElement("h4", "", resource.title),
+                createElement(
+                    "p",
+                    "",
+                    resource.description || resource.original_name || "PDF learning resource"
+                )
+            );
+
+            const actions = createElement("div", "resource-actions");
+
+            const viewButton = createElement("button", "btn view-btn", "View PDF");
+            viewButton.type = "button";
+            viewButton.addEventListener("click", () => openViewer(resource));
+
+            const downloadLink = createElement("a", "btn download-btn", "Download");
+            downloadLink.href = `${API}/${encodeURIComponent(resource.id)}/download`;
+            downloadLink.setAttribute("download", "");
+            downloadLink.textContent = "Download";
+
+            actions.append(viewButton, downloadLink);
+
+            if (currentUser && currentUser.role === "admin") {
+                const deleteButton = createElement("button", "btn delete-btn", "Delete");
+                deleteButton.type = "button";
+                deleteButton.addEventListener("click", () => deleteResource(resource));
+                actions.appendChild(deleteButton);
+            }
+
+            card.append(icon, info, actions);
+            list.appendChild(card);
+        });
+    });
+}
+
+async function loadResources() {
+    try {
+        const data = await apiRequest(API);
+        resources = Array.isArray(data.resources) ? data.resources : [];
+        renderResources();
+    } catch (error) {
+        categories.forEach(category => {
+            const list = document.getElementById("list-" + category);
+            list.textContent = error.message;
+        });
+    }
+}
+
+async function checkUser() {
+    try {
+        const data = await apiRequest("/api/auth/me");
+        currentUser = data.user;
+
+        accountLink.textContent = "My Profile";
+        accountLink.href = "profile.html";
+
+        if (currentUser && currentUser.role === "admin") {
+            adminPanel.style.display = "block";
+        }
+
+        loginNotice.style.display = "none";
+    } catch {
+        currentUser = null;
+        adminPanel.style.display = "none";
+        accountLink.textContent = "Login";
+        accountLink.href = "login.html";
+    }
+}
+
+function openViewer(resource) {
+    const viewer = document.getElementById("pdfViewer");
+    const frame = document.getElementById("pdfFrame");
+
+    document.getElementById("viewerTitle").textContent = resource.title;
+    frame.src = `${API}/${encodeURIComponent(resource.id)}/view`;
+    viewer.classList.add("show");
+    document.body.style.overflow = "hidden";
+}
+
+function closeViewer() {
+    document.getElementById("pdfViewer").classList.remove("show");
+    document.getElementById("pdfFrame").src = "about:blank";
+    document.body.style.overflow = "";
+}
+
+document.getElementById("closeViewer").addEventListener("click", closeViewer);
+
+document.getElementById("pdfViewer").addEventListener("click", event => {
+    if (event.target.id === "pdfViewer") closeViewer();
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeViewer();
+});
+
+document.querySelectorAll(".category-header").forEach(button => {
+    button.addEventListener("click", () => {
+        const category = button.closest(".category");
+        const isOpen = category.classList.toggle("open");
+        button.setAttribute("aria-expanded", String(isOpen));
+    });
+});
+
+uploadForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!currentUser || currentUser.role !== "admin") {
+        showMessage(uploadMessage, "Only administrators can upload resources.", "error");
+        return;
+    }
+
+    const file = document.getElementById("pdfFile").files[0];
+
+    if (!file) {
+        showMessage(uploadMessage, "Please select a PDF file.", "error");
+        return;
+    }
+
+    if (file.size > 20 * 1024 * 1024) {
+        showMessage(uploadMessage, "File size must not exceed 20 MB.", "error");
+        return;
+    }
+
+    if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+        showMessage(uploadMessage, "Please select a PDF file.", "error");
+        return;
+    }
+
+    const formData = new FormData(uploadForm);
+
+    uploadButton.disabled = true;
+    uploadButton.textContent = "Uploading...";
+
+    try {
+        const data = await apiRequest(API + "/upload", {
+            method: "POST",
+            body: formData
+        });
+
+        showMessage(
+            uploadMessage,
+            data.message || "PDF uploaded successfully!",
+            "success"
+        );
+
+        uploadForm.reset();
+        await loadResources();
+
+    } catch (error) {
+        showMessage(uploadMessage, error.message, "error");
+    } finally {
+        uploadButton.disabled = false;
+        uploadButton.textContent = "↑ Upload Resource";
+    }
+});
+
+async function deleteResource(resource) {
+    const confirmed = confirm(
+        `Are you sure you want to delete "${resource.title}"?`
+    );
+
+    if (!confirmed) return;
+
+    try {
+        const data = await apiRequest(
+            `${API}/${encodeURIComponent(resource.id)}`,
+            { method: "DELETE" }
+        );
+
+        resources = resources.filter(item => item.id !== resource.id);
+        renderResources();
+
+        alert(data.message || "Resource deleted successfully.");
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+async function initializeLibrary() {
+    await checkUser();
+    await loadResources();
+}
+
+initializeLibrary();
+</script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

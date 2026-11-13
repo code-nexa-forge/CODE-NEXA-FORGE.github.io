@@ -1,0 +1,1373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/html-lesson-access-gate.js"></script>
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNF/ | Headings & Paragraphs</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+
+:root {
+    --bg:#f4f6fb;
+    --ink:#10182b;
+    --muted:#68738a;
+    --blue:#3858e9;
+    --purple:#7655e8;
+    --line:#e1e6f0;
+    --white:#fff;
+}
+
+* { box-sizing:border-box; }
+
+html { scroll-behavior:smooth; }
+
+body {
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'DM Sans',sans-serif;
+    overflow-x:hidden;
+}
+
+button,textarea,input { font:inherit; }
+button { cursor:pointer; }
+
+.navbar {
+    height:72px;
+    padding:0 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#10182b;
+    color:white;
+    position:relative;
+    z-index:5;
+    animation:navDrop .8s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes navDrop {
+    from { opacity:0; transform:translateY(-25px); }
+    to { opacity:1; transform:translateY(0); }
+}
+
+.brand {
+    font-family:'DM Mono',monospace;
+    font-size:23px;
+    font-weight:500;
+    color:#91a5ff;
+    text-decoration:none;
+}
+
+.brand:hover { text-shadow:0 0 18px #91a5ff; }
+
+.nav-tag {
+    color:#aab4ca;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+/* HERO */
+
+.hero {
+    padding:75px 8% 65px;
+    background:
+        radial-gradient(circle at 85% 20%,rgba(118,85,232,.17),transparent 30%),
+        linear-gradient(120deg,#e9edff,#f8f7ff 60%,#f0edff);
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    align-items:center;
+    gap:55px;
+    min-height:480px;
+}
+
+.hero-copy { animation:heroEnter .9s .1s both; }
+
+@keyframes heroEnter {
+    from { opacity:0; transform:translateX(-45px); }
+    to { opacity:1; transform:translateX(0); }
+}
+
+.eyebrow {
+    color:var(--blue);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.hero h1 {
+    max-width:800px;
+    margin:18px 0;
+    font-size:clamp(42px,6vw,70px);
+    line-height:1.04;
+    letter-spacing:-3px;
+}
+
+.hero h1 span { color:var(--blue); }
+
+.hero p {
+    max-width:600px;
+    color:#626e86;
+    font-size:16px;
+    line-height:1.8;
+}
+
+.hero-meta {
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:28px;
+}
+
+.meta-pill {
+    padding:10px 15px;
+    background:rgba(255,255,255,.75);
+    border:1px solid #dfe3f5;
+    border-radius:30px;
+    color:#4b5872;
+    font-size:12px;
+    font-weight:700;
+    transition:.3s;
+}
+
+.meta-pill:hover {
+    transform:translateY(-4px);
+    box-shadow:0 8px 20px #3858e91c;
+}
+
+/* HERO SIDE PANEL */
+
+.hero-side {
+    min-height:330px;
+    padding:25px;
+    background:#111a30;
+    color:white;
+    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 25px 60px rgba(28,40,80,.2);
+    animation:sideEnter 1s .25s cubic-bezier(.22,1,.36,1) both;
+    transform-origin:center;
+}
+
+@keyframes sideEnter {
+    from { opacity:0; transform:translateX(65px) rotate(2deg) scale(.94); }
+    to { opacity:1; transform:translateX(0) rotate(0) scale(1); }
+}
+
+.hero-side:before {
+    content:"";
+    position:absolute;
+    width:220px;
+    height:220px;
+    border:1px solid #91a5ff35;
+    border-radius:50%;
+    right:-80px;
+    top:-85px;
+    animation:orbit 12s linear infinite;
+}
+
+.hero-side:after {
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    border:1px solid #7655e855;
+    border-radius:50%;
+    right:-40px;
+    top:-50px;
+    animation:orbit 9s linear infinite reverse;
+}
+
+@keyframes orbit { to { transform:rotate(360deg); } }
+
+.side-top {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+    z-index:1;
+    color:#aebce0;
+    font:10px 'DM Mono',monospace;
+    letter-spacing:1.5px;
+}
+
+.side-status {
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.side-status i {
+    width:7px;
+    height:7px;
+    background:#55e2a5;
+    border-radius:50%;
+    box-shadow:0 0 12px #55e2a5;
+    animation:statusPulse 1.5s infinite;
+}
+
+@keyframes statusPulse {
+    50% { opacity:.35; box-shadow:0 0 2px #55e2a5; }
+}
+
+.side-code {
+    position:relative;
+    z-index:1;
+    margin-top:35px;
+    padding:20px;
+    background:#0a1120;
+    border:1px solid #293858;
+    border-radius:12px;
+    font:12px/2 'DM Mono',monospace;
+    animation:codeFloat 4s ease-in-out infinite;
+}
+
+@keyframes codeFloat {
+    0%,100% { transform:translateY(0); }
+    50% { transform:translateY(-7px); }
+}
+
+.code-purple { color:#c3a8ff; }
+.code-blue { color:#91a5ff; }
+.code-green { color:#a5e6bc; }
+.code-muted { color:#74839f; }
+
+.side-bottom {
+    position:relative;
+    z-index:1;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:22px;
+    color:#9caac5;
+    font:10px 'DM Mono',monospace;
+}
+
+.side-bottom strong {
+    color:#a5e6bc;
+    font-size:11px;
+}
+
+.side-progress {
+    height:4px;
+    background:#293858;
+    border-radius:10px;
+    margin-top:12px;
+    overflow:hidden;
+    position:relative;
+    z-index:1;
+}
+
+.side-progress span {
+    display:block;
+    height:100%;
+    width:72%;
+    background:linear-gradient(90deg,#3858e9,#b29bff);
+    border-radius:10px;
+    animation:progressLoad 2s .8s both;
+}
+
+@keyframes progressLoad {
+    from { width:0; }
+    to { width:72%; }
+}
+
+/* GENERAL SECTIONS */
+
+.container {
+    width:min(1100px,88%);
+    margin:55px auto;
+}
+
+.section-label {
+    color:var(--blue);
+    font-size:11px;
+    letter-spacing:2px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+
+.section-title {
+    font-size:clamp(27px,4vw,38px);
+    letter-spacing:-1.3px;
+    margin:10px 0;
+}
+
+.section-intro {
+    color:var(--muted);
+    line-height:1.8;
+    max-width:700px;
+}
+
+/* STUDIO */
+
+.studio {
+    margin-top:28px;
+    display:grid;
+    grid-template-columns:310px 1fr;
+    background:white;
+    border:1px solid var(--line);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 18px 55px rgba(25,40,90,.07);
+}
+
+.controls {
+    padding:26px;
+    background:#f8f9ff;
+    border-right:1px solid var(--line);
+}
+
+.control-group { margin-bottom:25px; }
+
+.control-group label {
+    display:block;
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:10px;
+    color:#46516b;
+}
+
+.control-group select,
+.control-group input[type="range"] { width:100%; }
+
+.control-group select {
+    padding:12px;
+    border:1px solid #dce1ed;
+    border-radius:9px;
+    background:white;
+    color:var(--ink);
+    outline:none;
+}
+
+.control-group select:focus {
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px #3858e91a;
+}
+
+.range-value {
+    float:right;
+    color:var(--blue);
+    font-family:'DM Mono',monospace;
+}
+
+.preview-area {
+    padding:35px;
+    min-height:390px;
+}
+
+.preview-top {
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.preview-top span {
+    color:#8a94a8;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1.5px;
+}
+
+.live-dot {
+    display:inline-block;
+    width:7px;
+    height:7px;
+    background:#25bd82;
+    border-radius:50%;
+    margin-right:6px;
+    animation:statusPulse 1.5s infinite;
+}
+
+#typePreview {
+    padding:25px;
+    border:1px dashed #cbd3e5;
+    border-radius:13px;
+    background:#fcfcff;
+    min-height:245px;
+    transition:.3s;
+}
+
+#typePreview:hover {
+    border-color:var(--blue);
+    box-shadow:0 10px 30px #3858e910;
+}
+
+#typePreview h1,
+#typePreview h2,
+#typePreview h3,
+#typePreview h4,
+#typePreview h5,
+#typePreview h6 {
+    margin-top:0;
+    color:#182344;
+    line-height:1.2;
+    transition:.3s;
+}
+
+#typePreview p {
+    color:#69758d;
+    line-height:1.8;
+}
+
+.preview-caption {
+    margin-top:17px;
+    color:#98a1b2;
+    font-size:11px;
+}
+
+/* SCALE */
+
+.scale-board {
+    margin-top:30px;
+    background:#111a30;
+    border-radius:18px;
+    padding:30px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
+
+.scale-board:after {
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border:1px solid #91a5ff20;
+    border-radius:50%;
+    right:-70px;
+    bottom:-100px;
+    pointer-events:none;
+}
+
+.scale-board h3 {
+    margin:0 0 22px;
+    font-size:17px;
+}
+
+.scale-row {
+    display:grid;
+    grid-template-columns:55px 1fr 65px;
+    gap:15px;
+    align-items:center;
+    padding:13px 0;
+    border-bottom:1px solid #28334b;
+    transition:.3s;
+}
+
+.scale-row:hover {
+    padding-left:12px;
+    background:#ffffff08;
+}
+
+.scale-row:last-child { border:0; }
+
+.scale-tag {
+    color:#91a5ff;
+    font-family:'DM Mono',monospace;
+    font-size:13px;
+}
+
+.scale-sample {
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    font-family:'Playfair Display',serif;
+}
+
+.scale-size {
+    text-align:right;
+    color:#9aa7c0;
+    font-size:11px;
+    font-family:'DM Mono',monospace;
+}
+
+/* INFO CARDS */
+
+.info-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:25px;
+}
+
+.info-card {
+    padding:23px;
+    background:white;
+    border:1px solid var(--line);
+    border-radius:14px;
+    transition:transform .35s,box-shadow .35s,border-color .35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.info-card:before {
+    content:"";
+    position:absolute;
+    width:4px;
+    height:0;
+    left:0;
+    top:0;
+    background:var(--blue);
+    transition:height .35s;
+}
+
+.info-card:hover {
+    transform:translateY(-8px);
+    box-shadow:0 16px 35px #243b8015;
+    border-color:#b9c6ff;
+}
+
+.info-card:hover:before { height:100%; }
+
+.info-card .number {
+    color:var(--purple);
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+}
+
+.info-card h3 { margin:12px 0 8px; }
+
+.info-card p {
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* FORMATTING DEMO */
+
+.demo-box {
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.demo-panel {
+    background:white;
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:24px;
+    transition:.35s;
+}
+
+.demo-panel:hover {
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px #243b8012;
+}
+
+.demo-panel h3 { margin-top:0; }
+
+.demo-panel p {
+    color:var(--muted);
+    line-height:1.8;
+    font-size:14px;
+}
+
+.demo-panel code {
+    font-family:'DM Mono',monospace;
+    color:#6548d5;
+    background:#f0edff;
+    padding:3px 6px;
+    border-radius:5px;
+}
+
+.format-sample strong { color:#263fba; }
+.format-sample em { color:#9b54c9; }
+.format-sample mark { background:#fff0a8; }
+
+/* EDITOR */
+
+.editor {
+    background:#10182b;
+    color:white;
+    padding:27px;
+    border-radius:17px;
+    margin-top:25px;
+    box-shadow:0 18px 40px #10182b20;
+    transition:.35s;
+}
+
+.editor:hover {
+    box-shadow:0 25px 55px #10182b30;
+}
+
+.editor-heading {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:17px;
+}
+
+.editor-heading h3 { margin:0; }
+
+.editor textarea {
+    display:block;
+    width:100%;
+    min-height:150px;
+    resize:vertical;
+    padding:17px;
+    border:1px solid #35415b;
+    border-radius:10px;
+    outline:none;
+    background:#0a1120;
+    color:#b9d2ff;
+    font-family:'DM Mono',monospace;
+    font-size:13px;
+    line-height:1.7;
+    transition:.3s;
+}
+
+.editor textarea:focus {
+    border-color:#91a5ff;
+    box-shadow:0 0 0 3px #91a5ff20;
+}
+
+.editor button,.primary-btn {
+    border:0;
+    border-radius:8px;
+    padding:11px 17px;
+    background:var(--blue);
+    color:white;
+    font-weight:800;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.editor button:hover,.primary-btn:hover {
+    background:#263fbd;
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px #3858e94a;
+}
+
+.output-label {
+    color:#9caac5;
+    font-size:11px;
+    letter-spacing:1.5px;
+    margin:20px 0 10px;
+}
+
+.output {
+    min-height:100px;
+    background:white;
+    color:#17213b;
+    border-radius:10px;
+    padding:20px;
+    overflow-wrap:anywhere;
+}
+
+/* QUIZ */
+
+.quiz {
+    background:white;
+    border:1px solid var(--line);
+    border-radius:17px;
+    padding:28px;
+    margin-top:25px;
+    box-shadow:0 15px 40px #243b8008;
+}
+
+.question {
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.question:last-of-type { border:0; }
+
+.question p { font-weight:800; }
+
+.question label {
+    display:block;
+    padding:11px 12px;
+    margin:7px 0;
+    background:#f6f7fc;
+    border:1px solid transparent;
+    border-radius:8px;
+    cursor:pointer;
+    color:#56627b;
+    font-size:14px;
+    transition:.25s;
+}
+
+.question label:hover {
+    background:#eef1ff;
+    border-color:#c8d1ff;
+    transform:translateX(5px);
+}
+
+.question input {
+    margin-right:8px;
+    accent-color:var(--blue);
+}
+
+.feedback {
+    margin-top:16px;
+    font-weight:800;
+    font-size:13px;
+}
+
+/* COMPLETION */
+
+.complete-box {
+    margin-top:35px;
+    padding:30px;
+    border-radius:18px;
+    background:linear-gradient(120deg,#e8edff,#f1eaff);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    position:relative;
+    overflow:hidden;
+    transition:.35s;
+}
+
+.complete-box:after {
+    content:"";
+    position:absolute;
+    width:170px;
+    height:170px;
+    border:1px solid #7655e830;
+    border-radius:50%;
+    right:80px;
+    top:-110px;
+    animation:orbit 15s linear infinite;
+}
+
+.complete-box h3 { margin:0 0 7px; }
+
+.complete-box p {
+    margin:0;
+    color:#65708a;
+    font-size:13px;
+}
+
+.next-btn {
+    display:inline-block;
+    padding:13px 19px;
+    color:white;
+    background:#182344;
+    border-radius:9px;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:800;
+    position:relative;
+    z-index:1;
+    transition:.3s;
+}
+
+.next-btn:hover {
+    background:var(--blue);
+    transform:translateY(-4px);
+    box-shadow:0 10px 22px #3858e93b;
+}
+
+footer {
+    margin-top:70px;
+    padding:30px 8%;
+    background:#10182b;
+    color:#a8b3ca;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+    font-size:12px;
+}
+
+footer strong {
+    color:#91a5ff;
+    font-family:'DM Mono',monospace;
+    font-size:18px;
+}
+
+/* SCROLL REVEAL ANIMATIONS */
+
+.cnf-motion-ready .cnf-reveal {
+    opacity:0;
+    transform:translateY(38px);
+    filter:blur(3px);
+    transition:
+        opacity .8s cubic-bezier(.22,1,.36,1),
+        transform .8s cubic-bezier(.22,1,.36,1),
+        filter .8s ease;
+}
+
+.cnf-motion-ready .cnf-reveal.cnf-visible {
+    opacity:1;
+    transform:translateY(0);
+    filter:blur(0);
+}
+
+.cnf-motion-ready .cnf-reveal[data-direction="left"] {
+    transform:translateX(-45px);
+}
+
+.cnf-motion-ready .cnf-reveal[data-direction="right"] {
+    transform:translateX(45px);
+}
+
+.cnf-motion-ready .cnf-reveal[data-direction="left"].cnf-visible,
+.cnf-motion-ready .cnf-reveal[data-direction="right"].cnf-visible {
+    transform:translateX(0);
+}
+
+.cnf-motion-ready .cnf-stagger {
+    transition-delay:var(--delay,0ms);
+}
+
+@media(prefers-reduced-motion:reduce) {
+    *,*::before,*::after {
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+    }
+
+    .cnf-motion-ready .cnf-reveal {
+        opacity:1;
+        transform:none;
+        filter:none;
+    }
+}
+
+@media(max-width:850px) {
+    .hero { grid-template-columns:1fr; }
+    .hero-side { min-height:300px; }
+    .studio { grid-template-columns:1fr; }
+    .controls { border-right:0; border-bottom:1px solid var(--line); }
+    .info-grid { grid-template-columns:1fr; }
+    .demo-box { grid-template-columns:1fr; }
+    .preview-area { padding:22px; }
+    .hero { padding:55px 7%; }
+    .container { width:90%; }
+}
+
+@media(max-width:600px) {
+    .navbar { padding:0 5%; }
+    .nav-tag { font-size:9px; letter-spacing:1px; }
+    .hero h1 { letter-spacing:-1.5px; }
+    .hero-side { padding:20px; }
+    .side-code { font-size:10px; padding:15px; }
+    .scale-board { padding:18px; }
+    .scale-row { grid-template-columns:38px 1fr 45px; gap:8px; }
+    .complete-box { padding:22px; }
+}
+</style>
+
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a class="brand" href="../html.html">CNF/</a>
+    <span class="nav-tag">HTML COURSE / LESSON 04</span>
+</nav>
+
+<header class="hero">
+    <div class="hero-copy">
+        <div class="eyebrow">HTML TYPOGRAPHY STUDIO · 04 / 08</div>
+        <h1>Give your content a <span>voice.</span></h1>
+        <p>
+            Learn how headings create structure, how paragraphs communicate ideas,
+            and how HTML gives every piece of text its own meaning.
+        </p>
+        <div class="hero-meta">
+            <span class="meta-pill">◷ 20 MINUTES</span>
+            <span class="meta-pill">✦ BEGINNER LEVEL</span>
+            <span class="meta-pill">⌘ PRACTICAL LESSON</span>
+        </div>
+    </div>
+
+    <div class="hero-side">
+        <div class="side-top">
+            <span>CNF / TYPE STUDIO</span>
+            <span class="side-status"><i></i> LIVE PREVIEW</span>
+        </div>
+
+        <div class="side-code">
+            <div><span class="code-purple">&lt;h1&gt;</span><span class="code-green">Your Main Heading</span><span class="code-purple">&lt;/h1&gt;</span></div>
+            <div><span class="code-purple">&lt;p&gt;</span></div>
+            <div>&nbsp;&nbsp;<span class="code-blue">Your paragraph content goes here.</span></div>
+            <div><span class="code-purple">&lt;/p&gt;</span></div>
+            <br>
+            <div><span class="code-muted">&lt;!-- Structure your content --&gt;</span></div>
+        </div>
+
+        <div class="side-bottom">
+            <span>TYPOGRAPHY ENGINE</span>
+            <strong>72% READY</strong>
+        </div>
+        <div class="side-progress"><span></span></div>
+    </div>
+</header>
+
+<main>
+
+<section class="container">
+    <div class="section-label">01 — Experiment</div>
+    <h2 class="section-title">Typography Studio</h2>
+    <p class="section-intro">
+        Change the heading level, size and paragraph width. Watch how the
+        content changes instantly. This is how you understand HTML typography.
+    </p>
+
+    <div class="studio">
+        <aside class="controls">
+            <div class="control-group">
+                <label for="headingSelect">HEADING LEVEL</label>
+                <select id="headingSelect">
+                    <option value="h1">H1 — Main heading</option>
+                    <option value="h2">H2 — Section heading</option>
+                    <option value="h3">H3 — Subheading</option>
+                    <option value="h4">H4 — Small heading</option>
+                    <option value="h5">H5 — Minor heading</option>
+                    <option value="h6">H6 — Smallest heading</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="sizeRange">
+                    VISUAL SIZE <span class="range-value" id="sizeValue">36px</span>
+                </label>
+                <input type="range" id="sizeRange" min="18" max="58" value="36">
+            </div>
+
+            <div class="control-group">
+                <label for="widthSelect">PARAGRAPH WIDTH</label>
+                <select id="widthSelect">
+                    <option value="100%">Full width</option>
+                    <option value="85%">Wide</option>
+                    <option value="65%">Comfortable reading</option>
+                    <option value="45%">Narrow</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="alignSelect">TEXT ALIGNMENT</label>
+                <select id="alignSelect">
+                    <option value="left">Left</option>
+                    <option value="center">Center</option>
+                    <option value="right">Right</option>
+                </select>
+            </div>
+        </aside>
+
+        <div class="preview-area">
+            <div class="preview-top">
+                <span>LIVE CANVAS</span>
+                <span><i class="live-dot"></i>UPDATING</span>
+            </div>
+
+            <div id="typePreview">
+                <h1 id="demoHeading" style="font-size:36px;">Build something meaningful.</h1>
+                <p id="demoParagraph" style="max-width:100%;text-align:left;">
+                    Good typography helps readers understand your content.
+                    Headings organize information, while paragraphs explain
+                    ideas in a clear and readable way.
+                </p>
+            </div>
+            <div class="preview-caption">Your changes appear here instantly.</div>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-label">02 — Understand the hierarchy</div>
+    <h2 class="section-title">Six levels. One clear structure.</h2>
+    <p class="section-intro">
+        HTML provides six heading levels. H1 represents the main topic,
+        while H2 to H6 organize increasingly specific sections.
+    </p>
+
+    <div class="scale-board">
+        <h3>Heading hierarchy</h3>
+
+        <div class="scale-row">
+            <span class="scale-tag">H1</span>
+            <span class="scale-sample" style="font-size:30px">Main page title</span>
+            <span class="scale-size">Largest</span>
+        </div>
+        <div class="scale-row">
+            <span class="scale-tag">H2</span>
+            <span class="scale-sample" style="font-size:25px">Major section</span>
+            <span class="scale-size">Level 2</span>
+        </div>
+        <div class="scale-row">
+            <span class="scale-tag">H3</span>
+            <span class="scale-sample" style="font-size:21px">Subsection title</span>
+            <span class="scale-size">Level 3</span>
+        </div>
+        <div class="scale-row">
+            <span class="scale-tag">H4</span>
+            <span class="scale-sample" style="font-size:18px">Smaller heading</span>
+            <span class="scale-size">Level 4</span>
+        </div>
+        <div class="scale-row">
+            <span class="scale-tag">H5</span>
+            <span class="scale-sample" style="font-size:16px">Minor heading</span>
+            <span class="scale-size">Level 5</span>
+        </div>
+        <div class="scale-row">
+            <span class="scale-tag">H6</span>
+            <span class="scale-sample" style="font-size:14px">Smallest heading</span>
+            <span class="scale-size">Smallest</span>
+        </div>
+    </div>
+
+    <div class="info-grid">
+        <article class="info-card">
+            <span class="number">RULE / 01</span>
+            <h3>Use H1 for the main topic</h3>
+            <p>It introduces the primary subject of the page. Keep your heading hierarchy meaningful.</p>
+        </article>
+        <article class="info-card">
+            <span class="number">RULE / 02</span>
+            <h3>Don't skip levels randomly</h3>
+            <p>Use headings in a logical order so readers and assistive technologies can understand the structure.</p>
+        </article>
+        <article class="info-card">
+            <span class="number">RULE / 03</span>
+            <h3>Paragraphs explain ideas</h3>
+            <p>Use the paragraph tag to group related sentences into readable blocks of text.</p>
+        </article>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-label">03 — Text formatting</div>
+    <h2 class="section-title">Give words extra meaning.</h2>
+    <p class="section-intro">
+        HTML also provides elements for emphasizing, highlighting and
+        communicating special meaning within a paragraph.
+    </p>
+
+    <div class="demo-box">
+        <article class="demo-panel">
+            <h3>Important text</h3>
+            <p class="format-sample">
+                This is <strong>important text</strong> and this is
+                <em>emphasized text</em>. You can also
+                <mark>highlight a useful phrase</mark>.
+            </p>
+        </article>
+
+        <article class="demo-panel">
+            <h3>HTML behind it</h3>
+            <p><code>&lt;strong&gt;</code> — important text</p>
+            <p><code>&lt;em&gt;</code> — emphasized text</p>
+            <p><code>&lt;mark&gt;</code> — highlighted text</p>
+            <p><code>&lt;br&gt;</code> — line break</p>
+        </article>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-label">04 — Your turn</div>
+    <h2 class="section-title">Build your own typography.</h2>
+    <p class="section-intro">
+        Write HTML in the editor and press Run Code to see your result.
+    </p>
+
+    <div class="editor">
+        <div class="editor-heading">
+            <h3>⌘ HTML Playground</h3>
+            <button id="runCodeButton">Run Code ↗</button>
+        </div>
+
+        <textarea id="codeEditor" spellcheck="false"><h1>My Learning Journey</h1>
+<h2>About Me</h2>
+<p>I am learning HTML and building my first website.</p>
+<h3>My Goal</h3>
+<p>I want to become a skilled web developer.</p>
+<p><strong>Practice makes progress!</strong></p></textarea>
+
+        <div class="output-label">BROWSER OUTPUT</div>
+        <div class="output" id="codeOutput">
+            Your output will appear here.
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-label">05 — Knowledge check</div>
+    <h2 class="section-title">Test what you learned.</h2>
+
+    <div class="quiz">
+        <div class="question">
+            <p>1. Which tag represents the highest-level heading?</p>
+            <label><input type="radio" name="q1" value="a"> &lt;h6&gt;</label>
+            <label><input type="radio" name="q1" value="b"> &lt;h1&gt;</label>
+            <label><input type="radio" name="q1" value="c"> &lt;head&gt;</label>
+        </div>
+
+        <div class="question">
+            <p>2. Which tag is used for a paragraph?</p>
+            <label><input type="radio" name="q2" value="a"> &lt;text&gt;</label>
+            <label><input type="radio" name="q2" value="b"> &lt;para&gt;</label>
+            <label><input type="radio" name="q2" value="c"> &lt;p&gt;</label>
+        </div>
+
+        <div class="question">
+            <p>3. Which element gives strong importance to text?</p>
+            <label><input type="radio" name="q3" value="a"> &lt;small&gt;</label>
+            <label><input type="radio" name="q3" value="b"> &lt;strong&gt;</label>
+            <label><input type="radio" name="q3" value="c"> &lt;br&gt;</label>
+        </div>
+
+        <button class="primary-btn" id="checkQuiz">Check My Answers</button>
+        <div class="feedback" id="quizFeedback"></div>
+    </div>
+
+    <div class="complete-box">
+        <div>
+            <h3 id="completionTitle">Ready to complete this lesson?</h3>
+            <p id="completionText">Finish the quiz to unlock the next lesson.</p>
+        </div>
+        <a class="next-btn" id="nextLesson" href="05-links-images.html"
+           style="pointer-events:none;opacity:.45;">
+            Next Lesson →
+        </a>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <strong>CNF/</strong>
+    <span>CODE NEXA FORGE · Learn. Build. Create.</span>
+    <span>HTML COURSE — 04 / 08</span>
+</footer>
+
+<script>
+/* TYPOGRAPHY STUDIO */
+
+const headingSelect = document.getElementById('headingSelect');
+const sizeRange = document.getElementById('sizeRange');
+const sizeValue = document.getElementById('sizeValue');
+const widthSelect = document.getElementById('widthSelect');
+const alignSelect = document.getElementById('alignSelect');
+const demoHeading = document.getElementById('demoHeading');
+const demoParagraph = document.getElementById('demoParagraph');
+
+function updateTypography() {
+    const level = headingSelect.value;
+    const newHeading = document.createElement(level);
+
+    newHeading.id = 'demoHeading';
+    newHeading.textContent = 'Build something meaningful.';
+    newHeading.style.fontSize = sizeRange.value + 'px';
+
+    demoHeading.replaceWith(newHeading);
+
+    const currentHeading = document.getElementById('demoHeading');
+    currentHeading.style.fontSize = sizeRange.value + 'px';
+
+    sizeValue.textContent = sizeRange.value + 'px';
+    demoParagraph.style.maxWidth = widthSelect.value;
+    demoParagraph.style.textAlign = alignSelect.value;
+}
+
+headingSelect.addEventListener('change', updateTypography);
+sizeRange.addEventListener('input', updateTypography);
+widthSelect.addEventListener('change', updateTypography);
+alignSelect.addEventListener('change', updateTypography);
+
+/* HTML PLAYGROUND */
+
+const codeEditor = document.getElementById('codeEditor');
+const codeOutput = document.getElementById('codeOutput');
+
+const starterCode = `<h1>My Learning Journey</h1>
+<h2>About Me</h2>
+<p>I am learning HTML and building my first website.</p>
+<h3>My Goal</h3>
+<p>I want to become a skilled web developer.</p>
+<p><strong>Practice makes progress!</strong></p>`;
+
+function runCode() {
+    codeOutput.innerHTML = codeEditor.value;
+}
+
+document.getElementById('runCodeButton').addEventListener('click', runCode);
+runCode();
+
+/* QUIZ */
+
+let quizPassed = false;
+
+const completionKey = 'html-lesson-04-completed';
+
+function completeLesson() {
+    localStorage.setItem(completionKey, 'true');
+
+    const next = document.getElementById('nextLesson');
+    next.style.pointerEvents = 'auto';
+    next.style.opacity = '1';
+
+    document.getElementById('completionTitle').textContent =
+        'Lesson 04 completed!';
+
+    document.getElementById('completionText').textContent =
+        'Great work. Your next lesson is ready.';
+}
+
+function checkQuiz() {
+    const answers = {
+        q1:'b',
+        q2:'c',
+        q3:'b'
+    };
+
+    let score = 0;
+    let attempted = 0;
+
+    for (const question in answers) {
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if (selected) {
+            attempted++;
+            if (selected.value === answers[question]) score++;
+        }
+    }
+
+    const feedback = document.getElementById('quizFeedback');
+
+    if (attempted < 3) {
+        feedback.style.color = '#d97706';
+        feedback.textContent = 'Please answer all 3 questions first.';
+        quizPassed = false;
+        return;
+    }
+
+    if (score === 3) {
+        feedback.style.color = '#15966a';
+        feedback.textContent = 'Excellent! You scored 3/3. Lesson completed!';
+        quizPassed = true;
+        completeLesson();
+    } else {
+        feedback.style.color = '#d97706';
+        feedback.textContent = 'You scored ' + score + '/3. Review the lesson and try again.';
+        quizPassed = false;
+    }
+}
+
+document.getElementById('checkQuiz').addEventListener('click', checkQuiz);
+
+/* RESTORE COMPLETION */
+
+if (localStorage.getItem(completionKey) === 'true') {
+    completeLesson();
+    quizPassed = true;
+}
+
+/* RESET QUIZ STATE */
+
+document.addEventListener('click', function(event) {
+    if (event.target.closest('.cnf-quiz-reset')) {
+        quizPassed = false;
+
+        localStorage.removeItem(completionKey);
+
+        document.getElementById('quizFeedback').textContent = '';
+
+        const next = document.getElementById('nextLesson');
+        next.style.pointerEvents = 'none';
+        next.style.opacity = '.45';
+
+        document.getElementById('completionTitle').textContent =
+            'Ready to complete this lesson?';
+
+        document.getElementById('completionText').textContent =
+            'Finish the quiz to unlock the next lesson.';
+    }
+});
+
+/* LESSON-SPECIFIC SCROLL ANIMATIONS */
+
+(() => {
+    const startAnimations = () => {
+        const root = document.documentElement;
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
+        if (!('IntersectionObserver' in window)) return;
+
+        root.classList.add('cnf-motion-ready');
+
+        const targets = [
+            ...document.querySelectorAll(
+                '.container > .section-label, ' +
+                '.container > .section-title, ' +
+                '.container > .section-intro, ' +
+                '.studio, .controls, .preview-area, ' +
+                '.scale-board, .scale-row, .info-card, ' +
+                '.demo-panel, .editor, .quiz, ' +
+                '.complete-box, footer'
+            )
+        ];
+
+        targets.forEach((element, index) => {
+            element.classList.add('cnf-reveal');
+
+            if (element.classList.contains('controls')) {
+                element.dataset.direction = 'left';
+            } else if (element.classList.contains('preview-area')) {
+                element.dataset.direction = 'right';
+            }
+
+            if (
+                element.classList.contains('info-card') ||
+                element.classList.contains('scale-row') ||
+                element.classList.contains('demo-panel')
+            ) {
+                element.style.transitionDelay = (index % 3) * 100 + 'ms';
+            }
+        });
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('cnf-visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold:0.12,
+            rootMargin:'0px 0px -35px 0px'
+        });
+
+        targets.forEach(element => observer.observe(element));
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startAnimations, {once:true});
+    } else {
+        startAnimations();
+    }
+})();
+</script>
+
+<script src="../../js/lesson-quiz-guard.js"></script>
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

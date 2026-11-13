@@ -1,0 +1,1022 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171d31">
+<title>HTML Knowledge Arena | CODE NEXA FORGE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f5f9;--ink:#172033;--muted:#748096;
+    --blue:#5555e9;--purple:#9666e9;--line:#e3e6ef;
+    --white:#fff;--dark:#171d31;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:'DM Sans',sans-serif;overflow-x:hidden;
+    animation:pageEnter .8s ease both;
+}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+@keyframes pageEnter{from{opacity:0}to{opacity:1}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-25px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes floatReverse{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(10px) rotate(7deg)}}
+@keyframes pulse{0%,100%{opacity:.4;transform:scale(.94)}50%{opacity:1;transform:scale(1.08)}}
+@keyframes rotate{to{transform:rotate(360deg)}}
+@keyframes shine{from{left:-120%}to{left:150%}}
+@keyframes scan{0%{top:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
+@keyframes cardIn{from{opacity:0;transform:translateY(35px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes questionIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scorePop{0%{opacity:0;transform:scale(.6) rotate(-12deg)}70%{transform:scale(1.08) rotate(3deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes blink{50%{opacity:.25}}
+@keyframes progressGlow{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+
+/* NAVBAR */
+.navbar{
+    min-height:76px;padding:0 7%;background:var(--dark);
+    display:flex;align-items:center;justify-content:space-between;
+    position:relative;z-index:10;animation:slideDown .8s ease both;
+}
+.brand{
+    color:#b9baff;font-size:19px;font-weight:800;
+    letter-spacing:-.5px;text-decoration:none;transition:.3s;
+}
+.brand span{color:#a47bea}
+.brand:hover{color:white;transform:translateY(-2px)}
+.nav-info{color:#aab3c9;font:11px 'DM Mono',monospace;letter-spacing:2px}
+
+/* HERO */
+.hero{
+    padding:75px 8%;
+    background:radial-gradient(circle at 82% 40%,rgba(132,89,221,.24),transparent 32%),linear-gradient(120deg,#171d31,#252b50);
+    color:white;position:relative;overflow:hidden;isolation:isolate;
+}
+.hero:before,.hero:after{
+    content:"";position:absolute;z-index:-1;border-radius:50%;pointer-events:none;
+}
+.hero:before{
+    width:480px;height:480px;right:-100px;top:-250px;
+    background:radial-gradient(circle,rgba(132,89,221,.22),transparent 70%);
+    animation:pulse 8s infinite;
+}
+.hero:after{
+    width:350px;height:350px;left:20%;bottom:-280px;
+    background:radial-gradient(circle,rgba(76,85,232,.2),transparent 70%);
+    animation:pulse 9s infinite reverse;
+}
+.hero-inner{
+    max-width:1250px;margin:auto;display:grid;
+    grid-template-columns:1.05fr .95fr;align-items:center;gap:55px;
+}
+.hero-copy{position:relative;z-index:2}
+.eyebrow{color:#b9baff;font:12px 'DM Mono',monospace;letter-spacing:2px;animation:slideUp .7s .1s both}
+.hero h1{
+    font:700 clamp(40px,5.5vw,68px)/1.08 'Space Grotesk',sans-serif;
+    letter-spacing:-2.5px;max-width:650px;margin:20px 0;
+    animation:slideUp .8s .2s both;
+}
+.hero h1 span{color:#aaa7ff;position:relative}
+.hero p{
+    max-width:550px;color:#b7c0d5;line-height:1.9;
+    font-size:15px;animation:slideUp .8s .35s both;
+}
+.hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:27px}
+.hero-tags span{
+    border:1px solid #4a5274;padding:10px 13px;border-radius:6px;
+    color:#d4d8eb;font-size:10px;letter-spacing:.7px;
+    animation:slideUp .6s both;transition:.3s;
+}
+.hero-tags span:nth-child(2){animation-delay:.1s}
+.hero-tags span:nth-child(3){animation-delay:.2s}
+.hero-tags span:hover{background:rgba(169,169,255,.15);border-color:#aaa7ff;transform:translateY(-4px)}
+
+/* ANIMATED LAB */
+.lab-scene{
+    min-height:400px;display:grid;place-items:center;
+    position:relative;perspective:1000px;animation:slideUp .9s .25s both;
+}
+.lab-orbit{
+    position:absolute;width:310px;height:310px;
+    border:1px solid rgba(174,157,255,.2);border-radius:50%;
+    animation:rotate 22s linear infinite;
+}
+.lab-orbit:before,.lab-orbit:after{
+    content:"";position:absolute;border:1px solid rgba(174,157,255,.14);border-radius:50%;
+}
+.lab-orbit:before{inset:22px}
+.lab-orbit:after{inset:48px}
+.orbit-dot{
+    position:absolute;width:12px;height:12px;border-radius:50%;
+    background:#b8a5ff;box-shadow:0 0 20px #a88aff;top:50%;left:-6px;
+}
+.lab-window{
+    width:min(100%,390px);background:rgba(20,24,48,.94);
+    border:1px solid rgba(181,167,255,.38);border-radius:17px;
+    overflow:hidden;position:relative;z-index:2;
+    box-shadow:0 30px 80px rgba(0,0,0,.4),0 0 45px rgba(120,93,220,.16);
+    transform:rotateY(-7deg) rotateX(3deg);animation:float 5s ease-in-out infinite;
+}
+.lab-window:after{
+    content:"";position:absolute;left:0;right:0;height:65px;top:-70px;
+    background:linear-gradient(transparent,rgba(166,151,255,.12),transparent);
+    animation:scan 5s linear infinite;pointer-events:none;
+}
+.lab-top{
+    height:45px;background:#222846;border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:center;padding:0 15px;gap:7px;
+}
+.window-dot{width:8px;height:8px;border-radius:50%;background:#ed7b8b}
+.window-dot:nth-child(2){background:#e8bd69}
+.window-dot:nth-child(3){background:#75d5a4}
+.lab-file{margin-left:auto;color:#9ca6c8;font:10px 'DM Mono',monospace}
+.lab-content{padding:22px}
+.lab-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.lab-heading strong{color:#e5e3ff;font:600 14px 'Space Grotesk',sans-serif}
+.live-label{color:#75e0ae;font:10px 'DM Mono',monospace;display:flex;align-items:center;gap:6px}
+.live-label:before{
+    content:"";width:6px;height:6px;border-radius:50%;background:#75e0ae;
+    box-shadow:0 0 10px #75e0ae;animation:blink 1.2s infinite;
+}
+.code-lines{
+    background:#151a35;border:1px solid rgba(255,255,255,.07);
+    padding:17px;border-radius:10px;font:11px/2 'DM Mono',monospace;
+}
+.code-line{white-space:nowrap}
+.code-purple{color:#c3a5ff}.code-blue{color:#91c9ff}
+.code-green{color:#9ee4b5}.code-orange{color:#ffc28a}.code-muted{color:#687491}
+.code-cursor{display:inline-block;width:6px;height:13px;background:#aaa7ff;vertical-align:middle;animation:blink .8s infinite}
+.lab-bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}
+.lab-stat{padding:12px;border-radius:9px;background:#222846;border:1px solid rgba(255,255,255,.06)}
+.lab-stat small{display:block;color:#8994b4;font:9px 'DM Mono',monospace;margin-bottom:6px}
+.lab-stat strong{color:#e1deff;font:700 18px 'Space Grotesk',sans-serif}
+.lab-stat strong em{color:#8be2b3;font-size:10px;font-style:normal}
+.floating-tag{
+    position:absolute;z-index:3;padding:12px 16px;border-radius:9px;
+    background:rgba(39,43,79,.95);border:1px solid rgba(180,161,255,.4);
+    color:#c6b6ff;font:12px 'DM Mono',monospace;box-shadow:0 12px 35px rgba(0,0,0,.25);
+}
+.tag-one{top:30px;right:0;animation:floatReverse 5s infinite}
+.tag-two{bottom:35px;left:0;animation:float 5.5s infinite}
+.tag-three{top:45%;right:-15px;animation:float 4.5s infinite reverse}
+.floating-score{
+    position:absolute;z-index:4;bottom:5px;right:0;background:#f4f1ff;
+    color:#38336b;border-radius:10px;padding:11px 15px;
+    box-shadow:0 12px 35px rgba(0,0,0,.2);animation:floatReverse 4.5s infinite;
+}
+.floating-score small{display:block;font:9px 'DM Mono',monospace;color:#77709d}
+.floating-score strong{font:700 18px 'Space Grotesk',sans-serif}
+
+/* MAIN */
+.container{width:min(1120px,88%);margin:65px auto}
+.section-label{color:var(--blue);font:11px 'DM Mono',monospace;letter-spacing:2px}
+.section-title{font:700 clamp(27px,4vw,37px) 'Space Grotesk',sans-serif;margin:10px 0;letter-spacing:-1px}
+.description{color:var(--muted);font-size:14px;line-height:1.8;max-width:700px}
+
+/* TEST CARDS */
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:19px;margin-top:30px}
+.test-card{
+    background:white;padding:25px;border:1px solid var(--line);border-radius:15px;
+    position:relative;overflow:hidden;animation:cardIn .7s cubic-bezier(.2,.8,.2,1) both;
+    transition:transform .4s,box-shadow .4s,border-color .4s;
+}
+.test-card:nth-child(2){animation-delay:.08s}
+.test-card:nth-child(3){animation-delay:.16s}
+.test-card:nth-child(4){animation-delay:.24s}
+.test-card:nth-child(5){animation-delay:.32s}
+.test-card:nth-child(6){animation-delay:.40s}
+.test-card:before{
+    content:"";position:absolute;width:80%;height:150%;top:-25%;left:-120%;
+    transform:rotate(20deg);background:linear-gradient(90deg,transparent,rgba(132,89,221,.08),transparent);
+    transition:left .8s;pointer-events:none;
+}
+.test-card:hover:before{left:150%}
+.test-card:hover{transform:translateY(-9px);box-shadow:0 22px 45px rgba(30,40,90,.11);border-color:#c7c5fa}
+.test-icon{
+    width:48px;height:48px;display:grid;place-items:center;
+    background:#eeeeff;color:var(--blue);border-radius:12px;font-size:21px;transition:.4s;
+}
+.test-card:hover .test-icon{transform:rotate(-10deg) scale(1.12);background:#dedfff}
+.test-card h3{margin:18px 0 8px;font:700 18px 'Space Grotesk',sans-serif;transition:color .3s}
+.test-card:hover h3{color:var(--blue)}
+.test-card p{color:var(--muted);font-size:13px;line-height:1.7;min-height:44px}
+.test-meta{display:flex;justify-content:space-between;gap:8px;color:#8a93a6;font:10px 'DM Mono',monospace;margin:19px 0}
+.test-card button,.exam-btn,.result-actions button{border:0;position:relative;overflow:hidden}
+.test-card button{
+    width:100%;padding:13px;border-radius:8px;background:#eceeff;
+    color:#4248c9;font-weight:800;transition:.3s;
+}
+.test-card button:after,.exam-btn:after,.result-actions button:after{
+    content:"";position:absolute;top:0;left:-120%;width:70%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transition:left .7s;
+}
+.test-card button:hover:after,.exam-btn:hover:after,.result-actions button:hover:after{left:150%}
+.test-card button:hover{background:var(--blue);color:white;transform:translateY(-2px)}
+
+/* EXAM */
+.exam-area{
+    display:none;background:white;border:1px solid var(--line);border-radius:17px;
+    overflow:hidden;box-shadow:0 20px 55px rgba(30,40,90,.08);animation:cardIn .5s ease both;
+}
+.exam-header{
+    padding:23px 27px;background:#171d31;color:white;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.exam-header h3{margin:0;font:700 19px 'Space Grotesk',sans-serif}
+.timer{color:#c4c5ff;font:20px 'DM Mono',monospace}
+.exam-body{padding:30px;animation:fadeIn .4s ease both}
+.exam-progress{height:8px;background:#edf0f7;border-radius:20px;overflow:hidden;margin-bottom:27px}
+.exam-progress div{
+    height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));
+    border-radius:20px;transition:width .45s cubic-bezier(.2,.8,.2,1);position:relative;
+}
+.exam-progress div:after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);
+    animation:progressGlow 2s linear infinite;
+}
+.question-count{color:var(--blue);font:12px 'DM Mono',monospace}
+.question-text{font:700 23px 'Space Grotesk',sans-serif;line-height:1.5;margin:15px 0 24px;animation:questionIn .4s ease both}
+.options{display:grid;gap:12px}
+.option{
+    display:flex;align-items:center;gap:13px;width:100%;text-align:left;
+    padding:15px;border:1px solid var(--line);border-radius:10px;
+    background:#fafbfe;color:#566176;transition:.25s;animation:slideUp .35s ease both;
+}
+.option:nth-child(2){animation-delay:.05s}
+.option:nth-child(3){animation-delay:.10s}
+.option:nth-child(4){animation-delay:.15s}
+.option:hover{border-color:#a4a5f6;background:#f5f4ff;transform:translateX(5px)}
+.option.selected{border-color:var(--blue);background:#eeeeff;color:#3439b6;transform:translateX(4px)}
+.option-letter{
+    width:29px;height:29px;flex-shrink:0;display:grid;place-items:center;
+    background:#e9ebf5;border-radius:7px;font:12px 'DM Mono',monospace;transition:.25s;
+}
+.option.selected .option-letter{background:var(--blue);color:white}
+.exam-actions{display:flex;justify-content:space-between;gap:12px;margin-top:27px;flex-wrap:wrap}
+.exam-btn{padding:13px 20px;border-radius:8px;background:var(--blue);color:white;font-weight:800;transition:.3s}
+.exam-btn:hover:not(:disabled){transform:translateY(-3px);background:#3941cf}
+.exam-btn:disabled{opacity:.4;cursor:not-allowed}
+.exam-btn.back{background:#edf0f6;color:#4e5b72}
+
+/* RESULTS */
+.result{display:none;padding:42px 25px;text-align:center;animation:cardIn .6s ease both}
+.score-circle{
+    width:150px;height:150px;border-radius:50%;border:9px solid #e7e9fa;
+    margin:0 auto 23px;display:grid;place-items:center;color:var(--blue);
+    font:700 35px 'Space Grotesk',sans-serif;box-shadow:0 0 0 12px rgba(76,85,232,.04);
+    animation:scorePop .7s both;
+}
+.result h2{font:700 30px 'Space Grotesk',sans-serif;animation:slideUp .5s .15s both}
+.result p{color:var(--muted);line-height:1.8}
+.result-actions{display:flex;justify-content:center;gap:11px;flex-wrap:wrap;margin-top:23px}
+.result-actions button{padding:13px 19px;border-radius:8px;background:var(--blue);color:white;font-weight:800;transition:.3s}
+.result-actions button:hover{transform:translateY(-3px)}
+.result-actions button.secondary{background:#edf0f6;color:#45516b}
+.result-details{margin:30px auto 0;max-width:700px;text-align:left}
+.result-details h3{font-family:'Space Grotesk',sans-serif}
+.review-item{
+    border:1px solid var(--line);padding:16px;border-radius:10px;
+    margin-top:11px;font-size:13px;animation:slideUp .4s both;transition:.25s;
+}
+.review-item:hover{border-color:#c6c7f5;transform:translateX(4px)}
+.review-item strong{display:block;margin-bottom:8px}
+.correct-text{color:#15966a}
+.wrong-text{color:#d65b5b}
+.review-answer{margin-top:7px;color:#566176;line-height:1.6}
+
+/* HISTORY */
+.history{
+    background:#171d31;color:white;border-radius:16px;padding:27px;
+    animation:slideUp .7s both;transition:.3s;
+}
+.history:hover{box-shadow:0 18px 40px rgba(30,40,90,.15)}
+.history h3{margin-top:0;font:700 20px 'Space Grotesk',sans-serif}
+.history-row{
+    display:flex;justify-content:space-between;gap:15px;padding:15px 0;
+    border-bottom:1px solid #343d55;color:#c3cbd9;font-size:13px;
+    animation:fadeIn .4s both;transition:.25s;
+}
+.history-row:hover{padding-left:7px}
+.history-row:last-child{border:0}
+.history-row strong{color:#b9baff;text-align:right}
+.empty-history{color:#9aa7bf;font-size:13px}
+.status-pass{color:#75e0ae!important}
+.status-fail{color:#ff9999!important}
+.notice{
+    padding:13px 16px;border-radius:9px;margin:15px 0;
+    background:#fff3e7;border:1px solid #ffd6ad;color:#92521b;
+    font-size:13px;line-height:1.6;
+}
+.notice.error{background:#fff0f0;border-color:#ffcaca;color:#a33b3b}
+.notice.success{background:#eafff4;border-color:#b7efd0;color:#16764c}
+.loading-text{color:#9aa7bf;font-size:13px}
+
+/* FOOTER */
+footer{
+    background:#171d31;padding:31px 7%;color:#aab3c9;
+    display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;font-size:12px;
+}
+footer strong{color:#b9baff;font-size:17px;font-weight:800;transition:.3s}
+footer strong:hover{color:white}
+
+/* RESPONSIVE */
+@media(max-width:950px){
+    .hero-inner{grid-template-columns:1fr 1fr;gap:25px}
+    .lab-scene{min-height:350px}.lab-orbit{width:270px;height:270px}
+    .floating-tag{font-size:10px;padding:9px}
+    .test-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+    .hero-inner{grid-template-columns:1fr}
+    .hero-copy{text-align:center}
+    .hero p{margin-left:auto;margin-right:auto}
+    .hero-tags{justify-content:center}
+    .lab-scene{margin-top:20px;min-height:390px}
+    .hero{padding:55px 6%}
+    .lab-window{width:min(90%,390px)}
+    .tag-three{right:0}
+}
+@media(max-width:550px){
+    .test-grid{grid-template-columns:1fr}
+    .container{width:90%;margin:48px auto}
+    .navbar{padding:0 5%;min-height:68px}
+    .nav-info{font-size:8px;letter-spacing:1px}
+    .brand{font-size:16px}
+    .exam-body{padding:19px}
+    .question-text{font-size:19px}
+    .exam-header{padding:19px}
+    .history{padding:20px}
+    .history-row{font-size:11px}
+    footer{flex-direction:column}
+    .lab-scene{min-height:350px}
+    .lab-orbit{width:245px;height:245px}
+    .floating-score{right:-2px;bottom:0}
+}
+@media(prefers-reduced-motion:reduce){
+    *,*:before,*:after{
+        animation-duration:.01ms!important;animation-iteration-count:1!important;
+        transition-duration:.01ms!important;scroll-behavior:auto!important;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="html.html" class="brand">CODE NEXA <span>FORGE</span></a>
+    <span class="nav-info">HTML KNOWLEDGE ARENA</span>
+</nav>
+
+<header class="hero">
+    <div class="hero-inner">
+        <div class="hero-copy">
+            <div class="eyebrow">ASSESSMENT CENTER / HTML</div>
+            <h1>Knowledge meets <span>challenge.</span></h1>
+            <p>
+                Test your HTML skills, challenge yourself with timed questions
+                and track your learning progress. Every attempt makes you better.
+            </p>
+            <div class="hero-tags">
+                <span>MCQ ASSESSMENTS</span>
+                <span>SERVER-VERIFIED RESULTS</span>
+                <span>PERFORMANCE TRACKING</span>
+            </div>
+        </div>
+
+        <div class="lab-scene">
+            <div class="lab-orbit"><div class="orbit-dot"></div></div>
+            <div class="floating-tag tag-one">&lt;HTML&gt;</div>
+            <div class="floating-tag tag-two">&lt;/CODE&gt;</div>
+            <div class="floating-tag tag-three">&lt;DOCTYPE&gt;</div>
+
+            <div class="lab-window">
+                <div class="lab-top">
+                    <span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span>
+                    <span class="lab-file">knowledge-lab.html</span>
+                </div>
+                <div class="lab-content">
+                    <div class="lab-heading">
+                        <strong>HTML Knowledge Lab</strong>
+                        <span class="live-label">ACTIVE</span>
+                    </div>
+                    <div class="code-lines">
+                        <div class="code-line"><span class="code-muted">01</span> <span class="code-purple">&lt;!DOCTYPE</span> <span class="code-green">html</span><span class="code-purple">&gt;</span></div>
+                        <div class="code-line"><span class="code-muted">02</span> <span class="code-purple">&lt;html</span> <span class="code-blue">lang</span>=<span class="code-orange">"en"</span><span class="code-purple">&gt;</span></div>
+                        <div class="code-line"><span class="code-muted">03</span> &nbsp;&nbsp;<span class="code-purple">&lt;head&gt;</span></div>
+                        <div class="code-line"><span class="code-muted">04</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-purple">&lt;title&gt;</span><span class="code-green">Learn HTML</span><span class="code-purple">&lt;/title&gt;</span></div>
+                        <div class="code-line"><span class="code-muted">05</span> &nbsp;&nbsp;<span class="code-purple">&lt;/head&gt;</span></div>
+                        <div class="code-line"><span class="code-muted">06</span> &nbsp;&nbsp;<span class="code-purple">&lt;body&gt;</span></div>
+                        <div class="code-line"><span class="code-muted">07</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-purple">&lt;h1&gt;</span><span class="code-green">Hello World!</span><span class="code-purple">&lt;/h1&gt;</span></div>
+                        <div class="code-line"><span class="code-muted">08</span> &nbsp;&nbsp;<span class="code-purple">&lt;/body&gt;</span></div>
+                        <div class="code-line"><span class="code-muted">09</span> <span class="code-purple">&lt;/html&gt;</span> <span class="code-cursor"></span></div>
+                    </div>
+                    <div class="lab-bottom">
+                        <div class="lab-stat"><small>TEST MODE</small><strong>MCQ <em>● READY</em></strong></div>
+                        <div class="lab-stat"><small>PASS MARK</small><strong>60<span style="font-size:11px">%</span></strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="floating-score">
+                <small>YOUR NEXT GOAL</small>
+                <strong>100% ★</strong>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="container" id="testSelection">
+    <div class="section-label">01 — SELECT YOUR CHALLENGE</div>
+    <h2 class="section-title">Choose your test.</h2>
+    <p class="description">
+        Start with a topic-based test or challenge yourself with the complete HTML assessment.
+    </p>
+
+    <div class="test-grid">
+        <article class="test-card">
+            <div class="test-icon">⌘</div>
+            <h3>HTML Fundamentals</h3>
+            <p>Test your understanding of HTML basics and document structure.</p>
+            <div class="test-meta"><span>5 QUESTIONS</span><span>5 MINUTES</span></div>
+            <button onclick="startTest('html_basics')">Start Test →</button>
+        </article>
+
+        <article class="test-card">
+            <div class="test-icon">✦</div>
+            <h3>HTML Elements</h3>
+            <p>Headings, paragraphs, links, images, lists and tables.</p>
+            <div class="test-meta"><span>5 QUESTIONS</span><span>5 MINUTES</span></div>
+            <button onclick="startTest('html_elements')">Start Test →</button>
+        </article>
+
+        <article class="test-card">
+            <div class="test-icon">⚡</div>
+            <h3>HTML Forms</h3>
+            <p>Inputs, labels, buttons and form-related concepts.</p>
+            <div class="test-meta"><span>5 QUESTIONS</span><span>5 MINUTES</span></div>
+            <button onclick="startTest('html_forms')">Start Test →</button>
+        </article>
+
+        <article class="test-card">
+            <div class="test-icon">◈</div>
+            <h3>Complete HTML Test</h3>
+            <p>A complete assessment covering all major HTML topics.</p>
+            <div class="test-meta"><span>15 QUESTIONS</span><span>15 MINUTES</span></div>
+            <button onclick="startTest('html_complete')">Start Test →</button>
+        </article>
+
+        <article class="test-card">
+            <div class="test-icon">⌁</div>
+            <h3>HTML Advanced Practice</h3>
+            <p>Challenge yourself with semantic HTML and practical concepts.</p>
+            <div class="test-meta"><span>5 QUESTIONS</span><span>5 MINUTES</span></div>
+            <button onclick="startTest('html_advanced')">Start Test →</button>
+        </article>
+
+        <article class="test-card">
+            <div class="test-icon">★</div>
+            <h3>Quick Revision</h3>
+            <p>A quick mixed-topic test to refresh your knowledge.</p>
+            <div class="test-meta"><span>5 QUESTIONS</span><span>5 MINUTES</span></div>
+            <button onclick="startTest('html_revision')">Start Test →</button>
+        </article>
+    </div>
+</section>
+
+<section class="container" id="examSection">
+    <div class="exam-area" id="examArea">
+        <div class="exam-header">
+            <h3 id="examTitle">HTML Assessment</h3>
+            <div class="timer" id="timer">05:00</div>
+        </div>
+
+        <div class="exam-body" id="examBody">
+            <div class="exam-progress"><div id="examProgress"></div></div>
+            <div class="question-count" id="questionCount">QUESTION 1 / 5</div>
+            <div class="question-text" id="questionText"></div>
+            <div class="options" id="options"></div>
+            <div class="exam-actions">
+                <button class="exam-btn back" id="backButton" onclick="previousQuestion()">← Previous</button>
+                <button class="exam-btn" id="nextButton" onclick="nextQuestion()" disabled>Next Question →</button>
+            </div>
+        </div>
+
+        <div class="result" id="resultArea">
+            <div class="score-circle" id="scoreCircle">0%</div>
+            <h2 id="resultTitle">Assessment complete!</h2>
+            <p id="resultDescription"></p>
+            <div class="result-actions">
+                <button onclick="restartTest()">Try Again</button>
+                <button class="secondary" onclick="backToTests()">All Tests</button>
+            </div>
+            <div class="result-details" id="resultDetails"></div>
+        </div>
+    </div>
+    <div id="examMessage" aria-live="polite"></div>
+</section>
+
+<section class="container">
+    <div class="section-label">02 — YOUR PERFORMANCE</div>
+    <h2 class="section-title">Assessment history.</h2>
+    <div class="history">
+        <h3>Recent attempts</h3>
+        <div id="historyList"><p class="empty-history">Loading your results...</p></div>
+    </div>
+</section>
+
+<footer>
+    <strong>CODE NEXA FORGE</strong>
+    <span>CODE NEXA FORGE · Learn. Build. Create.</span>
+    <span>HTML ASSESSMENT CENTER</span>
+</footer>
+
+<script>
+"use strict";
+
+/*
+========================================
+ CODE NEXA FORGE
+ SECURE HTML QUIZ FRONTEND
+========================================
+
+Correct answers are NOT stored in this file.
+Questions are loaded from the authenticated server.
+The server calculates and stores every official result.
+*/
+
+const PASS_PERCENTAGE = 60;
+
+const testNames = {
+    html_basics: "HTML Fundamentals",
+    html_elements: "HTML Elements",
+    html_forms: "HTML Forms",
+    html_complete: "Complete HTML Test",
+    html_advanced: "HTML Advanced Practice",
+    html_revision: "Quick Revision"
+};
+
+let currentTest = "";
+let questions = [];
+let answers = [];
+let currentIndex = 0;
+let timeLeft = 0;
+let timerInterval = null;
+let lastResult = null;
+let submitting = false;
+
+const $ = id => document.getElementById(id);
+
+function showMessage(message, type = "error") {
+    const box = $("examMessage");
+    box.className = "notice " + type;
+    box.textContent = message;
+    box.style.display = "block";
+}
+
+function clearMessage() {
+    const box = $("examMessage");
+    box.textContent = "";
+    box.className = "";
+    box.style.display = "none";
+}
+
+async function apiRequest(url, options = {}) {
+    const response = await fetch(url, {
+        credentials: "same-origin",
+        ...options,
+        headers: {
+            ...(options.headers || {}),
+            ...(options.body ? {"Content-Type": "application/json"} : {})
+        }
+    });
+
+    let data;
+
+    try {
+        data = await response.json();
+    } catch {
+        throw new Error("The server returned an invalid response. Please try again.");
+    }
+
+    if (response.status === 401 || response.status === 403) {
+        throw new Error("Please log in to your CODE NEXA FORGE account before taking a test.");
+    }
+
+    if (!response.ok || data.success === false) {
+        throw new Error(data.message || data.error || "The request could not be completed.");
+    }
+
+    return data;
+}
+
+function extractQuiz(data) {
+    return data.quiz || data.data?.quiz || data.data || data;
+}
+
+function extractResult(data) {
+    return data.result || data.data?.result || data.data || data;
+}
+
+async function startTest(quizId) {
+    clearMessage();
+
+    if (!testNames[quizId]) {
+        showMessage("Invalid test selection.");
+        return;
+    }
+
+    clearInterval(timerInterval);
+    currentTest = quizId;
+    submitting = false;
+
+    $("testSelection").style.display = "none";
+    $("examArea").style.display = "block";
+    $("examBody").style.display = "block";
+    $("resultArea").style.display = "none";
+    $("examTitle").textContent = testNames[quizId];
+    $("questionText").textContent = "Loading questions...";
+    $("options").replaceChildren();
+    $("nextButton").disabled = true;
+
+    $("examSection").scrollIntoView({behavior:"smooth"});
+
+    try {
+        const response = await apiRequest(
+            "/api/quizzes/" + encodeURIComponent(quizId)
+        );
+
+        const quiz = extractQuiz(response);
+
+        if (!quiz || !Array.isArray(quiz.questions) || !quiz.questions.length) {
+            throw new Error("This test does not have any available questions.");
+        }
+
+        questions = quiz.questions.map(question => ({
+            q: String(question.q ?? ""),
+            o: Array.isArray(question.o) ? question.o.map(option => String(option)) : []
+        }));
+
+        if (questions.some(question => !question.q || question.o.length < 2)) {
+            throw new Error("The server returned an invalid question format.");
+        }
+
+        answers = new Array(questions.length).fill(null);
+        currentIndex = 0;
+
+        // Duration is supplied by the server in seconds.
+        timeLeft = Number(quiz.duration);
+
+        if (!Number.isFinite(timeLeft) || timeLeft <= 0) {
+            throw new Error("The test timer configuration is invalid.");
+        }
+
+        showQuestion();
+        startTimer();
+
+    } catch (error) {
+        $("examBody").style.display = "none";
+        $("examArea").style.display = "none";
+        $("testSelection").style.display = "block";
+        showMessage(error.message);
+    }
+}
+
+function showQuestion() {
+    const question = questions[currentIndex];
+
+    if (!question) return;
+
+    $("questionCount").textContent =
+        "QUESTION " + (currentIndex + 1) + " / " + questions.length;
+
+    $("questionText").textContent = question.q;
+
+    $("examProgress").style.width =
+        ((currentIndex + 1) / questions.length * 100) + "%";
+
+    const optionsContainer = $("options");
+    optionsContainer.replaceChildren();
+
+    question.o.forEach((option, index) => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className =
+            "option" + (answers[currentIndex] === index ? " selected" : "");
+
+        const letter = document.createElement("span");
+        letter.className = "option-letter";
+        letter.textContent = String.fromCharCode(65 + index);
+
+        const text = document.createElement("span");
+
+        // textContent safely displays HTML tag options without executing markup.
+        text.textContent = option;
+
+        button.append(letter, text);
+
+        button.addEventListener("click", () => {
+            if (submitting) return;
+            answers[currentIndex] = index;
+            showQuestion();
+        });
+
+        optionsContainer.appendChild(button);
+    });
+
+    $("backButton").disabled = currentIndex === 0;
+
+    $("nextButton").disabled = answers[currentIndex] === null;
+
+    $("nextButton").textContent =
+        currentIndex === questions.length - 1
+            ? "Submit Test ✓"
+            : "Next Question →";
+}
+
+function nextQuestion() {
+    if (submitting || answers[currentIndex] === null) return;
+
+    if (currentIndex === questions.length - 1) {
+        finishTest();
+        return;
+    }
+
+    currentIndex++;
+    showQuestion();
+}
+
+function previousQuestion() {
+    if (submitting) return;
+
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+function startTimer() {
+    clearInterval(timerInterval);
+    updateTimer();
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimer();
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            finishTest(true);
+        }
+    }, 1000);
+}
+
+function updateTimer() {
+    const mins = Math.floor(timeLeft / 60);
+    const secs = timeLeft % 60;
+
+    $("timer").textContent =
+        String(mins).padStart(2, "0") + ":" +
+        String(secs).padStart(2, "0");
+
+    $("timer").style.color =
+        timeLeft <= 30 ? "#ff8888" : "#c4c5ff";
+}
+
+async function finishTest(timeExpired = false) {
+    if (submitting || !currentTest) return;
+
+    submitting = true;
+    clearInterval(timerInterval);
+
+    $("nextButton").disabled = true;
+    $("backButton").disabled = true;
+
+    showMessage(
+        timeExpired
+            ? "Time is up. Your answers are being submitted..."
+            : "Submitting your answers securely...",
+        "success"
+    );
+
+    try {
+        /*
+          Only answer indexes/null values are sent.
+          No score, percentage, pass status or answer key is sent.
+        */
+        const response = await apiRequest(
+            "/api/quizzes/" + encodeURIComponent(currentTest) + "/submit",
+            {
+                method: "POST",
+                body: JSON.stringify({answers})
+            }
+        );
+
+        const result = extractResult(response);
+
+        if (
+            !Number.isFinite(Number(result.score)) ||
+            !Number.isFinite(Number(result.totalQuestions)) ||
+            !Number.isFinite(Number(result.percentage)) ||
+            !Array.isArray(result.review)
+        ) {
+            throw new Error("The server returned an incomplete result. Please refresh and check your result history.");
+        }
+
+        lastResult = result;
+
+        showResult(result, timeExpired);
+        await showHistory();
+
+    } catch (error) {
+        submitting = false;
+        $("nextButton").disabled = false;
+        $("backButton").disabled = currentIndex === 0;
+
+        showMessage(
+            error.message + " Your answers are still on this page. You can try submitting again.",
+            "error"
+        );
+    }
+}
+
+function showResult(result, timeExpired) {
+    clearMessage();
+
+    const score = Number(result.score);
+    const total = Number(result.totalQuestions);
+    const percentage = Number(result.percentage);
+    const passed = Boolean(result.passed);
+
+    $("examBody").style.display = "none";
+    $("resultArea").style.display = "block";
+
+    $("scoreCircle").textContent = percentage + "%";
+
+    $("resultTitle").textContent =
+        passed ? "Well done! You passed." : "Keep learning. Try again!";
+
+    $("resultDescription").textContent =
+        "You answered " + score + " out of " + total +
+        " questions correctly. " +
+        (passed
+            ? "You passed this assessment."
+            : "You need at least " + PASS_PERCENTAGE + "% to pass.") +
+        (timeExpired ? " The timer ended and your submitted answers were evaluated." : "");
+
+    const details = $("resultDetails");
+    details.replaceChildren();
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Answer review";
+    details.appendChild(heading);
+
+    result.review.forEach((item, index) => {
+        const reviewItem = document.createElement("div");
+        reviewItem.className = "review-item";
+
+        const title = document.createElement("strong");
+        title.textContent = (index + 1) + ". " + String(item.question || "");
+
+        const status = document.createElement("div");
+        status.className = item.correct ? "correct-text" : "wrong-text";
+        status.textContent = item.correct ? "✓ Correct answer" : "✗ Incorrect answer";
+
+        const correctAnswer = document.createElement("div");
+        correctAnswer.className = "review-answer";
+
+        const options = Array.isArray(item.options) ? item.options : [];
+        const correctIndex = Number(item.correctAnswer);
+        const correctOption = options[correctIndex];
+
+        correctAnswer.textContent =
+            "Correct answer: " +
+            (correctOption === undefined ? "Not available" : correctOption);
+
+        const explanation = document.createElement("p");
+        explanation.style.color = "#748096";
+        explanation.textContent = String(item.explanation || "");
+
+        reviewItem.append(title, status, correctAnswer, explanation);
+        details.appendChild(reviewItem);
+    });
+
+    $("examSection").scrollIntoView({behavior:"smooth"});
+}
+
+function restartTest() {
+    if (currentTest) startTest(currentTest);
+}
+
+function backToTests() {
+    clearInterval(timerInterval);
+    submitting = false;
+
+    $("examArea").style.display = "none";
+    $("testSelection").style.display = "block";
+
+    clearMessage();
+
+    $("testSelection").scrollIntoView({behavior:"smooth"});
+    showHistory();
+}
+
+function formatDate(value) {
+    if (!value) return "Date unavailable";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) return String(value);
+
+    return date.toLocaleString();
+}
+
+async function showHistory() {
+    const list = $("historyList");
+    list.replaceChildren();
+
+    const loading = document.createElement("p");
+    loading.className = "empty-history";
+    loading.textContent = "Loading your saved results...";
+    list.appendChild(loading);
+
+    try {
+        const response = await apiRequest("/api/quiz-results");
+
+        const results = Array.isArray(response.results)
+            ? response.results
+            : Array.isArray(response.data?.results)
+                ? response.data.results
+                : [];
+
+        // Only show HTML attempts on this page.
+        const htmlResults = results.filter(item =>
+            String(item.quiz_id || item.quizId || "").startsWith("html_")
+        );
+
+        list.replaceChildren();
+
+        if (!htmlResults.length) {
+            const empty = document.createElement("p");
+            empty.className = "empty-history";
+            empty.textContent = "You have not completed any HTML tests yet.";
+            list.appendChild(empty);
+            return;
+        }
+
+        htmlResults.forEach(item => {
+            const row = document.createElement("div");
+            row.className = "history-row";
+
+            const name = document.createElement("span");
+
+            const quizId = item.quiz_id || item.quizId || "";
+            const title = item.quiz_title || item.title || testNames[quizId] || "HTML Test";
+            const date = item.submitted_at || item.date || "";
+
+            name.textContent = title + " · " + formatDate(date);
+
+            const score = document.createElement("strong");
+
+            const obtained = Number(item.score ?? 0);
+            const total = Number(item.total_questions ?? item.totalQuestions ?? 0);
+            const percentage = Number(item.percentage ?? 0);
+            const passed = Number(item.passed) === 1 || item.passed === true;
+
+            score.textContent =
+                obtained + "/" + total + " (" + percentage + "%) · " +
+                (passed ? "PASSED" : "NOT PASSED");
+
+            score.className = passed ? "status-pass" : "status-fail";
+
+            row.append(name, score);
+            list.appendChild(row);
+        });
+
+    } catch (error) {
+        list.replaceChildren();
+
+        const message = document.createElement("p");
+        message.className = "empty-history";
+        message.textContent = error.message;
+        list.appendChild(message);
+    }
+}
+
+// Load saved results from the server when the page opens.
+showHistory();
+</script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

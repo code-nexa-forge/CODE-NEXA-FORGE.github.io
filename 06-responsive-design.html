@@ -1,0 +1,1522 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 06 - Responsive Design | CNF/</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+    --navy: #101b2c;
+    --navy-light: #192941;
+    --coral: #ff806b;
+    --peach: #ffb49d;
+    --cream: #fff6ed;
+    --muted: #aab7c8;
+    --border: #30435a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--cream);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, select {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.navbar {
+    height: 72px;
+    background: var(--navy);
+    color: white;
+    padding: 0 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #ffffff12;
+}
+
+.logo {
+    color: var(--coral);
+    font: bold 24px 'Space Mono', monospace;
+    transition: .3s ease;
+}
+
+.logo:hover {
+    color: var(--peach);
+    text-shadow: 0 0 18px #ff806b88;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.nav-tag {
+    color: var(--coral);
+    border: 1px solid #79524e;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: 'Space Mono', monospace;
+}
+
+.hero {
+    background:
+        radial-gradient(circle at 85% 20%, #ff806b20, transparent 28%),
+        radial-gradient(circle at 10% 100%, #304c6c55, transparent 35%),
+        var(--navy);
+    color: white;
+    padding: 85px 8% 100px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    border: 1px solid #ffffff12;
+    border-radius: 50%;
+    right: -100px;
+    top: -190px;
+    box-shadow:
+        0 0 0 45px #ffffff08,
+        0 0 0 90px #ffffff05,
+        0 0 0 135px #ffffff03;
+    animation: heroOrbit 22s linear infinite;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 1px solid #ff806b35;
+    border-radius: 50%;
+    right: 17%;
+    bottom: -110px;
+    box-shadow: 0 0 0 25px #ff806b0c, 0 0 45px #ff806b15;
+    animation: heroFloat 7s ease-in-out infinite;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 850px;
+    animation: heroContentIn 1s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.eyebrow {
+    color: var(--coral);
+    font: 12px 'Space Mono', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    animation: fadeUp .8s .1s both;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 7vw, 78px);
+    line-height: 1.02;
+    letter-spacing: -3px;
+    margin-bottom: 25px;
+    animation: fadeUp .8s .2s both;
+}
+
+.hero h1 span {
+    color: var(--coral);
+    display: inline-block;
+    animation: titleGlow 4s ease-in-out infinite;
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 600px;
+    font-size: 16px;
+    animation: fadeUp .8s .35s both;
+}
+
+.hero-bottom {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+    animation: fadeUp .8s .5s both;
+}
+
+.hero-bottom a {
+    background: var(--coral);
+    color: var(--navy);
+    padding: 14px 22px;
+    font-weight: 800;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: .3s ease;
+    box-shadow: 0 8px 25px #ff806b25;
+}
+
+.hero-bottom a:hover {
+    background: var(--peach);
+    transform: translateY(-5px);
+    box-shadow: 0 13px 30px #ff806b45;
+}
+
+.hero-bottom span {
+    color: var(--muted);
+    font: 11px 'Space Mono', monospace;
+}
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 70px 25px;
+}
+
+.section-kicker {
+    font: 11px 'Space Mono', monospace;
+    color: #d85e4e;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.section-title {
+    font-size: 36px;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+}
+
+.section-description {
+    color: #68788b;
+    line-height: 1.8;
+    max-width: 700px;
+    margin-bottom: 35px;
+}
+
+.device-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+    margin-bottom: 65px;
+}
+
+.device-card {
+    background: white;
+    border: 1px solid #eaded5;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 8px 25px #37251a08;
+    position: relative;
+    overflow: hidden;
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    animation: cardReveal .8s both;
+}
+
+.device-card:nth-child(2) {
+    animation-delay: .12s;
+}
+
+.device-card:nth-child(3) {
+    animation-delay: .24s;
+}
+
+.device-card::before {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background: linear-gradient(90deg, var(--coral), var(--peach));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .4s ease;
+}
+
+.device-card:hover {
+    transform: translateY(-9px);
+    box-shadow: 0 20px 40px #37251a18;
+    border-color: #efb5a7;
+}
+
+.device-card:hover::before {
+    transform: scaleX(1);
+}
+
+.device-icon {
+    width: 48px;
+    height: 48px;
+    background: #fff0e9;
+    color: #d85e4e;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    font-size: 23px;
+    margin-bottom: 20px;
+    transition: .35s ease;
+}
+
+.device-card:hover .device-icon {
+    transform: rotate(-8deg) scale(1.12);
+    background: var(--coral);
+    color: white;
+}
+
+.device-card h3 {
+    font-size: 20px;
+    margin-bottom: 9px;
+}
+
+.device-card p {
+    color: #748194;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.device-size {
+    color: #d85e4e;
+    font: 11px 'Space Mono', monospace;
+    margin-top: 17px;
+}
+
+.dark-section {
+    background:
+        radial-gradient(circle at 100% 0%, #ff806b12, transparent 35%),
+        var(--navy);
+    color: white;
+    padding: 32px;
+    border-radius: 12px;
+    margin-bottom: 65px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 18px 45px #101b2c18;
+}
+
+.dark-section .section-description {
+    color: var(--muted);
+}
+
+.breakpoint-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.breakpoint {
+    background: var(--navy-light);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 7px;
+    transition: .35s ease;
+}
+
+.breakpoint:hover {
+    transform: translateY(-6px);
+    border-color: var(--coral);
+    background: #20334c;
+    box-shadow: 0 12px 25px #0003;
+}
+
+.breakpoint strong {
+    display: block;
+    color: var(--coral);
+    font: 13px 'Space Mono', monospace;
+    margin-bottom: 10px;
+}
+
+.breakpoint span {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.code-block {
+    background: #17263a;
+    color: #ffc0a9;
+    padding: 22px;
+    border-radius: 7px;
+    font: 13px/2 'Space Mono', monospace;
+    overflow-x: auto;
+    margin-top: 20px;
+    border: 1px solid #34475c;
+    transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+.code-block:hover {
+    border-color: var(--coral);
+    box-shadow: 0 0 25px #ff806b12;
+}
+
+.preview-section {
+    background: white;
+    border: 1px solid #eaded5;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 65px;
+    box-shadow: 0 12px 35px #37251a08;
+    transition: box-shadow .35s ease, transform .35s ease;
+}
+
+.preview-section:hover {
+    box-shadow: 0 18px 45px #37251a12;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 23px;
+}
+
+.preview-header h3 {
+    font-size: 21px;
+}
+
+.preview-header span {
+    color: #d85e4e;
+    font: 11px 'Space Mono', monospace;
+}
+
+.device-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.device-controls button {
+    background: #fff1eb;
+    color: #a74739;
+    border: 1px solid #f1c8ba;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.device-controls button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px #d85e4e20;
+}
+
+.device-controls button.active {
+    background: var(--coral);
+    color: var(--navy);
+    border-color: var(--coral);
+    box-shadow: 0 5px 16px #ff806b35;
+}
+
+.preview-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: #788597;
+    font: 11px 'Space Mono', monospace;
+}
+
+.preview-frame {
+    width: 100%;
+    min-height: 320px;
+    background-color: #f4f1ed;
+    background-image: radial-gradient(#d6c9bf 1px, transparent 1px);
+    background-size: 16px 16px;
+    border: 2px dashed #d4c8be;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.demo-page {
+    width: 100%;
+    max-width: 100%;
+    background: white;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: width .45s cubic-bezier(.2,.8,.2,1), max-width .45s ease;
+    box-shadow: 0 5px 20px #00000010;
+    transform-origin: top center;
+}
+
+.demo-nav {
+    background: var(--navy);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 17px;
+    gap: 10px;
+}
+
+.demo-brand {
+    font-weight: 800;
+    color: var(--coral);
+}
+
+.demo-links {
+    display: flex;
+    gap: 15px;
+    font-size: 10px;
+}
+
+.demo-links span {
+    transition: color .2s ease;
+}
+
+.demo-links span:hover {
+    color: var(--coral);
+}
+
+.demo-hero {
+    background: #fff0e9;
+    padding: 28px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    transition: .4s ease;
+}
+
+.demo-hero h4 {
+    font-size: 23px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+}
+
+.demo-hero p {
+    font-size: 10px;
+    color: #77808b;
+}
+
+.demo-shape {
+    width: 75px;
+    height: 75px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--coral), #ffb49d);
+    border-radius: 50% 50% 10px 50%;
+    animation: shapeFloat 4s ease-in-out infinite;
+    box-shadow: 0 8px 20px #ff806b35;
+}
+
+.demo-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 15px;
+}
+
+.demo-card {
+    background: #f5f5f5;
+    padding: 15px 10px;
+    border-radius: 5px;
+    min-height: 65px;
+    transition: .3s ease;
+}
+
+.demo-card:hover {
+    background: #fff0e9;
+    transform: translateY(-4px);
+}
+
+.demo-card b {
+    display: block;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.demo-card span {
+    color: #8490a0;
+    font-size: 9px;
+}
+
+.demo-page.mobile {
+    max-width: 340px;
+}
+
+.demo-page.mobile .demo-links {
+    display: none;
+}
+
+.demo-page.mobile .demo-hero {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+}
+
+.demo-page.mobile .demo-hero h4 {
+    font-size: 20px;
+}
+
+.demo-page.mobile .demo-cards {
+    grid-template-columns: 1fr;
+}
+
+.demo-page.tablet {
+    max-width: 650px;
+}
+
+.demo-page.tablet .demo-cards {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.demo-page.tablet .demo-hero h4 {
+    font-size: 25px;
+}
+
+.demo-page.desktop {
+    max-width: 100%;
+}
+
+.demo-page.desktop .demo-cards {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tip {
+    color: #788597;
+    font-size: 12px;
+    line-height: 1.7;
+    margin-top: 15px;
+}
+
+.practice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 17px;
+    margin-bottom: 65px;
+}
+
+.practice-card {
+    background: white;
+    border: 1px solid #eaded5;
+    padding: 24px;
+    border-radius: 9px;
+    position: relative;
+    overflow: hidden;
+    transition: .35s ease;
+}
+
+.practice-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--coral), var(--peach));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .4s ease;
+}
+
+.practice-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 15px 35px #37251a12;
+    border-color: #efb5a7;
+}
+
+.practice-card:hover::after {
+    transform: scaleX(1);
+}
+
+.practice-card h3 {
+    margin-bottom: 12px;
+}
+
+.practice-card p {
+    color: #758195;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.practice-card code {
+    display: block;
+    background: #fff0e9;
+    color: #b14d3e;
+    padding: 12px;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-size: 12px;
+    overflow-x: auto;
+}
+
+.quiz {
+    background:
+        radial-gradient(circle at 100% 0%, #ff806b18, transparent 35%),
+        var(--navy);
+    color: white;
+    border: 1px solid #3c4d63;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 18px 45px #101b2c20;
+}
+
+.quiz .section-description {
+    color: var(--muted);
+}
+
+.question {
+    padding: 20px 0;
+    border-bottom: 1px solid #34475c;
+    transition: padding-left .3s ease;
+}
+
+.question:hover {
+    padding-left: 8px;
+}
+
+.question h4 {
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+
+.question label {
+    display: block;
+    color: #c1ccda;
+    font-size: 13px;
+    margin: 11px 0;
+    cursor: pointer;
+    transition: color .2s ease, transform .2s ease;
+}
+
+.question label:hover {
+    color: var(--peach);
+    transform: translateX(4px);
+}
+
+.question input {
+    accent-color: var(--coral);
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.action-btn {
+    padding: 13px 18px;
+    border: 1px solid var(--coral);
+    border-radius: 5px;
+    background: var(--coral);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.action-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    background: var(--peach);
+    box-shadow: 0 8px 20px #ff806b35;
+}
+
+.action-btn.outline {
+    background: transparent;
+    color: var(--coral);
+}
+
+.action-btn.outline:hover:not(:disabled) {
+    background: #ff806b15;
+}
+
+.action-btn:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#quizResult {
+    color: var(--coral);
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 20px;
+}
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 35px;
+}
+
+.lesson-navigation a {
+    padding: 13px 17px;
+    border: 1px solid #e4a89b;
+    border-radius: 5px;
+    color: #b34f41;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .3s ease;
+}
+
+.lesson-navigation a:hover:not(.locked) {
+    background: var(--coral);
+    color: var(--navy);
+    border-color: var(--coral);
+    transform: translateY(-3px);
+}
+
+.lesson-navigation a.locked {
+    opacity: .35;
+    pointer-events: none;
+}
+
+footer {
+    background: var(--navy);
+    color: var(--muted);
+    padding: 25px 7%;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 12px;
+}
+
+footer strong {
+    color: var(--coral);
+    font: bold 18px 'Space Mono', monospace;
+}
+
+/* ANIMATION KEYFRAMES */
+
+@keyframes heroOrbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes heroFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-18px) scale(1.08); }
+}
+
+@keyframes heroContentIn {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 0 transparent; }
+    50% { text-shadow: 0 0 25px #ff806b70; }
+}
+
+@keyframes cardReveal {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shapeFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-9px) rotate(7deg); }
+}
+
+@media(max-width: 900px) {
+    .device-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .breakpoint-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 750px) {
+    .hero {
+        padding: 60px 7%;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .device-cards,
+    .practice-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dark-section {
+        padding: 22px;
+    }
+
+    .preview-section {
+        padding: 17px;
+    }
+
+    main {
+        padding: 50px 18px;
+    }
+
+    .demo-links {
+        gap: 7px;
+    }
+
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .nav-right {
+        gap: 10px;
+        font-size: 10px;
+    }
+
+    .nav-tag {
+        font-size: 9px;
+        padding: 7px 8px;
+    }
+
+    .quiz {
+        padding: 20px;
+    }
+
+    .preview-frame {
+        padding: 8px;
+    }
+}
+
+@media(max-width: 480px) {
+    .nav-right span:first-child {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 43px;
+    }
+
+    .section-title {
+        font-size: 29px;
+    }
+
+    .hero-bottom {
+        gap: 18px;
+    }
+
+    .preview-meta {
+        font-size: 9px;
+    }
+
+    .lesson-navigation {
+        flex-direction: column;
+    }
+
+    .lesson-navigation a {
+        text-align: center;
+    }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+/* RESET QUIZ BUTTON — LESSON 06 */
+
+.quiz-actions #resetQuiz,
+.quiz-actions button[id*="reset"],
+.quiz-actions button[class*="reset"] {
+    appearance: none !important;
+    background: #26354a !important;
+    color: #ffb49d !important;
+    border: 1px solid #ff806b !important;
+    padding: 13px 20px !important;
+    border-radius: 5px !important;
+    font: 800 12px 'DM Sans', sans-serif !important;
+    cursor: pointer;
+    transition: all .3s ease !important;
+    box-shadow: 0 4px 15px rgba(255,128,107,.08);
+}
+
+.quiz-actions #resetQuiz:hover,
+.quiz-actions button[id*="reset"]:hover,
+.quiz-actions button[class*="reset"]:hover {
+    background: #ff806b !important;
+    color: #101b2c !important;
+    border-color: #ffb49d !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(255,128,107,.25);
+}
+
+.quiz-actions #resetQuiz:active,
+.quiz-actions button[id*="reset"]:active,
+.quiz-actions button[class*="reset"]:active {
+    transform: scale(.96);
+}
+/* RESET QUIZ — MOVING ORANGE DOT */
+
+.quiz-actions #resetQuiz,
+.quiz-actions button[id*="reset"],
+.quiz-actions button[class*="reset"] {
+    position: relative !important;
+    overflow: hidden;
+    padding: 13px 20px 13px 34px !important;
+    background: #26354a !important;
+    color: #ffb49d !important;
+    border: 1px solid #ff806b !important;
+    border-radius: 5px !important;
+    font: 800 12px 'DM Sans', sans-serif !important;
+    cursor: pointer;
+    transition: .3s ease !important;
+}
+
+/* Moving orange dot */
+.quiz-actions #resetQuiz::before,
+.quiz-actions button[id*="reset"]::before,
+.quiz-actions button[class*="reset"]::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    background: #ff806b;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 8px #ff806b, 0 0 16px #ff806b;
+    animation: orangeDotMove 1.5s ease-in-out infinite;
+}
+
+@keyframes orangeDotMove {
+    0%, 100% {
+        transform: translateY(-50%) translateX(0);
+        opacity: .65;
+    }
+    50% {
+        transform: translateY(-50%) translateX(7px);
+        opacity: 1;
+        box-shadow: 0 0 12px #ff806b, 0 0 22px #ff806b;
+    }
+}
+
+.quiz-actions #resetQuiz:hover,
+.quiz-actions button[id*="reset"]:hover,
+.quiz-actions button[class*="reset"]:hover {
+    background: #ff806b !important;
+    color: #101b2c !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px #ff806b40;
+}
+
+.quiz-actions #resetQuiz:hover::before,
+.quiz-actions button[id*="reset"]:hover::before {
+    background: #101b2c;
+    box-shadow: 0 0 10px #101b2c;
+}
+</style>
+
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="../css.html" target="_blank" rel="noopener" class="logo">CNF/</a>
+
+    <div class="nav-right">
+        <span>CSS COURSE</span>
+        <span class="nav-tag">LESSON 06 / 08</span>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">CSS RESPONSIVE LAB / MODULE 06</div>
+
+        <h1>One website.<br><span>Every screen.</span></h1>
+
+        <p>
+            Learn how to make websites adapt to mobile phones, tablets
+            and desktops. Build layouts that look beautiful on every device.
+        </p>
+
+        <div class="hero-bottom">
+            <a href="#learning">Start Learning ↓</a>
+            <span>DESIGN FOR EVERY SCREEN SIZE</span>
+        </div>
+    </div>
+</header>
+
+<main id="learning">
+
+    <div class="section-kicker">01 / UNDERSTANDING RESPONSIVENESS</div>
+    <h2 class="section-title">What is Responsive Design?</h2>
+
+    <p class="section-description">
+        Responsive web design means creating websites that automatically
+        adjust their layout, text, images and elements according to the
+        screen size of the device being used.
+    </p>
+
+    <div class="device-cards">
+
+        <article class="device-card">
+            <div class="device-icon">▯</div>
+            <h3>Mobile</h3>
+            <p>
+                Small screens need compact navigation, readable text
+                and content arranged mostly in a single column.
+            </p>
+            <div class="device-size">SMALL SCREEN</div>
+        </article>
+
+        <article class="device-card">
+            <div class="device-icon">▣</div>
+            <h3>Tablet</h3>
+            <p>
+                Medium screens can show more content side by side,
+                often using two-column layouts.
+            </p>
+            <div class="device-size">MEDIUM SCREEN</div>
+        </article>
+
+        <article class="device-card">
+            <div class="device-icon">▭</div>
+            <h3>Desktop</h3>
+            <p>
+                Large screens provide more room for navigation,
+                multi-column layouts and larger content sections.
+            </p>
+            <div class="device-size">LARGE SCREEN</div>
+        </article>
+
+    </div>
+
+    <section class="dark-section">
+        <div class="section-kicker">02 / MEDIA QUERIES</div>
+        <h2 class="section-title">The power of @media</h2>
+
+        <p class="section-description">
+            CSS media queries let you apply different styles depending
+            on the screen width or other device characteristics.
+        </p>
+
+        <div class="breakpoint-list">
+            <div class="breakpoint">
+                <strong>Mobile</strong>
+                <span>Small screens. Example: 600px and below.</span>
+            </div>
+
+            <div class="breakpoint">
+                <strong>Tablet</strong>
+                <span>Medium screens. Example: 601px to 900px.</span>
+            </div>
+
+            <div class="breakpoint">
+                <strong>Desktop</strong>
+                <span>Large screens. Example: above 900px.</span>
+            </div>
+        </div>
+
+        <div class="code-block">
+/* Default desktop layout */<br>
+.container {<br>
+&nbsp;&nbsp;display: grid;<br>
+&nbsp;&nbsp;grid-template-columns: repeat(3, 1fr);<br>
+}<br><br>
+
+/* Mobile layout */<br>
+@media (max-width: 600px) {<br>
+&nbsp;&nbsp;.container {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;grid-template-columns: 1fr;<br>
+&nbsp;&nbsp;}<br>
+}
+        </div>
+    </section>
+
+    <div class="section-kicker">03 / DEVICE SIMULATOR</div>
+    <h2 class="section-title">See the layout change.</h2>
+
+    <p class="section-description">
+        Select a device below. The preview changes its layout to demonstrate
+        how the same website can adapt to different screen sizes.
+    </p>
+
+    <section class="preview-section">
+
+        <div class="preview-header">
+            <h3>Responsive Preview Studio</h3>
+            <span>LIVE DEVICE SIMULATION</span>
+        </div>
+
+        <div class="device-controls">
+            <button type="button" data-device="mobile">▯ Mobile</button>
+            <button type="button" data-device="tablet">▣ Tablet</button>
+            <button type="button" data-device="desktop" class="active">▭ Desktop</button>
+        </div>
+
+        <div class="preview-meta">
+            <span id="deviceName">DESKTOP VIEW</span>
+            <span id="deviceWidth">FULL WIDTH</span>
+        </div>
+
+        <div class="preview-frame">
+
+            <div class="demo-page desktop" id="demoPage">
+
+                <div class="demo-nav">
+                    <div class="demo-brand">BRIGHT.</div>
+
+                    <div class="demo-links">
+                        <span>Home</span>
+                        <span>About</span>
+                        <span>Services</span>
+                        <span>Contact</span>
+                    </div>
+                </div>
+
+                <div class="demo-hero">
+                    <div>
+                        <h4>Design your digital future.</h4>
+                        <p>A beautiful website for every screen.</p>
+                    </div>
+                    <div class="demo-shape"></div>
+                </div>
+
+                <div class="demo-cards">
+                    <div class="demo-card">
+                        <b>Creative Design</b>
+                        <span>Build beautiful experiences.</span>
+                    </div>
+
+                    <div class="demo-card">
+                        <b>Smart Layout</b>
+                        <span>Adapt to every device.</span>
+                    </div>
+
+                    <div class="demo-card">
+                        <b>Fast Website</b>
+                        <span>Keep things simple and smooth.</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <p class="tip">
+            Note: This is a visual demonstration of responsive layout
+            behavior, not a real browser device emulator.
+        </p>
+
+    </section>
+
+    <div class="section-kicker">04 / IMPORTANT TECHNIQUES</div>
+    <h2 class="section-title">Three things to remember.</h2>
+
+    <div class="practice-grid">
+
+        <article class="practice-card">
+            <h3>Flexible Widths</h3>
+            <p>
+                Use percentages, flexible grid units and max-width instead
+                of forcing every element to have a fixed width.
+            </p>
+            <code>width: 100%; max-width: 1100px;</code>
+        </article>
+
+        <article class="practice-card">
+            <h3>Responsive Images</h3>
+            <p>
+                Images should scale inside their containers without
+                overflowing or becoming distorted.
+            </p>
+            <code>img { max-width: 100%; height: auto; }</code>
+        </article>
+
+        <article class="practice-card">
+            <h3>Viewport Meta Tag</h3>
+            <p>
+                This tag tells mobile browsers to use the device width
+                as the page's viewport width.
+            </p>
+            <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>
+        </article>
+
+        <article class="practice-card">
+            <h3>Mobile-First Design</h3>
+            <p>
+                Start with a simple layout for small screens, then add
+                more complex layouts for larger screens.
+            </p>
+            <code>@media (min-width: 768px) { ... }</code>
+        </article>
+
+    </div>
+
+    <div class="section-kicker">05 / KNOWLEDGE CHECK</div>
+    <h2 class="section-title">Test what you learned.</h2>
+
+    <section class="quiz">
+
+        <p class="section-description">
+            Answer all three questions. Get at least 2 correct answers
+            to unlock lesson completion.
+        </p>
+
+        <div class="question">
+            <h4>1. What is the main purpose of responsive web design?</h4>
+
+            <label><input type="radio" name="q1" value="a">
+                To make websites work only on desktops</label>
+
+            <label><input type="radio" name="q1" value="b">
+                To adapt websites to different screen sizes</label>
+
+            <label><input type="radio" name="q1" value="c">
+                To remove all images from a website</label>
+        </div>
+
+        <div class="question">
+            <h4>2. Which CSS feature is used to apply styles at certain screen widths?</h4>
+
+            <label><input type="radio" name="q2" value="a">
+                Media queries</label>
+
+            <label><input type="radio" name="q2" value="b">
+                Text decoration</label>
+
+            <label><input type="radio" name="q2" value="c">
+                Border radius</label>
+        </div>
+
+        <div class="question">
+            <h4>3. Which meta tag helps a page display correctly on mobile devices?</h4>
+
+            <label><input type="radio" name="q3" value="a">
+                Description meta tag</label>
+
+            <label><input type="radio" name="q3" value="b">
+                Keywords meta tag</label>
+
+            <label><input type="radio" name="q3" value="c">
+                Viewport meta tag</label>
+        </div>
+
+        <div class="quiz-actions">
+            <button class="action-btn" id="submitQuiz" type="button">
+                Submit Answers
+            </button>
+
+            <button class="action-btn outline" id="completeBtn" type="button" disabled>
+                Complete Lesson
+            </button>
+        </div>
+
+        <p id="quizResult" aria-live="polite"></p>
+
+    </section>
+
+    <div class="lesson-navigation">
+        <a href="05-flexbox-grid.html" target="_blank" rel="noopener">
+            ← Previous Lesson
+        </a>
+
+        <a href="../css.html" target="_blank" rel="noopener">
+            Course Home
+        </a>
+
+        <a href="07-animations.html" target="_blank" rel="noopener"
+           id="nextLesson" class="locked">
+            Next Lesson →
+        </a>
+    </div>
+
+</main>
+
+<footer>
+    <strong>CNF/</strong>
+    <span>CODE NEXA FORGE · RESPONSIVE DESIGN LAB</span>
+</footer>
+
+<script>
+// RESPONSIVE DEVICE SIMULATOR
+const demoPage = document.getElementById('demoPage');
+const deviceButtons = document.querySelectorAll('[data-device]');
+const deviceName = document.getElementById('deviceName');
+const deviceWidth = document.getElementById('deviceWidth');
+
+const deviceSettings = {
+    mobile: {
+        name: 'MOBILE VIEW',
+        width: 'MAX WIDTH: 340PX'
+    },
+    tablet: {
+        name: 'TABLET VIEW',
+        width: 'MAX WIDTH: 650PX'
+    },
+    desktop: {
+        name: 'DESKTOP VIEW',
+        width: 'FULL WIDTH'
+    }
+};
+
+deviceButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const device = button.dataset.device;
+
+        demoPage.classList.remove('mobile', 'tablet', 'desktop');
+        demoPage.classList.add(device);
+
+        deviceButtons.forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+
+        deviceName.textContent = deviceSettings[device].name;
+        deviceWidth.textContent = deviceSettings[device].width;
+    });
+});
+
+
+// QUIZ SYSTEM
+const correctAnswers = {
+    q1: 'b',
+    q2: 'a',
+    q3: 'c'
+};
+
+const submitQuiz = document.getElementById('submitQuiz');
+const completeBtn = document.getElementById('completeBtn');
+const nextLesson = document.getElementById('nextLesson');
+const quizResult = document.getElementById('quizResult');
+
+let quizPassed = false;
+
+submitQuiz.addEventListener('click', () => {
+    let score = 0;
+    let unanswered = false;
+
+    for (const question in correctAnswers) {
+        const selected = document.querySelector(
+            `input[name="${question}"]:checked`
+        );
+
+        if (!selected) {
+            unanswered = true;
+        } else if (selected.value === correctAnswers[question]) {
+            score++;
+        }
+    }
+
+    if (unanswered) {
+        quizPassed = false;
+        completeBtn.disabled = true;
+        quizResult.textContent = 'Please answer all three questions first.';
+        return;
+    }
+
+    if (score >= 2) {
+        quizPassed = true;
+        completeBtn.disabled = false;
+
+        quizResult.textContent =
+            `Great work! You scored ${score}/3. Complete the lesson to unlock Lesson 7.`;
+    } else {
+        quizPassed = false;
+        completeBtn.disabled = true;
+
+        quizResult.textContent =
+            `You scored ${score}/3. You need at least 2 correct answers. Try again!`;
+    }
+});
+
+completeBtn.addEventListener('click', () => {
+    if (!quizPassed) return;
+
+    localStorage.setItem('css-lesson-06-completed', 'true');
+
+    completeBtn.textContent = '✓ Lesson Completed';
+    completeBtn.disabled = true;
+
+    nextLesson.classList.remove('locked');
+
+    quizResult.textContent =
+        'Congratulations! Lesson 6 completed. Lesson 7 is now unlocked.';
+});
+
+
+// RESTORE COMPLETION STATE
+if (localStorage.getItem('css-lesson-06-completed') === 'true') {
+    completeBtn.textContent = '✓ Lesson Completed';
+    completeBtn.disabled = true;
+    nextLesson.classList.remove('locked');
+
+    quizResult.textContent =
+        'You have already completed this lesson. Lesson 7 is unlocked!';
+}
+</script>
+
+<script src="../../js/lesson-quiz-guard.js"></script>
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>
