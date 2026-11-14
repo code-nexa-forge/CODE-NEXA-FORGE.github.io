@@ -1,0 +1,2606 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 07 — DOM & Events | CNF/</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #edf3f8;
+    --white: #ffffff;
+    --ink: #172a3a;
+    --muted: #6e8191;
+    --blue: #2476a8;
+    --blue-dark: #15577f;
+    --ice: #d8f1ff;
+    --cyan: #54bde8;
+    --silver: #b9cbd8;
+    --line: #dce6ee;
+    --dark: #142331;
+    --green: #16885b;
+    --red: #c84c5b;
+    --shadow: 0 18px 45px rgba(32, 72, 101, .09);
+    --shadow-heavy: 0 28px 70px rgba(32, 72, 101, .16);
+    --radius: 22px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(84,189,232,.13), transparent 28%),
+        radial-gradient(circle at 90% 35%, rgba(36,118,168,.08), transparent 25%),
+        var(--bg);
+    color: var(--ink);
+    overflow-x: hidden;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+::selection {
+    background: var(--blue);
+    color: white;
+}
+
+/* =========================
+   GLOBAL BACKGROUND EFFECTS
+========================= */
+
+.background-orb {
+    position: fixed;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: .18;
+    pointer-events: none;
+    z-index: -1;
+    animation: orbDrift 13s ease-in-out infinite alternate;
+}
+
+.orb-one {
+    background: #54bde8;
+    top: 15%;
+    left: -170px;
+}
+
+.orb-two {
+    background: #8fc9ec;
+    right: -170px;
+    top: 55%;
+    animation-delay: -6s;
+}
+
+@keyframes orbDrift {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(65px, -55px) scale(1.2); }
+    100% { transform: translate(-20px, 65px) scale(.9); }
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    width: min(1180px, calc(100% - 40px));
+    margin: 22px auto 0;
+    min-height: 72px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    background: rgba(255,255,255,.82);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(185,203,216,.55);
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(30,65,90,.06);
+    position: relative;
+    z-index: 10;
+    animation: navEntrance .9s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes navEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(-35px) scale(.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.brand {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    color: var(--blue);
+    transition: transform .35s ease;
+}
+
+.brand:hover {
+    transform: scale(1.08);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-links a {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    padding: 11px 15px;
+    border-radius: 10px;
+    transition: .3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--blue);
+    background: var(--ice);
+    transform: translateY(-3px);
+}
+
+.nav-lesson {
+    background: var(--dark);
+    color: white !important;
+    padding: 11px 17px !important;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    width: min(1180px, calc(100% - 40px));
+    margin: 85px auto 100px;
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    align-items: center;
+    gap: 75px;
+    min-height: 420px;
+}
+
+.hero-content {
+    animation: heroTextIn 1s .15s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes heroTextIn {
+    from {
+        opacity: 0;
+        transform: translateX(-55px);
+        filter: blur(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+        filter: blur(0);
+    }
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--blue);
+    background: var(--ice);
+    border: 1px solid #bfe6fa;
+    border-radius: 50px;
+    padding: 9px 15px;
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+
+.eyebrow-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 0 5px rgba(84,189,232,.15);
+    animation: dotPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+    50% {
+        box-shadow: 0 0 0 9px rgba(84,189,232,0);
+        transform: scale(.75);
+    }
+}
+
+.hero h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(43px, 5.5vw, 72px);
+    line-height: 1.04;
+    letter-spacing: -3.5px;
+    margin-bottom: 23px;
+}
+
+.hero h1 span {
+    color: var(--blue);
+    display: inline-block;
+    position: relative;
+}
+
+.hero h1 span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 5px;
+    background: var(--cyan);
+    border-radius: 10px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: underlineReveal 1s 1s ease forwards;
+}
+
+@keyframes underlineReveal {
+    to { transform: scaleX(1); }
+}
+
+.hero-description {
+    max-width: 510px;
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 26px;
+}
+
+.hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.hero-tags span {
+    padding: 9px 13px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.7);
+    border-radius: 9px;
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    color: var(--blue);
+    animation: tagPop .6s both;
+}
+
+.hero-tags span:nth-child(1) { animation-delay: .5s; }
+.hero-tags span:nth-child(2) { animation-delay: .65s; }
+.hero-tags span:nth-child(3) { animation-delay: .8s; }
+
+@keyframes tagPop {
+    from { opacity: 0; transform: translateY(15px) scale(.8); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* =========================
+   HERO FLOATING BROWSER
+========================= */
+
+.hero-visual-wrap {
+    position: relative;
+    perspective: 1100px;
+    animation: visualEntrance 1.1s .2s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes visualEntrance {
+    from {
+        opacity: 0;
+        transform: translateX(55px) scale(.88);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.hero-visual-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 12% 5%;
+    background: var(--cyan);
+    filter: blur(65px);
+    opacity: .28;
+    border-radius: 50%;
+    animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    50% { opacity: .48; transform: scale(1.12); }
+}
+
+.browser {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,.95);
+    border: 1px solid rgba(185,203,216,.8);
+    border-radius: 21px;
+    box-shadow: var(--shadow-heavy);
+    overflow: hidden;
+    animation: browserFloat 4.8s ease-in-out infinite;
+    transform-style: preserve-3d;
+    transition: box-shadow .5s ease, border-color .5s ease;
+}
+
+.browser:hover {
+    box-shadow: 0 35px 85px rgba(36,118,168,.23);
+    border-color: var(--cyan);
+}
+
+@keyframes browserFloat {
+    0%, 100% {
+        transform: translateY(0) rotateX(1deg) rotateY(-2deg);
+    }
+    50% {
+        transform: translateY(-23px) rotateX(-1deg) rotateY(2deg);
+    }
+}
+
+.browser-bar {
+    height: 48px;
+    padding: 0 17px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #f4f8fb;
+    border-bottom: 1px solid var(--line);
+}
+
+.browser-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #c3d4df;
+}
+
+.browser-dot:first-child { background: #ef9d9d; }
+.browser-dot:nth-child(2) { background: #e9c77f; }
+.browser-dot:nth-child(3) { background: #83c7a7; }
+
+.browser-address {
+    margin-left: 12px;
+    flex: 1;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 6px 12px;
+    color: #9aaab6;
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+}
+
+.browser-page {
+    padding: 34px 28px 30px;
+    min-height: 310px;
+    position: relative;
+    overflow: hidden;
+}
+
+.browser-page::after {
+    content: "</>";
+    position: absolute;
+    right: -8px;
+    bottom: -34px;
+    font-family: "DM Mono", monospace;
+    font-size: 130px;
+    font-weight: bold;
+    color: rgba(84,189,232,.09);
+    transform: rotate(-12deg);
+}
+
+.browser-label {
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--blue);
+    margin-bottom: 15px;
+}
+
+.browser-page h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 27px;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.browser-page p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+}
+
+.browser-page button {
+    position: relative;
+    z-index: 1;
+    background: var(--blue);
+    color: white;
+    border: 0;
+    border-radius: 9px;
+    padding: 12px 17px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .3s ease;
+}
+
+.browser-page button:hover {
+    background: var(--dark);
+    transform: translateY(-4px);
+    box-shadow: 0 9px 20px rgba(36,118,168,.25);
+}
+
+/* Floating decorative labels */
+
+.float-label {
+    position: absolute;
+    z-index: 3;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(25,65,90,.12);
+    padding: 12px 15px;
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+    color: var(--blue);
+}
+
+.float-label-one {
+    top: -23px;
+    right: -22px;
+    animation: labelFloat 4s ease-in-out infinite;
+}
+
+.float-label-two {
+    bottom: 12px;
+    left: -27px;
+    animation: labelFloat 4.5s 1s ease-in-out infinite;
+}
+
+@keyframes labelFloat {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-13px) rotate(2deg); }
+}
+
+/* =========================
+   COMMON SECTIONS
+========================= */
+
+.container {
+    width: min(1080px, calc(100% - 40px));
+    margin: auto;
+}
+
+.lesson-section {
+    margin-bottom: 100px;
+}
+
+.section-heading {
+    margin-bottom: 30px;
+    animation: sectionEntrance .8s both;
+}
+
+@keyframes sectionEntrance {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-number {
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.section-heading h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -1.7px;
+    margin-bottom: 10px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 650px;
+    font-size: 14px;
+}
+
+/* =========================
+   DEFINITION
+========================= */
+
+.definition {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 25px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+    transition: .45s ease;
+}
+
+.definition:hover {
+    transform: translateY(-7px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.definition::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: linear-gradient(var(--cyan), var(--blue));
+}
+
+.definition h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 23px;
+    margin-bottom: 13px;
+}
+
+.definition p {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+.definition-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #eaf8ff, #f6fbff);
+    border-radius: 16px;
+    min-height: 150px;
+    position: relative;
+    overflow: hidden;
+}
+
+.definition-visual span {
+    font-family: "DM Mono", monospace;
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--blue);
+    animation: codeFloat 3s ease-in-out infinite;
+}
+
+@keyframes codeFloat {
+    0%,100% { transform: translateY(0) rotate(-4deg); }
+    50% { transform: translateY(-12px) rotate(4deg); }
+}
+
+/* =========================
+   DOM TREE
+========================= */
+
+.dom-tree {
+    padding: 35px 20px;
+    background: var(--dark);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-heavy);
+    position: relative;
+}
+
+.dom-tree::before {
+    content: "DOCUMENT STRUCTURE";
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    font-family: "DM Mono", monospace;
+    font-size: 9px;
+    color: #7993a5;
+    letter-spacing: 1.5px;
+}
+
+.tree-root {
+    width: fit-content;
+    margin: 15px auto 0;
+    text-align: center;
+    background: #21445d;
+    border: 1px solid #3e718f;
+    color: #bdeaff;
+    padding: 13px 24px;
+    border-radius: 10px;
+    font-family: "DM Mono", monospace;
+    animation: nodeAppear .7s both;
+}
+
+.tree-connector {
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(#54bde8, #2476a8);
+    margin: auto;
+    transform-origin: top;
+    animation: connectorGrow .7s .3s both;
+}
+
+@keyframes connectorGrow {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+}
+
+.tree-branches {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+    position: relative;
+    max-width: 650px;
+    margin: auto;
+}
+
+.tree-branches::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 25%;
+    right: 25%;
+    height: 2px;
+    background: #54bde8;
+    transform-origin: center;
+    animation: branchGrow .7s .5s both;
+}
+
+@keyframes branchGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+.tree-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tree-branch .tree-connector {
+    height: 24px;
+}
+
+.tree-node {
+    width: 100%;
+    text-align: center;
+    background: #1b3448;
+    border: 1px solid #31546e;
+    border-radius: 11px;
+    padding: 13px;
+    color: #d4edfa;
+    font-family: "DM Mono", monospace;
+    font-size: 12px;
+    transition: .35s ease;
+    animation: nodeAppear .7s both;
+}
+
+.tree-node:hover {
+    background: #285777;
+    border-color: var(--cyan);
+    color: white;
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(84,189,232,.15);
+}
+
+.tree-branch:nth-child(2) .tree-node { animation-delay: .6s; }
+.tree-branch:nth-child(3) .tree-node { animation-delay: .8s; }
+
+@keyframes nodeAppear {
+    from { opacity: 0; transform: translateY(18px) scale(.92); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tree-children {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px;
+    margin-top: 9px;
+}
+
+.tree-child {
+    padding: 11px 7px;
+    text-align: center;
+    border-radius: 8px;
+    background: #182b3a;
+    border: 1px solid #29475c;
+    color: #92bdd5;
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+    transition: .3s ease;
+}
+
+.tree-child:hover {
+    background: #285777;
+    color: white;
+    transform: translateY(-4px);
+}
+
+/* =========================
+   SELECTOR CARDS
+========================= */
+
+.selector-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+}
+
+.selector-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 17px;
+    padding: 23px;
+    min-height: 160px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .4s cubic-bezier(.2,.8,.2,1),
+                box-shadow .4s ease,
+                border-color .4s ease;
+    animation: cardEntrance .7s both;
+}
+
+.selector-card:nth-child(2) { animation-delay: .08s; }
+.selector-card:nth-child(3) { animation-delay: .16s; }
+.selector-card:nth-child(4) { animation-delay: .24s; }
+.selector-card:nth-child(5) { animation-delay: .32s; }
+.selector-card:nth-child(6) { animation-delay: .4s; }
+
+@keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(28px) scale(.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.selector-card::after {
+    content: "";
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    background: var(--ice);
+    border-radius: 50%;
+    right: -75px;
+    bottom: -80px;
+    transition: .5s ease;
+}
+
+.selector-card:hover {
+    transform: translateY(-9px) scale(1.025);
+    box-shadow: 0 20px 35px rgba(36,118,168,.13);
+    border-color: #a7d8ef;
+}
+
+.selector-card:hover::after {
+    transform: scale(1.8);
+}
+
+.selector-card code {
+    display: inline-block;
+    font-family: "DM Mono", monospace;
+    color: var(--blue);
+    font-size: 14px;
+    background: var(--ice);
+    padding: 7px 10px;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.selector-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.selector-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================
+   CONCEPT CARDS
+========================= */
+
+.concept-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.concept-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 25px;
+    transition: .4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.concept-card:hover {
+    transform: translateY(-7px);
+    border-color: #a6d8ef;
+    box-shadow: var(--shadow);
+}
+
+.concept-card h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+.concept-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.code-line {
+    background: var(--dark);
+    color: #bce7f9;
+    padding: 14px;
+    border-radius: 10px;
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    line-height: 1.8;
+    overflow-x: auto;
+    transition: .35s ease;
+}
+
+.concept-card:hover .code-line {
+    box-shadow: 0 8px 20px rgba(20,35,49,.18);
+    transform: scale(1.015);
+}
+
+/* =========================
+   EVENT TIMELINE
+========================= */
+
+.event-timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 13px;
+}
+
+.event-step {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    padding: 20px 16px;
+    transition: .35s ease;
+}
+
+.event-step:hover {
+    transform: translateY(-8px);
+    background: #f9fdff;
+    border-color: var(--cyan);
+    box-shadow: var(--shadow);
+}
+
+.event-step span {
+    display: block;
+    color: var(--cyan);
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    margin-bottom: 12px;
+}
+
+.event-step h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.event-step p {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.event-listener {
+    margin-top: 20px;
+    padding: 25px;
+    border-radius: 17px;
+    background: var(--dark);
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.event-listener h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 20px;
+    margin-bottom: 9px;
+}
+
+.event-listener p {
+    color: #9db3c2;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.event-listener .code-line {
+    background: #20394d;
+}
+
+/* =========================
+   PLAYGROUND
+========================= */
+
+.playground {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.playground-controls {
+    padding: 27px;
+    background: #f7fbfe;
+    border-right: 1px solid var(--line);
+}
+
+.playground-controls h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.playground-controls > p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    margin-bottom: 23px;
+}
+
+.control-group {
+    margin-bottom: 16px;
+}
+
+.control-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #4c6475;
+}
+
+.control-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: white;
+    outline: none;
+    font-size: 12px;
+    transition: .3s ease;
+}
+
+.control-group input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 4px rgba(84,189,232,.13);
+    transform: translateY(-2px);
+}
+
+.control-group input[type="color"] {
+    height: 43px;
+    padding: 5px;
+}
+
+.playground-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 20px;
+}
+
+.primary-btn, .secondary-btn {
+    border: 0;
+    border-radius: 9px;
+    padding: 12px 15px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .3s ease;
+}
+
+.primary-btn {
+    background: var(--blue);
+    color: white;
+}
+
+.secondary-btn {
+    background: #e5edf3;
+    color: var(--ink);
+}
+
+.primary-btn:hover, .secondary-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 9px 18px rgba(30,75,105,.15);
+}
+
+.primary-btn:active, .secondary-btn:active {
+    transform: scale(.96);
+}
+
+.playground-preview {
+    padding: 27px;
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.preview-top h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 17px;
+}
+
+.preview-status {
+    font-family: "DM Mono", monospace;
+    font-size: 9px;
+    color: var(--green);
+    background: #e4f8ef;
+    padding: 7px 10px;
+    border-radius: 30px;
+}
+
+.preview-screen {
+    flex: 1;
+    min-height: 280px;
+    background: #f2f8fc;
+    border: 1px dashed #bdd4e2;
+    border-radius: 15px;
+    padding: 35px 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: background .5s ease;
+}
+
+.preview-screen h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 28px;
+    margin-bottom: 12px;
+    transition: .4s ease;
+}
+
+.preview-screen p {
+    max-width: 350px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.preview-screen button {
+    border: 0;
+    border-radius: 8px;
+    background: var(--blue);
+    color: white;
+    padding: 12px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .3s ease;
+}
+
+.preview-screen button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(36,118,168,.25);
+}
+
+.playground-output {
+    margin-top: 15px;
+    background: var(--dark);
+    border-radius: 10px;
+    color: #aee4f8;
+    padding: 13px;
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+    min-height: 42px;
+    line-height: 1.6;
+}
+
+/* =========================
+   BUBBLING
+========================= */
+
+.bubbling {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+}
+
+.bubble-parent {
+    background: #e8f5fc;
+    border: 2px solid #9acde5;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    transition: .35s ease;
+}
+
+.bubble-child {
+    background: #d1eaf8;
+    border: 2px solid #83c2e1;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    transition: .35s ease;
+}
+
+.bubble-button {
+    border: 0;
+    border-radius: 9px;
+    background: var(--blue);
+    color: white;
+    padding: 12px 20px;
+    margin-top: 15px;
+    font-weight: 700;
+    font-size: 12px;
+    transition: .3s ease;
+}
+
+.bubble-button:hover {
+    background: var(--dark);
+    transform: translateY(-4px);
+}
+
+.bubble-parent h3, .bubble-child h3 {
+    font-size: 14px;
+}
+
+.bubble-log {
+    background: var(--dark);
+    color: #b8e5f8;
+    border-radius: 10px;
+    padding: 15px;
+    min-height: 70px;
+    margin-top: 18px;
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+.bubble-explanation {
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* =========================
+   QUIZ
+========================= */
+
+.quiz {
+    background: linear-gradient(145deg, #ffffff, #f3faff);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 32px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz::after {
+    content: "?";
+    position: absolute;
+    right: 20px;
+    top: -55px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 220px;
+    font-weight: 700;
+    color: rgba(84,189,232,.06);
+    pointer-events: none;
+}
+
+.quiz-top {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 25px;
+}
+
+.quiz-top h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.quiz-top p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.question {
+    position: relative;
+    z-index: 1;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.question h4 {
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    background: white;
+    border-radius: 9px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: .25s ease;
+}
+
+.option:hover {
+    border-color: var(--cyan);
+    background: #f3fbff;
+    transform: translateX(5px);
+}
+
+.option input {
+    accent-color: var(--blue);
+}
+
+.quiz-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.quiz-result {
+    display: none;
+    position: relative;
+    z-index: 1;
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.7;
+    animation: resultAppear .5s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.quiz-result.show {
+    display: block;
+}
+
+@keyframes resultAppear {
+    from { opacity: 0; transform: translateY(15px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.quiz-result.success {
+    background: #e5f8ee;
+    color: #116a48;
+    border: 1px solid #b9e8cf;
+}
+
+.quiz-result.failure {
+    background: #fff0f1;
+    color: #a73a49;
+    border: 1px solid #f0c5cb;
+}
+
+.complete-btn {
+    display: none;
+    margin-top: 16px;
+    background: var(--green);
+    color: white;
+    border: 0;
+    padding: 14px 19px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.complete-btn.show {
+    display: inline-flex;
+    animation: completePop .6s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes completePop {
+    0% { opacity: 0; transform: scale(.75) translateY(15px); }
+    65% { transform: scale(1.07) translateY(-3px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.complete-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(22,136,91,.22);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto 25px;
+    background: var(--dark);
+    border-radius: 20px;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    color: white;
+    animation: footerEntrance .8s both;
+}
+
+@keyframes footerEntrance {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.footer-brand {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #83d6f6;
+}
+
+.footer small {
+    display: block;
+    color: #92a9b8;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.next-link {
+    background: #2476a8;
+    color: white;
+    padding: 13px 18px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .3s ease;
+    text-align: center;
+}
+
+.next-link:hover {
+    background: #54bde8;
+    color: var(--dark);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(84,189,232,.2);
+}
+
+.next-link.locked {
+    opacity: .5;
+    pointer-events: none;
+    background: #344b5c;
+}
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity .8s cubic-bezier(.2,.8,.2,1),
+        transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-35px);
+    transition: .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(35px);
+    transition: .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 850px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        margin-top: 60px;
+    }
+
+    .hero-visual-wrap {
+        max-width: 570px;
+        width: 100%;
+        margin: auto;
+    }
+
+    .selector-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .event-timeline {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .playground {
+        grid-template-columns: 1fr;
+    }
+
+    .playground-controls {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        width: calc(100% - 24px);
+        padding: 12px;
+        min-height: 62px;
+    }
+
+    .brand {
+        font-size: 21px;
+    }
+
+    .nav-links {
+        gap: 3px;
+    }
+
+    .nav-links a {
+        font-size: 10px;
+        padding: 9px 8px;
+    }
+
+    .hero, .container {
+        width: calc(100% - 30px);
+    }
+
+    .hero {
+        margin: 55px auto 75px;
+    }
+
+    .hero h1 {
+        font-size: 46px;
+        letter-spacing: -2.5px;
+    }
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .browser-page {
+        padding: 27px 20px;
+        min-height: 280px;
+    }
+
+    .browser-page h3 {
+        font-size: 23px;
+    }
+
+    .float-label-one {
+        right: -5px;
+    }
+
+    .float-label-two {
+        left: -5px;
+    }
+
+    .lesson-section {
+        margin-bottom: 75px;
+    }
+
+    .definition {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+
+    .definition-visual {
+        min-height: 110px;
+    }
+
+    .tree-branches {
+        gap: 12px;
+    }
+
+    .tree-node {
+        font-size: 10px;
+        padding: 11px 5px;
+    }
+
+    .tree-child {
+        font-size: 8px;
+        padding: 9px 3px;
+    }
+
+    .selector-grid,
+    .concept-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .event-timeline {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .event-listener {
+        grid-template-columns: 1fr;
+    }
+
+    .playground-controls,
+    .playground-preview {
+        padding: 20px;
+    }
+
+    .preview-screen {
+        min-height: 240px;
+        padding: 25px 15px;
+    }
+
+    .quiz {
+        padding: 23px 18px;
+    }
+
+    .footer {
+        width: calc(100% - 24px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 23px;
+    }
+
+    .next-link {
+        width: 100%;
+    }
+}
+
+@media (max-width: 380px) {
+    .event-timeline {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 39px;
+    }
+
+    .nav-links a {
+        padding: 8px 6px;
+        font-size: 9px;
+    }
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+    .reveal, .reveal-left, .reveal-right {
+        opacity: 1;
+        transform: none;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="../../pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<div class="background-orb orb-one"></div>
+<div class="background-orb orb-two"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a href="../javascript.html" class="brand">CNF/</a>
+
+    <div class="nav-links">
+        <a href="../javascript.html">Course Home</a>
+        <a href="06-arrays-objects.html">Previous</a>
+        <a href="#lesson" class="nav-lesson">Lesson 07</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="lesson">
+
+    <div class="hero-content">
+        <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            JAVASCRIPT · LESSON 07
+        </div>
+
+        <h1>Control the <span>web page.</span></h1>
+
+        <p class="hero-description">
+            Learn how JavaScript communicates with HTML through the DOM.
+            Select elements, change content, create new elements, and respond
+            to user interactions using events.
+        </p>
+
+        <div class="hero-tags">
+            <span>DOM</span>
+            <span>SELECTORS</span>
+            <span>EVENTS</span>
+        </div>
+    </div>
+
+    <div class="hero-visual-wrap">
+
+        <div class="float-label float-label-one">
+            DOM OBJECT
+        </div>
+
+        <div class="browser" id="heroBrowser">
+            <div class="browser-bar">
+                <span class="browser-dot"></span>
+                <span class="browser-dot"></span>
+                <span class="browser-dot"></span>
+                <div class="browser-address">yourwebsite.com</div>
+            </div>
+
+            <div class="browser-page">
+                <div class="browser-label">LIVE DOM PREVIEW</div>
+                <h3 id="heroBrowserTitle">Your website, your rules.</h3>
+                <p id="heroBrowserText">
+                    JavaScript can update this content without reloading the page.
+                </p>
+                <button id="heroBrowserButton" type="button">
+                    Interact with DOM
+                </button>
+            </div>
+        </div>
+
+        <div class="float-label float-label-two">
+            document.querySelector()
+        </div>
+
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- SECTION 01 -->
+    <section class="lesson-section reveal">
+        <div class="section-heading">
+            <span class="section-number">01 / UNDERSTANDING</span>
+            <h2>What is the DOM?</h2>
+            <p>
+                The Document Object Model connects your HTML document
+                with JavaScript.
+            </p>
+        </div>
+
+        <div class="definition">
+            <div>
+                <h3>Document Object Model</h3>
+                <p>
+                    The DOM is a programming interface that represents an HTML
+                    document as a tree of objects. JavaScript uses this structure
+                    to access, modify, add, and remove elements on a webpage.
+                    When a browser loads HTML, it creates a DOM tree that
+                    JavaScript can interact with.
+                </p>
+            </div>
+
+            <div class="definition-visual">
+                <span>&lt;DOM /&gt;</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 02 -->
+    <section class="lesson-section reveal">
+        <div class="section-heading">
+            <span class="section-number">02 / STRUCTURE</span>
+            <h2>Understanding the DOM Tree</h2>
+            <p>
+                Every HTML element becomes a node in the DOM tree.
+                Elements can have parent, child, and sibling relationships.
+            </p>
+        </div>
+
+        <div class="dom-tree">
+            <div class="tree-root">document</div>
+            <div class="tree-connector"></div>
+
+            <div class="tree-branches">
+
+                <div class="tree-branch">
+                    <div class="tree-connector"></div>
+                    <div class="tree-node">head</div>
+                    <div class="tree-children">
+                        <div class="tree-child">title</div>
+                        <div class="tree-child">meta</div>
+                    </div>
+                </div>
+
+                <div class="tree-branch">
+                    <div class="tree-connector"></div>
+                    <div class="tree-node">body</div>
+                    <div class="tree-children">
+                        <div class="tree-child">h1</div>
+                        <div class="tree-child">p</div>
+                        <div class="tree-child">button</div>
+                        <div class="tree-child">div</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 03 -->
+    <section class="lesson-section reveal">
+        <div class="section-heading">
+            <span class="section-number">03 / SELECTORS</span>
+            <h2>Selecting HTML Elements</h2>
+            <p>
+                JavaScript provides several methods to find elements
+                inside the DOM.
+            </p>
+        </div>
+
+        <div class="selector-grid">
+
+            <div class="selector-card">
+                <code>getElementById()</code>
+                <h3>Select by ID</h3>
+                <p>Returns the element with the specified ID.</p>
+            </div>
+
+            <div class="selector-card">
+                <code>getElementsByClassName()</code>
+                <h3>Select by Class</h3>
+                <p>Returns a collection of elements with the same class.</p>
+            </div>
+
+            <div class="selector-card">
+                <code>getElementsByTagName()</code>
+                <h3>Select by Tag</h3>
+                <p>Finds elements using their HTML tag name.</p>
+            </div>
+
+            <div class="selector-card">
+                <code>querySelector()</code>
+                <h3>First CSS Match</h3>
+                <p>Returns the first element matching a CSS selector.</p>
+            </div>
+
+            <div class="selector-card">
+                <code>querySelectorAll()</code>
+                <h3>All CSS Matches</h3>
+                <p>Returns all matching elements in a NodeList.</p>
+            </div>
+
+            <div class="selector-card">
+                <code>document.body</code>
+                <h3>Access the Body</h3>
+                <p>Provides direct access to the document body element.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 04 -->
+    <section class="lesson-section reveal">
+        <div class="section-heading">
+            <span class="section-number">04 / MODIFICATION</span>
+            <h2>Modifying DOM Elements</h2>
+            <p>
+                Once an element is selected, JavaScript can change its
+                text, HTML, styles, and attributes.
+            </p>
+        </div>
+
+        <div class="concept-layout">
+
+            <div class="concept-card">
+                <h3>01. Change Text</h3>
+                <p>
+                    Use textContent to update the text inside an element.
+                </p>
+                <div class="code-line">
+                    document.querySelector("h1").textContent = "Hello!";
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <h3>02. Change HTML</h3>
+                <p>
+                    Use innerHTML to read or replace HTML markup.
+                    Only use trusted or safely handled content.
+                </p>
+                <div class="code-line">
+                    element.innerHTML = "&lt;strong&gt;Hello&lt;/strong&gt;";
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <h3>03. Change CSS</h3>
+                <p>
+                    Update inline styles using the style property.
+                </p>
+                <div class="code-line">
+                    element.style.color = "blue";
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <h3>04. Change Attributes</h3>
+                <p>
+                    Use setAttribute() to add or update HTML attributes.
+                </p>
+                <div class="code-line">
+                    element.setAttribute("title", "Welcome");
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 05 -->
+    <section class="lesson-section reveal">
+        <div class="section-heading">
+            <span class="section-number">05 / ELEMENT CREATION</span>
+            <h2>Creating New Elements</h2>
+            <p>
+                JavaScript can create new HTML elements and insert them
+                into the document.
+            </p>
+        </div>
+
+        <div class="concept-layout">
+
+            <div class="concept-card">
+                <h3>Create an Element</h3>
+                <p>
+                    createElement() creates a new HTML element in memory.
+                </p>
+                <div class="code-line">
+                    const newItem = document.createElement("p");<br>
+                    newItem.textContent = "New paragraph";
+                </div>
+            </div>
+
+            <div class="concept-card">
+                <h3>Add it to the Page</h3>
+                <p>
+                    appendChild() inserts a node inside another element.
+                </p>
+                <div class="code-line">
+                    document.body.appendChild(newItem);
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 06 -->
+    <section class="lesson-section reveal">
+        <div class="section-heading">
+            <span class="section-number">06 / INTERACTION</span>
+            <h2>JavaScript Events</h2>
+            <p>
+                Events allow JavaScript to respond when users interact
+                with a webpage.
+            </p>
+        </div>
+
+        <div class="event-timeline">
+
+            <div class="event-step">
+                <span>EVENT 01</span>
+                <h3>click</h3>
+                <p>Triggered when an element is clicked.</p>
+            </div>
+
+            <div class="event-step">
+                <span>EVENT 02</span>
+                <h3>mouseover</h3>
+                <p>Triggered when the pointer enters an element.</p>
+            </div>
+
+            <div class="event-step">
+                <span>EVENT 03</span>
+                <h3>keydown</h3>
+                <p>Triggered when a keyboard key is pressed.</p>
+            </div>
+
+            <div class="event-step">
+                <span>EVENT 04</span>
+                <h3>submit</h3>
+                <p>Triggered when a form is submitted.</p>
+            </div>
+
+            <div class="event-step">
+                <span>EVENT 05</span>
+                <h3>change</h3>
+                <p>Triggered when a form control value changes.</p>
+            </div>
+
+            <div class="event-step">
+                <span>EVENT 06</span>
+                <h3>input</h3>
+                <p>Triggered when the value of an input changes.</p>
+            </div>
+
+            <div class="event-step">
+                <span>EVENT 07</span>
+                <h3>load</h3>
+                <p>Triggered when a resource or page finishes loading.</p>
+            </div>
+
+            <div class="event-step">
+                <span>EVENT 08</span>
+                <h3>dblclick</h3>
+                <p>Triggered when an element is double-clicked.</p>
+            </div>
+
+        </div>
+
+        <div class="event-listener">
+            <div>
+                <h3>Event Listeners</h3>
+                <p>
+                    addEventListener() attaches an event handler to an element.
+                    It lets you run a function when a particular event occurs.
+                </p>
+            </div>
+
+            <div class="code-line">
+                const button = document.querySelector("button");<br><br>
+                button.addEventListener("click", function() {<br>
+                &nbsp;&nbsp;console.log("Button clicked!");<br>
+                });
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 07 -->
+    <section class="lesson-section reveal">
+        <div class="section-heading">
+            <span class="section-number">07 / PRACTICAL LAB</span>
+            <h2>Live DOM Playground</h2>
+            <p>
+                Change the values on the left and apply them to the live
+                webpage preview.
+            </p>
+        </div>
+
+        <div class="playground">
+
+            <div class="playground-controls">
+                <h3>DOM Controls</h3>
+                <p>Enter new values to modify the preview.</p>
+
+                <div class="control-group">
+                    <label for="headingInput">HEADING TEXT</label>
+                    <input type="text" id="headingInput" value="Welcome to JavaScript">
+                </div>
+
+                <div class="control-group">
+                    <label for="paragraphInput">PARAGRAPH TEXT</label>
+                    <input type="text" id="paragraphInput" value="This content was updated using the DOM.">
+                </div>
+
+                <div class="control-group">
+                    <label for="colorInput">HEADING COLOR</label>
+                    <input type="color" id="colorInput" value="#2476a8">
+                </div>
+
+                <div class="control-group">
+                    <label for="buttonInput">BUTTON TEXT</label>
+                    <input type="text" id="buttonInput" value="Click Me">
+                </div>
+
+                <div class="playground-actions">
+                    <button class="primary-btn" id="applyChanges" type="button">
+                        Apply DOM Changes
+                    </button>
+
+                    <button class="secondary-btn" id="resetPreview" type="button">
+                        Reset Preview
+                    </button>
+                </div>
+            </div>
+
+            <div class="playground-preview">
+                <div class="preview-top">
+                    <h3>Live Preview</h3>
+                    <span class="preview-status" id="previewStatus" aria-live="polite">
+                        ● READY
+                    </span>
+                </div>
+
+                <div class="preview-screen" id="previewScreen">
+                    <h2 id="previewHeading">Welcome to JavaScript</h2>
+                    <p id="previewParagraph">
+                        This content was updated using the DOM.
+                    </p>
+                    <button id="previewButton" type="button">Click Me</button>
+                </div>
+
+                <div class="playground-output" id="playgroundOutput" aria-live="polite">
+                    // Your DOM output will appear here.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 08 -->
+    <section class="lesson-section reveal">
+        <div class="section-heading">
+            <span class="section-number">08 / EVENT FLOW</span>
+            <h2>Event Bubbling</h2>
+            <p>
+                Event bubbling means an event starts at the target element
+                and then travels upward through its parent elements.
+            </p>
+        </div>
+
+        <div class="bubbling">
+
+            <div class="bubble-parent" id="bubbleParent">
+                <h3>Parent Element</h3>
+
+                <div class="bubble-child" id="bubbleChild">
+                    <h3>Child Element</h3>
+
+                    <button class="bubble-button" id="bubbleButton" type="button">
+                        Click This Button
+                    </button>
+                </div>
+            </div>
+
+            <div class="bubble-log" id="bubbleLog" aria-live="polite">
+                // Click the button to observe event bubbling.
+            </div>
+
+            <p class="bubble-explanation">
+                The event travels from the clicked button to its child container
+                and then to the parent container. You can stop this behavior
+                using event.stopPropagation().
+            </p>
+
+        </div>
+
+        <div class="concept-card" style="margin-top:18px;">
+            <h3>Stopping Event Propagation</h3>
+            <p>
+                stopPropagation() prevents the event from continuing to
+                travel through the DOM tree.
+            </p>
+            <div class="code-line">
+                button.addEventListener("click", function(event) {<br>
+                &nbsp;&nbsp;event.stopPropagation();<br>
+                });
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 09 -->
+    <section class="lesson-section reveal">
+        <div class="section-heading">
+            <span class="section-number">09 / KNOWLEDGE CHECK</span>
+            <h2>Test Your Knowledge</h2>
+            <p>
+                Answer the questions to check your understanding of
+                the DOM and events.
+            </p>
+        </div>
+
+        <div class="quiz">
+
+            <div class="quiz-top">
+                <h3>Lesson 07 Quiz</h3>
+                <p>Answer all three questions. Score at least 2 to pass.</p>
+            </div>
+
+            <div class="question">
+                <h4>1. What does DOM stand for?</h4>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="a">
+                    Data Object Management
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="b">
+                    Document Object Model
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="c">
+                    Digital Output Method
+                </label>
+            </div>
+
+            <div class="question">
+                <h4>2. Which method selects the first matching CSS selector?</h4>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="a">
+                    querySelector()
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="b">
+                    getElementsByClassName()
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="c">
+                    createElement()
+                </label>
+            </div>
+
+            <div class="question">
+                <h4>3. Which method attaches an event handler?</h4>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="a">
+                    appendChild()
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="b">
+                    setAttribute()
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="c">
+                    addEventListener()
+                </label>
+            </div>
+
+            <div class="quiz-actions">
+                <button class="primary-btn" id="checkQuiz" type="button">
+                    Check Answers
+                </button>
+
+                <button class="secondary-btn" id="resetQuiz" type="button">
+                    Reset Quiz
+                </button>
+            </div>
+
+            <div class="quiz-result" id="quizResult" aria-live="polite"></div>
+
+            <button class="complete-btn" id="completeLesson" type="button">
+                Complete Lesson →
+            </button>
+
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div>
+        <div class="footer-brand">CNF/</div>
+        <small>JavaScript Learning Path · Lesson 07</small>
+    </div>
+
+    <a href="08-async-final-project.html" class="next-link locked" id="nextLesson">
+        Complete Lesson to Unlock →
+    </a>
+</footer>
+
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+<script>
+/* =========================
+   HERO INTERACTION
+========================= */
+
+const heroBrowserButton = document.getElementById("heroBrowserButton");
+const heroBrowserTitle = document.getElementById("heroBrowserTitle");
+const heroBrowserText = document.getElementById("heroBrowserText");
+
+heroBrowserButton.addEventListener("click", function() {
+    heroBrowserTitle.textContent = "DOM interaction works!";
+    heroBrowserText.textContent =
+        "You just changed this browser preview using a JavaScript event listener.";
+
+    heroBrowserButton.textContent = "DOM Updated ✓";
+});
+
+/* =========================
+   PLAYGROUND
+========================= */
+
+const headingInput = document.getElementById("headingInput");
+const paragraphInput = document.getElementById("paragraphInput");
+const colorInput = document.getElementById("colorInput");
+const buttonInput = document.getElementById("buttonInput");
+
+const previewHeading = document.getElementById("previewHeading");
+const previewParagraph = document.getElementById("previewParagraph");
+const previewButton = document.getElementById("previewButton");
+const previewStatus = document.getElementById("previewStatus");
+const playgroundOutput = document.getElementById("playgroundOutput");
+
+const defaultValues = {
+    heading: "Welcome to JavaScript",
+    paragraph: "This content was updated using the DOM.",
+    color: "#2476a8",
+    button: "Click Me"
+};
+
+document.getElementById("applyChanges").addEventListener("click", function() {
+
+    const heading = headingInput.value.trim() || defaultValues.heading;
+    const paragraph = paragraphInput.value.trim() || defaultValues.paragraph;
+    const buttonText = buttonInput.value.trim() || defaultValues.button;
+
+    previewHeading.textContent = heading;
+    previewParagraph.textContent = paragraph;
+    previewHeading.style.color = colorInput.value;
+    previewButton.textContent = buttonText;
+
+    previewStatus.textContent = "● UPDATED";
+    playgroundOutput.textContent =
+        "// DOM successfully updated: heading, paragraph, color and button.";
+
+    previewHeading.animate(
+        [
+            { opacity: .3, transform: "translateY(12px)" },
+            { opacity: 1, transform: "translateY(0)" }
+        ],
+        { duration: 450, easing: "ease-out" }
+    );
+});
+
+document.getElementById("resetPreview").addEventListener("click", function() {
+
+    headingInput.value = defaultValues.heading;
+    paragraphInput.value = defaultValues.paragraph;
+    colorInput.value = defaultValues.color;
+    buttonInput.value = defaultValues.button;
+
+    previewHeading.textContent = defaultValues.heading;
+    previewParagraph.textContent = defaultValues.paragraph;
+    previewHeading.style.color = defaultValues.color;
+    previewButton.textContent = defaultValues.button;
+
+    previewStatus.textContent = "● RESET";
+    playgroundOutput.textContent = "// Preview restored to default values.";
+});
+
+previewButton.addEventListener("click", function() {
+    playgroundOutput.textContent =
+        "// Preview button clicked. The click event was detected.";
+});
+
+/* =========================
+   EVENT BUBBLING
+========================= */
+
+const bubbleParent = document.getElementById("bubbleParent");
+const bubbleChild = document.getElementById("bubbleChild");
+const bubbleButton = document.getElementById("bubbleButton");
+const bubbleLog = document.getElementById("bubbleLog");
+
+function addBubbleMessage(message) {
+    const line = document.createElement("div");
+    line.textContent = "→ " + message;
+    bubbleLog.appendChild(line);
+}
+
+bubbleButton.addEventListener("click", function() {
+    bubbleLog.textContent = "";
+    addBubbleMessage("Button event triggered.");
+});
+
+bubbleChild.addEventListener("click", function() {
+    addBubbleMessage("Child element received the event.");
+});
+
+bubbleParent.addEventListener("click", function() {
+    addBubbleMessage("Parent element received the event.");
+});
+
+/* =========================
+   QUIZ SYSTEM
+========================= */
+
+const quizAnswers = {
+    q1: "b",
+    q2: "a",
+    q3: "c"
+};
+
+const quizResult = document.getElementById("quizResult");
+const completeButton = document.getElementById("completeLesson");
+const nextLesson = document.getElementById("nextLesson");
+
+let quizPassed = false;
+
+function unlockNextLesson() {
+    nextLesson.classList.remove("locked");
+    nextLesson.textContent = "Next Lesson: Async JS & Final Project →";
+}
+
+function restoreCompletion() {
+    const completed =
+        localStorage.getItem("javascript-lesson-07-completed") === "true";
+
+    if (completed) {
+        unlockNextLesson();
+        completeButton.classList.add("show");
+        completeButton.textContent = "Lesson Completed ✓";
+        completeButton.disabled = true;
+        completeButton.style.background = "#16885b";
+        quizPassed = true;
+    }
+}
+
+document.getElementById("checkQuiz").addEventListener("click", function() {
+
+    let score = 0;
+    let unanswered = false;
+
+    for (const question in quizAnswers) {
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if (!selected) {
+            unanswered = true;
+            continue;
+        }
+
+        if (selected.value === quizAnswers[question]) {
+            score++;
+        }
+    }
+
+    if (unanswered) {
+        quizResult.className = "quiz-result show failure";
+        quizResult.textContent =
+            "Please answer all three questions before checking your score.";
+        completeButton.classList.remove("show");
+        return;
+    }
+
+    if (score >= 2) {
+        quizPassed = true;
+
+        quizResult.className = "quiz-result show success";
+        quizResult.textContent =
+            "Excellent! You scored " + score + "/3. You passed this lesson. Complete the lesson to unlock the next one.";
+
+        if (localStorage.getItem("javascript-lesson-07-completed") !== "true") {
+            completeButton.classList.add("show");
+            completeButton.disabled = false;
+            completeButton.textContent = "Complete Lesson →";
+        }
+
+    } else {
+        quizPassed = false;
+
+        quizResult.className = "quiz-result show failure";
+        quizResult.textContent =
+            "You scored " + score + "/3. Review the lesson and try again.";
+
+        completeButton.classList.remove("show");
+    }
+});
+
+document.getElementById("resetQuiz").addEventListener("click", function() {
+
+    if (localStorage.getItem("javascript-lesson-07-completed") === "true") {
+        return;
+    }
+
+    document.querySelectorAll('input[name="q1"], input[name="q2"], input[name="q3"]')
+        .forEach(input => input.checked = false);
+
+    quizResult.className = "quiz-result";
+    quizResult.textContent = "";
+
+    completeButton.classList.remove("show");
+    quizPassed = false;
+});
+
+completeButton.addEventListener("click", function() {
+
+    if (!quizPassed) return;
+
+    localStorage.setItem("javascript-lesson-07-completed", "true");
+
+    completeButton.textContent = "Lesson Completed ✓";
+    completeButton.disabled = true;
+    completeButton.style.background = "#16885b";
+
+    unlockNextLesson();
+
+    quizResult.className = "quiz-result show success";
+    quizResult.textContent =
+        "Lesson 07 completed successfully! The next lesson is now unlocked.";
+});
+
+restoreCompletion();
+
+/* =========================
+   SCROLL REVEAL ANIMATIONS
+========================= */
+
+const revealElements = document.querySelectorAll(
+    ".reveal, .reveal-left, .reveal-right"
+);
+
+if ("IntersectionObserver" in window) {
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+
+        });
+
+    }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -35px 0px"
+    });
+
+    revealElements.forEach(element => {
+        revealObserver.observe(element);
+    });
+
+} else {
+    revealElements.forEach(element => {
+        element.classList.add("visible");
+    });
+}
+
+/* =========================
+   STAGGERED CARD REVEAL
+========================= */
+
+const animatedGroups = document.querySelectorAll(
+    ".selector-grid, .concept-layout, .event-timeline"
+);
+
+if ("IntersectionObserver" in window) {
+
+    const groupObserver = new IntersectionObserver((entries, observer) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+                entry.target.classList.add("group-visible");
+                observer.unobserve(entry.target);
+            }
+
+        });
+
+    }, { threshold: 0.1 });
+
+    animatedGroups.forEach(group => {
+        groupObserver.observe(group);
+    });
+}
+
+/* =========================
+   BUTTON RIPPLE EFFECT
+========================= */
+
+document.querySelectorAll(
+    ".primary-btn, .secondary-btn, .complete-btn, .bubble-button"
+).forEach(button => {
+
+    button.addEventListener("click", function() {
+
+        this.animate(
+            [
+                { transform: "scale(1)" },
+                { transform: "scale(.95)" },
+                { transform: "scale(1)" }
+            ],
+            {
+                duration: 260,
+                easing: "ease-out"
+            }
+        );
+
+    });
+
+});
+</script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

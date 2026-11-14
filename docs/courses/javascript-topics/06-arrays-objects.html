@@ -1,0 +1,2278 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 06 — Arrays & Objects | CNF/</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #100b0d;
+    --surface: #1b1215;
+    --surface2: #27191e;
+    --wine: #8e2945;
+    --rose: #e9a1ad;
+    --gold: #d9b47a;
+    --light: #fff2ee;
+    --muted: #b49da2;
+    --border: rgba(233,161,173,.17);
+    --green: #8fe0b0;
+    --red: #ff9caa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--light);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* NAVIGATION */
+
+.navbar {
+    min-height: 72px;
+    padding: 0 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: rgba(20,13,16,.94);
+    backdrop-filter: blur(14px);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    animation: navDrop .8s ease both;
+}
+
+.brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    color: var(--rose);
+    letter-spacing: -1px;
+    transition: .3s;
+}
+
+.brand:hover {
+    color: var(--gold);
+    text-shadow: 0 0 18px rgba(217,180,122,.35);
+}
+
+.nav-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-link {
+    border: 1px solid var(--border);
+    padding: 8px 13px;
+    border-radius: 7px;
+    color: var(--muted);
+    font-size: 12px;
+    transition: .3s;
+}
+
+.nav-link:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: rgba(217,180,122,.07);
+    transform: translateY(-3px);
+}
+
+/* HERO */
+
+.hero {
+    min-height: 570px;
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    align-items: center;
+    gap: 40px;
+    padding: 75px 8%;
+    background:
+        linear-gradient(110deg, rgba(16,11,13,.98) 25%, rgba(64,20,35,.8)),
+        radial-gradient(circle at 85% 50%, #8e2945, transparent 50%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "{}";
+    position: absolute;
+    right: 6%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(170px, 25vw, 340px);
+    font-weight: bold;
+    color: rgba(233,161,173,.055);
+    pointer-events: none;
+}
+
+.hero-content {
+    max-width: 850px;
+    position: relative;
+    z-index: 2;
+    animation: heroEnter .9s .15s ease both;
+}
+
+.hero-label {
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: .99;
+    letter-spacing: -5px;
+    margin-bottom: 25px;
+}
+
+.hero h1 span {
+    color: var(--rose);
+    display: block;
+}
+
+.hero p {
+    max-width: 590px;
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.hero-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.hero-tags span {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.035);
+    color: var(--rose);
+    font-size: 11px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    transition: .3s;
+}
+
+.hero-tags span:hover {
+    background: rgba(142,41,69,.25);
+    border-color: var(--rose);
+    transform: translateY(-4px);
+}
+
+/* FLOATING HERO DATA BOX */
+
+.hero-visual-wrap {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: dataFloat 5s ease-in-out infinite;
+}
+
+.hero-data-card {
+    width: min(100%, 390px);
+    padding: 23px;
+    border: 1px solid rgba(233,161,173,.3);
+    border-radius: 15px;
+    background: linear-gradient(145deg, rgba(43,22,30,.96), rgba(24,14,18,.96));
+    box-shadow: 0 25px 70px rgba(0,0,0,.4), 0 0 45px rgba(142,41,69,.13);
+    position: relative;
+    overflow: hidden;
+    transform: rotate(2deg);
+    transition: .4s;
+}
+
+.hero-data-card:hover {
+    transform: rotate(0deg) scale(1.035);
+    border-color: var(--gold);
+    box-shadow: 0 30px 75px rgba(0,0,0,.5), 0 0 35px rgba(217,180,122,.12);
+}
+
+.hero-data-card::before {
+    content: "";
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background: rgba(142,41,69,.15);
+    filter: blur(35px);
+    right: -70px;
+    top: -80px;
+}
+
+.visual-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.visual-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.visual-dots i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--rose);
+    opacity: .8;
+}
+
+.visual-dots i:nth-child(2) {
+    background: var(--gold);
+}
+
+.visual-dots i:nth-child(3) {
+    background: var(--green);
+}
+
+.visual-code {
+    padding: 16px;
+    background: rgba(8,5,7,.55);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--rose);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.visual-code .gold {
+    color: var(--gold);
+}
+
+.visual-code .green {
+    color: var(--green);
+}
+
+.visual-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 13px;
+}
+
+.visual-type {
+    padding: 11px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    text-align: center;
+    animation: softPulse 3s ease-in-out infinite;
+}
+
+.visual-type:nth-child(2) {
+    animation-delay: 1.5s;
+}
+
+.visual-type strong {
+    display: block;
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+}
+
+.visual-type small {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.visual-caption {
+    margin-top: 15px;
+    text-align: center;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+/* OVERVIEW */
+
+.data-overview {
+    max-width: 1100px;
+    margin: -35px auto 0;
+    padding: 0 22px;
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.overview-item {
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    border-radius: 9px;
+    transition: .35s;
+    animation: cardRise .8s both;
+}
+
+.overview-item:nth-child(2) {
+    animation-delay: .12s;
+}
+
+.overview-item:nth-child(3) {
+    animation-delay: .24s;
+}
+
+.overview-item:hover {
+    transform: translateY(-7px);
+    border-color: var(--rose);
+    box-shadow: 0 15px 35px rgba(0,0,0,.2);
+}
+
+.overview-item small {
+    color: var(--muted);
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.overview-item strong {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    color: var(--rose);
+}
+
+/* MAIN CONTENT */
+
+main {
+    max-width: 1100px;
+    padding: 0 22px 100px;
+    margin: auto;
+}
+
+.section-heading {
+    margin: 85px 0 28px;
+    position: relative;
+    animation: sectionEnter .8s ease both;
+}
+
+.section-number {
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.section-heading h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 4vw, 39px);
+    letter-spacing: -1.5px;
+    transition: .3s;
+}
+
+.section-heading h2:hover {
+    color: var(--rose);
+    transform: translateX(5px);
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 8px;
+    max-width: 690px;
+}
+
+/* INTRO */
+
+.database-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    animation: cardRise .8s both;
+}
+
+.database-text {
+    padding: 32px;
+    background: var(--surface);
+}
+
+.database-text h3 {
+    font-size: 23px;
+    margin-bottom: 12px;
+    color: var(--rose);
+}
+
+.database-text p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.database-visual {
+    padding: 25px;
+    background: #211318;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 9px;
+}
+
+.data-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 10px 13px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    transition: .3s;
+    animation: rowSlide .7s both;
+}
+
+.data-row:nth-child(2) { animation-delay: .1s; }
+.data-row:nth-child(3) { animation-delay: .2s; }
+.data-row:nth-child(4) { animation-delay: .3s; }
+
+.data-row:hover {
+    transform: translateX(7px);
+    background: rgba(142,41,69,.15);
+    border-color: var(--rose);
+}
+
+.data-row span:first-child {
+    color: var(--gold);
+}
+
+.data-row span:last-child {
+    color: var(--rose);
+}
+
+/* TWO COLUMN PANELS */
+
+.array-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.lesson-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 25px;
+    transition: .35s;
+    animation: cardRise .8s both;
+}
+
+.lesson-panel:hover {
+    transform: translateY(-6px);
+    border-color: rgba(233,161,173,.5);
+    box-shadow: 0 18px 40px rgba(0,0,0,.2);
+}
+
+.lesson-panel h3 {
+    font-size: 19px;
+    margin-bottom: 12px;
+}
+
+.lesson-panel p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 17px;
+}
+
+.code {
+    padding: 17px;
+    background: #0d090b;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--rose);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    line-height: 2;
+    overflow-x: auto;
+    white-space: pre;
+    transition: .3s;
+}
+
+.code:hover {
+    border-color: rgba(217,180,122,.45);
+    box-shadow: inset 0 0 20px rgba(142,41,69,.08);
+}
+
+.gold {
+    color: var(--gold);
+}
+
+.green {
+    color: var(--green);
+}
+
+/* ARRAY VISUALIZER */
+
+.array-board {
+    background: #170e11;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    overflow: hidden;
+    animation: cardRise .8s both;
+}
+
+.board-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+}
+
+.array-cells {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.array-cell {
+    min-width: 90px;
+    text-align: center;
+    border: 1px solid rgba(233,161,173,.35);
+    border-radius: 7px;
+    overflow: hidden;
+    transition: .3s;
+    animation: cellPop .6s both;
+}
+
+.array-cell:nth-child(2) { animation-delay: .1s; }
+.array-cell:nth-child(3) { animation-delay: .2s; }
+.array-cell:nth-child(4) { animation-delay: .3s; }
+
+.array-cell:hover {
+    transform: translateY(-7px) scale(1.04);
+    border-color: var(--gold);
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+}
+
+.array-cell .index {
+    padding: 6px;
+    background: #46202c;
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+}
+
+.array-cell .value {
+    padding: 16px 8px;
+    color: var(--rose);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+}
+
+.index-note {
+    margin-top: 17px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* METHODS */
+
+.methods-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 13px;
+}
+
+.method-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 19px;
+    transition: .35s;
+    animation: cardRise .7s both;
+}
+
+.method-card:hover {
+    transform: translateY(-7px) scale(1.015);
+    border-color: var(--gold);
+    box-shadow: 0 14px 30px rgba(0,0,0,.22);
+}
+
+.method-card code {
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+}
+
+.method-card p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 9px;
+    margin-bottom: 12px;
+}
+
+.method-card .code {
+    font-size: 11px;
+}
+
+/* OBJECTS */
+
+.object-layout {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    gap: 20px;
+}
+
+.object-card {
+    padding: 25px;
+    background: linear-gradient(150deg, #29151d, #1b1215);
+    border: 1px solid rgba(217,180,122,.3);
+    border-radius: 12px;
+    transition: .35s;
+    animation: cardRise .8s both;
+}
+
+.object-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(0,0,0,.25);
+}
+
+.object-card h3 {
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+.object-property {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    transition: .3s;
+}
+
+.object-property:hover {
+    padding-left: 8px;
+    background: rgba(255,255,255,.025);
+}
+
+.object-property span:first-child {
+    color: var(--rose);
+}
+
+.object-property span:last-child {
+    color: var(--green);
+}
+
+.object-explanation {
+    padding: 25px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: .35s;
+    animation: cardRise .8s .15s both;
+}
+
+.object-explanation:hover {
+    border-color: var(--rose);
+    transform: translateY(-5px);
+}
+
+.object-explanation h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.object-explanation p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.object-explanation .code {
+    margin-top: 18px;
+}
+
+/* TABLE */
+
+.methods-table {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    animation: cardRise .8s both;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 580px;
+}
+
+th, td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 13px;
+}
+
+th {
+    background: #301922;
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+}
+
+td {
+    background: var(--surface);
+    color: var(--muted);
+    transition: .25s;
+}
+
+td:first-child {
+    color: var(--rose);
+    font-family: 'DM Mono', monospace;
+}
+
+tbody tr {
+    transition: .3s;
+}
+
+tbody tr:hover td {
+    background: #2b1920;
+    color: var(--light);
+}
+
+/* LAB */
+
+.lab {
+    padding: 28px;
+    border: 1px solid rgba(217,180,122,.3);
+    border-radius: 13px;
+    background: linear-gradient(140deg, #25151b, #160e11);
+    animation: cardRise .8s both;
+}
+
+.lab-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 23px;
+}
+
+.lab-tab {
+    border: 1px solid var(--border);
+    padding: 9px 15px;
+    background: transparent;
+    color: var(--muted);
+    border-radius: 6px;
+    font-size: 12px;
+    transition: .3s;
+}
+
+.lab-tab:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+}
+
+.lab-tab.active {
+    background: var(--wine);
+    color: white;
+    border-color: var(--rose);
+    box-shadow: 0 5px 18px rgba(142,41,69,.25);
+}
+
+.lab-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.lab-content[hidden] {
+    display: none !important;
+}
+
+.lab-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.lab-controls label {
+    color: var(--gold);
+    font-size: 12px;
+}
+
+.lab-controls input {
+    width: 100%;
+    padding: 13px;
+    background: #100b0d;
+    border: 1px solid var(--border);
+    color: white;
+    border-radius: 7px;
+    outline: none;
+    transition: .3s;
+}
+
+.lab-controls input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(217,180,122,.08);
+}
+
+.lab-button {
+    background: var(--gold);
+    color: #20130e;
+    border: none;
+    border-radius: 7px;
+    padding: 12px;
+    font-weight: 800;
+    transition: .3s;
+}
+
+.lab-button:hover {
+    background: var(--rose);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(142,41,69,.2);
+}
+
+.lab-reset {
+    background: transparent;
+    color: var(--rose);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 11px;
+    transition: .3s;
+}
+
+.lab-reset:hover {
+    border-color: var(--rose);
+    background: rgba(142,41,69,.12);
+    transform: translateY(-2px);
+}
+
+.lab-output {
+    background: #0d090b;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 20px;
+    min-height: 190px;
+    transition: .3s;
+}
+
+.lab-output:hover {
+    border-color: rgba(217,180,122,.4);
+}
+
+.lab-output small {
+    display: block;
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.lab-output pre {
+    color: var(--rose);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.lab-result {
+    margin-top: 15px;
+    padding: 12px;
+    color: var(--green);
+    background: rgba(143,224,176,.07);
+    border: 1px solid rgba(143,224,176,.2);
+    border-radius: 6px;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+/* QUIZ */
+
+.quiz {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    animation: cardRise .8s both;
+    transition: .3s;
+}
+
+.quiz:hover {
+    border-color: rgba(233,161,173,.35);
+}
+
+.quiz-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.quiz-heading h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 23px;
+}
+
+.quiz-heading span {
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+}
+
+.question {
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    animation: rowSlide .7s both;
+}
+
+.question h4 {
+    margin-bottom: 13px;
+    font-size: 14px;
+}
+
+.option {
+    display: block;
+    padding: 11px 13px;
+    margin: 7px 0;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: rgba(255,255,255,.025);
+    color: var(--muted);
+    font-size: 13px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.option:hover {
+    border-color: var(--rose);
+    color: white;
+    transform: translateX(5px);
+    background: rgba(142,41,69,.1);
+}
+
+.option:has(input:checked) {
+    border-color: var(--gold);
+    background: rgba(217,180,122,.08);
+    color: var(--light);
+}
+
+.option input {
+    accent-color: var(--wine);
+    margin-right: 9px;
+}
+
+.quiz-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.quiz-submit {
+    padding: 12px 20px;
+    border: none;
+    background: var(--wine);
+    color: white;
+    border-radius: 7px;
+    font-weight: 800;
+    transition: .3s;
+}
+
+.quiz-submit:hover {
+    background: #aa3556;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(142,41,69,.25);
+}
+
+.quiz-reset {
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    color: var(--rose);
+    background: transparent;
+    border-radius: 7px;
+    transition: .3s;
+}
+
+.quiz-reset:hover {
+    border-color: var(--rose);
+    transform: translateY(-3px);
+}
+
+.quiz-result {
+    display: none;
+    padding: 15px;
+    margin-top: 18px;
+    border-radius: 7px;
+    font-size: 13px;
+    animation: resultReveal .4s ease both;
+}
+
+.quiz-result.pass {
+    display: block;
+    color: var(--green);
+    border: 1px solid rgba(143,224,176,.3);
+    background: rgba(143,224,176,.07);
+}
+
+.quiz-result.fail {
+    display: block;
+    color: var(--red);
+    border: 1px solid rgba(255,156,170,.25);
+    background: rgba(255,156,170,.06);
+}
+
+/* COMPLETION */
+
+.completion-panel {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: rgba(217,180,122,.045);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.completion-panel p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.complete-button {
+    padding: 12px 18px;
+    border: 1px solid var(--gold);
+    border-radius: 7px;
+    background: var(--gold);
+    color: #1c1110;
+    font-weight: 800;
+    font-size: 12px;
+    transition: .3s;
+}
+
+.complete-button:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.complete-button:not(:disabled):hover {
+    transform: translateY(-3px);
+    background: var(--rose);
+    border-color: var(--rose);
+    box-shadow: 0 8px 22px rgba(142,41,69,.2);
+}
+
+.complete-button.completed {
+    background: rgba(143,224,176,.12);
+    color: var(--green);
+    border-color: rgba(143,224,176,.4);
+    cursor: default;
+}
+
+/* FOOTER */
+
+.footer {
+    margin-top: 80px;
+    border-top: 1px solid var(--border);
+    padding: 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    animation: sectionEnter .8s both;
+}
+
+.footer-brand {
+    color: var(--rose);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.footer small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.next-link {
+    padding: 12px 17px;
+    border-radius: 7px;
+    background: var(--gold);
+    color: #1c1110;
+    font-size: 12px;
+    font-weight: 800;
+    opacity: .35;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.next-link.unlocked {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.next-link.unlocked:hover {
+    transform: translateY(-4px);
+    background: var(--rose);
+    box-shadow: 0 10px 25px rgba(142,41,69,.25);
+}
+
+/* ANIMATION KEYFRAMES */
+
+@keyframes navDrop {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroEnter {
+    from { opacity: 0; transform: translateX(-35px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes dataFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+@keyframes softPulse {
+    0%, 100% { box-shadow: 0 0 0 rgba(217,180,122,0); }
+    50% { box-shadow: 0 0 18px rgba(217,180,122,.12); }
+}
+
+@keyframes cardRise {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sectionEnter {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rowSlide {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes cellPop {
+    from { opacity: 0; transform: scale(.85); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes resultReveal {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 850px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 45px;
+        padding: 65px 7%;
+    }
+
+    .hero-content {
+        max-width: 700px;
+    }
+
+    .hero-visual-wrap {
+        max-width: 420px;
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media(max-width: 750px) {
+    .database-intro,
+    .array-layout,
+    .object-layout,
+    .lab-content {
+        grid-template-columns: 1fr;
+    }
+
+    .methods-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .data-overview {
+        grid-template-columns: 1fr;
+        margin-top: 20px;
+    }
+}
+
+@media(max-width: 500px) {
+    .navbar {
+        padding: 0 4%;
+        min-height: 65px;
+    }
+
+    .brand {
+        font-size: 21px;
+    }
+
+    .nav-actions {
+        gap: 6px;
+    }
+
+    .nav-link {
+        padding: 7px 8px;
+        font-size: 10px;
+    }
+
+    .hero {
+        padding: 55px 6%;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .hero-data-card {
+        padding: 17px;
+    }
+
+    .methods-grid {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .lab, .quiz {
+        padding: 18px;
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .completion-panel {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* REDUCED MOTION ACCESSIBILITY */
+
+@media(prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="../../pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="#" class="brand">CNF/</a>
+
+    <div class="nav-actions">
+        <a href="../javascript.html" target="_blank" class="nav-link">Course Home ↗</a>
+        <a href="05-functions.html" class="nav-link">← Previous</a>
+    </div>
+</nav>
+
+<header class="hero">
+
+    <div class="hero-content">
+        <div class="hero-label">JAVASCRIPT / CHAPTER 06</div>
+
+        <h1>
+            Organize your
+            <span>data better.</span>
+        </h1>
+
+        <p>
+            Real applications work with collections of information.
+            Learn how arrays store lists and objects organize related
+            information into meaningful properties and values.
+        </p>
+
+        <div class="hero-tags">
+            <span>ARRAYS</span>
+            <span>OBJECTS</span>
+            <span>DATA STRUCTURES</span>
+            <span>LEVEL 06</span>
+        </div>
+    </div>
+
+    <div class="hero-visual-wrap">
+        <div class="hero-data-card">
+
+            <div class="visual-card-top">
+                <span>DATA STRUCTURES.JS</span>
+                <div class="visual-dots">
+                    <i></i><i></i><i></i>
+                </div>
+            </div>
+
+            <div class="visual-code">
+                <span class="gold">const</span> fruits = [<br>
+                &nbsp;&nbsp;<span class="green">"Apple"</span>,<br>
+                &nbsp;&nbsp;<span class="green">"Mango"</span>,<br>
+                &nbsp;&nbsp;<span class="green">"Orange"</span><br>
+                ];<br><br>
+                <span class="gold">const</span> student = {<br>
+                &nbsp;&nbsp;name: <span class="green">"Alex"</span>,<br>
+                &nbsp;&nbsp;age: <span class="gold">20</span><br>
+                };
+            </div>
+
+            <div class="visual-bottom">
+                <div class="visual-type">
+                    <strong>[ ] ARRAY</strong>
+                    <small>Ordered values</small>
+                </div>
+                <div class="visual-type">
+                    <strong>{ } OBJECT</strong>
+                    <small>Key-value pairs</small>
+                </div>
+            </div>
+
+            <div class="visual-caption">STRUCTURE YOUR DATA · BUILD BETTER APPS</div>
+
+        </div>
+    </div>
+
+</header>
+
+<div class="data-overview">
+    <div class="overview-item">
+        <small>DATA STRUCTURE 01</small>
+        <strong>Arrays [ ]</strong>
+    </div>
+
+    <div class="overview-item">
+        <small>DATA STRUCTURE 02</small>
+        <strong>Objects { }</strong>
+    </div>
+
+    <div class="overview-item">
+        <small>CORE CONCEPT</small>
+        <strong>Organized Data</strong>
+    </div>
+</div>
+
+<main>
+
+    <section class="section-heading">
+        <div class="section-number">01 / INTRODUCTION</div>
+        <h2>Why do we need data structures?</h2>
+        <p>
+            Understand why JavaScript needs arrays and objects to manage
+            information efficiently.
+        </p>
+    </section>
+
+    <div class="database-intro">
+        <div class="database-text">
+            <h3>Think like a developer.</h3>
+            <p>
+                Imagine building a student management system. You may
+                need to store hundreds of student names, marks, emails
+                and other details. Creating separate variables for
+                every value would become difficult. Arrays and objects
+                provide a structured way to manage that data.
+            </p>
+        </div>
+
+        <div class="database-visual">
+            <div class="data-row">
+                <span>studentName</span>
+                <span>Alex</span>
+            </div>
+            <div class="data-row">
+                <span>studentAge</span>
+                <span>20</span>
+            </div>
+            <div class="data-row">
+                <span>studentCourse</span>
+                <span>JavaScript</span>
+            </div>
+            <div class="data-row">
+                <span>studentActive</span>
+                <span>true</span>
+            </div>
+        </div>
+    </div>
+
+    <section class="section-heading">
+        <div class="section-number">02 / ARRAYS</div>
+        <h2>Meet the Array</h2>
+        <p>
+            An array stores multiple values in a single variable.
+            Each value has a position called an index.
+        </p>
+    </section>
+
+    <div class="array-layout">
+        <div class="lesson-panel">
+            <h3>Creating an Array</h3>
+            <p>
+                Square brackets are used to create an array. Values are
+                separated by commas.
+            </p>
+
+            <div class="code"><span class="gold">const</span> fruits = [
+  "Apple",
+  "Mango",
+  "Orange",
+  "Banana"
+];
+
+console.log(fruits);</div>
+        </div>
+
+        <div class="lesson-panel">
+            <h3>Accessing Array Values</h3>
+            <p>
+                Array indexing starts from zero. The first value is
+                at index 0, not index 1.
+            </p>
+
+            <div class="code"><span class="gold">const</span> fruits = [
+  "Apple",
+  "Mango",
+  "Orange"
+];
+
+console.log(fruits[0]);
+// Apple
+
+console.log(fruits[1]);
+// Mango</div>
+        </div>
+    </div>
+
+    <section class="section-heading">
+        <div class="section-number">03 / VISUAL INDEXING</div>
+        <h2>How array indexes work</h2>
+        <p>
+            Each box represents one position in an array.
+            The index tells JavaScript where a value is stored.
+        </p>
+    </section>
+
+    <div class="array-board">
+        <div class="board-top">
+            <span>ARRAY: fruits</span>
+            <span>4 ELEMENTS</span>
+        </div>
+
+        <div class="array-cells">
+            <div class="array-cell">
+                <div class="index">INDEX 0</div>
+                <div class="value">Apple</div>
+            </div>
+
+            <div class="array-cell">
+                <div class="index">INDEX 1</div>
+                <div class="value">Mango</div>
+            </div>
+
+            <div class="array-cell">
+                <div class="index">INDEX 2</div>
+                <div class="value">Orange</div>
+            </div>
+
+            <div class="array-cell">
+                <div class="index">INDEX 3</div>
+                <div class="value">Banana</div>
+            </div>
+        </div>
+
+        <div class="index-note">
+            JavaScript arrays are zero-indexed. The first element is always at index 0.
+        </div>
+    </div>
+
+    <section class="section-heading">
+        <div class="section-number">04 / ARRAY METHODS</div>
+        <h2>Work with Arrays</h2>
+        <p>
+            JavaScript provides built-in methods to add, remove,
+            search and transform array values.
+        </p>
+    </section>
+
+    <div class="methods-grid">
+        <div class="method-card">
+            <code>push()</code>
+            <p>Adds an element to the end of an array.</p>
+            <div class="code">fruits.push("Grapes");</div>
+        </div>
+
+        <div class="method-card">
+            <code>pop()</code>
+            <p>Removes the last element of an array.</p>
+            <div class="code">fruits.pop();</div>
+        </div>
+
+        <div class="method-card">
+            <code>unshift()</code>
+            <p>Adds an element to the beginning.</p>
+            <div class="code">fruits.unshift("Kiwi");</div>
+        </div>
+
+        <div class="method-card">
+            <code>shift()</code>
+            <p>Removes the first element.</p>
+            <div class="code">fruits.shift();</div>
+        </div>
+
+        <div class="method-card">
+            <code>includes()</code>
+            <p>Checks whether an array contains a value.</p>
+            <div class="code">fruits.includes("Apple");</div>
+        </div>
+
+        <div class="method-card">
+            <code>indexOf()</code>
+            <p>Returns the index of a value, or -1 if absent.</p>
+            <div class="code">fruits.indexOf("Mango");</div>
+        </div>
+
+        <div class="method-card">
+            <code>map()</code>
+            <p>Creates a new array from transformed elements.</p>
+            <div class="code">nums.map(n => n * 2);</div>
+        </div>
+
+        <div class="method-card">
+            <code>filter()</code>
+            <p>Creates a new array containing matching elements.</p>
+            <div class="code">nums.filter(n => n > 5);</div>
+        </div>
+
+        <div class="method-card">
+            <code>forEach()</code>
+            <p>Runs a function for every array element.</p>
+            <div class="code">fruits.forEach(item => {
+  console.log(item);
+});</div>
+        </div>
+    </div>
+
+    <section class="section-heading">
+        <div class="section-number">05 / OBJECTS</div>
+        <h2>Meet the Object</h2>
+        <p>
+            Objects store related information using key-value pairs.
+            They are useful for describing real-world entities.
+        </p>
+    </section>
+
+    <div class="object-layout">
+        <div class="object-card">
+            <h3>Student Object</h3>
+
+            <div class="object-property">
+                <span>name</span>
+                <span>"Alex"</span>
+            </div>
+
+            <div class="object-property">
+                <span>age</span>
+                <span>20</span>
+            </div>
+
+            <div class="object-property">
+                <span>course</span>
+                <span>"BSCS"</span>
+            </div>
+
+            <div class="object-property">
+                <span>active</span>
+                <span>true</span>
+            </div>
+        </div>
+
+        <div class="object-explanation">
+            <h3>What is an Object?</h3>
+            <p>
+                An object groups related properties together.
+                Each property has a key and a value. You can access
+                properties using dot notation or bracket notation.
+            </p>
+
+            <div class="code"><span class="gold">const</span> student = {
+  name: "Alex",
+  age: 20,
+  course: "BSCS",
+  active: true
+};
+
+console.log(student.name);
+console.log(student["age"]);</div>
+        </div>
+    </div>
+
+    <section class="section-heading">
+        <div class="section-number">06 / OBJECT FEATURES</div>
+        <h2>More powerful object concepts</h2>
+        <p>
+            Objects can contain functions, other objects and nested data.
+        </p>
+    </section>
+
+    <div class="array-layout">
+        <div class="lesson-panel">
+            <h3>Object Methods</h3>
+            <p>
+                A function stored inside an object is commonly called
+                a method.
+            </p>
+
+            <div class="code"><span class="gold">const</span> user = {
+  name: "Alex",
+
+  greet: function() {
+    return "Hello!";
+  }
+};
+
+console.log(user.greet());</div>
+        </div>
+
+        <div class="lesson-panel">
+            <h3>Nested Objects</h3>
+            <p>
+                An object can contain another object as one of its
+                property values.
+            </p>
+
+            <div class="code"><span class="gold">const</span> student = {
+  name: "Alex",
+
+  address: {
+    city: "Multan",
+    country: "Pakistan"
+  }
+};
+
+console.log(student.address.city);</div>
+        </div>
+
+        <div class="lesson-panel">
+            <h3>Destructuring Arrays</h3>
+            <p>
+                Destructuring extracts values from an array into
+                separate variables.
+            </p>
+
+            <div class="code"><span class="gold">const</span> colors = [
+  "Red",
+  "Blue"
+];
+
+<span class="gold">const</span> [first, second] = colors;
+
+console.log(first);</div>
+        </div>
+
+        <div class="lesson-panel">
+            <h3>Object Destructuring</h3>
+            <p>
+                You can extract object properties into variables
+                using their matching property names.
+            </p>
+
+            <div class="code"><span class="gold">const</span> user = {
+  name: "Alex",
+  age: 20
+};
+
+<span class="gold">const</span> {name, age} = user;
+
+console.log(name);</div>
+        </div>
+    </div>
+
+    <section class="section-heading">
+        <div class="section-number">07 / COMPARISON</div>
+        <h2>Array vs Object</h2>
+        <p>Both store data, but they organize it differently.</p>
+    </section>
+
+    <div class="methods-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Array</th>
+                    <th>Object</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Syntax</td>
+                    <td>[ ]</td>
+                    <td>{ }</td>
+                </tr>
+
+                <tr>
+                    <td>Stores</td>
+                    <td>Ordered collection of elements</td>
+                    <td>Properties and values</td>
+                </tr>
+
+                <tr>
+                    <td>Access</td>
+                    <td>Using numeric indexes</td>
+                    <td>Using property keys</td>
+                </tr>
+
+                <tr>
+                    <td>Example</td>
+                    <td>fruits[0]</td>
+                    <td>student.name</td>
+                </tr>
+
+                <tr>
+                    <td>Best use</td>
+                    <td>Lists and collections</td>
+                    <td>Describing related data</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <section class="section-heading">
+        <div class="section-number">08 / PRACTICAL LAB</div>
+        <h2>Array & Object Workbench</h2>
+        <p>
+            Experiment with array methods and inspect object properties
+            using this interactive workspace.
+        </p>
+    </section>
+
+    <div class="lab">
+
+        <div class="lab-tabs">
+            <button type="button" class="lab-tab active" data-tab="array"
+                    aria-controls="arrayLab" aria-selected="true">
+                Array Visualizer
+            </button>
+
+            <button type="button" class="lab-tab" data-tab="object"
+                    aria-controls="objectLab" aria-selected="false">
+                Object Inspector
+            </button>
+        </div>
+
+        <div id="arrayLab" class="lab-content">
+
+            <div class="lab-controls">
+
+                <div>
+                    <label for="arrayInput">ADD A VALUE</label>
+                    <input id="arrayInput" type="text" placeholder="Enter a fruit name">
+                </div>
+
+                <button type="button" class="lab-button" id="addArray">Push to Array</button>
+
+                <button type="button" class="lab-button" id="removeArray">Pop Last Element</button>
+
+                <button type="button" class="lab-button" id="searchArray">Search for Mango</button>
+
+                <button type="button" class="lab-reset" id="resetArray">Reset Array</button>
+
+            </div>
+
+            <div class="lab-output">
+                <small>ARRAY OUTPUT</small>
+                <pre id="arrayOutput" aria-live="polite">["Apple", "Mango", "Orange"]</pre>
+                <div class="lab-result" id="arrayResult" aria-live="polite">
+                    Array contains 3 elements.
+                </div>
+            </div>
+
+        </div>
+
+        <div id="objectLab" class="lab-content" hidden>
+
+            <div class="lab-controls">
+
+                <div>
+                    <label for="objectName">STUDENT NAME</label>
+                    <input id="objectName" type="text" value="Alex">
+                </div>
+
+                <div>
+                    <label for="objectAge">STUDENT AGE</label>
+                    <input id="objectAge" type="number" value="20" min="1" max="120">
+                </div>
+
+                <div>
+                    <label for="objectCourse">COURSE</label>
+                    <input id="objectCourse" type="text" value="JavaScript">
+                </div>
+
+                <button type="button" class="lab-button" id="inspectObject">
+                    Inspect Object
+                </button>
+
+            </div>
+
+            <div class="lab-output">
+                <small>OBJECT INSPECTOR</small>
+                <pre id="objectOutput" aria-live="polite">{
+  "name": "Alex",
+  "age": 20,
+  "course": "JavaScript"
+}</pre>
+                <div class="lab-result" id="objectResult" aria-live="polite">
+                    Object has 3 properties.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <section class="section-heading">
+        <div class="section-number">09 / FINAL CHECK</div>
+        <h2>Test Your Knowledge</h2>
+        <p>
+            Complete this short quiz to qualify for the next JavaScript lesson.
+        </p>
+    </section>
+
+    <div class="quiz">
+
+        <div class="quiz-heading">
+            <h3>Lesson 06 Quiz</h3>
+            <span>03 QUESTIONS</span>
+        </div>
+
+        <form id="quizForm">
+
+            <div class="question">
+                <h4>01. Which brackets are used to create an array?</h4>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="a">
+                    Curly brackets { }
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="b">
+                    Square brackets [ ]
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="c">
+                    Parentheses ( )
+                </label>
+            </div>
+
+            <div class="question">
+                <h4>02. What is the index of the first array element?</h4>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="a">
+                    1
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="b">
+                    -1
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="c">
+                    0
+                </label>
+            </div>
+
+            <div class="question">
+                <h4>03. How can you access the name property of student?</h4>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="a">
+                    student.name
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="b">
+                    student( name )
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="c">
+                    student[0]
+                </label>
+            </div>
+
+            <div class="quiz-buttons">
+                <button type="button" class="quiz-submit" id="submitQuiz">
+                    Submit Quiz
+                </button>
+
+                <button type="button" class="quiz-reset" id="resetQuiz">
+                    Reset Quiz
+                </button>
+            </div>
+
+        </form>
+
+        <div class="quiz-result" id="quizResult" aria-live="polite"></div>
+
+        <div class="completion-panel">
+            <p id="completionMessage">
+                Pass the quiz with at least 2 correct answers to enable lesson completion.
+            </p>
+
+            <button type="button" class="complete-button" id="completeLesson" disabled>
+                Complete Lesson
+            </button>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div>
+            <div class="footer-brand">CNF/</div>
+            <small>JavaScript Learning Path · Lesson 06</small>
+        </div>
+
+        <a href="07-dom-events.html"
+           class="next-link"
+           id="nextLesson"
+           aria-disabled="true">
+            Complete Lesson to Unlock →
+        </a>
+    </footer>
+
+</main>
+
+<script>
+/* ARRAY VISUALIZER */
+
+let fruits = ["Apple", "Mango", "Orange"];
+
+const arrayOutput = document.getElementById("arrayOutput");
+const arrayResult = document.getElementById("arrayResult");
+
+function updateArray() {
+    arrayOutput.textContent = JSON.stringify(fruits, null, 2);
+    arrayResult.textContent =
+        "Array contains " + fruits.length + " elements.";
+}
+
+document.getElementById("addArray").addEventListener("click", () => {
+    const input = document.getElementById("arrayInput");
+    const value = input.value.trim();
+
+    if (!value) {
+        arrayResult.textContent = "Please enter a value first.";
+        return;
+    }
+
+    fruits.push(value);
+    input.value = "";
+    updateArray();
+
+    arrayResult.textContent = value + " added to the array.";
+});
+
+document.getElementById("removeArray").addEventListener("click", () => {
+    if (fruits.length === 0) {
+        arrayResult.textContent = "The array is already empty.";
+        return;
+    }
+
+    const removed = fruits.pop();
+    updateArray();
+
+    arrayResult.textContent = removed + " removed from the array.";
+});
+
+document.getElementById("searchArray").addEventListener("click", () => {
+    const index = fruits.indexOf("Mango");
+
+    if (index === -1) {
+        arrayResult.textContent = "Mango was not found.";
+    } else {
+        arrayResult.textContent = "Mango found at index " + index + ".";
+    }
+});
+
+document.getElementById("resetArray").addEventListener("click", () => {
+    fruits = ["Apple", "Mango", "Orange"];
+    document.getElementById("arrayInput").value = "";
+    updateArray();
+});
+
+
+/* OBJECT INSPECTOR */
+
+document.getElementById("inspectObject").addEventListener("click", () => {
+
+    const name = document.getElementById("objectName").value.trim();
+    const ageValue = document.getElementById("objectAge").value;
+    const course = document.getElementById("objectCourse").value.trim();
+
+    const age = Number(ageValue);
+
+    if (
+        !name ||
+        !course ||
+        ageValue === "" ||
+        !Number.isInteger(age) ||
+        age < 1 ||
+        age > 120
+    ) {
+        document.getElementById("objectResult").textContent =
+            "Please enter a valid name, course and age between 1 and 120.";
+        return;
+    }
+
+    const student = {
+        name: name,
+        age: age,
+        course: course
+    };
+
+    document.getElementById("objectOutput").textContent =
+        JSON.stringify(student, null, 2);
+
+    document.getElementById("objectResult").textContent =
+        "Object successfully inspected. " +
+        Object.keys(student).length + " properties found.";
+});
+
+
+/* LAB TABS */
+
+const tabs = document.querySelectorAll(".lab-tab");
+
+tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+
+        tabs.forEach(item => {
+            item.classList.remove("active");
+            item.setAttribute("aria-selected", "false");
+        });
+
+        tab.classList.add("active");
+        tab.setAttribute("aria-selected", "true");
+
+        const selected = tab.dataset.tab;
+
+        document.getElementById("arrayLab").hidden = selected !== "array";
+        document.getElementById("objectLab").hidden = selected !== "object";
+    });
+});
+
+
+/* QUIZ AND LESSON COMPLETION */
+
+const answers = {
+    q1: "b",
+    q2: "c",
+    q3: "a"
+};
+
+const quizForm = document.getElementById("quizForm");
+const quizResult = document.getElementById("quizResult");
+const nextLesson = document.getElementById("nextLesson");
+const completeButton = document.getElementById("completeLesson");
+const completionMessage = document.getElementById("completionMessage");
+
+const completionKey = "javascript-lesson-06-completed";
+
+let quizPassed = false;
+let lessonCompleted = localStorage.getItem(completionKey) === "true";
+
+
+function showCompletedState() {
+    lessonCompleted = true;
+    quizPassed = true;
+
+    completeButton.disabled = true;
+    completeButton.classList.add("completed");
+    completeButton.textContent = "Lesson Completed ✓";
+
+    completionMessage.textContent =
+        "Lesson 06 has been completed successfully. You can continue to the next lesson.";
+
+    nextLesson.classList.add("unlocked");
+    nextLesson.setAttribute("aria-disabled", "false");
+    nextLesson.textContent = "Next Lesson: DOM & Events →";
+}
+
+
+function enableCompletion() {
+    quizPassed = true;
+
+    completeButton.disabled = false;
+
+    completionMessage.textContent =
+        "You passed the quiz! Click Complete Lesson to unlock the next chapter.";
+}
+
+
+if (lessonCompleted) {
+    showCompletedState();
+}
+
+
+document.getElementById("submitQuiz").addEventListener("click", () => {
+
+    let score = 0;
+    let unanswered = 0;
+
+    for (const question in answers) {
+
+        const selected = quizForm.querySelector(
+            `input[name="${question}"]:checked`
+        );
+
+        if (!selected) {
+            unanswered++;
+        } else if (selected.value === answers[question]) {
+            score++;
+        }
+    }
+
+    if (unanswered > 0) {
+        quizResult.className = "quiz-result fail";
+        quizResult.textContent =
+            "Please answer all three questions before submitting.";
+        return;
+    }
+
+    if (score >= 2) {
+
+        quizResult.className = "quiz-result pass";
+        quizResult.textContent =
+            `Excellent! You scored ${score}/3. You passed the quiz.`;
+
+        enableCompletion();
+
+    } else {
+
+        quizPassed = false;
+
+        if (!lessonCompleted) {
+            completeButton.disabled = true;
+        }
+
+        quizResult.className = "quiz-result fail";
+        quizResult.textContent =
+            `You scored ${score}/3. You need at least 2 correct answers. Review and try again.`;
+
+        if (!lessonCompleted) {
+            completionMessage.textContent =
+                "Pass the quiz with at least 2 correct answers to enable lesson completion.";
+        }
+    }
+});
+
+
+/* COMPLETE LESSON BUTTON */
+
+completeButton.addEventListener("click", () => {
+
+    if (!quizPassed || lessonCompleted) {
+        return;
+    }
+
+    localStorage.setItem(completionKey, "true");
+
+    showCompletedState();
+});
+
+
+/* RESET QUIZ */
+
+document.getElementById("resetQuiz").addEventListener("click", () => {
+
+    quizForm.reset();
+
+    quizResult.className = "quiz-result";
+    quizResult.textContent = "";
+
+    if (!lessonCompleted) {
+        quizPassed = false;
+        completeButton.disabled = true;
+
+        completionMessage.textContent =
+            "Pass the quiz with at least 2 correct answers to enable lesson completion.";
+    }
+});
+</script>
+
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

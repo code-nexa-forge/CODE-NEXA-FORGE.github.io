@@ -1,0 +1,2023 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/html-lesson-access-gate.js"></script>
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNF/ | HTML Document Structure</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+    --bg: #100e1c;
+    --panel: #19172a;
+    --panel2: #211e35;
+    --purple: #a78bfa;
+    --cyan: #63e6e2;
+    --text: #f4f0ff;
+    --muted: #a5a0ba;
+    --border: #34304c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.nav {
+    height: 75px;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: #141222;
+}
+
+.logo {
+    font: 700 26px 'Space Grotesk';
+    letter-spacing: -2px;
+}
+
+.logo span { color: var(--purple); }
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.nav-links a:hover { color: var(--cyan); }
+
+.nav-label {
+    font: 11px 'DM Mono';
+    color: var(--cyan);
+}
+
+/* INTRO */
+
+.intro {
+    padding: 70px 7% 55px;
+    background:
+        radial-gradient(ellipse at 85% 15%, rgba(167,139,250,.15), transparent 40%),
+        radial-gradient(ellipse at 10% 90%, rgba(99,230,226,.08), transparent 35%);
+}
+
+.breadcrumb {
+    font: 11px 'DM Mono';
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.breadcrumb span { color: var(--cyan); }
+
+.intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 45px;
+    align-items: end;
+}
+
+.intro h1 {
+    font: 700 clamp(42px, 6vw, 76px)/1.05 'Space Grotesk';
+    letter-spacing: -4px;
+    max-width: 750px;
+}
+
+.intro h1 span { color: var(--purple); }
+
+.intro p {
+    color: var(--muted);
+    max-width: 650px;
+    line-height: 1.8;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.progress-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 22px;
+    border-radius: 12px;
+}
+
+.progress-card small {
+    color: var(--muted);
+    font: 10px 'DM Mono';
+}
+
+.progress-card strong {
+    display: block;
+    font: 700 35px 'Space Grotesk';
+    margin: 8px 0;
+}
+
+.progress-line {
+    height: 5px;
+    background: #37334c;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-line div {
+    width: 25%;
+    height: 100%;
+    background: linear-gradient(90deg,var(--purple),var(--cyan));
+}
+
+/* LAYOUT */
+
+.workspace {
+    padding: 45px 7% 80px;
+}
+
+.workspace-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.workspace-heading h2 {
+    font: 600 23px 'Space Grotesk';
+}
+
+.workspace-heading span {
+    font: 10px 'DM Mono';
+    color: var(--cyan);
+}
+
+.anatomy-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 22px;
+}
+
+.code-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.panel-top {
+    height: 52px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #201d32;
+    border-bottom: 1px solid var(--border);
+}
+
+.panel-top strong {
+    font: 12px 'DM Mono';
+}
+
+.panel-top span {
+    color: var(--cyan);
+    font: 10px 'DM Mono';
+}
+
+.code-area {
+    padding: 24px 20px;
+    overflow-x: auto;
+}
+
+.code-line {
+    display: flex;
+    align-items: center;
+    min-width: 470px;
+    min-height: 37px;
+    padding: 0 10px;
+    border-left: 2px solid transparent;
+    border-radius: 4px;
+    font: 12px 'DM Mono';
+    white-space: pre;
+    color: #d8d3ed;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.code-line:hover,
+.code-line.active {
+    background: rgba(167,139,250,.13);
+    border-left-color: var(--purple);
+}
+
+.line-no {
+    display: inline-block;
+    width: 30px;
+    color: #716b8a;
+    user-select: none;
+}
+
+.tag { color: #c4a6ff; }
+.attr { color: #78d9d6; }
+.value { color: #e8c58b; }
+.comment { color: #77728f; }
+
+.instruction {
+    margin: 0 20px 20px;
+    padding: 13px;
+    background: rgba(99,230,226,.07);
+    border: 1px solid rgba(99,230,226,.2);
+    border-radius: 6px;
+    color: var(--cyan);
+    font-size: 11px;
+}
+
+/* EXPLAINER */
+
+.explainer {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    min-height: 400px;
+}
+
+.explainer-label {
+    color: var(--cyan);
+    font: 10px 'DM Mono';
+    margin-bottom: 20px;
+}
+
+.explainer-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+    background: rgba(167,139,250,.15);
+    margin-bottom: 20px;
+}
+
+.explainer h3 {
+    font: 600 22px 'Space Grotesk';
+    margin-bottom: 12px;
+}
+
+.explainer p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.syntax {
+    background: #100e1c;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 14px;
+    margin-top: 22px;
+    color: var(--cyan);
+    font: 11px 'DM Mono';
+    overflow-wrap: anywhere;
+}
+
+.hint {
+    margin-top: 20px;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+/* TOPIC CARDS */
+
+.section {
+    padding: 65px 7%;
+}
+
+.section-heading {
+    margin-bottom: 30px;
+}
+
+.section-heading small {
+    color: var(--cyan);
+    font: 10px 'DM Mono';
+    letter-spacing: 2px;
+}
+
+.section-heading h2 {
+    font: 600 clamp(29px, 4vw, 43px) 'Space Grotesk';
+    letter-spacing: -2px;
+    margin-top: 12px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-top: 10px;
+    max-width: 650px;
+}
+
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 16px;
+}
+
+.concept {
+    padding: 25px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 10px;
+    transition: .3s ease;
+}
+
+.concept:hover {
+    transform: translateY(-5px);
+    border-color: var(--purple);
+    background: #201c35;
+}
+
+.concept-number {
+    color: var(--purple);
+    font: 11px 'DM Mono';
+}
+
+.concept h3 {
+    font: 600 18px 'Space Grotesk';
+    margin: 13px 0 9px;
+}
+
+.concept p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.concept code {
+    display: inline-block;
+    margin-top: 14px;
+    color: var(--cyan);
+    background: #100e1c;
+    padding: 8px 11px;
+    border-radius: 5px;
+    font: 11px 'DM Mono';
+}
+
+/* BROWSER DEMO */
+
+.demo-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.browser {
+    background: white;
+    border-radius: 9px;
+    overflow: hidden;
+    color: #222;
+}
+
+.browser-top {
+    height: 43px;
+    background: #e9e7ef;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 14px;
+}
+
+.browser-top i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef786c;
+}
+
+.browser-top i:nth-child(2) { background: #e4c35e; }
+.browser-top i:nth-child(3) { background: #7cc88d; }
+
+.address {
+    background: white;
+    border-radius: 4px;
+    color: #777;
+    padding: 5px 12px;
+    margin-left: 8px;
+    flex: 1;
+    font: 9px 'DM Mono';
+}
+
+.browser-content {
+    padding: 30px 25px;
+    min-height: 240px;
+}
+
+.browser-content h1 {
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.browser-content p {
+    color: #555;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.browser-content a {
+    color: #5140bc;
+    display: inline-block;
+    margin-top: 17px;
+    text-decoration: underline;
+    font-size: 13px;
+}
+
+.browser-note {
+    padding: 20px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+}
+
+.browser-note h3 {
+    font: 600 19px 'Space Grotesk';
+    margin-bottom: 12px;
+}
+
+.browser-note p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* DOCTYPE */
+
+.doctype-box {
+    border: 1px solid rgba(99,230,226,.25);
+    background: rgba(99,230,226,.06);
+    border-radius: 10px;
+    padding: 27px;
+}
+
+.doctype-box code {
+    color: var(--cyan);
+    font: 17px 'DM Mono';
+}
+
+.doctype-box h3 {
+    font: 600 19px 'Space Grotesk';
+    margin: 20px 0 8px;
+}
+
+.doctype-box p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 13px;
+}
+
+/* PLAYGROUND */
+
+.playground {
+    background: #0c0b15;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.playground-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.editor-box,
+.result-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--panel);
+}
+
+.editor-box textarea {
+    width: 100%;
+    height: 310px;
+    padding: 20px;
+    background: #171526;
+    color: #c8b4ff;
+    border: none;
+    outline: none;
+    resize: vertical;
+    font: 12px/1.8 'DM Mono';
+}
+
+.result-box iframe {
+    width: 100%;
+    height: 310px;
+    background: white;
+    border: none;
+}
+
+.editor-controls {
+    display: flex;
+    padding: 13px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: none;
+    border-radius: 5px;
+    background: var(--purple);
+    color: #151020;
+    padding: 11px 17px;
+    font-size: 12px;
+    font-weight: 800;
+    transition: .25s ease;
+}
+
+.btn:hover {
+    background: var(--cyan);
+    transform: translateY(-2px);
+}
+
+.btn.alt {
+    background: #34304c;
+    color: white;
+}
+
+.btn.alt:hover {
+    background: #51476f;
+}
+
+/* QUIZ */
+
+.quiz {
+    max-width: 850px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.question {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.question h3 {
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+.option {
+    display: block;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin: 8px 0;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.option:hover {
+    border-color: var(--purple);
+    color: white;
+}
+
+.option input {
+    accent-color: var(--purple);
+    margin-right: 9px;
+}
+
+#quizResult {
+    font-size: 13px;
+    margin-top: 20px;
+    font-weight: 700;
+}
+
+/* FOOTER */
+
+.finish {
+    margin: 20px 7% 65px;
+    padding: 35px;
+    background: linear-gradient(120deg,#30264e,#1a3340);
+    border: 1px solid #51446f;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.finish h2 {
+    font: 600 27px 'Space Grotesk';
+}
+
+.finish p {
+    color: #c2bbd8;
+    font-size: 12px;
+    margin-top: 9px;
+}
+
+#completeLesson {
+    background: var(--cyan);
+    color: #10151b;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 20px;
+    font-weight: 800;
+    transition: .25s ease;
+}
+
+#completeLesson:hover:not(:disabled) {
+    background: white;
+    transform: translateY(-2px);
+}
+
+#completeLesson:disabled {
+    opacity: .6;
+    cursor: default;
+}
+
+#completionMessage {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 7%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+footer strong {
+    color: white;
+    font: 700 21px 'Space Grotesk';
+}
+
+footer strong span { color: var(--purple); }
+
+footer a:hover { color: var(--cyan); }
+
+@media(max-width: 850px) {
+    .intro-grid,
+    .anatomy-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .progress-card { max-width: 350px; }
+    .explainer { min-height: auto; }
+}
+
+@media(max-width: 650px) {
+    .nav { padding: 0 5%; }
+    .nav-links { display: none; }
+    .intro { padding: 55px 6%; }
+    .intro h1 { letter-spacing: -2px; }
+    .workspace,
+    .section { padding: 45px 6%; }
+
+    .concept-grid,
+    .demo-layout,
+    .playground-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .finish {
+        margin: 10px 6% 45px;
+        padding: 25px;
+    }
+
+    .finish h2 { font-size: 23px; }
+    .quiz { padding: 20px; }
+}
+
+/* ==========================================
+   LESSON 02 — PURPLE CYAN MOTION EXPERIENCE
+========================================== */
+
+:root {
+    --cnf-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* PAGE ENTRANCE */
+
+body {
+    animation: cnfPageEnter 1s ease both;
+}
+
+@keyframes cnfPageEnter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* NAVIGATION */
+
+.nav {
+    animation: cnfNavEnter .85s var(--cnf-ease) both;
+}
+
+@keyframes cnfNavEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    transition: transform .35s var(--cnf-ease);
+}
+
+.logo:hover {
+    transform: scale(1.08);
+}
+
+.logo span {
+    display: inline-block;
+    animation: cnfLogoPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes cnfLogoPulse {
+    50% {
+        transform: rotate(12deg) scale(1.2);
+        text-shadow: 0 0 15px var(--purple);
+    }
+}
+
+.nav-links a {
+    position: relative;
+    transition: color .3s, transform .3s;
+}
+
+.nav-links a:hover {
+    color: var(--cyan);
+    transform: translateY(-3px);
+}
+
+/* INTRO ENTRANCE */
+
+.intro .breadcrumb {
+    animation: cnfFadeUp .7s .1s both;
+}
+
+.intro h1 {
+    animation: cnfFadeUp .9s .2s both;
+}
+
+.intro p {
+    animation: cnfFadeUp .9s .38s both;
+}
+
+.progress-card {
+    animation: cnfProgressEnter 1s .35s var(--cnf-ease) both;
+    transition: transform .4s, border-color .4s, box-shadow .4s;
+}
+
+.progress-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--purple);
+    box-shadow: 0 18px 45px rgba(167,139,250,.13);
+}
+
+.progress-line div {
+    animation: cnfProgressFill 1.5s .8s var(--cnf-ease) both;
+    transform-origin: left;
+}
+
+@keyframes cnfProgressFill {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+@keyframes cnfProgressEnter {
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(.94);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes cnfFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* SCROLL REVEAL SYSTEM */
+
+.cnf-motion-ready .cnf-motion-item {
+    opacity: 0;
+    transform: translateY(45px);
+    filter: blur(5px);
+    transition:
+        opacity .85s var(--cnf-ease),
+        transform .85s var(--cnf-ease),
+        filter .85s var(--cnf-ease);
+}
+
+.cnf-motion-ready .cnf-motion-item.cnf-in-view {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/* WORKSPACE HEADING */
+
+.workspace-heading h2 {
+    transition: color .3s, letter-spacing .3s;
+}
+
+.workspace-heading:hover h2 {
+    color: var(--purple);
+    letter-spacing: .5px;
+}
+
+.workspace-heading span {
+    animation: cnfLabelGlow 3s ease-in-out infinite;
+}
+
+@keyframes cnfLabelGlow {
+    50% {
+        text-shadow: 0 0 12px rgba(99,230,226,.65);
+    }
+}
+
+/* INTERACTIVE CODE PANEL */
+
+.code-panel,
+.explainer {
+    transition:
+        border-color .4s,
+        box-shadow .4s,
+        transform .4s var(--cnf-ease);
+}
+
+.code-panel:hover,
+.explainer:hover {
+    border-color: rgba(167,139,250,.55);
+    box-shadow: 0 18px 45px rgba(0,0,0,.22);
+}
+
+.cnf-motion-ready .code-line {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.cnf-motion-ready .code-panel.cnf-in-view .code-line {
+    animation: cnfCodeLineEnter .55s var(--cnf-ease) both;
+}
+
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(1) { animation-delay: .05s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(2) { animation-delay: .10s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(3) { animation-delay: .15s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(4) { animation-delay: .20s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(5) { animation-delay: .25s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(6) { animation-delay: .30s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(7) { animation-delay: .35s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(8) { animation-delay: .40s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(9) { animation-delay: .45s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(10) { animation-delay: .50s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(11) { animation-delay: .55s; }
+.cnf-motion-ready .code-panel.cnf-in-view .code-line:nth-child(12) { animation-delay: .60s; }
+
+@keyframes cnfCodeLineEnter {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.code-line {
+    transition:
+        background .3s,
+        border-color .3s,
+        transform .3s;
+}
+
+.code-line:hover {
+    transform: translateX(5px);
+}
+
+/* EXPLAINER ANIMATION */
+
+.explainer-icon {
+    animation: cnfIconFloat 4s ease-in-out infinite;
+    transition: background .4s, transform .4s;
+}
+
+@keyframes cnfIconFloat {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-9px) rotate(5deg); }
+}
+
+.explainer h3 {
+    transition: color .3s;
+}
+
+.explainer:hover h3 {
+    color: var(--purple);
+}
+
+.syntax {
+    transition: border-color .35s, box-shadow .35s;
+}
+
+.syntax:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 20px rgba(99,230,226,.09);
+}
+
+/* CONCEPT CARDS */
+
+.concept {
+    position: relative;
+    overflow: hidden;
+}
+
+.concept::before {
+    content: "";
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    top: -110px;
+    right: -110px;
+    border-radius: 50%;
+    background: rgba(167,139,250,.12);
+    transition: transform .65s var(--cnf-ease);
+}
+
+.concept:hover::before {
+    transform: scale(2.4);
+}
+
+.concept:hover {
+    transform: translateY(-9px) scale(1.015);
+    border-color: var(--cyan);
+    box-shadow: 0 18px 40px rgba(99,230,226,.08);
+}
+
+.concept-number {
+    display: inline-block;
+    transition: transform .35s, color .35s;
+}
+
+.concept:hover .concept-number {
+    transform: translateX(6px);
+    color: var(--cyan);
+}
+
+.concept h3 {
+    transition: transform .35s;
+}
+
+.concept:hover h3 {
+    transform: translateX(4px);
+}
+
+/* DOCTYPE BOX */
+
+.doctype-box {
+    position: relative;
+    overflow: hidden;
+    transition: border-color .4s, box-shadow .4s, transform .4s;
+}
+
+.doctype-box::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        110deg,
+        transparent 35%,
+        rgba(99,230,226,.09) 50%,
+        transparent 65%
+    );
+    transform: translateX(-100%);
+    transition: transform .9s;
+}
+
+.doctype-box:hover::after {
+    transform: translateX(100%);
+}
+
+.doctype-box:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 15px 35px rgba(99,230,226,.08);
+    transform: translateY(-5px);
+}
+
+.doctype-box code {
+    display: inline-block;
+    animation: cnfCodeGlow 3s ease-in-out infinite;
+}
+
+@keyframes cnfCodeGlow {
+    50% {
+        text-shadow: 0 0 15px rgba(99,230,226,.55);
+    }
+}
+
+/* BROWSER DEMO */
+
+.browser {
+    transition: transform .45s var(--cnf-ease), box-shadow .45s;
+}
+
+.browser:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 22px 45px rgba(0,0,0,.3);
+}
+
+.browser-top i {
+    animation: cnfBrowserDot 2s ease-in-out infinite;
+}
+
+.browser-top i:nth-child(2) { animation-delay: .3s; }
+.browser-top i:nth-child(3) { animation-delay: .6s; }
+
+@keyframes cnfBrowserDot {
+    50% { transform: scale(1.35); }
+}
+
+.browser-content h1 {
+    animation: cnfFadeUp .7s .2s both;
+}
+
+.browser-content p {
+    animation: cnfFadeUp .7s .4s both;
+}
+
+.browser-content a {
+    transition: color .3s, transform .3s;
+}
+
+.browser-content a:hover {
+    color: #a78bfa;
+    transform: translateX(5px);
+}
+
+.browser-note {
+    transition: transform .4s, border-color .4s;
+}
+
+.browser-note:hover {
+    transform: translateY(-7px);
+    border-color: var(--purple);
+}
+
+/* PLAYGROUND */
+
+.editor-box,
+.result-box {
+    transition: transform .4s var(--cnf-ease), border-color .4s, box-shadow .4s;
+}
+
+.editor-box:hover,
+.result-box:hover {
+    transform: translateY(-6px);
+    border-color: rgba(167,139,250,.6);
+    box-shadow: 0 18px 40px rgba(0,0,0,.2);
+}
+
+.editor-box textarea {
+    transition: background .3s, box-shadow .3s;
+}
+
+.editor-box textarea:focus {
+    background: #1c1930;
+    box-shadow: inset 0 0 0 2px rgba(167,139,250,.5);
+}
+
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform .3s var(--cnf-ease),
+        background .3s,
+        box-shadow .3s;
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: -60%;
+    left: -100%;
+    width: 50%;
+    height: 220%;
+    transform: rotate(25deg);
+    background: rgba(255,255,255,.25);
+    transition: left .6s;
+}
+
+.btn:hover::after {
+    left: 150%;
+}
+
+.btn:hover {
+    box-shadow: 0 9px 22px rgba(167,139,250,.2);
+}
+
+.btn:active {
+    transform: scale(.96);
+}
+
+/* QUIZ */
+
+.quiz {
+    transition: border-color .4s, box-shadow .4s, transform .4s;
+}
+
+.quiz:hover {
+    border-color: rgba(167,139,250,.5);
+    box-shadow: 0 18px 45px rgba(0,0,0,.2);
+}
+
+.question {
+    transition: transform .35s, border-color .35s;
+}
+
+.question:hover {
+    transform: translateX(5px);
+}
+
+.option {
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform .3s,
+        border-color .3s,
+        background .3s,
+        color .3s;
+}
+
+.option:hover {
+    transform: translateX(5px);
+    background: rgba(167,139,250,.07);
+}
+
+.option:has(input:checked) {
+    border-color: var(--purple);
+    background: rgba(167,139,250,.12);
+    color: white;
+    box-shadow: 0 0 0 1px rgba(167,139,250,.15);
+}
+
+#quizResult {
+    animation: cnfResultEnter .45s var(--cnf-ease) both;
+}
+
+@keyframes cnfResultEnter {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* COMPLETION */
+
+.finish {
+    position: relative;
+    overflow: hidden;
+    transition: transform .4s, box-shadow .4s;
+}
+
+.finish::after {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    border: 1px solid rgba(99,230,226,.18);
+    border-radius: 50%;
+    right: -100px;
+    top: -130px;
+    pointer-events: none;
+    animation: cnfOrbit 14s linear infinite;
+}
+
+@keyframes cnfOrbit {
+    to { transform: rotate(360deg); }
+}
+
+.finish:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 45px rgba(0,0,0,.25);
+}
+
+.finish h2 {
+    animation: cnfFinishFloat 4s ease-in-out infinite;
+}
+
+@keyframes cnfFinishFloat {
+    50% { transform: translateY(-5px); }
+}
+
+#completeLesson {
+    position: relative;
+    z-index: 1;
+}
+
+#completeLesson:not(:disabled):hover {
+    box-shadow: 0 10px 25px rgba(99,230,226,.2);
+}
+
+/* FOOTER */
+
+footer strong {
+    transition: transform .3s;
+}
+
+footer strong:hover {
+    transform: scale(1.08);
+}
+
+footer a {
+    transition: color .3s, transform .3s;
+}
+
+footer a:hover {
+    color: var(--cyan);
+    transform: translateX(5px);
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .cnf-motion-ready .cnf-motion-item {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+
+    .cnf-motion-ready .code-line {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* SIDE BOX SLIDE-IN ANIMATION */
+.cnf-motion-ready .explainer {
+    opacity: 0;
+    transform: translateX(65px);
+    filter: blur(5px);
+    transition:
+        opacity 0.85s ease,
+        transform 0.85s cubic-bezier(.22, 1, .36, 1),
+        filter 0.85s ease;
+}
+
+.cnf-motion-ready .explainer.cnf-in-view {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .explainer {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+    }
+}
+
+</style>
+
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="../../pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<nav class="nav">
+    <a href="../html.html" class="logo">CNF<span>/</span></a>
+
+    <div class="nav-links">
+        <a href="../html.html">Course Home</a>
+        <a href="#anatomy">Anatomy</a>
+        <a href="#concepts">Concepts</a>
+        <a href="#playground">Playground</a>
+        <a href="#quiz">Quiz</a>
+    </div>
+
+    <div class="nav-label">LESSON 02 / 08</div>
+</nav>
+
+<header class="intro">
+    <div class="breadcrumb">
+        HTML COURSE / LESSONS / <span>DOCUMENT STRUCTURE</span>
+    </div>
+
+    <div class="intro-grid">
+        <div>
+            <h1>Inside an HTML <span>document.</span></h1>
+
+            <p>
+                Every HTML webpage follows a document structure.
+                Learn what happens behind the scenes, understand the
+                important elements, and discover how browsers read your code.
+            </p>
+        </div>
+
+        <div class="progress-card">
+            <small>YOUR HTML JOURNEY</small>
+            <strong>02 / 08</strong>
+            <div class="progress-line"><div></div></div>
+            <small style="display:block;margin-top:12px;">
+                You are building your foundation.
+            </small>
+        </div>
+    </div>
+</header>
+
+<!-- INTERACTIVE ANATOMY -->
+
+<section class="workspace" id="anatomy">
+
+    <div class="workspace-heading">
+        <h2>Explore the anatomy of HTML</h2>
+        <span>INTERACTIVE DOCUMENT MAP</span>
+    </div>
+
+    <div class="anatomy-layout">
+
+        <div class="code-panel">
+            <div class="panel-top">
+                <strong>index.html</strong>
+                <span>CLICK A LINE TO EXPLORE</span>
+            </div>
+
+            <div class="code-area">
+
+                <div class="code-line active" data-part="doctype">
+                    <span class="line-no">01</span>
+                    <span class="tag">&lt;!DOCTYPE html&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="html">
+                    <span class="line-no">02</span>
+                    <span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="head">
+                    <span class="line-no">03</span>
+                    <span class="tag">&nbsp;&nbsp;&lt;head&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="meta">
+                    <span class="line-no">04</span>
+                    <span class="tag">&nbsp;&nbsp;&nbsp;&nbsp;&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="viewport">
+                    <span class="line-no">05</span>
+                    <span class="tag">&nbsp;&nbsp;&nbsp;&nbsp;&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="title">
+                    <span class="line-no">06</span>
+                    <span class="tag">&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;</span>My Website<span class="tag">&lt;/title&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="headclose">
+                    <span class="line-no">07</span>
+                    <span class="tag">&nbsp;&nbsp;&lt;/head&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="body">
+                    <span class="line-no">08</span>
+                    <span class="tag">&nbsp;&nbsp;&lt;body&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="heading">
+                    <span class="line-no">09</span>
+                    <span class="tag">&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;</span>Hello World<span class="tag">&lt;/h1&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="paragraph">
+                    <span class="line-no">10</span>
+                    <span class="tag">&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;</span>Welcome to my website.<span class="tag">&lt;/p&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="bodyclose">
+                    <span class="line-no">11</span>
+                    <span class="tag">&nbsp;&nbsp;&lt;/body&gt;</span>
+                </div>
+
+                <div class="code-line" data-part="htmlclose">
+                    <span class="line-no">12</span>
+                    <span class="tag">&lt;/html&gt;</span>
+                </div>
+
+            </div>
+
+            <div class="instruction">
+                ↗ Select any line to understand its purpose.
+            </div>
+        </div>
+
+        <div class="explainer">
+            <div class="explainer-label">ELEMENT EXPLAINER</div>
+            <div class="explainer-icon" id="partIcon">📄</div>
+
+            <h3 id="partTitle">DOCTYPE Declaration</h3>
+
+            <p id="partDescription">
+                The DOCTYPE declaration tells the browser that this
+                document uses modern HTML5 standards. It should be
+                the first line of an HTML document.
+            </p>
+
+            <div class="syntax" id="partSyntax">&lt;!DOCTYPE html&gt;</div>
+
+            <div class="hint" id="partHint">
+                Remember: DOCTYPE is a declaration, not a normal HTML element.
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CORE ELEMENTS -->
+
+<section class="section" id="concepts">
+    <div class="section-heading">
+        <small>01 / DOCUMENT COMPONENTS</small>
+        <h2>Know the important building blocks.</h2>
+        <p>
+            These elements work together to create a properly structured
+            HTML document.
+        </p>
+    </div>
+
+    <div class="concept-grid">
+
+        <div class="concept">
+            <div class="concept-number">COMPONENT 01</div>
+            <h3>The HTML Element</h3>
+            <p>
+                The root element of the page. All other HTML elements,
+                except the DOCTYPE declaration, are placed inside it.
+            </p>
+            <code>&lt;html lang="en"&gt; ... &lt;/html&gt;</code>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">COMPONENT 02</div>
+            <h3>The Head Section</h3>
+            <p>
+                Contains document information such as the title,
+                metadata, stylesheet links and other resources.
+            </p>
+            <code>&lt;head&gt; ... &lt;/head&gt;</code>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">COMPONENT 03</div>
+            <h3>The Body Section</h3>
+            <p>
+                Contains the visible webpage content such as headings,
+                paragraphs, images, buttons and links.
+            </p>
+            <code>&lt;body&gt; ... &lt;/body&gt;</code>
+        </div>
+
+        <div class="concept">
+            <div class="concept-number">COMPONENT 04</div>
+            <h3>The Title Element</h3>
+            <p>
+                Defines the webpage title that usually appears in
+                the browser tab and helps identify the page.
+            </p>
+            <code>&lt;title&gt;My Website&lt;/title&gt;</code>
+        </div>
+
+    </div>
+</section>
+
+<!-- DOCTYPE -->
+
+<section class="section">
+    <div class="section-heading">
+        <small>02 / IMPORTANT DECLARATION</small>
+        <h2>Why do we write DOCTYPE?</h2>
+        <p>
+            A small declaration makes a big difference in how the
+            browser interprets your document.
+        </p>
+    </div>
+
+    <div class="doctype-box">
+        <code>&lt;!DOCTYPE html&gt;</code>
+
+        <h3>Use HTML5 standards mode.</h3>
+
+        <p>
+            This declaration tells the browser to render the page
+            using modern standards rather than an old compatibility
+            or quirks mode. Place it at the very beginning of the file.
+        </p>
+    </div>
+</section>
+
+<!-- BROWSER PREVIEW -->
+
+<section class="section">
+    <div class="section-heading">
+        <small>03 / FROM CODE TO SCREEN</small>
+        <h2>What does the browser display?</h2>
+        <p>
+            The head contains document information. The body contains
+            the content that visitors see on the webpage.
+        </p>
+    </div>
+
+    <div class="demo-layout">
+        <div class="browser">
+            <div class="browser-top">
+                <i></i><i></i><i></i>
+                <div class="address">yourwebsite.com</div>
+            </div>
+
+            <div class="browser-content">
+                <h1>Hello World!</h1>
+                <p>Welcome to my first properly structured webpage.</p>
+                <a href="#playground">Explore the HTML playground →</a>
+            </div>
+        </div>
+
+        <div class="browser-note">
+            <h3>Look at the difference.</h3>
+
+            <p>
+                The browser tab gets its title from the title element
+                inside the head. The heading, paragraph and link are
+                displayed because they are inside the body.
+            </p>
+
+            <p style="margin-top:15px;">
+                This separation keeps document information and visible
+                content organized.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- PLAYGROUND -->
+
+<section class="section playground" id="playground">
+    <div class="section-heading">
+        <small>04 / PRACTICAL WORKSHOP</small>
+        <h2>Build a complete HTML document.</h2>
+        <p>
+            This time, write the complete document structure yourself.
+            Change the title, heading and paragraph, then run your code.
+        </p>
+    </div>
+
+    <div class="playground-grid">
+
+        <div class="editor-box">
+            <div class="panel-top">
+                <strong>FULL HTML DOCUMENT</strong>
+                <span>EDITOR</span>
+            </div>
+
+            <textarea id="htmlEditor" spellcheck="false"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Website</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <p>I am learning HTML document structure.</p>
+</body>
+</html></textarea>
+
+            <div class="editor-controls">
+                <button class="btn" id="runHTML">Run Document ↗</button>
+                <button class="btn alt" id="resetHTML">Reset Code</button>
+            </div>
+        </div>
+
+        <div class="result-box">
+            <div class="panel-top">
+                <strong>BROWSER OUTPUT</strong>
+                <span>PREVIEW</span>
+            </div>
+
+            <iframe
+                id="htmlPreview"
+                title="HTML document preview"
+                sandbox="allow-scripts"
+            ></iframe>
+        </div>
+
+    </div>
+</section>
+
+<!-- QUIZ -->
+
+<section class="section" id="quiz">
+    <div class="section-heading">
+        <small>05 / KNOWLEDGE TEST</small>
+        <h2>Let's test your understanding.</h2>
+        <p>Three questions. Three opportunities to prove your progress.</p>
+    </div>
+
+    <div class="quiz">
+
+        <div class="question">
+            <h3>1. Which element is the root of an HTML document?</h3>
+
+            <label class="option">
+                <input type="radio" name="q1" value="a">
+                &lt;body&gt;
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="b">
+                &lt;html&gt;
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="c">
+                &lt;head&gt;
+            </label>
+        </div>
+
+        <div class="question">
+            <h3>2. Where is the visible webpage content placed?</h3>
+
+            <label class="option">
+                <input type="radio" name="q2" value="a">
+                Inside &lt;head&gt;
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="b">
+                Inside &lt;title&gt;
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="c">
+                Inside &lt;body&gt;
+            </label>
+        </div>
+
+        <div class="question">
+            <h3>3. What is the purpose of DOCTYPE?</h3>
+
+            <label class="option">
+                <input type="radio" name="q3" value="a">
+                To declare the HTML document type and standards mode
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="b">
+                To add a background image
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="c">
+                To create a heading
+            </label>
+        </div>
+
+        <button class="btn" id="checkQuiz">Submit Answers</button>
+        <div id="quizResult" aria-live="polite"></div>
+
+    </div>
+</section>
+
+<!-- COMPLETION -->
+
+<div class="finish">
+    <div>
+        <h2>Document structure mastered?</h2>
+        <p>Get all three quiz answers correct to complete this lesson.</p>
+        <div id="completionMessage" aria-live="polite"></div>
+    </div>
+
+    <button id="completeLesson">Complete Lesson ↗</button>
+</div>
+
+<footer>
+    <strong>CNF<span>/</span></strong>
+    <span>HTML COURSE · LESSON 02</span>
+    <a href="03-html-elements-tags.html">Next: HTML Elements &amp; Tags →</a>
+</footer>
+
+<script>
+/* INTERACTIVE DOCUMENT ANATOMY */
+
+const parts = {
+    doctype: {
+        icon: '📄',
+        title: 'DOCTYPE Declaration',
+        description: 'Tells the browser that this document uses modern HTML5 standards. It should be the first line of your HTML file.',
+        syntax: '<!DOCTYPE html>',
+        hint: 'It is a declaration, not a normal HTML element.'
+    },
+
+    html: {
+        icon: '🌐',
+        title: 'HTML Root Element',
+        description: 'The html element is the root of the document. All other HTML elements are nested inside it.',
+        syntax: '<html lang="en"> ... </html>',
+        hint: 'The lang attribute identifies the document language.'
+    },
+
+    head: {
+        icon: '🧠',
+        title: 'The Head Section',
+        description: 'The head contains information about the document, such as metadata, the page title and links to external resources.',
+        syntax: '<head> ... </head>',
+        hint: 'Most of the content here is not directly displayed on the page.'
+    },
+
+    meta: {
+        icon: '⚙️',
+        title: 'Character Encoding',
+        description: 'The charset metadata tells the browser which character encoding to use. UTF-8 supports a wide range of characters and symbols.',
+        syntax: '<meta charset="UTF-8">',
+        hint: 'UTF-8 is the recommended character encoding for modern HTML.'
+    },
+
+    viewport: {
+        icon: '📱',
+        title: 'Viewport Metadata',
+        description: 'This setting helps the page adapt to the width of different devices, including mobile phones and tablets.',
+        syntax: 'width=device-width, initial-scale=1.0',
+        hint: 'Important for responsive layouts.'
+    },
+
+    title: {
+        icon: '🏷️',
+        title: 'Page Title',
+        description: 'Defines the title shown in the browser tab. It also helps users identify the webpage.',
+        syntax: '<title>My Website</title>',
+        hint: 'Place the title element inside the head.'
+    },
+
+    headclose: {
+        icon: '🔒',
+        title: 'Closing Head Tag',
+        description: 'Marks the end of the head section. The browser moves on to the body section after this.',
+        syntax: '</head>',
+        hint: 'Closing tags use a forward slash.'
+    },
+
+    body: {
+        icon: '👁️',
+        title: 'The Body Section',
+        description: 'The body contains the main visible content of the webpage, including headings, text, images and links.',
+        syntax: '<body> ... </body>',
+        hint: 'Visitors see the content placed inside the body.'
+    },
+
+    heading: {
+        icon: '🔠',
+        title: 'Heading Element',
+        description: 'The h1 element represents a top-level heading. It introduces the main topic or title of a page.',
+        syntax: '<h1>Hello World</h1>',
+        hint: 'HTML provides six heading levels, from h1 to h6.'
+    },
+
+    paragraph: {
+        icon: '📝',
+        title: 'Paragraph Element',
+        description: 'The p element represents a paragraph of text. It is commonly used for descriptions and written content.',
+        syntax: '<p>Welcome to my website.</p>',
+        hint: 'Use paragraphs to organize readable text.'
+    },
+
+    bodyclose: {
+        icon: '📦',
+        title: 'Closing Body Tag',
+        description: 'Marks the end of the visible document content.',
+        syntax: '</body>',
+        hint: 'Close the body after adding your page content.'
+    },
+
+    htmlclose: {
+        icon: '🏁',
+        title: 'Closing HTML Tag',
+        description: 'Closes the root HTML element and marks the end of the document.',
+        syntax: '</html>',
+        hint: 'A properly structured document closes its root element.'
+    }
+};
+
+document.querySelectorAll('.code-line').forEach(line => {
+    line.addEventListener('click', () => {
+        document.querySelectorAll('.code-line').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        line.classList.add('active');
+
+        const part = parts[line.dataset.part];
+
+        document.getElementById('partIcon').textContent = part.icon;
+        document.getElementById('partTitle').textContent = part.title;
+        document.getElementById('partDescription').textContent = part.description;
+        document.getElementById('partSyntax').textContent = part.syntax;
+        document.getElementById('partHint').textContent = part.hint;
+    });
+});
+
+/* HTML PLAYGROUND */
+
+const editor = document.getElementById('htmlEditor');
+const preview = document.getElementById('htmlPreview');
+
+const starterCode = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Website</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <p>I am learning HTML document structure.</p>
+</body>
+</html>`;
+
+function runDocument() {
+    preview.srcdoc = editor.value;
+}
+
+document.getElementById('runHTML').addEventListener('click', runDocument);
+
+document.getElementById('resetHTML').addEventListener('click', () => {
+    editor.value = starterCode;
+    runDocument();
+});
+
+runDocument();
+
+/* QUIZ SYSTEM */
+
+let quizPassed = false;
+
+const answers = {
+    q1: 'b',
+    q2: 'c',
+    q3: 'a'
+};
+
+const result = document.getElementById('quizResult');
+const completeButton = document.getElementById('completeLesson');
+const completionMessage = document.getElementById('completionMessage');
+const storageKey = 'html-lesson-02-completed';
+
+document.getElementById('checkQuiz').addEventListener('click', () => {
+    let score = 0;
+    let unanswered = false;
+
+    Object.keys(answers).forEach(key => {
+        const selected = document.querySelector(
+            `input[name="${key}"]:checked`
+        );
+
+        if (!selected) {
+            unanswered = true;
+        } else if (selected.value === answers[key]) {
+            score++;
+        }
+    });
+
+    if (unanswered) {
+        quizPassed = false;
+        result.textContent = 'Please answer all three questions.';
+        result.style.color = '#f5a36b';
+        return;
+    }
+
+    result.textContent = `Your Score: ${score}/3`;
+
+    if (score === 3) {
+        result.textContent += ' — Perfect! You passed.';
+        result.style.color = '#63e6a5';
+        quizPassed = true;
+    } else {
+        result.textContent += ' — Review the lesson and try again.';
+        result.style.color = '#f5a36b';
+        quizPassed = false;
+    }
+});
+
+/* LESSON COMPLETION */
+
+if (localStorage.getItem(storageKey) === 'true') {
+    completeButton.disabled = true;
+    completeButton.textContent = '✓ Lesson Completed';
+
+    completionMessage.textContent = 'This lesson is already completed.';
+    completionMessage.style.color = '#63e6a5';
+}
+
+completeButton.addEventListener('click', () => {
+    if (!quizPassed) {
+        completionMessage.textContent = 'First get 3/3 in the quiz.';
+        completionMessage.style.color = '#f5a36b';
+        return;
+    }
+
+    localStorage.setItem(storageKey, 'true');
+
+    completeButton.disabled = true;
+    completeButton.textContent = '✓ Lesson Completed';
+
+    completionMessage.textContent =
+        'Excellent! Lesson 02 completed successfully.';
+
+    completionMessage.style.color = '#63e6a5';
+});
+
+/* RESET QUIZ STATE WHEN SHARED RESET BUTTON IS USED */
+
+document.addEventListener('click', event => {
+    const resetButton = event.target.closest('.cnf-quiz-reset');
+
+    if (!resetButton) return;
+
+    quizPassed = false;
+
+    localStorage.removeItem(storageKey);
+
+    result.textContent = '';
+    completionMessage.textContent = '';
+
+    completeButton.disabled = true;
+    completeButton.textContent = 'Complete Lesson ↗';
+});
+</script>
+
+<!-- SHARED QUIZ GUARD: INJECTS THE RESET BUTTON -->
+<script src="../../js/lesson-quiz-guard.js"></script>
+
+<!-- SHARED LESSON ANIMATIONS -->
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+<script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

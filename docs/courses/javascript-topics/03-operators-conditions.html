@@ -1,0 +1,2185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 03 — Operators & Conditions | CNF/</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg:#080d18;
+    --panel:#101a2b;
+    --panel2:#142239;
+    --line:#26364d;
+    --text:#edf3ff;
+    --muted:#91a1ba;
+    --cyan:#39d9d0;
+    --blue:#6198ff;
+    --yellow:#ffd166;
+    --green:#75e6a2;
+    --red:#ff7d91;
+    --mono:'DM Mono',monospace;
+    --heading:'Space Grotesk',sans-serif;
+    --body:'Manrope',sans-serif;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(ellipse at 85% 5%,rgba(57,217,208,.07),transparent 28%),
+        radial-gradient(ellipse at 5% 45%,rgba(97,152,255,.06),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.7;
+    overflow-x:hidden;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+::selection{
+    background:var(--cyan);
+    color:#07131b;
+}
+
+/* NAVBAR */
+
+.navbar{
+    height:72px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    background:rgba(8,13,24,.94);
+    position:sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter:blur(15px);
+    animation:navDrop .7s ease both;
+}
+
+.brand{
+    font-family:var(--heading);
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:-1px;
+    color:var(--cyan);
+    transition:.3s;
+}
+
+.brand:hover{
+    text-shadow:0 0 20px rgba(57,217,208,.5);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.nav-right a{
+    transition:.25s;
+}
+
+.nav-right a:hover{
+    color:var(--cyan);
+    transform:translateY(-2px);
+}
+
+.lesson-tag{
+    border:1px solid var(--line);
+    padding:7px 12px;
+    border-radius:6px;
+    color:var(--cyan);
+    font-family:var(--mono);
+    font-size:11px;
+}
+
+/* HERO */
+
+.hero{
+    padding:75px 7% 65px;
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    gap:55px;
+    align-items:center;
+    min-height:520px;
+    background:
+        radial-gradient(ellipse at 80% 30%,rgba(57,217,208,.10),transparent 35%),
+        radial-gradient(ellipse at 10% 90%,rgba(97,152,255,.10),transparent 35%);
+    border-bottom:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    border:1px solid rgba(57,217,208,.07);
+    border-radius:50%;
+    right:-130px;
+    bottom:-180px;
+    box-shadow:0 0 0 35px rgba(57,217,208,.025),
+               0 0 0 70px rgba(57,217,208,.02);
+    pointer-events:none;
+}
+
+.hero-copy{
+    position:relative;
+    z-index:2;
+}
+
+.eyebrow{
+    color:var(--cyan);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:2px;
+    margin-bottom:18px;
+    animation:fadeUp .7s .1s both;
+}
+
+.hero h1{
+    font-family:var(--heading);
+    font-size:clamp(40px,5vw,65px);
+    line-height:1.08;
+    letter-spacing:-3px;
+    max-width:650px;
+    animation:fadeUp .8s .2s both;
+}
+
+.hero h1 span{
+    color:var(--cyan);
+}
+
+.hero-description{
+    color:var(--muted);
+    max-width:520px;
+    margin:23px 0 28px;
+    font-size:15px;
+    animation:fadeUp .8s .35s both;
+}
+
+.hero-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    animation:fadeUp .8s .45s both;
+}
+
+.meta-item{
+    border:1px solid var(--line);
+    background:rgba(16,26,43,.7);
+    border-radius:7px;
+    padding:9px 13px;
+    font-size:12px;
+    color:var(--muted);
+    transition:.3s;
+}
+
+.meta-item:hover{
+    color:var(--cyan);
+    border-color:var(--cyan);
+    transform:translateY(-4px);
+}
+
+/* FLOATING HERO BOX */
+
+.hero-visual-wrap{
+    position:relative;
+    z-index:2;
+    animation:fadeUp .9s .3s both;
+}
+
+.hero-visual{
+    background:linear-gradient(145deg,#101f33,#0b1524);
+    border:1px solid #2b4057;
+    border-radius:14px;
+    padding:22px;
+    box-shadow:0 25px 80px rgba(0,0,0,.3);
+    position:relative;
+    overflow:hidden;
+}
+
+.hero-visual:before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    background:rgba(57,217,208,.10);
+    filter:blur(55px);
+    right:-60px;
+    top:-60px;
+    animation:softGlow 4s ease-in-out infinite alternate;
+}
+
+.visual-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:17px;
+    border-bottom:1px solid var(--line);
+    color:var(--muted);
+    font-family:var(--mono);
+    font-size:11px;
+    position:relative;
+}
+
+.live-dot{
+    color:var(--green);
+    animation:blink 1.5s infinite;
+}
+
+.logic-question{
+    font-family:var(--heading);
+    font-size:21px;
+    font-weight:700;
+    margin:23px 0 16px;
+    position:relative;
+}
+
+.logic-equation{
+    background:#14243a;
+    border:1px solid #304863;
+    border-radius:9px;
+    padding:17px;
+    font-family:var(--mono);
+    color:var(--yellow);
+    text-align:center;
+    font-size:16px;
+    position:relative;
+    animation:equationPulse 3s infinite;
+}
+
+.logic-branches{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:15px;
+    position:relative;
+}
+
+.branch{
+    padding:15px;
+    border-radius:8px;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:12px;
+    transition:.3s;
+}
+
+.branch:hover{
+    transform:translateY(-5px);
+}
+
+.branch.yes{
+    background:rgba(117,230,162,.10);
+    border:1px solid rgba(117,230,162,.35);
+    color:var(--green);
+    animation:branchFloat 3s ease-in-out infinite;
+}
+
+.branch.no{
+    background:rgba(255,125,145,.08);
+    border:1px solid rgba(255,125,145,.3);
+    color:var(--red);
+    animation:branchFloat 3s ease-in-out infinite reverse;
+}
+
+.branch strong{
+    display:block;
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+/* MAIN LAYOUT */
+
+.workspace{
+    max-width:1400px;
+    margin:auto;
+    padding:55px 5%;
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:55px;
+    align-items:start;
+}
+
+.sidebar{
+    position:sticky;
+    top:100px;
+    border-right:1px solid var(--line);
+    padding-right:20px;
+    animation:slideRight .8s ease both;
+}
+
+.sidebar-title{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--muted);
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+
+.sidebar a{
+    display:block;
+    padding:11px 13px;
+    border-radius:6px;
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:5px;
+    transition:.25s;
+}
+
+.sidebar a:hover{
+    color:var(--cyan);
+    background:rgba(57,217,208,.08);
+    transform:translateX(5px);
+}
+
+.sidebar a.active{
+    color:var(--cyan);
+    background:rgba(57,217,208,.10);
+    border-left:2px solid var(--cyan);
+}
+
+/* CONTENT SECTIONS */
+
+.content{
+    min-width:0;
+}
+
+.section{
+    margin-bottom:75px;
+    scroll-margin-top:105px;
+    position:relative;
+}
+
+.section-number{
+    color:var(--cyan);
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:9px;
+    transition:.3s;
+}
+
+.section h2{
+    font-family:var(--heading);
+    font-size:32px;
+    letter-spacing:-1px;
+    margin-bottom:12px;
+    transition:.3s;
+}
+
+.section:hover h2{
+    color:#d6ffff;
+}
+
+.section-intro{
+    color:var(--muted);
+    font-size:14px;
+    max-width:700px;
+    margin-bottom:28px;
+}
+
+/* OPERATOR TABLE */
+
+.operator-table{
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.operator-table:hover{
+    border-color:rgba(57,217,208,.35);
+    box-shadow:0 15px 40px rgba(0,0,0,.16);
+}
+
+.operator-row{
+    display:grid;
+    grid-template-columns:1fr 1.4fr 1.4fr;
+    border-bottom:1px solid var(--line);
+    transition:background .25s;
+}
+
+.operator-row:hover:not(.header){
+    background:rgba(57,217,208,.045);
+}
+
+.operator-row:last-child{
+    border-bottom:none;
+}
+
+.operator-row>div{
+    padding:15px;
+    font-size:13px;
+    border-right:1px solid var(--line);
+}
+
+.operator-row>div:last-child{
+    border-right:none;
+}
+
+.operator-row.header{
+    background:#15243a;
+    color:var(--cyan);
+    font-family:var(--mono);
+    font-size:11px;
+}
+
+.operator-symbol{
+    color:var(--yellow);
+    font-family:var(--mono);
+    font-weight:500;
+}
+
+.operator-description{
+    color:var(--muted);
+}
+
+/* CODE BLOCK */
+
+.code-block{
+    background:#060c16;
+    border:1px solid #263a53;
+    border-radius:9px;
+    overflow:hidden;
+    margin:22px 0;
+    transition:.3s;
+}
+
+.code-block:hover{
+    border-color:rgba(57,217,208,.45);
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(0,0,0,.2);
+}
+
+.code-header{
+    padding:11px 15px;
+    border-bottom:1px solid #263a53;
+    color:var(--muted);
+    font-family:var(--mono);
+    font-size:11px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.code-block pre{
+    padding:20px;
+    overflow-x:auto;
+    color:#b9d3ee;
+    font-family:var(--mono);
+    font-size:13px;
+    line-height:2;
+}
+
+.code-highlight{
+    color:var(--yellow);
+}
+
+.code-green{
+    color:var(--green);
+}
+
+.code-blue{
+    color:var(--blue);
+}
+
+/* OPERATOR LAB */
+
+.lab{
+    background:linear-gradient(145deg,#111e31,#0c1728);
+    border:1px solid #2b4057;
+    border-radius:12px;
+    padding:25px;
+    position:relative;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.lab:before{
+    content:"";
+    position:absolute;
+    width:200px;
+    height:200px;
+    right:-100px;
+    top:-120px;
+    background:rgba(57,217,208,.08);
+    filter:blur(40px);
+    pointer-events:none;
+}
+
+.lab:hover{
+    border-color:rgba(57,217,208,.4);
+}
+
+.lab-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+    position:relative;
+}
+
+.lab-heading h3{
+    font-family:var(--heading);
+    font-size:19px;
+}
+
+.lab-label{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--cyan);
+    border:1px solid #31536a;
+    padding:5px 9px;
+    border-radius:5px;
+}
+
+.lab-controls{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr auto;
+    gap:10px;
+    align-items:end;
+    position:relative;
+}
+
+.field label{
+    display:block;
+    color:var(--muted);
+    font-size:11px;
+    margin-bottom:7px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    background:#091321;
+    border:1px solid #344b64;
+    color:white;
+    border-radius:6px;
+    padding:11px;
+    outline:none;
+    transition:.25s;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:var(--cyan);
+    box-shadow:0 0 0 3px rgba(57,217,208,.08);
+}
+
+.action-btn{
+    background:var(--cyan);
+    color:#07131b;
+    border:none;
+    border-radius:6px;
+    padding:12px 18px;
+    font-weight:800;
+    font-size:12px;
+    transition:.3s;
+}
+
+.action-btn:hover{
+    filter:brightness(1.1);
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(57,217,208,.18);
+}
+
+.action-btn:active{
+    transform:scale(.97);
+}
+
+.result-box{
+    margin-top:18px;
+    background:#081522;
+    border:1px solid #29445a;
+    border-radius:7px;
+    padding:15px;
+    font-family:var(--mono);
+    color:var(--green);
+    font-size:13px;
+    min-height:50px;
+    overflow-wrap:anywhere;
+    transition:.3s;
+}
+
+/* CONDITION FLOW */
+
+.flow{
+    display:grid;
+    grid-template-columns:1fr 50px 1fr;
+    align-items:center;
+    gap:12px;
+    margin:25px 0;
+}
+
+.flow-node{
+    padding:19px;
+    border:1px solid #304761;
+    background:#122238;
+    border-radius:9px;
+    text-align:center;
+    transition:.3s;
+}
+
+.flow-node:hover{
+    transform:translateY(-6px);
+    border-color:var(--cyan);
+    box-shadow:0 12px 25px rgba(0,0,0,.2);
+}
+
+.flow-node small{
+    display:block;
+    color:var(--muted);
+    font-family:var(--mono);
+    font-size:10px;
+    margin-bottom:7px;
+}
+
+.flow-node strong{
+    color:var(--cyan);
+    font-family:var(--mono);
+    font-size:15px;
+}
+
+.flow-arrow{
+    color:var(--yellow);
+    text-align:center;
+    font-size:25px;
+    animation:arrowMove 1.5s ease-in-out infinite;
+}
+
+.condition-example{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:20px;
+}
+
+.condition-card{
+    padding:20px;
+    border-radius:9px;
+    background:#101d30;
+    border:1px solid var(--line);
+    transition:.3s;
+}
+
+.condition-card:hover{
+    transform:translateY(-6px);
+    border-color:var(--cyan);
+    background:#14243a;
+}
+
+.condition-card h4{
+    color:var(--cyan);
+    font-family:var(--mono);
+    margin-bottom:10px;
+    font-size:13px;
+}
+
+.condition-card p{
+    font-size:12px;
+    color:var(--muted);
+}
+
+/* GRADE CALCULATOR */
+
+.grade-panel{
+    background:linear-gradient(130deg,#12283a,#101a2b);
+    border:1px solid #2c5060;
+    border-radius:12px;
+    padding:27px;
+    transition:.3s;
+}
+
+.grade-panel:hover{
+    border-color:rgba(57,217,208,.45);
+    box-shadow:0 18px 45px rgba(0,0,0,.2);
+}
+
+.grade-panel h3{
+    font-family:var(--heading);
+    font-size:21px;
+    margin-bottom:7px;
+}
+
+.grade-panel>p{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:22px;
+}
+
+.grade-output{
+    margin-top:18px;
+    padding:18px;
+    background:#081522;
+    border-radius:8px;
+    border:1px solid #2b4057;
+    min-height:75px;
+    color:var(--green);
+    font-family:var(--mono);
+    font-size:13px;
+    overflow-wrap:anywhere;
+    transition:.3s;
+}
+
+/* QUIZ */
+
+.quiz-area{
+    background:#0e1929;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:28px;
+    transition:.3s;
+}
+
+.quiz-area:hover{
+    border-color:rgba(57,217,208,.3);
+}
+
+.quiz-question{
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.quiz-question:last-of-type{
+    border-bottom:none;
+}
+
+.quiz-question h4{
+    font-size:14px;
+    margin-bottom:13px;
+}
+
+.quiz-question label{
+    display:block;
+    color:var(--muted);
+    font-size:13px;
+    padding:9px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.quiz-question label:hover{
+    color:var(--cyan);
+    background:rgba(57,217,208,.06);
+    transform:translateX(4px);
+}
+
+.quiz-question input{
+    accent-color:var(--cyan);
+    margin-right:8px;
+}
+
+.quiz-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:22px;
+}
+
+.secondary-btn{
+    border:1px solid #42536b;
+    color:var(--text);
+    background:transparent;
+    border-radius:6px;
+    padding:11px 17px;
+    font-size:12px;
+    transition:.3s;
+}
+
+.secondary-btn:hover{
+    border-color:var(--cyan);
+    color:var(--cyan);
+    transform:translateY(-3px);
+}
+
+.quiz-result{
+    margin-top:17px;
+    padding:15px;
+    border-radius:7px;
+    background:#091522;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.8;
+    display:none;
+    animation:fadeUp .35s ease both;
+}
+
+.quiz-result.success{
+    display:block;
+    color:var(--green);
+    border:1px solid rgba(117,230,162,.25);
+    background:rgba(117,230,162,.07);
+}
+
+.quiz-result.error{
+    display:block;
+    color:var(--red);
+    border:1px solid rgba(255,125,145,.25);
+    background:rgba(255,125,145,.07);
+}
+
+.quiz-result.warning{
+    display:block;
+    color:var(--yellow);
+    border:1px solid rgba(255,209,102,.25);
+    background:rgba(255,209,102,.07);
+}
+
+/* COMPLETION NAVIGATION */
+
+.lesson-navigation{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+    margin:50px 0 15px;
+    padding-top:25px;
+    border-top:1px solid var(--line);
+}
+
+.navigation-group{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.nav-button{
+    border:1px solid #344861;
+    padding:13px 18px;
+    border-radius:7px;
+    color:var(--muted);
+    background:transparent;
+    font-size:12px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    transition:.3s;
+}
+
+.nav-button:hover:not(.locked){
+    border-color:var(--cyan);
+    color:var(--cyan);
+    transform:translateY(-3px);
+}
+
+.nav-button.locked{
+    opacity:.35;
+    cursor:not-allowed;
+    pointer-events:none;
+}
+
+#completeBtn.completed{
+    color:var(--green);
+    border-color:var(--green);
+    background:rgba(117,230,162,.07);
+    pointer-events:none;
+    opacity:1;
+}
+
+#nextBtn.unlocked{
+    color:var(--cyan);
+    border-color:var(--cyan);
+    opacity:1;
+    pointer-events:auto;
+}
+
+#nextBtn.unlocked:hover{
+    background:var(--cyan);
+    color:#07131b;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid var(--line);
+    padding:28px 6%;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+footer strong{
+    color:var(--cyan);
+    font-family:var(--heading);
+    font-size:17px;
+}
+
+/* REVEAL ANIMATIONS */
+
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+    transition:
+        opacity .75s ease,
+        transform .75s cubic-bezier(.2,.7,.2,1);
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.reveal-left{
+    opacity:0;
+    transform:translateX(-30px);
+    transition:opacity .75s ease,transform .75s ease;
+}
+
+.reveal-left.visible{
+    opacity:1;
+    transform:translateX(0);
+}
+
+/* KEYFRAMES */
+
+@keyframes navDrop{
+    from{opacity:0;transform:translateY(-15px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(25px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes slideRight{
+    from{opacity:0;transform:translateX(-25px)}
+    to{opacity:1;transform:translateX(0)}
+}
+
+@keyframes floatBox{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-16px)}
+}
+
+@keyframes branchFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-5px)}
+}
+
+@keyframes blink{
+    0%,100%{opacity:1}
+    50%{opacity:.35}
+}
+
+@keyframes softGlow{
+    from{opacity:.4;transform:scale(.8)}
+    to{opacity:1;transform:scale(1.2)}
+}
+
+@keyframes equationPulse{
+    0%,100%{box-shadow:0 0 0 rgba(57,217,208,0)}
+    50%{box-shadow:0 0 22px rgba(57,217,208,.1)}
+}
+
+@keyframes arrowMove{
+    0%,100%{transform:translateX(0)}
+    50%{transform:translateX(6px)}
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+    .hero{
+        grid-template-columns:1fr;
+        padding:55px 6%;
+        gap:35px;
+    }
+
+    .hero-visual-wrap{
+        max-width:550px;
+        width:100%;
+        margin:auto;
+    }
+
+    .workspace{
+        grid-template-columns:1fr;
+        gap:30px;
+    }
+
+    .sidebar{
+        position:static;
+        border-right:none;
+        border-bottom:1px solid var(--line);
+        padding:0 0 15px;
+        display:flex;
+        flex-wrap:wrap;
+        gap:5px;
+    }
+
+    .sidebar-title{
+        width:100%;
+    }
+
+    .sidebar a{
+        display:inline-block;
+    }
+}
+
+@media(max-width:600px){
+    .navbar{
+        padding:0 5%;
+        height:65px;
+    }
+
+    .nav-right{
+        gap:10px;
+        font-size:11px;
+    }
+
+    .brand{
+        font-size:18px;
+    }
+
+    .lesson-tag{
+        font-size:9px;
+        padding:6px 8px;
+    }
+
+    .hero{
+        padding:45px 6%;
+    }
+
+    .hero h1{
+        font-size:43px;
+    }
+
+    .hero-description{
+        font-size:13px;
+    }
+
+    .workspace{
+        padding:40px 5%;
+    }
+
+    .lab-controls{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .condition-example{
+        grid-template-columns:1fr;
+    }
+
+    .flow{
+        grid-template-columns:1fr;
+    }
+
+    .flow-arrow{
+        transform:rotate(90deg);
+    }
+
+    .operator-row{
+        grid-template-columns:.7fr 1fr 1fr;
+    }
+
+    .operator-row>div{
+        padding:10px 7px;
+        font-size:11px;
+        overflow-wrap:anywhere;
+    }
+
+    .section h2{
+        font-size:27px;
+    }
+
+    .lab{
+        padding:17px;
+    }
+
+    .quiz-area{
+        padding:18px;
+    }
+
+    .lesson-navigation{
+        flex-direction:column;
+    }
+
+    .navigation-group{
+        width:100%;
+    }
+
+    .navigation-group .nav-button{
+        flex:1;
+    }
+
+    footer{
+        flex-direction:column;
+    }
+}
+
+@media(max-width:390px){
+    .nav-right{
+        gap:7px;
+    }
+
+    .nav-right>a{
+        font-size:10px;
+    }
+
+    .hero h1{
+        font-size:37px;
+    }
+
+    .lab-controls{
+        grid-template-columns:1fr;
+    }
+
+    .logic-question{
+        font-size:18px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        scroll-behavior:auto!important;
+        transition-duration:.01ms!important;
+    }
+
+    .reveal,
+    .reveal-left{
+        opacity:1;
+        transform:none;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="../../pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+    <a href="#" class="brand">CNF/</a>
+
+    <div class="nav-right">
+        <a href="../javascript.html" target="_blank">Course Home</a>
+        <span class="lesson-tag">LESSON 03 / 08</span>
+    </div>
+</nav>
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="hero-copy">
+        <div class="eyebrow">JAVASCRIPT / CORE CONCEPTS</div>
+
+        <h1>Make your code <span>think.</span></h1>
+
+        <p class="hero-description">
+            Learn how JavaScript performs calculations, compares values,
+            and makes decisions. This is where your code starts behaving
+            intelligently.
+        </p>
+
+        <div class="hero-meta">
+            <div class="meta-item">⏱ 25–35 Minutes</div>
+            <div class="meta-item">⌨ Beginner Level</div>
+            <div class="meta-item">⚡ 3 Practice Tasks</div>
+        </div>
+    </div>
+
+    <!-- FLOATING SIDE BOX -->
+
+    <div class="hero-visual-wrap">
+        <div class="hero-visual">
+
+            <div class="visual-top">
+                <span>DECISION ENGINE / 01</span>
+                <span class="live-dot">● ACTIVE</span>
+            </div>
+
+            <div class="logic-question">Can this student pass?</div>
+
+            <div class="logic-equation">
+                marks &gt;= 50
+            </div>
+
+            <div class="logic-branches">
+                <div class="branch yes">
+                    <strong>TRUE</strong>
+                    PASS
+                </div>
+
+                <div class="branch no">
+                    <strong>FALSE</strong>
+                    TRY AGAIN
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</header>
+
+<!-- MAIN WORKSPACE -->
+
+<div class="workspace">
+
+    <aside class="sidebar">
+        <div class="sidebar-title">LESSON MAP</div>
+
+        <a href="#intro" class="active">01 / Introduction</a>
+        <a href="#arithmetic">02 / Arithmetic</a>
+        <a href="#comparison">03 / Comparison</a>
+        <a href="#logical">04 / Logical</a>
+        <a href="#playground">05 / Operator Lab</a>
+        <a href="#conditions">06 / Conditions</a>
+        <a href="#grade">07 / Grade Checker</a>
+        <a href="#quiz">08 / Final Quiz</a>
+    </aside>
+
+    <main class="content">
+
+        <!-- SECTION 01 -->
+
+        <section class="section reveal" id="intro">
+            <div class="section-number">01 — THE FOUNDATION</div>
+
+            <h2>What are operators?</h2>
+
+            <p class="section-intro">
+                Operators are special symbols that perform operations on values
+                and variables. They help JavaScript calculate, compare and
+                make decisions.
+            </p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>example.js</span>
+                    <span>JavaScript</span>
+                </div>
+
+                <pre><span class="code-blue">let</span> price = 500;
+<span class="code-blue">let</span> quantity = 3;
+
+<span class="code-blue">let</span> total = price <span class="code-highlight">*</span> quantity;
+
+console.log(total);
+
+<span class="code-green">// Output: 1500</span></pre>
+            </div>
+
+            <p class="section-intro">
+                In this example, the multiplication operator (*) multiplies
+                price by quantity and stores the result in total.
+            </p>
+        </section>
+
+        <!-- SECTION 02 -->
+
+        <section class="section reveal" id="arithmetic">
+            <div class="section-number">02 — CALCULATIONS</div>
+
+            <h2>Arithmetic operators</h2>
+
+            <p class="section-intro">
+                Arithmetic operators are used to perform mathematical
+                calculations in JavaScript.
+            </p>
+
+            <div class="operator-table">
+
+                <div class="operator-row header">
+                    <div>OPERATOR</div>
+                    <div>MEANING</div>
+                    <div>EXAMPLE</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">+</div>
+                    <div>Addition</div>
+                    <div>10 + 5 = 15</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">-</div>
+                    <div>Subtraction</div>
+                    <div>10 - 5 = 5</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">*</div>
+                    <div>Multiplication</div>
+                    <div>10 * 5 = 50</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">/</div>
+                    <div>Division</div>
+                    <div>10 / 5 = 2</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">%</div>
+                    <div>Remainder</div>
+                    <div>10 % 3 = 1</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">**</div>
+                    <div>Exponentiation</div>
+                    <div>2 ** 3 = 8</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 03 -->
+
+        <section class="section reveal" id="comparison">
+            <div class="section-number">03 — COMPARING VALUES</div>
+
+            <h2>Comparison operators</h2>
+
+            <p class="section-intro">
+                Comparison operators compare two values and return a Boolean
+                result: true or false.
+            </p>
+
+            <div class="operator-table">
+
+                <div class="operator-row header">
+                    <div>OPERATOR</div>
+                    <div>MEANING</div>
+                    <div>EXAMPLE</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">==</div>
+                    <div>Loose equality</div>
+                    <div>5 == "5" → true</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">===</div>
+                    <div>Strict equality</div>
+                    <div>5 === "5" → false</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">!=</div>
+                    <div>Not equal</div>
+                    <div>5 != 3 → true</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">!==</div>
+                    <div>Strict not equal</div>
+                    <div>5 !== "5" → true</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">&gt;</div>
+                    <div>Greater than</div>
+                    <div>10 &gt; 5 → true</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">&lt;</div>
+                    <div>Less than</div>
+                    <div>5 &lt; 10 → true</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">&gt;=</div>
+                    <div>Greater or equal</div>
+                    <div>5 &gt;= 5 → true</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">&lt;=</div>
+                    <div>Less or equal</div>
+                    <div>4 &lt;= 5 → true</div>
+                </div>
+
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>comparison.js</span>
+                    <span>Example</span>
+                </div>
+
+                <pre><span class="code-blue">let</span> age = 18;
+
+console.log(age &gt;= 18);
+
+<span class="code-green">// Output: true</span></pre>
+            </div>
+        </section>
+
+        <!-- SECTION 04 -->
+
+        <section class="section reveal" id="logical">
+            <div class="section-number">04 — CONNECTING CONDITIONS</div>
+
+            <h2>Logical operators</h2>
+
+            <p class="section-intro">
+                Logical operators combine multiple conditions or reverse
+                a condition.
+            </p>
+
+            <div class="operator-table">
+
+                <div class="operator-row header">
+                    <div>OPERATOR</div>
+                    <div>MEANING</div>
+                    <div>EXAMPLE</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">&&</div>
+                    <div>AND — both must be true</div>
+                    <div>true && true</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">||</div>
+                    <div>OR — at least one true</div>
+                    <div>true || false</div>
+                </div>
+
+                <div class="operator-row">
+                    <div class="operator-symbol">!</div>
+                    <div>NOT — reverses the result</div>
+                    <div>!true → false</div>
+                </div>
+
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>logical.js</span>
+                    <span>Example</span>
+                </div>
+
+                <pre><span class="code-blue">let</span> age = 20;
+<span class="code-blue">let</span> hasID = true;
+
+<span class="code-blue">let</span> allowed = age &gt;= 18 <span class="code-highlight">&&</span> hasID;
+
+console.log(allowed);
+
+<span class="code-green">// Output: true</span></pre>
+            </div>
+        </section>
+
+        <!-- SECTION 05 -->
+
+        <section class="section reveal" id="playground">
+            <div class="section-number">05 — EXPERIMENT YOURSELF</div>
+
+            <h2>Operator laboratory</h2>
+
+            <p class="section-intro">
+                Change the values and operator. Run the calculation to see
+                how JavaScript evaluates your expression.
+            </p>
+
+            <div class="lab">
+
+                <div class="lab-heading">
+                    <h3>Live calculation</h3>
+                    <span class="lab-label">INTERACTIVE LAB</span>
+                </div>
+
+                <div class="lab-controls">
+
+                    <div class="field">
+                        <label for="numA">First number</label>
+                        <input type="number" id="numA" value="20">
+                    </div>
+
+                    <div class="field">
+                        <label for="operator">Operator</label>
+                        <select id="operator">
+                            <option value="+">Addition (+)</option>
+                            <option value="-">Subtraction (-)</option>
+                            <option value="*">Multiply (*)</option>
+                            <option value="/">Divide (/)</option>
+                            <option value="%">Remainder (%)</option>
+                            <option value="**">Power (**)</option>
+                            <option value=">">Greater than (&gt;)</option>
+                            <option value="<">Less than (&lt;)</option>
+                            <option value="===">Equal (===)</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="numB">Second number</label>
+                        <input type="number" id="numB" value="5">
+                    </div>
+
+                    <button type="button" class="action-btn" onclick="runOperator()">
+                        RUN →
+                    </button>
+
+                </div>
+
+                <div class="result-box" id="operatorResult" aria-live="polite">
+                    Result will appear here...
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 06 -->
+
+        <section class="section reveal" id="conditions">
+
+            <div class="section-number">06 — DECISION MAKING</div>
+
+            <h2>Conditional statements</h2>
+
+            <p class="section-intro">
+                Conditions allow JavaScript to execute different blocks
+                of code depending on whether a condition is true or false.
+            </p>
+
+            <div class="flow">
+
+                <div class="flow-node">
+                    <small>STEP 01</small>
+                    <strong>Check condition</strong>
+                </div>
+
+                <div class="flow-arrow">→</div>
+
+                <div class="flow-node">
+                    <small>STEP 02</small>
+                    <strong>True / False</strong>
+                </div>
+
+            </div>
+
+            <div class="condition-example">
+
+                <div class="condition-card">
+                    <h4>if statement</h4>
+                    <p>
+                        Executes a block of code when its condition is true.
+                    </p>
+                </div>
+
+                <div class="condition-card">
+                    <h4>else statement</h4>
+                    <p>
+                        Executes when the if condition is false.
+                    </p>
+                </div>
+
+                <div class="condition-card">
+                    <h4>else if statement</h4>
+                    <p>
+                        Checks another condition when previous conditions
+                        are false.
+                    </p>
+                </div>
+
+                <div class="condition-card">
+                    <h4>switch statement</h4>
+                    <p>
+                        Selects one block from multiple possible cases.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>conditions.js</span>
+                    <span>Example</span>
+                </div>
+
+                <pre><span class="code-blue">let</span> marks = 75;
+
+<span class="code-highlight">if</span> (marks &gt;= 80) {
+    console.log("Excellent!");
+}
+<span class="code-highlight">else if</span> (marks &gt;= 50) {
+    console.log("You passed!");
+}
+<span class="code-highlight">else</span> {
+    console.log("Try again!");
+}
+
+<span class="code-green">// Output: You passed!</span></pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>ternary.js</span>
+                    <span>Short condition</span>
+                </div>
+
+                <pre><span class="code-blue">let</span> age = 19;
+
+<span class="code-blue">let</span> result = age &gt;= 18
+    ? "Adult"
+    : "Minor";
+
+console.log(result);
+
+<span class="code-green">// Output: Adult</span></pre>
+            </div>
+
+        </section>
+
+        <!-- SECTION 07 -->
+
+        <section class="section reveal" id="grade">
+
+            <div class="section-number">07 — REAL WORLD APPLICATION</div>
+
+            <h2>Build a grade checker</h2>
+
+            <p class="section-intro">
+                Let's use conditions to create a simple grading system.
+                Enter marks and see how JavaScript makes a decision.
+            </p>
+
+            <div class="grade-panel">
+
+                <h3>Student result system</h3>
+
+                <p>Enter marks between 0 and 100.</p>
+
+                <div class="lab-controls">
+
+                    <div class="field">
+                        <label for="studentMarks">Student marks</label>
+                        <input type="number" id="studentMarks"
+                               min="0" max="100" placeholder="e.g. 85">
+                    </div>
+
+                    <button type="button" class="action-btn" onclick="checkGrade()">
+                        CHECK RESULT →
+                    </button>
+
+                </div>
+
+                <div class="grade-output" id="gradeOutput" aria-live="polite">
+                    Waiting for marks...
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SECTION 08 -->
+
+        <section class="section reveal" id="quiz">
+
+            <div class="section-number">08 — TEST YOUR KNOWLEDGE</div>
+
+            <h2>Lesson 03 challenge</h2>
+
+            <p class="section-intro">
+                Answer all three questions. You need at least 2 correct
+                answers to pass this lesson.
+            </p>
+
+            <div class="quiz-area">
+
+                <form id="quizForm">
+
+                    <div class="quiz-question">
+                        <h4>Q1. Which operator is used for multiplication?</h4>
+
+                        <label><input type="radio" name="q1" value="a"> +</label>
+                        <label><input type="radio" name="q1" value="b"> *</label>
+                        <label><input type="radio" name="q1" value="c"> /</label>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Q2. What does the === operator check?</h4>
+
+                        <label><input type="radio" name="q2" value="a"> Only values</label>
+                        <label><input type="radio" name="q2" value="b"> Only data types</label>
+                        <label><input type="radio" name="q2" value="c"> Value and data type</label>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Q3. Which statement runs when an if condition is false?</h4>
+
+                        <label><input type="radio" name="q3" value="a"> else</label>
+                        <label><input type="radio" name="q3" value="b"> console</label>
+                        <label><input type="radio" name="q3" value="c"> let</label>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button type="button" class="action-btn" onclick="submitQuiz()">
+                            SUBMIT ANSWERS →
+                        </button>
+
+                        <button type="button" class="secondary-btn" onclick="resetQuiz()">
+                            RESET QUIZ
+                        </button>
+                    </div>
+
+                </form>
+
+                <div class="quiz-result" id="quizResult" aria-live="polite"></div>
+
+            </div>
+
+        </section>
+
+        <!-- LESSON NAVIGATION -->
+
+        <div class="lesson-navigation">
+
+            <a href="02-variables-data-types.html" class="nav-button">
+                ← Previous Lesson
+            </a>
+
+            <div class="navigation-group">
+
+                <button type="button" id="completeBtn"
+                        class="nav-button locked"
+                        onclick="completeLesson()">
+                    Complete Lesson ✓
+                </button>
+
+                <a id="nextBtn"
+                   href="04-loops.html"
+                   class="nav-button locked">
+                    Next Lesson →
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<footer>
+    <strong>CNF/</strong>
+    <span>Learn. Build. Create. Repeat.</span>
+    <span>JavaScript Course — Lesson 03</span>
+</footer>
+
+<script>
+
+/* ==========================================
+   OPERATOR LAB
+========================================== */
+
+function runOperator(){
+
+    const inputA = document.getElementById("numA");
+    const inputB = document.getElementById("numB");
+    const op = document.getElementById("operator").value;
+    const output = document.getElementById("operatorResult");
+
+    if(inputA.value.trim() === "" || inputB.value.trim() === ""){
+        output.textContent = "Please enter both numbers.";
+        return;
+    }
+
+    const a = Number(inputA.value);
+    const b = Number(inputB.value);
+
+    if(!Number.isFinite(a) || !Number.isFinite(b)){
+        output.textContent = "Please enter valid finite numbers.";
+        return;
+    }
+
+    let result;
+
+    switch(op){
+
+        case "+":
+            result = a + b;
+            break;
+
+        case "-":
+            result = a - b;
+            break;
+
+        case "*":
+            result = a * b;
+            break;
+
+        case "/":
+            result = b === 0 ? "Cannot divide by zero" : a / b;
+            break;
+
+        case "%":
+            result = b === 0 ? "Cannot divide by zero" : a % b;
+            break;
+
+        case "**":
+            result = a ** b;
+            break;
+
+        case ">":
+            result = a > b;
+            break;
+
+        case "<":
+            result = a < b;
+            break;
+
+        case "===":
+            result = a === b;
+            break;
+
+        default:
+            result = "Unknown operator";
+    }
+
+    output.textContent = `${a} ${op} ${b} = ${result}`;
+}
+
+
+/* ==========================================
+   GRADE CHECKER
+========================================== */
+
+function checkGrade(){
+
+    const input = document.getElementById("studentMarks");
+    const output = document.getElementById("gradeOutput");
+
+    if(input.value.trim() === ""){
+        output.textContent = "Please enter your marks first.";
+        return;
+    }
+
+    const marks = Number(input.value);
+
+    if(!Number.isFinite(marks) || marks < 0 || marks > 100){
+        output.textContent = "Enter a valid number between 0 and 100.";
+        return;
+    }
+
+    let grade;
+    let message;
+
+    if(marks >= 90){
+        grade = "A+";
+        message = "Outstanding performance!";
+    }
+    else if(marks >= 80){
+        grade = "A";
+        message = "Excellent work!";
+    }
+    else if(marks >= 70){
+        grade = "B";
+        message = "Very good!";
+    }
+    else if(marks >= 60){
+        grade = "C";
+        message = "Good effort!";
+    }
+    else if(marks >= 50){
+        grade = "D";
+        message = "You passed!";
+    }
+    else{
+        grade = "F";
+        message = "Keep practicing and try again!";
+    }
+
+    output.textContent =
+        `Marks: ${marks}/100 | Grade: ${grade} | ${message}`;
+}
+
+
+/* ==========================================
+   QUIZ SYSTEM
+========================================== */
+
+let quizPassed = false;
+
+const LESSON_STORAGE_KEY = "javascript-lesson-03-completed";
+
+function submitQuiz(){
+
+    const answers = {
+        q1:"b",
+        q2:"c",
+        q3:"a"
+    };
+
+    let score = 0;
+    let answered = 0;
+
+    for(const question in answers){
+
+        const selected = document.querySelector(
+            `input[name="${question}"]:checked`
+        );
+
+        if(selected){
+            answered++;
+
+            if(selected.value === answers[question]){
+                score++;
+            }
+        }
+    }
+
+    const result = document.getElementById("quizResult");
+
+    if(answered < 3){
+
+        result.className = "quiz-result warning";
+        result.textContent =
+            `You answered ${answered}/3 questions. Please answer all questions before submitting.`;
+
+        return;
+    }
+
+    if(score >= 2){
+
+        quizPassed = true;
+
+        result.className = "quiz-result success";
+        result.textContent =
+            `Congratulations! You scored ${score}/3. You passed the knowledge check. Now click Complete Lesson to unlock the next lesson.`;
+
+        document.getElementById("completeBtn").classList.remove("locked");
+
+    }else{
+
+        quizPassed = false;
+
+        result.className = "quiz-result error";
+        result.textContent =
+            `You scored ${score}/3. You need at least 2 correct answers. Review the lesson and try again.`;
+
+        document.getElementById("completeBtn").classList.add("locked");
+    }
+}
+
+
+/* ==========================================
+   RESET QUIZ AND PROGRESS
+========================================== */
+
+function resetQuiz(){
+
+    document.getElementById("quizForm").reset();
+
+    const result = document.getElementById("quizResult");
+
+    result.className = "quiz-result";
+    result.textContent = "";
+
+    quizPassed = false;
+
+    // Clear saved completion
+    localStorage.removeItem(LESSON_STORAGE_KEY);
+
+    // Lock completion and next lesson
+    const completeBtn = document.getElementById("completeBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    completeBtn.classList.add("locked");
+    completeBtn.classList.remove("completed");
+    completeBtn.textContent = "Complete Lesson ✓";
+
+    nextBtn.classList.add("locked");
+    nextBtn.classList.remove("unlocked");
+}
+
+
+/* ==========================================
+   LESSON COMPLETION
+========================================== */
+
+function completeLesson(){
+
+    if(!quizPassed){
+        return;
+    }
+
+    localStorage.setItem(LESSON_STORAGE_KEY,"true");
+
+    const completeBtn = document.getElementById("completeBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    completeBtn.classList.remove("locked");
+    completeBtn.classList.add("completed");
+    completeBtn.textContent = "Lesson Completed ✓";
+
+    nextBtn.classList.remove("locked");
+    nextBtn.classList.add("unlocked");
+}
+
+
+/* ==========================================
+   RESTORE SAVED PROGRESS
+========================================== */
+
+function restoreProgress(){
+
+    const completed = localStorage.getItem(LESSON_STORAGE_KEY) === "true";
+
+    if(completed){
+
+        quizPassed = true;
+
+        const completeBtn = document.getElementById("completeBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        completeBtn.classList.remove("locked");
+        completeBtn.classList.add("completed");
+        completeBtn.textContent = "Lesson Completed ✓";
+
+        nextBtn.classList.remove("locked");
+        nextBtn.classList.add("unlocked");
+    }
+}
+
+
+/* ==========================================
+   SIDEBAR ACTIVE SECTION
+========================================== */
+
+function initializeSidebar(){
+
+    const sections = document.querySelectorAll(".section");
+    const sidebarLinks = document.querySelectorAll(".sidebar a");
+
+    if(!("IntersectionObserver" in window)){
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries)=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                sidebarLinks.forEach(link=>{
+                    link.classList.remove("active");
+                });
+
+                const activeLink = document.querySelector(
+                    `.sidebar a[href="#${entry.target.id}"]`
+                );
+
+                if(activeLink){
+                    activeLink.classList.add("active");
+                }
+            }
+
+        });
+
+    },{
+        rootMargin:"-25% 0px -60% 0px"
+    });
+
+    sections.forEach(section=>observer.observe(section));
+}
+
+
+/* ==========================================
+   SCROLL REVEAL ANIMATIONS
+========================================== */
+
+function initializeRevealAnimations(){
+
+    const elements = document.querySelectorAll(
+        ".reveal, .reveal-left"
+    );
+
+    if(!("IntersectionObserver" in window)){
+
+        elements.forEach(element=>{
+            element.classList.add("visible");
+        });
+
+        return;
+    }
+
+    const revealObserver = new IntersectionObserver((entries,observer)=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+
+        });
+
+    },{
+        threshold:0.12
+    });
+
+    elements.forEach(element=>{
+        revealObserver.observe(element);
+    });
+}
+
+
+/* ==========================================
+   INITIALIZE PAGE
+========================================== */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+    restoreProgress();
+    initializeSidebar();
+    initializeRevealAnimations();
+
+});
+
+</script>
+
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

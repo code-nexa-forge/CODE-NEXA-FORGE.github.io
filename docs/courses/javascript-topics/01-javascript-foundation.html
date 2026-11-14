@@ -1,0 +1,1835 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 01 — JavaScript Foundation | CNF</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg:#f5f7fb;
+    --white:#fff;
+    --blue:#315bea;
+    --blue-dark:#1d3fc0;
+    --blue-soft:#eaf0ff;
+    --text:#17213a;
+    --muted:#778198;
+    --border:#e5e9f2;
+    --green:#159b70;
+    --mono:'DM Mono',monospace;
+    --sans:'DM Sans',sans-serif;
+    --display:'Space Grotesk',sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{
+    scroll-behavior:smooth;
+    scroll-padding-top:100px;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    overflow-x:hidden;
+}
+
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+
+.navbar{
+    height:76px;
+    background:rgba(255,255,255,.94);
+    border-bottom:1px solid var(--border);
+    padding:0 6%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:100;
+    backdrop-filter:blur(15px);
+}
+
+.brand{
+    font-family:var(--display);
+    font-size:23px;
+    font-weight:800;
+    letter-spacing:-1px;
+    color:var(--blue);
+}
+
+.nav-center{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--muted);
+    letter-spacing:2px;
+}
+
+.nav-btn{
+    padding:10px 15px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    font-size:11px;
+    font-weight:700;
+    transition:.25s;
+}
+
+.nav-btn:hover{
+    border-color:var(--blue);
+    color:var(--blue);
+    transform:translateY(-2px);
+}
+
+.page{
+    max-width:1200px;
+    margin:auto;
+    padding:55px 6%;
+}
+
+.breadcrumb{
+    display:flex;
+    gap:9px;
+    align-items:center;
+    color:var(--muted);
+    font-size:11px;
+    margin-bottom:35px;
+}
+
+.breadcrumb span:last-child{color:var(--blue)}
+
+/* HERO */
+
+.hero{
+    position:relative;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:55px;
+    overflow:hidden;
+    box-shadow:0 12px 40px rgba(34,55,110,.04);
+}
+
+.hero::before{
+    content:"JS";
+    position:absolute;
+    right:35px;
+    top:5px;
+    font-family:var(--display);
+    font-size:210px;
+    font-weight:900;
+    color:rgba(49,91,234,.045);
+    pointer-events:none;
+}
+
+.hero-content{position:relative;z-index:2;max-width:700px}
+
+.hero-label{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 12px;
+    background:var(--blue-soft);
+    color:var(--blue);
+    border-radius:5px;
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:1px;
+    margin-bottom:25px;
+}
+
+.hero-label::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--blue);
+    animation:pulse 1.8s infinite;
+}
+
+.hero h1{
+    font-family:var(--display);
+    font-size:clamp(42px,7vw,76px);
+    line-height:1.02;
+    letter-spacing:-4px;
+    margin-bottom:22px;
+}
+
+.hero h1 span{color:var(--blue)}
+
+.hero-description{
+    max-width:620px;
+    color:var(--muted);
+    line-height:1.9;
+    font-size:14px;
+}
+
+.hero-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:30px;
+}
+
+.meta-item{
+    border:1px solid var(--border);
+    padding:10px 13px;
+    border-radius:6px;
+    font-family:var(--mono);
+    font-size:10px;
+    color:#68738a;
+}
+
+/* ANIMATED SIDE BOX */
+
+.hero-side{
+    position:absolute;
+    right:6%;
+    top:50%;
+    transform:translateY(-50%);
+    width:190px;
+    height:190px;
+    border-radius:24px;
+    background:linear-gradient(145deg,#315bea,#1839b5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 22px 45px rgba(49,91,234,.25);
+    animation:sideFloat 4s ease-in-out infinite;
+    z-index:1;
+}
+
+.hero-side::before,
+.hero-side::after{
+    content:"";
+    position:absolute;
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:50%;
+}
+
+.hero-side::before{inset:14px}
+.hero-side::after{inset:27px}
+
+.side-symbol{
+    font-family:var(--display);
+    color:white;
+    font-size:62px;
+    font-weight:900;
+    letter-spacing:-5px;
+    text-shadow:0 8px 20px rgba(0,0,0,.15);
+    animation:symbolPulse 3s ease-in-out infinite;
+}
+
+.side-caption{
+    position:absolute;
+    bottom:22px;
+    color:#dce5ff;
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+@keyframes sideFloat{
+    0%,100%{transform:translateY(-50%) translateY(-12px) rotate(-3deg)}
+    50%{transform:translateY(-50%) translateY(12px) rotate(3deg)}
+}
+
+@keyframes symbolPulse{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.1)}
+}
+
+@keyframes pulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(49,91,234,.4)}
+    50%{box-shadow:0 0 0 7px rgba(49,91,234,0)}
+}
+
+/* SECTIONS */
+
+.section{
+    margin-top:65px;
+    scroll-margin-top:100px;
+}
+
+.section-header{
+    display:flex;
+    gap:17px;
+    align-items:flex-start;
+    margin-bottom:25px;
+}
+
+.section-number{
+    color:var(--blue);
+    font-family:var(--mono);
+    font-size:12px;
+    padding-top:6px;
+}
+
+.section-header h2{
+    font-family:var(--display);
+    font-size:29px;
+    letter-spacing:-1px;
+    margin-bottom:7px;
+}
+
+.section-header p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* CONTENT CARDS */
+
+.intro-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.intro-card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+    transition:.3s;
+}
+
+.intro-card:hover{
+    transform:translateY(-7px);
+    border-color:#aabaff;
+    box-shadow:0 15px 35px rgba(49,91,234,.09);
+}
+
+.card-icon{
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    background:var(--blue-soft);
+    color:var(--blue);
+    font-family:var(--mono);
+    font-size:15px;
+    margin-bottom:19px;
+}
+
+.intro-card h3{
+    font-family:var(--display);
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.intro-card p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.8;
+}
+
+/* EXPLANATION */
+
+.explain-panel{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:27px;
+}
+
+.explain-panel p{
+    color:#69748a;
+    font-size:13px;
+    line-height:1.9;
+    margin-bottom:15px;
+}
+
+.explain-panel p:last-child{margin-bottom:0}
+.explain-panel strong{color:var(--text)}
+
+/* CODE WINDOW */
+
+.code-window{
+    border-radius:12px;
+    overflow:hidden;
+    background:#151e32;
+    margin-top:20px;
+    box-shadow:0 15px 35px rgba(16,28,55,.12);
+    transition:.3s;
+}
+
+.code-window:hover{
+    box-shadow:0 20px 42px rgba(16,28,55,.18);
+}
+
+.code-header{
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#202b42;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.code-file{
+    font-family:var(--mono);
+    color:#dce5ff;
+    font-size:11px;
+}
+
+.code-language{
+    font-family:var(--mono);
+    font-size:9px;
+    color:#8ca7ff;
+    letter-spacing:1px;
+}
+
+pre{
+    padding:25px;
+    overflow-x:auto;
+    color:#dce5ff;
+    font-family:var(--mono);
+    font-size:12px;
+    line-height:2.2;
+    white-space:pre;
+}
+
+.kw{color:#8eb5ff}
+.str{color:#c7ec9d}
+.fn{color:#f3bb81}
+.comment{color:#8491aa}
+.num{color:#f4a6c5}
+
+/* FLOW */
+
+.flow-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.flow-item{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:11px;
+    padding:20px;
+    transition:.3s;
+}
+
+.flow-item:hover{
+    transform:translateY(-5px);
+    border-color:#aabaff;
+}
+
+.flow-item small{
+    color:var(--blue);
+    font-family:var(--mono);
+    font-size:10px;
+}
+
+.flow-item h3{
+    font-family:var(--display);
+    font-size:15px;
+    margin:13px 0 8px;
+}
+
+.flow-item p{
+    font-size:11px;
+    line-height:1.7;
+    color:var(--muted);
+}
+
+/* INFO BOX */
+
+.info-box{
+    background:var(--blue-soft);
+    border-left:3px solid var(--blue);
+    padding:19px 21px;
+    border-radius:0 9px 9px 0;
+    margin-top:20px;
+}
+
+.info-box strong{
+    display:block;
+    font-size:13px;
+    color:var(--blue-dark);
+    margin-bottom:7px;
+}
+
+.info-box p{
+    color:#63749f;
+    font-size:12px;
+    line-height:1.8;
+}
+
+/* PLAYGROUND */
+
+.playground{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 12px 35px rgba(34,55,110,.05);
+}
+
+.playground-top{
+    padding:17px 22px;
+    background:#202b42;
+    color:#fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.playground-top strong{
+    font-family:var(--mono);
+    font-size:11px;
+}
+
+.playground-top span{
+    color:#9eb4ff;
+    font-family:var(--mono);
+    font-size:9px;
+}
+
+.playground-body{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:280px;
+}
+
+.editor-area{
+    background:#151e32;
+    padding:20px;
+}
+
+.editor-label{
+    color:#8ca7ff;
+    font-family:var(--mono);
+    font-size:10px;
+    margin-bottom:12px;
+}
+
+#codeEditor{
+    width:100%;
+    min-height:220px;
+    resize:vertical;
+    background:#101827;
+    color:#dce5ff;
+    border:1px solid #34415a;
+    border-radius:8px;
+    outline:none;
+    padding:15px;
+    font-family:var(--mono);
+    font-size:12px;
+    line-height:1.8;
+    tab-size:2;
+}
+
+#codeEditor:focus{
+    border-color:#7895ff;
+    box-shadow:0 0 0 3px rgba(49,91,234,.18);
+}
+
+.output-area{
+    padding:20px;
+    background:#fbfcff;
+}
+
+.output-label{
+    color:#64718b;
+    font-family:var(--mono);
+    font-size:10px;
+    margin-bottom:12px;
+}
+
+#playgroundOutput{
+    min-height:220px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:15px;
+    color:#26334d;
+    font-family:var(--mono);
+    font-size:12px;
+    line-height:1.8;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+}
+
+.playground-actions{
+    padding:15px 20px;
+    border-top:1px solid var(--border);
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    background:#fff;
+}
+
+.run-btn,.editor-reset{
+    padding:11px 17px;
+    border-radius:7px;
+    font-size:11px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.run-btn{
+    background:var(--blue);
+    color:#fff;
+    border:1px solid var(--blue);
+}
+
+.run-btn:hover{
+    background:var(--blue-dark);
+    transform:translateY(-2px);
+}
+
+.editor-reset{
+    background:#fff;
+    border:1px solid var(--border);
+    color:#68738a;
+}
+
+.editor-reset:hover{
+    border-color:var(--blue);
+    color:var(--blue);
+    transform:translateY(-2px);
+}
+
+/* COMMON MISTAKES */
+
+.mistake-list{
+    display:grid;
+    gap:12px;
+}
+
+.mistake{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:19px 21px;
+    display:grid;
+    grid-template-columns:35px 1fr;
+    gap:13px;
+    transition:.25s;
+}
+
+.mistake:hover{
+    transform:translateX(5px);
+    border-color:#aabaff;
+}
+
+.mistake-icon{
+    width:32px;
+    height:32px;
+    display:grid;
+    place-items:center;
+    background:#fff0ef;
+    color:#d64b4b;
+    border-radius:8px;
+    font-weight:900;
+}
+
+.mistake h3{
+    font-family:var(--display);
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+.mistake p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.8;
+}
+
+/* QUIZ */
+
+.quiz-card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:28px;
+}
+
+.question{
+    padding:21px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.question:last-of-type{border-bottom:0}
+
+.question-label{
+    color:var(--blue);
+    font-family:var(--mono);
+    font-size:10px;
+    margin-bottom:10px;
+}
+
+.question h3{
+    font-size:14px;
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+.option{
+    display:block;
+    padding:12px 14px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    margin:8px 0;
+    color:#657087;
+    font-size:12px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    border-color:var(--blue);
+    color:var(--blue);
+    background:#f8faff;
+}
+
+.option input{
+    accent-color:var(--blue);
+    margin-right:9px;
+}
+
+.quiz-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:11px;
+    margin-top:22px;
+}
+
+.submit-btn,.reset-btn{
+    padding:13px 20px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.submit-btn{
+    background:var(--blue);
+    border:1px solid var(--blue);
+    color:white;
+}
+
+.submit-btn:hover{
+    background:var(--blue-dark);
+    transform:translateY(-2px);
+}
+
+.reset-btn{
+    background:white;
+    border:1px solid var(--border);
+    color:#68738a;
+}
+
+.reset-btn:hover{
+    border-color:var(--blue);
+    color:var(--blue);
+    transform:translateY(-2px);
+}
+
+.quiz-result{
+    display:none;
+    padding:17px;
+    border-radius:8px;
+    margin-top:20px;
+    font-size:13px;
+    line-height:1.8;
+    background:#f5f7fb;
+    border:1px solid var(--border);
+}
+
+/* COMPLETION */
+
+.completion{
+    margin-top:60px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:32px;
+}
+
+.completion-label{
+    font-family:var(--mono);
+    color:var(--blue);
+    font-size:10px;
+    letter-spacing:2px;
+    margin-bottom:14px;
+}
+
+.completion h2{
+    font-family:var(--display);
+    font-size:26px;
+    margin-bottom:10px;
+}
+
+.completion p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.8;
+    max-width:650px;
+}
+
+.completion-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:11px;
+    margin-top:22px;
+}
+
+.complete-btn{
+    background:var(--green);
+    border:1px solid var(--green);
+    color:white;
+    padding:13px 20px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.complete-btn:hover:not(:disabled){
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(21,155,112,.18);
+}
+
+.complete-btn:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.next-btn{
+    padding:13px 20px;
+    border:1px solid var(--border);
+    border-radius:7px;
+    color:var(--blue);
+    font-size:12px;
+    font-weight:700;
+    opacity:.35;
+    pointer-events:none;
+    transition:.2s;
+}
+
+.next-btn.unlocked{
+    opacity:1;
+    pointer-events:auto;
+    border-color:var(--blue);
+}
+
+.next-btn.unlocked:hover{background:var(--blue-soft)}
+
+/* FOOTER */
+
+footer{
+    background:white;
+    border-top:1px solid var(--border);
+    padding:27px 6%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:12px;
+    color:var(--muted);
+    font-size:11px;
+}
+
+footer strong{
+    font-family:var(--display);
+    color:var(--blue);
+    font-size:16px;
+}
+
+/* REVEAL ANIMATIONS */
+
+.reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .7s ease,transform .7s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@keyframes gentleGlow{
+    0%,100%{box-shadow:0 12px 35px rgba(49,91,234,.05)}
+    50%{box-shadow:0 18px 45px rgba(49,91,234,.12)}
+}
+
+.hero{animation:gentleGlow 6s ease-in-out infinite}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+    .hero-side{
+        width:145px;
+        height:145px;
+        right:4%;
+    }
+
+    .side-symbol{font-size:48px}
+    .hero-content{max-width:65%}
+    .flow-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:700px){
+    .nav-center{display:none}
+    .page{padding:35px 5%}
+    .hero{padding:35px 25px}
+    .hero-content{max-width:100%}
+    .hero-side{
+        position:relative;
+        top:auto;
+        right:auto;
+        transform:none;
+        width:115px;
+        height:115px;
+        margin:30px auto 0;
+        animation:mobileFloat 4s ease-in-out infinite;
+    }
+
+    .side-symbol{font-size:38px}
+    .side-caption{bottom:13px;font-size:8px}
+
+    @keyframes mobileFloat{
+        0%,100%{transform:translateY(0) rotate(-3deg)}
+        50%{transform:translateY(-12px) rotate(3deg)}
+    }
+
+    .hero h1{font-size:48px;letter-spacing:-2px}
+    .hero::before{font-size:130px;right:12px}
+    .intro-grid{grid-template-columns:repeat(2,1fr)}
+    .playground-body{grid-template-columns:1fr}
+}
+
+@media(max-width:580px){
+    .navbar{height:66px;padding:0 4%}
+    .brand{font-size:19px}
+    .nav-btn{padding:9px 10px;font-size:10px}
+    .hero h1{font-size:42px}
+    .intro-grid,.flow-grid{grid-template-columns:1fr}
+    .section-header h2{font-size:24px}
+    .quiz-card{padding:19px}
+    pre{font-size:10px;padding:18px}
+    .completion{padding:24px}
+    footer{padding:25px 5%}
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="../../pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="../javascript.html" class="brand">CNF/</a>
+    <div class="nav-center">JAVASCRIPT LEARNING SERIES</div>
+    <div class="nav-actions">
+        <a href="../javascript.html" class="nav-btn">Course Home</a>
+    </div>
+</header>
+
+<div class="page">
+
+    <div class="breadcrumb">
+        <a href="../javascript.html">JavaScript</a>
+        <span>/</span>
+        <span>Lesson 01</span>
+    </div>
+
+    <!-- HERO -->
+
+    <section class="hero" id="introduction">
+
+        <div class="hero-content">
+            <div class="hero-label">JAVASCRIPT FUNDAMENTALS</div>
+
+            <h1>Meet <span>JavaScript.</span><br>The Web's Logic.</h1>
+
+            <p class="hero-description">
+                Discover the programming language that makes websites interactive.
+                Understand what JavaScript is, how it works with HTML and CSS,
+                and why it is an essential part of modern web development.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">LESSON 01 / 08</span>
+                <span class="meta-item">BEGINNER LEVEL</span>
+                <span class="meta-item">20–25 MIN</span>
+            </div>
+        </div>
+
+        <div class="hero-side">
+            <div class="side-symbol">JS</div>
+            <div class="side-caption">MAKE IT WORK</div>
+        </div>
+
+    </section>
+
+    <!-- SECTION 01 -->
+
+    <section class="section reveal" id="what-is-javascript">
+
+        <div class="section-header">
+            <div class="section-number">01 /</div>
+            <div>
+                <h2>What is JavaScript?</h2>
+                <p>Understand the role of JavaScript in web development.</p>
+            </div>
+        </div>
+
+        <div class="explain-panel">
+            <p>
+                <strong>JavaScript</strong> is a programming language mainly
+                used to make websites interactive and dynamic.
+            </p>
+
+            <p>
+                HTML creates the structure of a webpage, CSS controls its
+                appearance, and JavaScript adds behavior and functionality.
+            </p>
+
+            <p>
+                For example, when you click a button and a menu opens,
+                JavaScript can handle that interaction.
+            </p>
+        </div>
+
+        <div class="intro-grid" style="margin-top:18px;">
+
+            <div class="intro-card">
+                <div class="card-icon">01</div>
+                <h3>Interactive Websites</h3>
+                <p>JavaScript responds to clicks, typing, scrolling and other user actions.</p>
+            </div>
+
+            <div class="intro-card">
+                <div class="card-icon">02</div>
+                <h3>Dynamic Content</h3>
+                <p>It can update webpage content without requiring the entire page to reload.</p>
+            </div>
+
+            <div class="intro-card">
+                <div class="card-icon">03</div>
+                <h3>Application Logic</h3>
+                <p>It handles calculations, conditions, data and the logic behind web applications.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECTION 02 -->
+
+    <section class="section reveal" id="html-css-js">
+
+        <div class="section-header">
+            <div class="section-number">02 /</div>
+            <div>
+                <h2>HTML vs CSS vs JavaScript</h2>
+                <p>Three technologies working together to build a webpage.</p>
+            </div>
+        </div>
+
+        <div class="flow-grid">
+
+            <div class="flow-item">
+                <small>01 — STRUCTURE</small>
+                <h3>HTML</h3>
+                <p>Creates headings, paragraphs, images, buttons and other webpage elements.</p>
+            </div>
+
+            <div class="flow-item">
+                <small>02 — DESIGN</small>
+                <h3>CSS</h3>
+                <p>Controls colors, layouts, spacing, typography and visual appearance.</p>
+            </div>
+
+            <div class="flow-item">
+                <small>03 — BEHAVIOR</small>
+                <h3>JavaScript</h3>
+                <p>Adds interactions, calculations, animations and dynamic functionality.</p>
+            </div>
+
+            <div class="flow-item">
+                <small>04 — RESULT</small>
+                <h3>Complete Website</h3>
+                <p>All three technologies work together to create a functional webpage.</p>
+            </div>
+
+        </div>
+
+        <div class="code-window">
+            <div class="code-header">
+                <span class="code-file">index.html</span>
+                <span class="code-language">HTML + CSS + JS</span>
+            </div>
+
+<pre><span class="comment">&lt;!-- HTML: Structure --&gt;</span>
+&lt;button id="myButton"&gt;Click Me&lt;/button&gt;
+
+<span class="comment">&lt;!-- CSS: Appearance --&gt;</span>
+&lt;style&gt;
+    button {
+        background: blue;
+        color: white;
+        padding: 12px 20px;
+    }
+&lt;/style&gt;
+
+<span class="comment">&lt;!-- JavaScript: Behavior --&gt;</span>
+&lt;script&gt;
+    document.getElementById("myButton")
+        .addEventListener("click", function() {
+            alert("Hello, welcome!");
+        });
+&lt;/script&gt;</pre>
+        </div>
+
+        <div class="info-box">
+            <strong>Remember the difference</strong>
+            <p>HTML builds it. CSS styles it. JavaScript makes it interactive.</p>
+        </div>
+
+    </section>
+
+    <!-- SECTION 03 -->
+
+    <section class="section reveal" id="how-it-works">
+
+        <div class="section-header">
+            <div class="section-number">03 /</div>
+            <div>
+                <h2>How JavaScript Works</h2>
+                <p>Understand how your browser handles JavaScript code.</p>
+            </div>
+        </div>
+
+        <div class="explain-panel">
+            <p>
+                When a browser loads a webpage, it processes HTML,
+                applies CSS and executes JavaScript.
+            </p>
+
+            <p>
+                JavaScript code is executed by a <strong>JavaScript engine</strong>.
+                The engine reads and runs the instructions written by the developer.
+            </p>
+
+            <p>
+                Modern browsers include JavaScript engines that allow websites
+                to respond to user actions and update content.
+            </p>
+        </div>
+
+        <div class="flow-grid" style="margin-top:18px;">
+
+            <div class="flow-item">
+                <small>STEP 01</small>
+                <h3>Browser Loads</h3>
+                <p>The browser receives the webpage files.</p>
+            </div>
+
+            <div class="flow-item">
+                <small>STEP 02</small>
+                <h3>Engine Reads</h3>
+                <p>The JavaScript engine processes the code.</p>
+            </div>
+
+            <div class="flow-item">
+                <small>STEP 03</small>
+                <h3>Code Executes</h3>
+                <p>Instructions are executed by the engine.</p>
+            </div>
+
+            <div class="flow-item">
+                <small>STEP 04</small>
+                <h3>Page Responds</h3>
+                <p>The webpage can update and react to actions.</p>
+            </div>
+
+        </div>
+
+        <div class="code-window">
+            <div class="code-header">
+                <span class="code-file">first-program.js</span>
+                <span class="code-language">YOUR FIRST JAVASCRIPT</span>
+            </div>
+
+<pre><span class="comment">// Display a message in the browser console</span>
+
+console.<span class="fn">log</span>(<span class="str">"Hello, JavaScript!"</span>);
+
+<span class="comment">// Display a message in an alert box</span>
+
+<span class="fn">alert</span>(<span class="str">"Welcome to JavaScript!"</span>);</pre>
+        </div>
+
+        <div class="info-box">
+            <strong>Where can you see console.log() output?</strong>
+            <p>
+                Open your browser's Developer Tools using F12,
+                then select the Console tab. Your JavaScript
+                console messages will appear there.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- SECTION 04 -->
+
+    <section class="section reveal" id="uses">
+
+        <div class="section-header">
+            <div class="section-number">04 /</div>
+            <div>
+                <h2>Where is JavaScript Used?</h2>
+                <p>JavaScript is used in many areas of modern technology.</p>
+            </div>
+        </div>
+
+        <div class="intro-grid">
+
+            <div class="intro-card">
+                <div class="card-icon">01</div>
+                <h3>Web Development</h3>
+                <p>Interactive websites, dashboards, forms and web applications.</p>
+            </div>
+
+            <div class="intro-card">
+                <div class="card-icon">02</div>
+                <h3>Mobile Applications</h3>
+                <p>Frameworks and tools can use JavaScript to build mobile applications.</p>
+            </div>
+
+            <div class="intro-card">
+                <div class="card-icon">03</div>
+                <h3>Backend Development</h3>
+                <p>Node.js allows JavaScript to run on servers and build backend systems.</p>
+            </div>
+
+            <div class="intro-card">
+                <div class="card-icon">04</div>
+                <h3>Web Games</h3>
+                <p>JavaScript can power browser games, animations and interactive experiences.</p>
+            </div>
+
+            <div class="intro-card">
+                <div class="card-icon">05</div>
+                <h3>APIs & Data</h3>
+                <p>JavaScript can communicate with APIs and work with data from servers.</p>
+            </div>
+
+            <div class="intro-card">
+                <div class="card-icon">06</div>
+                <h3>Automation</h3>
+                <p>It can automate repetitive tasks and perform useful programming operations.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECTION 05 -->
+
+    <section class="section reveal" id="first-code">
+
+        <div class="section-header">
+            <div class="section-number">05 /</div>
+            <div>
+                <h2>Your First JavaScript Program</h2>
+                <p>Learn how to write and execute a simple JavaScript instruction.</p>
+            </div>
+        </div>
+
+        <div class="explain-panel">
+            <p>
+                The <strong>console.log()</strong> method prints information
+                into the browser's developer console.
+            </p>
+
+            <p>
+                It is commonly used by developers to test code,
+                inspect values and debug problems.
+            </p>
+        </div>
+
+        <div class="code-window">
+            <div class="code-header">
+                <span class="code-file">hello-world.js</span>
+                <span class="code-language">BEGINNER EXAMPLE</span>
+            </div>
+
+<pre><span class="comment">// Your first JavaScript program</span>
+
+console.<span class="fn">log</span>(<span class="str">"Hello World!"</span>);
+
+<span class="comment">// Display another message</span>
+
+console.<span class="fn">log</span>(<span class="str">"I am learning JavaScript."</span>);</pre>
+        </div>
+
+        <div class="info-box">
+            <strong>Practice tip</strong>
+            <p>
+                Change the text inside the quotation marks and run the
+                program again. Observe how the console output changes.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- SECTION 06: LIVE PLAYGROUND -->
+
+    <section class="section reveal" id="playground">
+
+        <div class="section-header">
+            <div class="section-number">06 /</div>
+            <div>
+                <h2>JavaScript Playground</h2>
+                <p>Write your own JavaScript code and see the output instantly.</p>
+            </div>
+        </div>
+
+        <div class="playground">
+
+            <div class="playground-top">
+                <strong>CNF / CODE EDITOR</strong>
+                <span>LIVE JAVASCRIPT ENVIRONMENT</span>
+            </div>
+
+            <div class="playground-body">
+
+                <div class="editor-area">
+                    <div class="editor-label">YOUR JAVASCRIPT CODE</div>
+
+                    <textarea id="codeEditor" spellcheck="false">console.log("Hello, JavaScript!");
+
+console.log("I am learning to code.");
+
+let message = "Welcome to CNF!";
+console.log(message);</textarea>
+                </div>
+
+                <div class="output-area">
+                    <div class="output-label">PROGRAM OUTPUT</div>
+                    <pre id="playgroundOutput">Your output will appear here...</pre>
+                </div>
+
+            </div>
+
+            <div class="playground-actions">
+                <button class="run-btn" onclick="runCode()">▶ RUN CODE</button>
+                <button class="editor-reset" onclick="resetEditor()">↻ RESET CODE</button>
+            </div>
+
+        </div>
+
+        <div class="info-box">
+            <strong>Your task</strong>
+            <p>
+                Change the message in the editor, add another console.log()
+                statement and click Run Code to test your changes.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- SECTION 07: COMMON MISTAKES -->
+
+    <section class="section reveal" id="mistakes">
+
+        <div class="section-header">
+            <div class="section-number">07 /</div>
+            <div>
+                <h2>Common Beginner Mistakes</h2>
+                <p>Understand a few mistakes you should avoid from the beginning.</p>
+            </div>
+        </div>
+
+        <div class="mistake-list">
+
+            <div class="mistake">
+                <div class="mistake-icon">!</div>
+                <div>
+                    <h3>Missing Quotation Marks</h3>
+                    <p>Text values need quotation marks. For example: console.log("Hello");</p>
+                </div>
+            </div>
+
+            <div class="mistake">
+                <div class="mistake-icon">!</div>
+                <div>
+                    <h3>Incorrect Capitalization</h3>
+                    <p>JavaScript is case-sensitive. console.log() and Console.log() are not the same.</p>
+                </div>
+            </div>
+
+            <div class="mistake">
+                <div class="mistake-icon">!</div>
+                <div>
+                    <h3>Misspelling Method Names</h3>
+                    <p>Use console.log() correctly. A spelling mistake can cause an error.</p>
+                </div>
+            </div>
+
+            <div class="mistake">
+                <div class="mistake-icon">!</div>
+                <div>
+                    <h3>Ignoring Error Messages</h3>
+                    <p>Read browser console errors carefully. They often help you find the problem.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SECTION 08: QUIZ -->
+
+    <section class="section reveal" id="quiz">
+
+        <div class="section-header">
+            <div class="section-number">08 /</div>
+            <div>
+                <h2>Test Your Knowledge</h2>
+                <p>Answer all three questions. You need a perfect score of 3/3 to pass.</p>
+            </div>
+        </div>
+
+        <div class="quiz-card">
+
+            <div class="question">
+                <div class="question-label">QUESTION 01</div>
+                <h3>What is the main purpose of JavaScript in web development?</h3>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="a">
+                    To create webpage structure
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="b">
+                    To add interactivity and behavior
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="c">
+                    To store images only
+                </label>
+            </div>
+
+            <div class="question">
+                <div class="question-label">QUESTION 02</div>
+                <h3>Which technology is mainly responsible for styling a webpage?</h3>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="a">
+                    HTML
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="b">
+                    JavaScript
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="c">
+                    CSS
+                </label>
+            </div>
+
+            <div class="question">
+                <div class="question-label">QUESTION 03</div>
+                <h3>Which method displays a message in the browser console?</h3>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="a">
+                    console.log()
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="b">
+                    console.print()
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="c">
+                    browser.show()
+                </label>
+            </div>
+
+            <div class="quiz-actions">
+                <button class="submit-btn" onclick="checkQuiz()">SUBMIT ANSWERS →</button>
+                <button class="reset-btn" onclick="resetQuiz()">↻ RESET QUIZ</button>
+            </div>
+
+            <div class="quiz-result" id="quizResult"></div>
+
+        </div>
+
+    </section>
+
+    <!-- COMPLETION -->
+
+    <section class="completion reveal" id="completion">
+
+        <div class="completion-label">YOUR NEXT MILESTONE</div>
+
+        <h2>Foundation complete?</h2>
+
+        <p>
+            Complete the live coding practice and pass the knowledge check
+            with a perfect score. Then mark this lesson complete to unlock
+            your next JavaScript chapter.
+        </p>
+
+        <div class="completion-actions">
+
+            <button class="complete-btn" id="completeBtn" disabled onclick="completeLesson()">
+                ✓ COMPLETE LESSON
+            </button>
+
+            <a href="02-variables-data-types.html" class="next-btn" id="nextBtn">
+                NEXT LESSON →
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+<footer>
+    <strong>CNF/</strong>
+    <span>CODE NEXA FORGE — Learn. Build. Create.</span>
+    <span>JavaScript · Lesson 01</span>
+</footer>
+
+<script>
+
+/* PLAYGROUND */
+
+const starterCode = `console.log("Hello, JavaScript!");
+
+console.log("I am learning to code.");
+
+let message = "Welcome to CNF!";
+console.log(message);`;
+
+function runCode(){
+
+    const code = document.getElementById("codeEditor").value;
+    const output = document.getElementById("playgroundOutput");
+
+    output.textContent = "";
+
+    const safeCode = code.replace(/<\/script/gi, "<\\/script");
+
+    const iframe = document.createElement("iframe");
+
+    iframe.sandbox = "allow-scripts";
+    iframe.style.display = "none";
+
+    iframe.srcdoc = `
+        <!DOCTYPE html>
+        <html>
+        <body>
+        <script>
+            const sendOutput = (type, values) => {
+                parent.postMessage({
+                    source: "cnf-playground",
+                    type: type,
+                    value: values.map(value => {
+                        if(typeof value === "object" && value !== null){
+                            try { return JSON.stringify(value); }
+                            catch(error){ return "[Object]"; }
+                        }
+                        return String(value);
+                    }).join(" ")
+                }, "*");
+            };
+
+            console.log = (...values) => sendOutput("log", values);
+            console.error = (...values) => sendOutput("error", values);
+            console.warn = (...values) => sendOutput("warn", values);
+
+            window.onerror = function(message){
+                sendOutput("error", [message]);
+            };
+
+            try {
+                ${safeCode}
+            } catch(error) {
+                sendOutput("error", [error.message]);
+            }
+
+            parent.postMessage({
+                source: "cnf-playground",
+                type: "finished",
+                value: ""
+            }, "*");
+        <\/script>
+</body>
+        </html>
+    `;
+
+    document.body.appendChild(iframe);
+
+    let receivedOutput = false;
+
+    const messageHandler = function(event){
+
+        if(event.source !== iframe.contentWindow) return;
+        if(!event.data || event.data.source !== "cnf-playground") return;
+
+        if(event.data.type === "finished"){
+            window.removeEventListener("message", messageHandler);
+            iframe.remove();
+            return;
+        }
+
+        receivedOutput = true;
+
+        const line = document.createElement("div");
+        line.textContent = event.data.value;
+
+        if(event.data.type === "error"){
+            line.style.color = "#d64b4b";
+        }
+
+        output.appendChild(line);
+    };
+
+    window.addEventListener("message", messageHandler);
+
+    setTimeout(function(){
+
+        window.removeEventListener("message", messageHandler);
+
+        if(iframe.isConnected){
+            iframe.remove();
+        }
+
+        if(!receivedOutput){
+            output.textContent = "Code executed. No console output was produced.";
+        }
+
+    }, 1500);
+
+}
+
+function resetEditor(){
+
+    document.getElementById("codeEditor").value = starterCode;
+    document.getElementById("playgroundOutput").textContent =
+        "Your output will appear here...";
+
+}
+
+
+/* QUIZ STATE */
+
+let quizPassed = false;
+
+const correctAnswers = {
+    q1:"b",
+    q2:"c",
+    q3:"a"
+};
+
+
+/* CHECK QUIZ */
+
+function checkQuiz(){
+
+    let score = 0;
+    let answered = 0;
+
+    for(const question in correctAnswers){
+
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if(selected){
+            answered++;
+
+            if(selected.value === correctAnswers[question]){
+                score++;
+            }
+        }
+    }
+
+    const result = document.getElementById("quizResult");
+
+    result.style.display = "block";
+
+    if(answered < 3){
+
+        quizPassed = false;
+
+        result.style.color = "#a66a00";
+        result.textContent =
+            "Please answer all 3 questions before submitting. You have answered " +
+            answered + " out of 3.";
+
+        updateCompletion();
+        return;
+    }
+
+    if(score === 3){
+
+        quizPassed = true;
+
+        result.style.color = "#159b70";
+        result.textContent =
+            "✓ Perfect score! You scored 3/3. You passed the quiz and can now complete this lesson.";
+
+    }else{
+
+        quizPassed = false;
+
+        result.style.color = "#d64b4b";
+        result.textContent =
+            "You scored " + score +
+            "/3. A perfect score of 3/3 is required. Review the lesson and try again.";
+
+    }
+
+    updateCompletion();
+
+}
+
+
+/* RESET QUIZ */
+
+function resetQuiz(){
+
+    document.querySelectorAll(
+        '.quiz-card input[type="radio"]'
+    ).forEach(input => {
+        input.checked = false;
+    });
+
+    quizPassed = false;
+
+    localStorage.removeItem("javascript-lesson-01-completed");
+
+    const result = document.getElementById("quizResult");
+
+    result.textContent = "";
+    result.style.display = "none";
+
+    document.getElementById("completeBtn").textContent =
+        "✓ COMPLETE LESSON";
+
+    updateCompletion();
+
+}
+
+
+/* COMPLETION STATE */
+
+function updateCompletion(){
+
+    const completeBtn = document.getElementById("completeBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    completeBtn.disabled = !quizPassed;
+
+    if(!quizPassed){
+        nextBtn.classList.remove("unlocked");
+    }
+
+}
+
+
+/* COMPLETE LESSON */
+
+function completeLesson(){
+
+    if(!quizPassed){
+        alert("Please pass the quiz with a perfect score first.");
+        return;
+    }
+
+    localStorage.setItem(
+        "javascript-lesson-01-completed",
+        "true"
+    );
+
+    document.getElementById("completeBtn").textContent =
+        "✓ LESSON COMPLETED";
+
+    document.getElementById("nextBtn").classList.add("unlocked");
+
+    alert("Congratulations! Lesson 01 completed successfully.");
+
+}
+
+
+/* RESTORE SAVED PROGRESS */
+
+window.addEventListener("DOMContentLoaded",function(){
+
+    const completed = localStorage.getItem(
+        "javascript-lesson-01-completed"
+    );
+
+    if(completed === "true"){
+
+        quizPassed = true;
+
+        document.getElementById("completeBtn").textContent =
+            "✓ LESSON COMPLETED";
+
+        document.getElementById("completeBtn").disabled = false;
+
+        document.getElementById("nextBtn").classList.add("unlocked");
+
+    }
+
+});
+
+
+/* SCROLL REVEAL */
+
+const revealObserver = new IntersectionObserver(function(entries){
+
+    entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+
+        }
+
+    });
+
+},{threshold:0.12});
+
+document.querySelectorAll(".reveal").forEach(element => {
+    revealObserver.observe(element);
+});
+
+</script>
+
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+<script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

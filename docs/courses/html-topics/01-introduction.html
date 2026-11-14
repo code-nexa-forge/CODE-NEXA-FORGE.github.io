@@ -1,0 +1,1121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNF/ | Introduction to HTML</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #f5f3ed;
+    --ink: #20231f;
+    --muted: #77796f;
+    --orange: #ed653b;
+    --line: #dedbd2;
+    --green: #c9edaa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* NAVIGATION */
+
+.nav {
+    height: 76px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+}
+
+.logo {
+    font-family: 'Space Grotesk';
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -2px;
+}
+
+.logo span {
+    color: var(--orange);
+}
+
+.nav-center {
+    display: flex;
+    gap: 30px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.nav-center a:hover {
+    color: var(--orange);
+}
+
+.nav-right {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--orange);
+}
+
+/* HERO */
+
+.hero {
+    padding: 90px 9% 75px;
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 50px;
+    align-items: center;
+    min-height: 590px;
+}
+
+.eyebrow {
+    font-family: 'DM Mono';
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+    font-family: 'Space Grotesk';
+    font-size: clamp(55px, 7vw, 94px);
+    line-height: .98;
+    letter-spacing: -7px;
+    max-width: 650px;
+}
+
+.hero h1 span {
+    color: var(--orange);
+}
+
+.hero-description {
+    max-width: 460px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-top: 30px;
+    font-size: 15px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+.primary-btn {
+    background: var(--ink);
+    color: white;
+    padding: 16px 23px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: .25s;
+}
+
+.primary-btn:hover {
+    background: var(--orange);
+    transform: translateY(-3px);
+}
+
+.secondary-btn {
+    border: 1px solid var(--line);
+    padding: 15px 22px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.hero-visual {
+    min-height: 390px;
+    background: #e9e4d8;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visual-circle {
+    width: 290px;
+    height: 290px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: absolute;
+}
+
+.html-symbol {
+    position: relative;
+    color: white;
+    font-family: 'Space Grotesk';
+    font-size: 150px;
+    font-weight: 700;
+    z-index: 2;
+    transform: rotate(-8deg);
+    text-shadow: 10px 12px 0 rgba(0,0,0,.1);
+}
+
+.visual-label {
+    position: absolute;
+    bottom: 22px;
+    left: 25px;
+    font-family: 'DM Mono';
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* COURSE INFO */
+
+.info-strip {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 25px 9%;
+}
+
+.info-item {
+    padding: 5px 25px;
+    border-right: 1px solid var(--line);
+}
+
+.info-item:first-child {
+    padding-left: 0;
+}
+
+.info-item:last-child {
+    border: none;
+}
+
+.info-item small {
+    color: var(--muted);
+    display: block;
+    font-size: 11px;
+    margin-bottom: 7px;
+}
+
+.info-item strong {
+    font-family: 'Space Grotesk';
+    font-size: 17px;
+}
+
+/* CONTENT SECTIONS */
+
+.section {
+    padding: 100px 10%;
+}
+
+.section-label {
+    font-family: 'DM Mono';
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 2px;
+    margin-bottom: 17px;
+}
+
+.section h2 {
+    font-family: 'Space Grotesk';
+    font-size: clamp(35px, 5vw, 55px);
+    letter-spacing: -2.5px;
+    line-height: 1.08;
+    max-width: 720px;
+}
+
+.section-intro {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 650px;
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-top: 55px;
+}
+
+.explain-card {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 30px;
+    border-radius: 7px;
+}
+
+.explain-card h3 {
+    font-family: 'Space Grotesk';
+    font-size: 21px;
+    margin-bottom: 13px;
+}
+
+.explain-card p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.big-number {
+    font-family: 'Space Grotesk';
+    font-size: 65px;
+    color: var(--orange);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* CODE WINDOW */
+
+.code-window {
+    background: #20231f;
+    border-radius: 8px;
+    overflow: hidden;
+    color: #eee;
+    box-shadow: 0 18px 40px rgba(0,0,0,.09);
+}
+
+.window-top {
+    padding: 15px 19px;
+    background: #292d27;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono';
+    font-size: 11px;
+    color: #b6b9ae;
+}
+
+.window-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.window-dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ed653b;
+}
+
+.window-dots i:nth-child(2) { background: #e6bd57; }
+.window-dots i:nth-child(3) { background: #8bc77c; }
+
+.code-content {
+    padding: 25px;
+    font-family: 'DM Mono';
+    font-size: 13px;
+    line-height: 2;
+    overflow-x: auto;
+}
+
+.code-orange { color: #ff956e; }
+.code-green { color: #b7e58d; }
+.code-yellow { color: #f1d58a; }
+.code-muted { color: #9b9f91; }
+
+/* WHY HTML */
+
+.why-section {
+    background: #222620;
+    color: white;
+}
+
+.why-section .section-intro {
+    color: #b4b9ae;
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 45px;
+}
+
+.why-card {
+    border: 1px solid #41463e;
+    padding: 27px;
+    border-radius: 6px;
+    transition: .25s;
+}
+
+.why-card:hover {
+    background: #30372c;
+    transform: translateY(-5px);
+}
+
+.why-icon {
+    font-size: 27px;
+    margin-bottom: 20px;
+}
+
+.why-card h3 {
+    font-family: 'Space Grotesk';
+    margin-bottom: 12px;
+    font-size: 19px;
+}
+
+.why-card p {
+    color: #b4b9ae;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* HOW IT WORKS */
+
+.steps {
+    margin-top: 50px;
+    border-top: 1px solid var(--line);
+}
+
+.step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    padding: 27px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.step-number {
+    color: var(--orange);
+    font-family: 'DM Mono';
+    font-size: 13px;
+}
+
+.step h3 {
+    font-family: 'Space Grotesk';
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.step p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+/* PRACTICE */
+
+.practice-section {
+    background: #e9e6dc;
+}
+
+.practice-box {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.editor-panel, .preview-panel {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.panel-heading {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono';
+    font-size: 11px;
+}
+
+#htmlEditor {
+    width: 100%;
+    height: 280px;
+    padding: 20px;
+    border: none;
+    outline: none;
+    resize: vertical;
+    font-family: 'DM Mono';
+    font-size: 13px;
+    line-height: 1.7;
+    background: #222620;
+    color: #c8e9a8;
+}
+
+#htmlPreview {
+    width: 100%;
+    height: 280px;
+    border: none;
+    background: white;
+}
+
+.editor-actions {
+    padding: 13px;
+    display: flex;
+    gap: 10px;
+}
+
+.small-btn {
+    border: none;
+    background: var(--ink);
+    color: white;
+    padding: 10px 17px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.small-btn.secondary {
+    background: #e9e6dc;
+    color: var(--ink);
+}
+
+/* QUIZ */
+
+.quiz-box {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 35px;
+    border-radius: 8px;
+    margin-top: 40px;
+}
+
+.question {
+    margin-bottom: 28px;
+}
+
+.question h3 {
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+
+.option {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 12px 15px;
+    margin: 8px 0;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.option:hover {
+    border-color: var(--orange);
+    background: #fff8f4;
+}
+
+.option input {
+    margin-right: 10px;
+    accent-color: var(--orange);
+}
+
+.quiz-result {
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+/* COMPLETION */
+
+.completion {
+    background: var(--green);
+    padding: 65px 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.completion h2 {
+    font-family: 'Space Grotesk';
+    font-size: 35px;
+    letter-spacing: -1px;
+}
+
+.completion p {
+    font-size: 13px;
+    margin-top: 10px;
+    color: #47533d;
+}
+
+#completeLesson {
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 17px 24px;
+    font-weight: 700;
+}
+
+#completeLesson:disabled {
+    background: #63705b;
+    cursor: default;
+}
+
+#completionMessage {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 30px 9%;
+    background: #20231f;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 12px;
+}
+
+footer strong {
+    color: white;
+    font-family: 'Space Grotesk';
+    font-size: 18px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 850px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding-top: 65px;
+    }
+
+    .hero-visual {
+        min-height: 300px;
+    }
+
+    .two-column,
+    .practice-box {
+        grid-template-columns: 1fr;
+    }
+
+    .why-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media(max-width: 600px) {
+    .nav {
+        padding: 0 5%;
+    }
+
+    .nav-center {
+        display: none;
+    }
+
+    .hero {
+        padding: 60px 6%;
+    }
+
+    .hero h1 {
+        letter-spacing: -4px;
+    }
+
+    .info-strip {
+        padding: 20px 6%;
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+
+    .info-item {
+        border-right: none;
+        padding: 0;
+    }
+
+    .section {
+        padding: 70px 6%;
+    }
+
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz-box {
+        padding: 22px;
+    }
+
+    .completion {
+        padding: 50px 6%;
+    }
+
+    .completion h2 {
+        font-size: 29px;
+    }
+}
+</style>
+
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="../../pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<nav class="nav">
+    <a href="../html.html" class="logo">CNF<span>/</span></a>
+
+    <div class="nav-center">
+        <a href="../html.html">Course Home</a>
+        <a href="#learn">What You'll Learn</a>
+        <a href="#practice">Practice</a>
+        <a href="#quiz">Quiz</a>
+    </div>
+
+    <div class="nav-right">HTML COURSE · 01/08</div>
+</nav>
+
+<!-- HERO -->
+
+<header class="hero">
+    <div>
+        <div class="eyebrow">HTML FUNDAMENTALS / LESSON 01</div>
+
+        <h1>Meet the language of the <span>web.</span></h1>
+
+        <p class="hero-description">
+            Before creating beautiful websites, you need to understand
+            the language that gives every webpage its structure.
+            Welcome to your first step into HTML.
+        </p>
+
+        <div class="hero-actions">
+            <a href="#learn" class="primary-btn">Start Learning ↗</a>
+            <a href="#practice" class="secondary-btn">Try HTML Yourself</a>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="visual-circle"></div>
+        <div class="html-symbol">5</div>
+        <div class="visual-label">HYPERTEXT MARKUP LANGUAGE</div>
+    </div>
+</header>
+
+<div class="info-strip">
+    <div class="info-item">
+        <small>LESSON NUMBER</small>
+        <strong>01 / 08</strong>
+    </div>
+
+    <div class="info-item">
+        <small>LEARNING LEVEL</small>
+        <strong>Beginner Friendly</strong>
+    </div>
+
+    <div class="info-item">
+        <small>ESTIMATED TIME</small>
+        <strong>20–25 Minutes</strong>
+    </div>
+</div>
+
+<!-- INTRODUCTION -->
+
+<section class="section" id="learn">
+    <div class="section-label">01 — THE FOUNDATION</div>
+    <h2>So, what exactly is HTML?</h2>
+
+    <p class="section-intro">
+        HTML stands for HyperText Markup Language. It is the standard
+        markup language used to create and structure content on the web.
+        Think of it as the skeleton of a website.
+    </p>
+
+    <div class="two-column">
+        <div>
+            <div class="big-number">01.</div>
+
+            <div class="explain-card">
+                <h3>HTML gives structure.</h3>
+                <p>
+                    It tells the browser which content is a heading,
+                    which content is a paragraph, where an image belongs,
+                    and where a link should take the visitor.
+                </p>
+            </div>
+        </div>
+
+        <div class="code-window">
+            <div class="window-top">
+                <span>first-page.html</span>
+                <div class="window-dots">
+                    <i></i><i></i><i></i>
+                </div>
+            </div>
+
+            <div class="code-content">
+                <span class="code-orange">&lt;h1&gt;</span>
+                <span class="code-green">Hello, World!</span>
+                <span class="code-orange">&lt;/h1&gt;</span>
+                <br>
+                <span class="code-orange">&lt;p&gt;</span>
+                <span class="code-green">My first webpage.</span>
+                <span class="code-orange">&lt;/p&gt;</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY HTML -->
+
+<section class="section why-section">
+    <div class="section-label">02 — WHY HTML MATTERS</div>
+    <h2>Every website starts somewhere.</h2>
+
+    <p class="section-intro">
+        From simple blogs to massive online platforms, HTML helps
+        organize the content users see and interact with.
+    </p>
+
+    <div class="why-grid">
+        <div class="why-card">
+            <div class="why-icon">🏗️</div>
+            <h3>Website Structure</h3>
+            <p>Organize headings, paragraphs, sections, navigation and content.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon">🖼️</div>
+            <h3>Media & Content</h3>
+            <p>Add images, videos, audio, links and other useful content.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon">♿</div>
+            <h3>Accessibility</h3>
+            <p>Use meaningful elements to make content easier to understand and navigate.</p>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+
+<section class="section">
+    <div class="section-label">03 — UNDERSTANDING THE PROCESS</div>
+    <h2>How does HTML work?</h2>
+
+    <p class="section-intro">
+        You write HTML in a file. Your browser reads the markup
+        and builds the webpage that appears on your screen.
+    </p>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">STEP 01</div>
+            <div>
+                <h3>Write HTML code</h3>
+                <p>Create an HTML file and write elements such as headings, paragraphs and images.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">STEP 02</div>
+            <div>
+                <h3>Browser reads the code</h3>
+                <p>The browser parses the HTML and understands the document structure.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">STEP 03</div>
+            <div>
+                <h3>Webpage appears</h3>
+                <p>The browser renders the content so visitors can view and interact with it.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HTML CSS JS -->
+
+<section class="section" style="background:#eeeae0;">
+    <div class="section-label">04 — THE THREE BUILDING BLOCKS</div>
+    <h2>HTML, CSS and JavaScript.</h2>
+
+    <p class="section-intro">
+        Modern frontend development commonly uses three core technologies.
+        Each one has a different responsibility.
+    </p>
+
+    <div class="why-grid">
+        <div class="why-card" style="background:#fff;">
+            <div class="why-icon">🧱</div>
+            <h3>HTML</h3>
+            <p>Creates the structure and content of a webpage.</p>
+        </div>
+
+        <div class="why-card" style="background:#fff;">
+            <div class="why-icon">🎨</div>
+            <h3>CSS</h3>
+            <p>Controls the appearance, layout, colours and responsive design.</p>
+        </div>
+
+        <div class="why-card" style="background:#fff;">
+            <div class="why-icon">⚡</div>
+            <h3>JavaScript</h3>
+            <p>Adds behaviour, logic and interactivity to a webpage.</p>
+        </div>
+    </div>
+</section>
+
+<!-- PRACTICE -->
+
+<section class="section practice-section" id="practice">
+    <div class="section-label">05 — YOUR FIRST EXPERIMENT</div>
+    <h2>Write your first HTML page.</h2>
+
+    <p class="section-intro">
+        Edit the code below and click Run Code. Your browser preview
+        will update with your HTML.
+    </p>
+
+    <div class="practice-box">
+        <div class="editor-panel">
+            <div class="panel-heading">
+                <span>HTML EDITOR</span>
+                <span>LIVE CODE</span>
+            </div>
+
+            <textarea id="htmlEditor" spellcheck="false"><h1>Hello, World!</h1>
+<p>I am learning HTML at CODE NEXA FORGE.</p>
+<h2>My First Website</h2>
+<p>This is my first webpage.</p></textarea>
+
+            <div class="editor-actions">
+                <button class="small-btn" id="runHTML">Run Code ↗</button>
+                <button class="small-btn secondary" id="resetHTML">Reset</button>
+            </div>
+        </div>
+
+        <div class="preview-panel">
+            <div class="panel-heading">
+                <span>LIVE PREVIEW</span>
+                <span>YOUR WEBPAGE</span>
+            </div>
+
+            <iframe id="htmlPreview" title="HTML live preview"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- QUIZ -->
+
+<section class="section" id="quiz">
+    <div class="section-label">06 — CHECK YOUR KNOWLEDGE</div>
+    <h2>Quick knowledge check.</h2>
+
+    <p class="section-intro">
+        Answer all three questions to test what you learned in this lesson.
+    </p>
+
+    <div class="quiz-box">
+
+        <div class="question">
+            <h3>1. What does HTML stand for?</h3>
+
+            <label class="option">
+                <input type="radio" name="q1" value="a">
+                HyperText Machine Language
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="b">
+                HyperText Markup Language
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="c">
+                HighText Markdown Language
+            </label>
+        </div>
+
+        <div class="question">
+            <h3>2. What is the main purpose of HTML?</h3>
+
+            <label class="option">
+                <input type="radio" name="q2" value="a">
+                To structure webpage content
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="b">
+                To create database servers
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2" value="c">
+                To edit photographs
+            </label>
+        </div>
+
+        <div class="question">
+            <h3>3. Which technology controls webpage styling?</h3>
+
+            <label class="option">
+                <input type="radio" name="q3" value="a">
+                HTML
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="b">
+                CSS
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3" value="c">
+                SQL
+            </label>
+        </div>
+
+        <button class="primary-btn" id="checkQuiz">Check My Answers</button>
+        <div class="quiz-result" id="quizResult"></div>
+    </div>
+</section>
+
+<!-- COMPLETION -->
+
+<section class="completion">
+    <div>
+        <div class="section-label" style="color:#405d2e;">LESSON 01 / FINISH LINE</div>
+        <h2>One step closer to becoming a developer.</h2>
+        <p>Complete the quiz with 3/3 to unlock lesson completion.</p>
+        <div id="completionMessage"></div>
+    </div>
+
+    <button id="completeLesson">Mark Lesson Complete ↗</button>
+</section>
+
+<footer>
+    <strong>CNF/</strong>
+    <span>CODE NEXA FORGE · HTML LEARNING EXPERIENCE</span>
+    <a href="02-document-structure.html">Next Lesson: Document Structure →</a>
+</footer>
+
+<script>
+const editor = document.getElementById('htmlEditor');
+const preview = document.getElementById('htmlPreview');
+
+const starterCode = `<h1>Hello, World!</h1>
+<p>I am learning HTML at CODE NEXA FORGE.</p>
+<h2>My First Website</h2>
+<p>This is my first webpage.</p>`;
+
+function runCode() {
+    preview.srcdoc = editor.value;
+}
+
+document.getElementById('runHTML').addEventListener('click', runCode);
+
+document.getElementById('resetHTML').addEventListener('click', () => {
+    editor.value = starterCode;
+    runCode();
+});
+
+runCode();
+
+let quizPassed = false;
+
+document.getElementById('checkQuiz').addEventListener('click', () => {
+    const answers = {
+        q1: 'b',
+        q2: 'a',
+        q3: 'b'
+    };
+
+    let score = 0;
+    let unanswered = false;
+
+    Object.keys(answers).forEach(question => {
+        const selected = document.querySelector(
+            `input[name="${question}"]:checked`
+        );
+
+        if (!selected) {
+            unanswered = true;
+        } else if (selected.value === answers[question]) {
+            score++;
+        }
+    });
+
+    const result = document.getElementById('quizResult');
+
+    if (unanswered) {
+        result.textContent = 'Please answer all three questions first.';
+        result.style.color = '#c45b30';
+        quizPassed = false;
+        return;
+    }
+
+    result.textContent = `Your Score: ${score}/3`;
+
+    if (score === 3) {
+        result.textContent += ' — Excellent! You passed the quiz.';
+        result.style.color = '#39813a';
+        quizPassed = true;
+    } else {
+        result.textContent += ' — Review the lesson and try again.';
+        result.style.color = '#c45b30';
+        quizPassed = false;
+    }
+});
+
+const completeButton = document.getElementById('completeLesson');
+const completionMessage = document.getElementById('completionMessage');
+const storageKey = 'html-lesson-01-completed';
+
+if (localStorage.getItem(storageKey) === 'true') {
+    completeButton.disabled = true;
+    completeButton.textContent = '✓ Lesson Completed';
+    completionMessage.textContent = 'You have already completed this lesson.';
+}
+
+completeButton.addEventListener('click', () => {
+    if (!quizPassed) {
+        completionMessage.textContent = 'First achieve 3/3 in the quiz.';
+        completionMessage.style.color = '#a33b22';
+        return;
+    }
+
+    localStorage.setItem(storageKey, 'true');
+    completeButton.disabled = true;
+    completeButton.textContent = '✓ Lesson Completed';
+    completionMessage.textContent = 'Great work! Lesson 01 completed successfully.';
+    completionMessage.style.color = '#345d26';
+});
+</script>
+
+
+<script src="../../js/lesson-quiz-guard.js"></script>
+
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

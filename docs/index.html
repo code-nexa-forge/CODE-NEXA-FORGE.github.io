@@ -1,0 +1,2950 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b14">
+
+<title>CODE NEXA FORGE | Learn. Build. Master.</title>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #080b14;
+    --bg2: #0d1422;
+    --card: #111b2c;
+    --cyan: #00d9ff;
+    --purple: #a855f7;
+    --lime: #b5f550;
+    --orange: #ff914d;
+    --white: #f7f9ff;
+    --muted: #9aa6bd;
+    --border: rgba(255,255,255,.09);
+    --gradient: linear-gradient(120deg,#00d9ff,#a855f7);
+    --font: "DM Sans",sans-serif;
+    --heading: "Space Grotesk",sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font);
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 15% 15%,rgba(0,217,255,.045),transparent 30%),
+        radial-gradient(circle at 85% 60%,rgba(168,85,247,.05),transparent 35%);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,input,textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    width: min(1160px,90%);
+    margin: auto;
+}
+
+.section {
+    padding: 105px 0;
+    position: relative;
+}
+
+.section-heading {
+    max-width: 700px;
+    margin-bottom: 48px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 17px;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 2px;
+    background: currentColor;
+}
+
+.section-heading h2 {
+    font: 700 clamp(30px,4vw,48px)/1.15 var(--heading);
+    letter-spacing: -1.5px;
+    margin-bottom: 15px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    line-height: 1.85;
+    font-size: 14px;
+}
+
+.gradient-text {
+    background: linear-gradient(110deg,#00d9ff,#a855f7,#b5f550);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientFlow 5s linear infinite;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 23px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-weight: 800;
+    font-size: 13px;
+    transition: .35s;
+    cursor: pointer;
+}
+
+.btn-primary {
+    color: #07111a;
+    background: var(--gradient);
+    background-size: 200% auto;
+}
+
+.btn-primary:hover {
+    transform: translateY(-5px) scale(1.025);
+    background-position: right center;
+    box-shadow: 0 12px 35px rgba(0,217,255,.23);
+}
+
+.btn-outline {
+    border-color: var(--border);
+    color: var(--white);
+    background: rgba(255,255,255,.025);
+}
+
+.btn-outline:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,217,255,.08);
+}
+
+/* BACKGROUND DECORATIONS */
+
+.background-orb {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(110px);
+    opacity: .12;
+    pointer-events: none;
+    z-index: -1;
+    animation: orbDrift 15s ease-in-out infinite alternate;
+}
+
+.orb-one {
+    background: var(--cyan);
+    top: 20%;
+    left: -200px;
+}
+
+.orb-two {
+    background: var(--purple);
+    right: -200px;
+    top: 55%;
+    animation-delay: -7s;
+}
+
+@keyframes orbDrift {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(100px,-70px) scale(1.3); }
+}
+
+@keyframes gradientFlow {
+    to { background-position: 200% center; }
+}
+
+/* NAVBAR */
+
+.navbar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 1000;
+    background: rgba(8,11,20,.82);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid transparent;
+    transition: .35s;
+}
+
+.navbar.scrolled {
+    border-bottom-color: var(--border);
+    box-shadow: 0 10px 35px rgba(0,0,0,.3);
+}
+
+.nav-inner {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.brand {
+    font: 800 19px var(--heading);
+    white-space: nowrap;
+    letter-spacing: -.6px;
+    transition: .3s;
+}
+
+.brand:hover {
+    transform: scale(1.04);
+}
+
+.brand span {
+    color: var(--cyan);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* SAME ANIMATIONS FOR ALL NAVIGATION BUTTONS */
+
+.nav-links a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    color: #c1c9d9;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+    transition:
+        color .3s ease,
+        background .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease,
+        transform .3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--cyan);
+    background: rgba(0,217,255,.09);
+    border-color: rgba(0,217,255,.3);
+    transform: translateY(-4px);
+    box-shadow: 0 7px 22px rgba(0,217,255,.13);
+}
+
+.nav-links a:active {
+    transform: translateY(-1px) scale(.96);
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+    width: 0;
+    height: 2px;
+    border-radius: 5px;
+    background: linear-gradient(90deg,var(--cyan),var(--purple));
+    transform: translateX(-50%);
+    transition: width .3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 55%;
+}
+
+.nav-links .login-link {
+    padding: 11px 16px;
+    color: #07111a;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: var(--gradient);
+    background-size: 200% auto;
+}
+
+.nav-links .login-link:hover {
+    color: #07111a;
+    background-position: right center;
+    border-color: var(--cyan);
+    box-shadow: 0 7px 25px rgba(0,217,255,.3);
+}
+
+.nav-links .login-link::after,
+.nav-links .profile-link::after {
+    display: none;
+}
+
+/* PROFILE NAVIGATION */
+
+.profile-link {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 13px 7px 7px !important;
+    border: 1px solid rgba(0,217,255,.3) !important;
+    border-radius: 50px !important;
+    background: rgba(0,217,255,.07) !important;
+    color: var(--white) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+.profile-link:hover {
+    border-color: var(--cyan) !important;
+    background: rgba(0,217,255,.16) !important;
+    color: var(--white) !important;
+    box-shadow: 0 7px 25px rgba(0,217,255,.2) !important;
+    transform: translateY(-4px) !important;
+}
+
+.profile-avatar {
+    width: 31px;
+    height: 31px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#00d9ff,#a855f7);
+    color: #07111a;
+    font: 800 13px var(--heading);
+}
+
+.profile-link[hidden],
+.login-link[hidden] {
+    display: none !important;
+}
+
+.menu-toggle {
+    display: none;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 9px;
+    font-size: 22px;
+    transition: .3s;
+}
+
+.menu-toggle:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    box-shadow: 0 0 18px rgba(0,217,255,.15);
+    transform: scale(1.05);
+}
+
+/* HERO */
+
+.hero {
+    min-height: 750px;
+    padding: 155px 0 95px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 15% 35%,rgba(0,217,255,.12),transparent 38%),
+        radial-gradient(ellipse at 85% 45%,rgba(168,85,247,.13),transparent 38%);
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border: 1px solid rgba(0,217,255,.07);
+    border-radius: 50%;
+    right: -200px;
+    top: 10%;
+    box-shadow: 0 0 0 50px rgba(0,217,255,.015),
+                0 0 0 100px rgba(0,217,255,.012);
+    animation: rotateRing 35s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes rotateRing {
+    to { transform: rotate(360deg); }
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    align-items: center;
+    gap: 60px;
+}
+
+.hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    background: rgba(0,217,255,.07);
+    border: 1px solid rgba(0,217,255,.2);
+    border-radius: 50px;
+    color: var(--cyan);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    animation: labelGlow 3s infinite alternate;
+}
+
+@keyframes labelGlow {
+    to { box-shadow: 0 0 25px rgba(0,217,255,.15); }
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 12px var(--lime);
+    animation: pulse 1.7s infinite;
+}
+
+.hero h1 {
+    font: 700 clamp(42px,5.8vw,72px)/1.06 var(--heading);
+    letter-spacing: -3px;
+    margin-bottom: 24px;
+}
+
+.hero-description {
+    max-width: 520px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 30px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 35px;
+    margin-top: 45px;
+}
+
+.hero-stats strong {
+    display: block;
+    font: 700 25px var(--heading);
+}
+
+.hero-stats span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* CODE WINDOW */
+
+.hero-visual {
+    position: relative;
+    perspective: 1000px;
+}
+
+.code-window {
+    position: relative;
+    background: #101827;
+    border: 1px solid rgba(0,217,255,.22);
+    border-radius: 17px;
+    padding: 20px;
+    box-shadow: 0 30px 90px rgba(0,0,0,.45),0 0 55px rgba(0,217,255,.08);
+    animation: codeFloat 6s ease-in-out infinite;
+    transition: .4s;
+}
+
+.code-window:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 30px 90px rgba(0,0,0,.5),0 0 55px rgba(0,217,255,.18);
+}
+
+.window-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.window-dots {
+    display: flex;
+    gap: 7px;
+}
+
+.window-dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ff6b6b;
+}
+
+.window-dots i:nth-child(2) { background: #ffc857; }
+.window-dots i:nth-child(3) { background: #56d69b; }
+
+.window-name {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.code-lines {
+    font: 13px/2 "Courier New",monospace;
+    color: #c7d2e6;
+    overflow: hidden;
+}
+
+.code-lines .purple { color: #c792ea; }
+.code-lines .cyan { color: #80deea; }
+.code-lines .green { color: #b5f550; }
+.code-lines .orange { color: #ffb86c; }
+.code-lines .indent { padding-left: 22px; }
+
+.floating-chip {
+    position: absolute;
+    padding: 13px 17px;
+    border: 1px solid var(--border);
+    background: #172133;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 800;
+    box-shadow: 0 15px 35px rgba(0,0,0,.3);
+    animation: chipFloat 4s ease-in-out infinite;
+}
+
+.chip-one {
+    top: -28px;
+    right: -22px;
+    color: var(--lime);
+}
+
+.chip-two {
+    bottom: -24px;
+    left: -25px;
+    color: var(--cyan);
+    animation-delay: 1.5s;
+}
+
+@keyframes codeFloat {
+    0%,100% { transform: translateY(0) rotateY(-5deg) rotateX(3deg); }
+    50% { transform: translateY(-13px) rotateY(-2deg) rotateX(1deg); }
+}
+
+@keyframes chipFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* FEATURE SECTIONS */
+
+.features-section {
+    background: #0b101c;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 22px;
+}
+
+.feature-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 410px;
+    display: flex;
+    flex-direction: column;
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: linear-gradient(145deg,#151e2e,#0e1522);
+    transition: transform .45s,border-color .45s,box-shadow .45s;
+}
+
+.feature-card::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 230px;
+    height: 230px;
+    right: -100px;
+    top: -100px;
+    border-radius: 50%;
+    background: var(--feature-color);
+    opacity: .12;
+    filter: blur(55px);
+    transition: .5s;
+}
+
+.feature-card::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -80%;
+    width: 50%;
+    height: 300%;
+    transform: rotate(25deg);
+    background: linear-gradient(90deg,transparent,rgba(255,255,255,.035),transparent);
+    transition: .8s;
+    pointer-events: none;
+}
+
+.feature-card:hover::after {
+    left: 150%;
+}
+
+.feature-card:hover {
+    transform: translateY(-13px) scale(1.015);
+    border-color: var(--feature-color);
+    box-shadow: 0 22px 55px rgba(0,0,0,.3),0 0 30px color-mix(in srgb,var(--feature-color) 10%,transparent);
+}
+
+.feature-card:hover::before {
+    opacity: .3;
+    transform: scale(1.5);
+}
+
+.progress-card { --feature-color: #b5f550; }
+.ai-card { --feature-color: #b77aff; }
+.play-card { --feature-color: #00d9ff; }
+
+.feature-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.feature-icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    color: var(--feature-color);
+    background: color-mix(in srgb,var(--feature-color) 12%,transparent);
+    border: 1px solid color-mix(in srgb,var(--feature-color) 25%,transparent);
+    font-size: 27px;
+    transition: .4s;
+}
+
+.feature-card:hover .feature-icon {
+    transform: rotate(-12deg) scale(1.13);
+    box-shadow: 0 0 25px color-mix(in srgb,var(--feature-color) 22%,transparent);
+}
+
+.feature-tag {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--feature-color);
+}
+
+.feature-card h3 {
+    font: 700 27px var(--heading);
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.85;
+    margin-bottom: 25px;
+}
+
+.feature-visual {
+    margin-top: auto;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+}
+
+.feature-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--feature-color);
+    font-size: 13px;
+    font-weight: 800;
+    margin-top: 22px;
+    transition: .3s;
+}
+
+.feature-link span {
+    transition: transform .3s;
+}
+
+.feature-link:hover span {
+    transform: translateX(7px);
+}
+
+/* PROGRESS PREVIEW */
+
+.progress-preview {
+    width: 100%;
+    padding: 16px;
+    background: rgba(0,0,0,.2);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.progress-preview-top {
+    display: flex;
+    justify-content: space-between;
+    color: #dce5f5;
+    font-size: 10px;
+    margin-bottom: 12px;
+}
+
+.progress-track {
+    height: 7px;
+    background: #263144;
+    border-radius: 30px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg,#b5f550,#00d9ff);
+    border-radius: inherit;
+    transition: width 1.8s ease;
+}
+
+.progress-preview-bottom {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+/* AI PREVIEW */
+
+.ai-preview {
+    width: 100%;
+    display: grid;
+    gap: 9px;
+}
+
+.ai-message {
+    width: fit-content;
+    max-width: 90%;
+    padding: 10px 13px;
+    border-radius: 11px;
+    font-size: 10px;
+    line-height: 1.6;
+    background: #22243a;
+    color: #e3d9ff;
+    animation: messageIn .7s both;
+}
+
+.ai-message.user {
+    justify-self: end;
+    background: rgba(0,217,255,.12);
+    color: #a5edff;
+    animation-delay: .3s;
+}
+
+/* PLAYGROUND PREVIEW */
+
+.play-preview {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.mini-editor,.mini-output {
+    min-height: 105px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #0a101b;
+    font: 10px/1.8 monospace;
+}
+
+.mini-editor span { color: #c792ea; }
+.mini-editor b { color: #80deea; }
+
+.mini-output small {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 9px;
+}
+
+.mini-output strong {
+    color: var(--lime);
+    font: 700 13px var(--heading);
+}
+
+/* COURSES */
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 22px;
+}
+
+.course-card {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: var(--card);
+    transition: .4s;
+}
+
+.course-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(0,217,255,.45);
+    box-shadow: 0 20px 45px rgba(0,0,0,.25);
+}
+
+.course-art {
+    height: 175px;
+    display: grid;
+    place-items: center;
+    font: 800 54px var(--heading);
+    position: relative;
+    overflow: hidden;
+    transition: .4s;
+}
+
+.course-card:hover .course-art {
+    letter-spacing: 5px;
+}
+
+.course-art::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 50%;
+    transition: .5s;
+}
+
+.course-card:hover .course-art::after {
+    transform: scale(1.5) rotate(45deg);
+}
+
+.html-art { background: linear-gradient(135deg,#4a210e,#f06427); color: #ffd4b5; }
+.css-art { background: linear-gradient(135deg,#102d62,#2678ef); color: #c5e2ff; }
+.js-art { background: linear-gradient(135deg,#493b08,#d9ad13); color: #fff0a1; }
+
+.course-content {
+    padding: 24px;
+}
+
+.course-level {
+    color: var(--cyan);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.course-content h3 {
+    font: 700 22px var(--heading);
+    margin: 10px 0;
+}
+
+.course-content p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    min-height: 70px;
+}
+
+.course-meta {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 18px;
+    margin-top: 18px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.course-meta a {
+    color: var(--cyan);
+    font-weight: 800;
+}
+
+/* TUTORIALS */
+
+.tutorials-section {
+    background: #0b101c;
+}
+
+.tutorial-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+
+.tutorial-card {
+    padding: 25px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    transition: .4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.tutorial-card::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    right: -60px;
+    bottom: -60px;
+    background: var(--purple);
+    filter: blur(45px);
+    opacity: 0;
+    transition: .4s;
+}
+
+.tutorial-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--purple);
+}
+
+.tutorial-card:hover::before {
+    opacity: .3;
+}
+
+.tutorial-number {
+    font: 700 31px var(--heading);
+    color: rgba(168,85,247,.65);
+    margin-bottom: 18px;
+}
+
+.tutorial-card h3 {
+    font: 700 18px var(--heading);
+    margin-bottom: 10px;
+}
+
+.tutorial-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.tutorial-card a {
+    color: var(--cyan);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* PROJECTS */
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 22px;
+}
+
+.project-card {
+    padding: 28px;
+    border-radius: 17px;
+    background: linear-gradient(140deg,#151d2c,#101624);
+    border: 1px solid var(--border);
+    transition: .4s;
+}
+
+.project-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    border-color: var(--cyan);
+    box-shadow: 0 18px 40px rgba(0,217,255,.07);
+}
+
+.project-icon {
+    font-size: 30px;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: .4s;
+}
+
+.project-card:hover .project-icon {
+    transform: rotate(12deg) scale(1.2);
+}
+
+.project-card h3 {
+    font: 700 21px var(--heading);
+    margin-bottom: 10px;
+}
+
+.project-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.project-tags span {
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: #aab8ce;
+    font-size: 10px;
+    transition: .3s;
+}
+
+.project-tags span:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+}
+
+/* CHALLENGES */
+
+.challenge-box {
+    position: relative;
+    overflow: hidden;
+    padding: 55px;
+    border: 1px solid rgba(0,217,255,.2);
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 90% 20%,rgba(168,85,247,.18),transparent 35%),
+        linear-gradient(120deg,#10202e,#15152b);
+}
+
+.challenge-box::after {
+    content: "</>";
+    position: absolute;
+    right: 35px;
+    bottom: -20px;
+    font: 800 150px var(--heading);
+    color: rgba(255,255,255,.035);
+    animation: codeFloat 7s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.challenge-box h2 {
+    max-width: 600px;
+    font: 700 clamp(30px,4vw,43px)/1.2 var(--heading);
+    margin-bottom: 15px;
+}
+
+.challenge-box p {
+    max-width: 580px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+/* NEXA LIBRARY SECTION */
+
+#nexa-library-section {
+    scroll-margin-top: 95px;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 10% 50%,rgba(0,217,255,.10),transparent 40%),
+        radial-gradient(ellipse at 90% 50%,rgba(168,85,247,.12),transparent 40%),
+        #0b101c;
+}
+
+.library-promo {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 65px 55px;
+    border: 1px solid rgba(0,217,255,.25);
+    border-radius: 25px;
+    background:
+        linear-gradient(125deg,rgba(13,29,46,.97),rgba(29,20,51,.96));
+    box-shadow: 0 25px 70px rgba(0,0,0,.25);
+    animation: libraryBorderGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes libraryBorderGlow {
+    from {
+        border-color: rgba(0,217,255,.2);
+        box-shadow: 0 20px 55px rgba(0,0,0,.25),0 0 15px rgba(0,217,255,.04);
+    }
+    to {
+        border-color: rgba(168,85,247,.5);
+        box-shadow: 0 20px 55px rgba(0,0,0,.3),0 0 30px rgba(168,85,247,.12);
+    }
+}
+
+.library-promo::before,
+.library-promo::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.library-promo::before {
+    width: 300px;
+    height: 300px;
+    right: -90px;
+    top: -150px;
+    background: var(--cyan);
+    opacity: .14;
+    filter: blur(75px);
+    animation: libraryOrb 7s ease-in-out infinite alternate;
+}
+
+.library-promo::after {
+    width: 250px;
+    height: 250px;
+    left: 35%;
+    bottom: -180px;
+    background: var(--purple);
+    opacity: .2;
+    filter: blur(70px);
+    animation: libraryOrb 6s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes libraryOrb {
+    to { transform: translate(-35px,35px) scale(1.25); }
+}
+
+.library-promo-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+}
+
+.library-promo .eyebrow {
+    color: var(--lime);
+}
+
+.library-promo h2 {
+    font: 700 clamp(34px,5vw,53px)/1.12 var(--heading);
+    letter-spacing: -1.8px;
+    margin-bottom: 18px;
+}
+
+.library-promo p {
+    max-width: 650px;
+    color: #b0bed1;
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 27px;
+}
+
+.library-promo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+}
+
+.library-promo .btn-primary {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(0,217,255,.15);
+}
+
+.library-promo .btn-primary:hover {
+    box-shadow: 0 12px 38px rgba(0,217,255,.32);
+}
+
+.library-promo .btn-outline:hover {
+    border-color: var(--purple);
+    color: #d8b9ff;
+    box-shadow: 0 10px 28px rgba(168,85,247,.14);
+}
+
+.library-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.library-highlight {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 13px;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 30px;
+    color: #c6d6e9;
+    background: rgba(255,255,255,.035);
+    font-size: 11px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.library-highlight:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0,217,255,.4);
+    color: var(--cyan);
+    background: rgba(0,217,255,.07);
+}
+
+.library-decoration {
+    position: absolute;
+    z-index: 1;
+    right: 65px;
+    top: 50%;
+    width: 190px;
+    height: 190px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(0,217,255,.2);
+    border-radius: 35px;
+    background: linear-gradient(145deg,rgba(0,217,255,.1),rgba(168,85,247,.12));
+    box-shadow: 0 20px 60px rgba(0,0,0,.25),inset 0 0 35px rgba(0,217,255,.05);
+    transform: translateY(-50%) rotate(8deg);
+    animation: libraryBookFloat 5s ease-in-out infinite;
+}
+
+.library-decoration::before,
+.library-decoration::after {
+    content: "";
+    position: absolute;
+    inset: 13px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 25px;
+}
+
+.library-decoration::after {
+    inset: 27px;
+    border-color: rgba(0,217,255,.16);
+}
+
+.library-decoration span {
+    position: relative;
+    z-index: 2;
+    color: var(--cyan);
+    font: 800 65px var(--heading);
+    text-shadow: 0 0 30px rgba(0,217,255,.45);
+}
+
+@keyframes libraryBookFloat {
+    0%,100% { transform: translateY(-50%) rotate(8deg); }
+    50% { transform: translateY(calc(-50% - 13px)) rotate(3deg); }
+}
+
+/* CTA */
+
+.cta-section {
+    padding: 100px 0;
+    text-align: center;
+    background: radial-gradient(ellipse at center,rgba(0,217,255,.1),transparent 65%);
+}
+
+.cta-section h2 {
+    font: 700 clamp(32px,5vw,52px)/1.15 var(--heading);
+    margin-bottom: 17px;
+}
+
+.cta-section p {
+    color: var(--muted);
+    max-width: 570px;
+    margin: 0 auto 27px;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #060911;
+    border-top: 1px solid var(--border);
+    padding: 55px 0 25px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 35px;
+    padding-bottom: 40px;
+}
+
+.footer-brand p {
+    max-width: 270px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+    margin-top: 16px;
+}
+
+.footer-column h4 {
+    font: 700 14px var(--heading);
+    margin-bottom: 17px;
+}
+
+.footer-column a {
+    display: block;
+    width: fit-content;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 12px;
+    transition: .25s;
+}
+
+.footer-column a:hover {
+    color: var(--cyan);
+    transform: translateX(5px);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding-top: 23px;
+    border-top: 1px solid var(--border);
+    color: #738096;
+    font-size: 11px;
+}
+
+/* SCROLL REVEAL */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 { transition-delay: .12s; }
+.delay-2 { transition-delay: .24s; }
+.delay-3 { transition-delay: .36s; }
+
+@keyframes pulse {
+    0%,100% { opacity: 1; box-shadow: 0 0 12px var(--lime); }
+    50% { opacity: .45; box-shadow: 0 0 3px var(--lime); }
+}
+
+@keyframes messageIn {
+    from { opacity: 0; transform: translateY(9px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* FLOATING NEXA AI CHAT ASSISTANT */
+
+.nexa-launcher {
+    position: fixed;
+    right: 27px;
+    bottom: 25px;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px 10px 10px;
+    border: 1px solid rgba(0,217,255,.35);
+    border-radius: 50px;
+    color: white;
+    background: linear-gradient(135deg,#15243a,#19152f);
+    box-shadow: 0 8px 35px rgba(0,0,0,.4),0 0 25px rgba(0,217,255,.13);
+    transition: .35s;
+    animation: launcherFloat 4s ease-in-out infinite;
+}
+
+.nexa-launcher:hover {
+    transform: translateY(-7px) scale(1.04);
+    border-color: var(--cyan);
+    box-shadow: 0 12px 40px rgba(0,217,255,.22);
+}
+
+.nexa-launcher-icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 47px;
+    height: 47px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#00d9ff,#8255ff);
+    color: white;
+    font: 800 23px var(--heading);
+    box-shadow: 0 0 22px rgba(0,217,255,.4);
+}
+
+.nexa-launcher-icon::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border: 1px solid rgba(0,217,255,.55);
+    border-radius: 50%;
+    animation: launcherRing 2s ease-out infinite;
+}
+
+.nexa-launcher-text {
+    text-align: left;
+}
+
+.nexa-launcher-text strong {
+    display: block;
+    font: 700 13px var(--heading);
+}
+
+.nexa-launcher-text small {
+    color: #a9bed2;
+    font-size: 10px;
+}
+
+.launcher-status {
+    position: absolute;
+    right: 9px;
+    top: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 10px var(--lime);
+}
+
+@keyframes launcherFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes launcherRing {
+    0% { transform: scale(.9); opacity: .9; }
+    100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* CHAT PANEL */
+
+.nexa-chat {
+    position: fixed;
+    right: 27px;
+    bottom: 98px;
+    z-index: 1999;
+    width: 365px;
+    max-width: calc(100vw - 30px);
+    height: 510px;
+    max-height: min(70vh,600px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(0,217,255,.25);
+    border-radius: 19px;
+    background: #0d1524;
+    box-shadow: 0 25px 90px rgba(0,0,0,.6),0 0 35px rgba(0,217,255,.08);
+    transform: translateY(25px) scale(.92);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform-origin: bottom right;
+    transition: opacity .3s ease,transform .35s cubic-bezier(.2,.8,.2,1),visibility .35s;
+}
+
+.nexa-chat.open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.chat-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 16px;
+    background: linear-gradient(115deg,#142c43,#211a3d);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.chat-header::after {
+    content: "";
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    right: 55px;
+    top: -55px;
+    border-radius: 50%;
+    background: var(--cyan);
+    filter: blur(50px);
+    opacity: .25;
+    pointer-events: none;
+}
+
+.chat-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.chat-avatar {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    color: white;
+    font: 800 21px var(--heading);
+    background: linear-gradient(135deg,#00d9ff,#8955ff);
+    box-shadow: 0 0 20px rgba(0,217,255,.25);
+    animation: avatarGlow 3s infinite alternate;
+}
+
+@keyframes avatarGlow {
+    to { box-shadow: 0 0 28px rgba(168,85,247,.55); }
+}
+
+.chat-brand h3 {
+    font: 700 15px var(--heading);
+}
+
+.chat-brand p {
+    color: #9eb4ca;
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+.chat-brand p span {
+    color: var(--lime);
+    margin-right: 4px;
+}
+
+.chat-actions {
+    display: flex;
+    gap: 7px;
+}
+
+.chat-actions button {
+    width: 31px;
+    height: 31px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px;
+    color: #d6e5f5;
+    background: rgba(255,255,255,.06);
+    font-size: 17px;
+    transition: .25s;
+}
+
+.chat-actions button:hover {
+    background: rgba(0,217,255,.17);
+    color: var(--cyan);
+    transform: rotate(8deg);
+}
+
+/* CHAT MESSAGES */
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    scrollbar-width: thin;
+    scrollbar-color: #34465c transparent;
+}
+
+.chat-welcome {
+    text-align: center;
+    padding: 16px 7px 12px;
+    animation: messageIn .5s both;
+}
+
+.chat-welcome-icon {
+    width: 57px;
+    height: 57px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 14px;
+    border-radius: 19px;
+    background: linear-gradient(135deg,rgba(0,217,255,.2),rgba(168,85,247,.2));
+    border: 1px solid rgba(0,217,255,.2);
+    color: var(--cyan);
+    font: 800 25px var(--heading);
+}
+
+.chat-welcome h4 {
+    font: 700 17px var(--heading);
+    margin-bottom: 7px;
+}
+
+.chat-welcome p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.chat-message {
+    max-width: 88%;
+    padding: 11px 13px;
+    font-size: 12px;
+    line-height: 1.7;
+    border-radius: 13px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    animation: messageIn .3s ease both;
+}
+
+.chat-message.assistant {
+    align-self: flex-start;
+    color: #dce8f6;
+    background: #19263a;
+    border: 1px solid rgba(255,255,255,.06);
+    border-bottom-left-radius: 4px;
+}
+
+.chat-message.user {
+    align-self: flex-end;
+    color: #e8faff;
+    background: linear-gradient(135deg,#164c65,#43306a);
+    border-bottom-right-radius: 4px;
+}
+
+.typing-indicator {
+    align-self: flex-start;
+    display: flex;
+    gap: 5px;
+    padding: 13px 15px;
+    border-radius: 12px;
+    background: #19263a;
+}
+
+.typing-indicator span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: typing 1s infinite;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: .15s; }
+.typing-indicator span:nth-child(3) { animation-delay: .3s; }
+
+@keyframes typing {
+    0%,60%,100% { transform: translateY(0); opacity: .4; }
+    30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* SUGGESTED PROMPTS */
+
+.chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 0 14px 12px;
+}
+
+.chat-suggestions button {
+    border: 1px solid rgba(0,217,255,.2);
+    background: rgba(0,217,255,.05);
+    color: #aeeeff;
+    border-radius: 20px;
+    padding: 7px 10px;
+    font-size: 10px;
+    transition: .25s;
+}
+
+.chat-suggestions button:hover {
+    background: rgba(0,217,255,.15);
+    transform: translateY(-2px);
+}
+
+/* CHAT INPUT */
+
+.chat-input-area {
+    padding: 12px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    background: #0c1421;
+}
+
+.chat-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px;
+    background: #162235;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    transition: .3s;
+}
+
+.chat-input-row:focus-within {
+    border-color: rgba(0,217,255,.5);
+    box-shadow: 0 0 15px rgba(0,217,255,.08);
+}
+
+.chat-input-row input {
+    flex: 1;
+    min-width: 0;
+    outline: none;
+    border: none;
+    color: white;
+    background: transparent;
+    padding: 8px 5px;
+    font-size: 12px;
+}
+
+.chat-input-row input::placeholder {
+    color: #8292a9;
+}
+
+.chat-send {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 9px;
+    color: #06131b;
+    background: linear-gradient(135deg,#00d9ff,#a855f7);
+    font-size: 17px;
+    transition: .3s;
+}
+
+.chat-send:hover {
+    transform: scale(1.08) rotate(-8deg);
+    box-shadow: 0 0 18px rgba(0,217,255,.25);
+}
+
+.chat-disclaimer {
+    text-align: center;
+    color: #718096;
+    font-size: 9px;
+    margin-top: 9px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px) {
+    .nav-links { gap: 5px; }
+    .nav-links a { padding: 9px 8px; font-size: 10px; }
+}
+
+@media(max-width:850px) {
+    .menu-toggle { display: block; }
+
+    .nav-links {
+        position: absolute;
+        top: 76px;
+        left: 5%;
+        right: 5%;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        background: #101827;
+        box-shadow: 0 20px 40px rgba(0,0,0,.4);
+    }
+
+    .nav-links.open { display: flex; }
+
+    .nav-links a {
+        justify-content: flex-start;
+        padding: 14px;
+        font-size: 13px;
+        border-radius: 9px;
+    }
+
+    .nav-links a:hover {
+        background: rgba(0,217,255,.09);
+        transform: translateX(5px);
+    }
+
+    .nav-links .login-link {
+        justify-content: center;
+        margin-top: 6px;
+    }
+
+    .nav-links .profile-link {
+        justify-content: center;
+        border-radius: 50px !important;
+        margin-top: 6px;
+    }
+
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-content { text-align: center; }
+    .hero-description { margin-inline: auto; }
+    .hero-actions,.hero-stats { justify-content: center; }
+    .hero-visual { max-width: 600px; width: 100%; margin: 35px auto 0; }
+
+    .feature-grid,.courses-grid { grid-template-columns: repeat(2,1fr); }
+    .feature-card:last-child,.course-card:last-child { grid-column: 1/-1; }
+    .tutorial-grid { grid-template-columns: repeat(2,1fr); }
+    .footer-grid { grid-template-columns: repeat(2,1fr); }
+
+    .library-decoration {
+        right: 30px;
+        width: 145px;
+        height: 145px;
+        opacity: .65;
+    }
+
+    .library-decoration span { font-size: 50px; }
+}
+
+@media(max-width:560px) {
+    .section { padding: 75px 0; }
+    .hero { min-height: auto; padding: 130px 0 75px; }
+    .hero h1 { letter-spacing: -2px; }
+    .hero-description { font-size: 14px; }
+    .hero-stats { gap: 22px; }
+    .hero-stats strong { font-size: 21px; }
+    .code-window { padding: 14px; transform: none; }
+    .code-lines { font-size: 10px; }
+    .chip-one { right: -5px; }
+    .chip-two { left: -5px; }
+
+    .feature-grid,.courses-grid,.tutorial-grid,.projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card:last-child,.course-card:last-child {
+        grid-column: auto;
+    }
+
+    .feature-card { min-height: 375px; }
+    .challenge-box { padding: 30px 23px; }
+
+    .library-promo {
+        padding: 38px 24px;
+    }
+
+    .library-promo h2 {
+        font-size: 34px;
+    }
+
+    .library-promo p {
+        font-size: 13px;
+    }
+
+    .library-decoration {
+        right: -25px;
+        top: 35px;
+        width: 100px;
+        height: 100px;
+        opacity: .22;
+        transform: rotate(8deg);
+    }
+
+    .library-decoration span { font-size: 36px; }
+
+    .library-promo-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .library-promo-actions .btn {
+        width: 100%;
+    }
+
+    .library-highlights {
+        gap: 8px;
+    }
+
+    .library-highlight {
+        font-size: 10px;
+    }
+
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 25px 15px; }
+    .footer-brand { grid-column: 1/-1; }
+    .footer-bottom { flex-direction: column; }
+
+    .nexa-launcher {
+        right: 15px;
+        bottom: 15px;
+        padding: 8px 14px 8px 8px;
+    }
+
+    .nexa-launcher-icon {
+        width: 43px;
+        height: 43px;
+    }
+
+    .nexa-chat {
+        right: 10px;
+        bottom: 82px;
+        width: calc(100vw - 20px);
+        max-width: 400px;
+        height: min(520px,70vh);
+        max-height: calc(100dvh - 110px);
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    *,*::before,*::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+    .reveal { opacity: 1; transform: none; }
+}
+
+.nexa-home-scope {
+    margin: 12px 15px 0;
+    padding: 11px 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border: 1px solid rgba(0,217,255,.2);
+    border-radius: 12px;
+    background: linear-gradient(110deg,rgba(0,217,255,.07),rgba(168,85,247,.07));
+    color: #aebbd0;
+    font-size: 11px;
+    line-height: 1.5;
+}
+.nexa-home-scope strong { color: #00d9ff; letter-spacing: .04em; }
+
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<div class="background-orb orb-one"></div>
+<div class="background-orb orb-two"></div>
+
+<!-- NAVBAR -->
+
+<header class="navbar" id="navbar">
+    <div class="container nav-inner">
+
+        <a href="index.html" class="brand">
+            CODE NEXA <span>FORGE</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+            ☰
+        </button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#courses">Courses</a>
+            <a href="#tutorials">Tutorials</a>
+            <a href="#projects">Projects</a>
+            <a href="#progress">Progress</a>
+            <a href="#nexa-ai">NEXA AI</a>
+            <a href="#playground">Playground</a>
+            <a href="#nexa-library-section">NEXA LIBRARY</a>
+            <a href="contact-support.html">Support</a>
+
+            <a href="login.html" class="login-link" id="loginNavLink">
+                Login / Sign Up ↗
+            </a>
+
+            <a href="profile.html" class="profile-link" id="profileNavLink" hidden>
+                <span class="profile-avatar" id="profileAvatar">U</span>
+                <span id="profileName">Your Name</span>
+            </a>
+        </nav>
+
+    </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+    <div class="container hero-grid">
+
+        <div class="hero-content reveal">
+            <div class="hero-label">
+                <span class="status-dot"></span>
+                YOUR CODING JOURNEY STARTS HERE
+            </div>
+
+            <h1>
+                Turn Your Ideas Into
+                <span class="gradient-text">Real Code.</span>
+            </h1>
+
+            <p class="hero-description">
+                Learn web development through structured lessons,
+                practical projects, coding challenges and intelligent
+                learning tools. Build skills that turn beginners into creators.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#courses" class="btn btn-primary">Explore Courses ↗</a>
+                <a href="playground.html" class="btn btn-outline">Start Coding &lt;/&gt;</a>
+            </div>
+
+            <div class="hero-stats">
+                <div>
+                    <strong>03+</strong>
+                    <span>Learning Paths</span>
+                </div>
+                <div>
+                    <strong>50+</strong>
+                    <span>Learning Topics</span>
+                </div>
+                <div>
+                    <strong>∞</strong>
+                    <span>Ways to Create</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-visual reveal delay-2">
+            <div class="floating-chip chip-one">✦ Build Something Amazing</div>
+
+            <div class="code-window">
+                <div class="window-top">
+                    <div class="window-dots"><i></i><i></i><i></i></div>
+                    <span class="window-name">your-first-website.html</span>
+                </div>
+
+                <div class="code-lines">
+                    <div><span class="purple">&lt;!DOCTYPE</span> <span class="cyan">html</span><span class="purple">&gt;</span></div>
+                    <div><span class="purple">&lt;html&gt;</span></div>
+                    <div class="indent"><span class="purple">&lt;head&gt;</span></div>
+                    <div class="indent"><span class="purple">&lt;title&gt;</span><span class="green">My Website</span><span class="purple">&lt;/title&gt;</span></div>
+                    <div class="indent"><span class="purple">&lt;/head&gt;</span></div>
+                    <div class="indent"><span class="purple">&lt;body&gt;</span></div>
+                    <div class="indent"><span class="purple">&lt;h1&gt;</span><span class="orange">Hello, World!</span><span class="purple">&lt;/h1&gt;</span></div>
+                    <div class="indent"><span class="purple">&lt;p&gt;</span><span class="green">I am a developer.</span><span class="purple">&lt;/p&gt;</span></div>
+                    <div class="indent"><span class="purple">&lt;button&gt;</span><span class="cyan">Let's Build</span><span class="purple">&lt;/button&gt;</span></div>
+                    <div class="indent"><span class="purple">&lt;/body&gt;</span></div>
+                    <div><span class="purple">&lt;/html&gt;</span></div>
+                </div>
+            </div>
+
+            <div class="floating-chip chip-two">● Live Learning Experience</div>
+        </div>
+
+    </div>
+</section>
+
+<!-- PLATFORM FEATURES -->
+
+<section class="section features-section" id="platform-tools">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow">YOUR LEARNING TOOLKIT</span>
+            <h2>Everything You Need to <span class="gradient-text">Grow.</span></h2>
+            <p>
+                Learn smarter, practice freely and track every step
+                of your progress with the powerful tools inside CODE NEXA FORGE.
+            </p>
+        </div>
+
+        <div class="feature-grid">
+
+            <article class="feature-card progress-card reveal" id="progress">
+                <div class="feature-top">
+                    <div class="feature-icon">↗</div>
+                    <span class="feature-tag">TRACK YOUR GROWTH</span>
+                </div>
+
+                <h3>My Progress</h3>
+                <p>
+                    Keep track of your completed lessons, learning
+                    achievements and course progress. See how far
+                    you have come and what is next.
+                </p>
+
+                <div class="feature-visual">
+                    <div class="progress-preview">
+                        <div class="progress-preview-top">
+                            <span>YOUR LEARNING JOURNEY</span>
+                            <span>LIVE TRACKING</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="homeProgressBar"></div>
+                        </div>
+                        <div class="progress-preview-bottom">
+                            <span id="homeProgressText">Your journey starts here</span>
+                            <span id="homeProgressCount">0 completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="progress.html" class="feature-link">Explore Your Progress <span>→</span></a>
+            </article>
+
+            <article class="feature-card ai-card reveal delay-1" id="nexa-ai">
+                <div class="feature-top">
+                    <div class="feature-icon">✧</div>
+                    <span class="feature-tag">INTELLIGENT ASSISTANT</span>
+                </div>
+
+                <h3>NEXA AI</h3>
+                <p>
+                    Meet your CODE NEXA FORGE learning assistant. Explore
+                    HTML, CSS and JavaScript lessons, review quizzes
+                    and tests, and get help with course projects.
+                </p>
+
+                <div class="feature-visual">
+                    <div class="ai-preview">
+                        <div class="ai-message">How does HTML work?</div>
+                        <div class="ai-message user">Explain it in simple words.</div>
+                        <div class="ai-message">HTML gives structure to every webpage. Think of it as the skeleton of a website.</div>
+                    </div>
+                </div>
+
+                <a href="/nexa-ai.html" class="feature-link">Open NEXA AI <span>→</span></a>
+            </article>
+
+            <article class="feature-card play-card reveal delay-2" id="playground">
+                <div class="feature-top">
+                    <div class="feature-icon">&lt;/&gt;</div>
+                    <span class="feature-tag">PRACTICE & CREATE</span>
+                </div>
+
+                <h3>Run Your Program</h3>
+                <p>
+                    Write HTML, CSS and JavaScript in your own coding
+                    playground. Run your program and instantly see
+                    what you have created.
+                </p>
+
+                <div class="feature-visual">
+                    <div class="play-preview">
+                        <div class="mini-editor">
+                            <span>&lt;h1&gt;</span><br>
+                            <b>Hello!</b><br>
+                            <span>&lt;/h1&gt;</span><br>
+                            <span>/* Your code */</span>
+                        </div>
+                        <div class="mini-output">
+                            <small>LIVE OUTPUT</small>
+                            <strong>Hello!</strong>
+                            <small>Program executed ✓</small>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="playground.html" class="feature-link">Open Playground <span>→</span></a>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- COURSES -->
+
+<section class="section" id="courses">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow">STRUCTURED LEARNING</span>
+            <h2>Explore Our <span class="gradient-text">Courses.</span></h2>
+            <p>
+                Start with the fundamentals, understand how the web works
+                and gradually build the skills to create real websites.
+            </p>
+        </div>
+
+        <div class="courses-grid">
+
+            <article class="course-card reveal">
+                <div class="course-art html-art">HTML5</div>
+                <div class="course-content">
+                    <span class="course-level">01 · BEGINNER</span>
+                    <h3>HTML Fundamentals</h3>
+                    <p>Learn website structure, HTML elements, attributes, forms, semantic markup and more.</p>
+                    <div class="course-meta">
+                        <span>Structured Lessons</span>
+                        <a href="courses/html.html">Start Learning →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="course-card reveal delay-1">
+                <div class="course-art css-art">CSS3</div>
+                <div class="course-content">
+                    <span class="course-level">02 · BEGINNER</span>
+                    <h3>CSS Mastery</h3>
+                    <p>Master styling, colors, layouts, Flexbox, Grid, responsive design and animations.</p>
+                    <div class="course-meta">
+                        <span>Structured Lessons</span>
+                        <a href="courses/css.html">Start Learning →</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="course-card reveal delay-2">
+                <div class="course-art js-art">JS</div>
+                <div class="course-content">
+                    <span class="course-level">03 · INTERMEDIATE</span>
+                    <h3>JavaScript</h3>
+                    <p>Explore programming fundamentals, variables, functions, DOM manipulation and interactivity.</p>
+                    <div class="course-meta">
+                        <span>Structured Lessons</span>
+                        <a href="courses/javascript.html">Start Learning →</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- TUTORIALS -->
+
+<section class="section tutorials-section" id="tutorials">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow">LEARN SOMETHING NEW</span>
+            <h2>Explore <span class="gradient-text">Tutorials.</span></h2>
+            <p>Strengthen your understanding with focused explanations and practical web-development concepts.</p>
+        </div>
+
+        <div class="tutorial-grid">
+
+            <article class="tutorial-card reveal">
+                <div class="tutorial-number">01</div>
+                <h3>How Websites Work</h3>
+                <p>Understand browsers, servers, requests and responses behind every website.</p>
+                <a href="courses/html.html">Explore HTML →</a>
+            </article>
+
+            <article class="tutorial-card reveal delay-1">
+                <div class="tutorial-number">02</div>
+                <h3>Understanding HTML</h3>
+                <p>Discover elements, tags, attributes and the building blocks of webpages.</p>
+                <a href="courses/html.html">Explore HTML →</a>
+            </article>
+
+            <article class="tutorial-card reveal delay-2">
+                <div class="tutorial-number">03</div>
+                <h3>CSS Layouts</h3>
+                <p>Learn how modern websites arrange content using Flexbox and Grid.</p>
+                <a href="courses/css.html">Explore CSS →</a>
+            </article>
+
+            <article class="tutorial-card reveal">
+                <div class="tutorial-number">04</div>
+                <h3>JavaScript Basics</h3>
+                <p>Understand variables, data types, conditions and the logic of programming.</p>
+                <a href="courses/javascript.html">Explore JavaScript →</a>
+            </article>
+
+            <article class="tutorial-card reveal delay-1">
+                <div class="tutorial-number">05</div>
+                <h3>Responsive Design</h3>
+                <p>Make websites adapt beautifully to desktops, tablets and mobile screens.</p>
+                <a href="courses/css.html">Explore CSS →</a>
+            </article>
+
+            <article class="tutorial-card reveal delay-2">
+                <div class="tutorial-number">06</div>
+                <h3>Interactive Websites</h3>
+                <p>Discover how JavaScript brings webpages to life with user interactions.</p>
+                <a href="courses/javascript.html">Explore JavaScript →</a>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+
+<section class="section" id="projects">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow">LEARN BY BUILDING</span>
+            <h2>Build Real <span class="gradient-text">Projects.</span></h2>
+            <p>Apply what you learn by creating practical projects. Every project is another step towards becoming a developer.</p>
+        </div>
+
+        <div class="projects-grid">
+
+            <article class="project-card reveal">
+                <div class="project-icon">🌐</div>
+                <h3>Personal Portfolio Website</h3>
+                <p>Create a professional portfolio to showcase your skills, projects and experience.</p>
+                <div class="project-tags"><span>HTML</span><span>CSS</span><span>Responsive Design</span></div>
+            </article>
+
+            <article class="project-card reveal delay-1">
+                <div class="project-icon">🧮</div>
+                <h3>Interactive Calculator</h3>
+                <p>Build a working calculator and practice JavaScript logic and event handling.</p>
+                <div class="project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            </article>
+
+            <article class="project-card reveal">
+                <div class="project-icon">📝</div>
+                <h3>To-Do List App</h3>
+                <p>Create a task manager that allows users to add, complete and remove tasks.</p>
+                <div class="project-tags"><span>JavaScript</span><span>DOM</span><span>Local Storage</span></div>
+            </article>
+
+            <article class="project-card reveal delay-1">
+                <div class="project-icon">🎨</div>
+                <h3>Modern Landing Page</h3>
+                <p>Design a beautiful landing page with sections, responsive layouts and animations.</p>
+                <div class="project-tags"><span>HTML</span><span>CSS</span><span>Animations</span></div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- CHALLENGES -->
+
+<section class="section tutorials-section" id="challenges">
+    <div class="container">
+        <div class="challenge-box reveal">
+            <span class="eyebrow">PRACTICE MAKES PROGRESS</span>
+            <h2>Don't Just Learn Code. <span class="gradient-text">Write It.</span></h2>
+            <p>
+                Challenge yourself with practical coding exercises.
+                Experiment with ideas, test your knowledge and become
+                more confident with every program you write.
+            </p>
+            <a href="playground.html" class="btn btn-primary">Start Practicing ↗</a>
+        </div>
+    </div>
+</section>
+
+<!-- NEXA LIBRARY -->
+
+<section class="section" id="nexa-library-section">
+    <div class="container">
+
+        <div class="library-promo reveal">
+
+            <div class="library-promo-content">
+                <span class="eyebrow">YOUR LEARNING RESOURCE HUB</span>
+
+                <h2>
+                    Discover the
+                    <span class="gradient-text">NEXA LIBRARY.</span>
+                </h2>
+
+                <p>
+                    Explore a growing collection of HTML, CSS and JavaScript
+                    PDF resources. Read learning materials online or download
+                    them to study anytime, anywhere.
+                </p>
+
+                <div class="library-promo-actions">
+                    <a href="library.html" class="btn btn-primary">
+                        Explore NEXA LIBRARY ↗
+                    </a>
+
+                    <a href="#courses" class="btn btn-outline">
+                        Explore Courses
+                    </a>
+                </div>
+
+                <div class="library-highlights">
+                    <span class="library-highlight">📘 HTML Resources</span>
+                    <span class="library-highlight">🎨 CSS Resources</span>
+                    <span class="library-highlight">⚡ JavaScript Resources</span>
+                    <span class="library-highlight">📄 PDF Learning Materials</span>
+                </div>
+            </div>
+
+            <div class="library-decoration" aria-hidden="true">
+                <span>PDF</span>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+
+<section class="cta-section">
+    <div class="container reveal">
+        <span class="eyebrow">YOUR NEXT CHAPTER STARTS NOW</span>
+        <h2>Ready to Build Your <span class="gradient-text">Future?</span></h2>
+        <p>
+            Learn the fundamentals, practice your skills and turn
+            your creativity into real-world projects.
+        </p>
+        <a href="courses/html.html" class="btn btn-primary">Start Your Journey ↗</a>
+    </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer>
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <a href="index.html" class="brand">CODE NEXA <span>FORGE</span></a>
+                <p>
+                    A learning platform built to help aspiring developers
+                    understand web development, practice coding and create
+                    something meaningful.
+                </p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Learning</h4>
+                <a href="courses/html.html">HTML Course</a>
+                <a href="courses/css.html">CSS Course</a>
+                <a href="courses/javascript.html">JavaScript Course</a>
+                <a href="#tutorials">Tutorials</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Platform</h4>
+                <a href="progress.html">My Progress</a>
+                <a href="/nexa-ai.html">NEXA AI</a>
+                <a href="playground.html">Playground</a>
+                <a href="library.html">NEXA LIBRARY</a>
+                <a href="contact-support.html">Contact Support</a>
+                <a href="#projects">Projects</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Account</h4>
+                <a href="login.html" id="footerLoginLink">Login</a>
+                <a href="login.html" id="footerSignupLink">Create Account</a>
+                <a href="profile.html" id="footerProfileLink" hidden>My Profile</a>
+                <a href="#home">Back to Top ↑</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <span>© <span id="currentYear"></span> CODE NEXA FORGE. All rights reserved.</span>
+            <span>Learn. Build. Master.</span>
+        </div>
+
+    </div>
+</footer>
+
+<!-- FLOATING NEXA AI BUTTON -->
+
+<button class="nexa-launcher" id="nexaLauncher" aria-label="Open NEXA AI chat" aria-expanded="false">
+    <span class="nexa-launcher-icon">N</span>
+    <span class="nexa-launcher-text">
+        <strong>NEXA AI</strong>
+        <small>Your coding companion</small>
+    </span>
+    <span class="launcher-status"></span>
+</button>
+
+<!-- NEXA AI CHAT WINDOW -->
+
+<section class="nexa-chat" id="nexaChat" aria-label="NEXA AI chat" aria-hidden="true">
+
+    <div class="chat-header">
+        <div class="chat-brand">
+            <div class="chat-avatar">N</div>
+            <div>
+                <h3>NEXA AI</h3>
+                <p><span>●</span> Coding assistant interface</p>
+            </div>
+        </div>
+
+        <div class="chat-actions">
+            <button id="chatMinimize" aria-label="Minimize chat">−</button>
+            <button id="chatClose" aria-label="Close chat">×</button>
+        </div>
+    </div>
+
+    <div class="nexa-home-scope">
+        <strong>CODE NEXA FORGE Learning Assistant</strong>
+        <span>NEXA AI answers questions about this website, HTML, CSS, JavaScript, lessons, quizzes, tests and projects. English only.</span>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+        <div class="chat-welcome" id="chatWelcome">
+            <div class="chat-welcome-icon">N</div>
+            <h4>Welcome to NEXA AI</h4>
+            <p>Your CODE NEXA FORGE learning assistant.<br>Ask about courses, lessons, quizzes, tests and projects.</p>
+        </div>
+
+        <div class="chat-message assistant">
+            Hello! I'm NEXA AI, your CODE NEXA FORGE learning assistant. What would you like to learn today?
+        </div>
+    </div>
+
+    <div class="chat-suggestions" id="chatSuggestions">
+        <button type="button" data-prompt="What is HTML?">What is HTML?</button>
+        <button type="button" data-prompt="Explain CSS Flexbox.">CSS Flexbox</button>
+        <button type="button" data-prompt="What is JavaScript?">JavaScript</button>
+    </div>
+
+    <form class="chat-input-area" id="chatForm">
+        <div class="chat-input-row">
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Ask about courses, lessons or code..."
+                autocomplete="off"
+                maxlength="1500"
+                aria-label="Your message"
+            >
+            <button class="chat-send" type="submit" aria-label="Send message">➤</button>
+        </div>
+        <p class="chat-disclaimer">NEXA AI · Connected to the CODE NEXA FORGE local engine</p>
+    </form>
+
+</section>
+
+
+<script>
+"use strict";
+
+/* =================================
+   USER ACCOUNT NAVIGATION
+================================= */
+
+async function updateAccountNavigation() {
+    const loginLink = document.getElementById("loginNavLink");
+    const profileLink = document.getElementById("profileNavLink");
+    const profileName = document.getElementById("profileName");
+    const profileAvatar = document.getElementById("profileAvatar");
+
+    const footerLoginLink = document.getElementById("footerLoginLink");
+    const footerSignupLink = document.getElementById("footerSignupLink");
+    const footerProfileLink = document.getElementById("footerProfileLink");
+
+    try {
+        const response = await fetch("/api/auth/me", {
+            method: "GET",
+            credentials: "same-origin",
+            headers: {
+                "Accept": "application/json"
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success || !data.user) {
+            loginLink.hidden = false;
+            profileLink.hidden = true;
+
+            footerLoginLink.hidden = false;
+            footerSignupLink.hidden = false;
+            footerProfileLink.hidden = true;
+
+            return;
+        }
+
+        const name = data.user.name || "User";
+
+        profileName.textContent = name;
+        profileAvatar.textContent = name.trim().charAt(0).toUpperCase();
+
+        loginLink.hidden = true;
+        profileLink.hidden = false;
+
+        footerLoginLink.hidden = true;
+        footerSignupLink.hidden = true;
+        footerProfileLink.hidden = false;
+
+    } catch (error) {
+        console.error("Account navigation error:", error);
+
+        loginLink.hidden = false;
+        profileLink.hidden = true;
+
+        footerLoginLink.hidden = false;
+        footerSignupLink.hidden = false;
+        footerProfileLink.hidden = true;
+    }
+}
+
+updateAccountNavigation();
+
+/* MOBILE NAVIGATION */
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", isOpen);
+    menuToggle.textContent = isOpen ? "×" : "☰";
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+    });
+});
+
+/* NAVBAR SCROLL EFFECT */
+
+const navbar = document.getElementById("navbar");
+
+window.addEventListener("scroll", () => {
+    navbar.classList.toggle("scrolled", window.scrollY > 30);
+});
+
+/* SMOOTH NAVIGATION TO LIBRARY */
+
+document.querySelectorAll('a[href="#nexa-library-section"]').forEach(link => {
+    link.addEventListener("click", event => {
+        const librarySection = document.getElementById("nexa-library-section");
+
+        if (librarySection) {
+            event.preventDefault();
+
+            librarySection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+            history.replaceState(null, "", "#nexa-library-section");
+        }
+    });
+});
+
+/* SCROLL REVEAL */
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.12
+});
+
+document.querySelectorAll(".reveal").forEach(element => {
+    revealObserver.observe(element);
+});
+
+/* HOME PROGRESS PREVIEW */
+
+function updateHomeProgress() {
+    let completed = 0;
+
+    try {
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+
+            if (
+                key &&
+                key.toLowerCase().includes("lesson") &&
+                key.toLowerCase().endsWith("completed") &&
+                localStorage.getItem(key) === "true"
+            ) {
+                completed++;
+            }
+        }
+    } catch (error) {
+        console.warn("Progress preview is unavailable.", error);
+    }
+
+    const count = document.getElementById("homeProgressCount");
+    const label = document.getElementById("homeProgressText");
+    const bar = document.getElementById("homeProgressBar");
+
+    count.textContent = completed + " completed";
+
+    label.textContent = completed > 0
+        ? "Great work! Keep going."
+        : "Your journey starts here";
+
+    setTimeout(() => {
+        bar.style.width = Math.min(completed * 5, 100) + "%";
+    }, 300);
+}
+
+updateHomeProgress();
+
+/* CURRENT YEAR */
+
+document.getElementById("currentYear").textContent =
+    new Date().getFullYear();
+
+/* =================================
+   NEXA AI CHAT INTERACTION
+================================= */
+
+const nexaLauncher = document.getElementById("nexaLauncher");
+const nexaChat = document.getElementById("nexaChat");
+const chatClose = document.getElementById("chatClose");
+const chatMinimize = document.getElementById("chatMinimize");
+const chatMessages = document.getElementById("chatMessages");
+const chatForm = document.getElementById("chatForm");
+const chatInput = document.getElementById("chatInput");
+const chatSuggestions = document.getElementById("chatSuggestions");
+
+/* CONVERSATION HISTORY */
+
+const chatHistory = [
+    {
+        role: "assistant",
+        content: "Hello! I'm NEXA AI, your CODE NEXA FORGE learning assistant. I can help with this website, its courses, lessons, quizzes, tests and projects."
+    }
+];
+
+let isSending = false;
+
+/* OPEN AND CLOSE CHAT */
+
+function openNexaChat() {
+    nexaChat.classList.add("open");
+    nexaChat.setAttribute("aria-hidden", "false");
+    nexaLauncher.setAttribute("aria-expanded", "true");
+
+    setTimeout(() => chatInput.focus(), 250);
+}
+
+function closeNexaChat() {
+    nexaChat.classList.remove("open");
+    nexaChat.setAttribute("aria-hidden", "true");
+    nexaLauncher.setAttribute("aria-expanded", "false");
+}
+
+nexaLauncher.addEventListener("click", () => {
+    if (nexaChat.classList.contains("open")) {
+        closeNexaChat();
+    } else {
+        openNexaChat();
+    }
+});
+
+chatClose.addEventListener("click", closeNexaChat);
+chatMinimize.addEventListener("click", closeNexaChat);
+
+/* ADD CHAT MESSAGE */
+
+function addChatMessage(message, sender) {
+    const bubble = document.createElement("div");
+
+    bubble.className = "chat-message " + sender;
+    bubble.textContent = message;
+
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+/* TYPING INDICATOR */
+
+function showTyping() {
+    const typing = document.createElement("div");
+
+    typing.className = "typing-indicator";
+    typing.id = "nexaTyping";
+
+    for (let i = 0; i < 3; i++) {
+        const dot = document.createElement("span");
+        typing.appendChild(dot);
+    }
+
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function removeTyping() {
+    const typing = document.getElementById("nexaTyping");
+
+    if (typing) {
+        typing.remove();
+    }
+}
+
+/* NEXA AI BACKEND CONNECTION */
+
+async function sendMessage(message) {
+    const cleanMessage = message.trim();
+
+    if (!cleanMessage || isSending) {
+        return;
+    }
+
+    const welcome = document.getElementById("chatWelcome");
+
+    if (welcome) {
+        welcome.remove();
+    }
+
+    chatSuggestions.style.display = "none";
+
+    addChatMessage(cleanMessage, "user");
+
+    chatInput.value = "";
+
+    chatHistory.push({
+        role: "user",
+        content: cleanMessage
+    });
+
+    if (chatHistory.length > 20) {
+        chatHistory.splice(0, chatHistory.length - 20);
+    }
+
+    isSending = true;
+
+    const sendButton = chatForm.querySelector(".chat-send");
+
+    if (sendButton) {
+        sendButton.disabled = true;
+    }
+
+    chatInput.disabled = true;
+
+    showTyping();
+
+    try {
+        const response = await fetch("/api/nexa-ai/chat", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                messages: chatHistory
+            })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (response.status === 401) {
+            throw new Error("Please log in to your CODE NEXA FORGE account before using NEXA AI.");
+        }
+
+        if (!response.ok || data.success === false) {
+            throw new Error(
+                data.error || "NEXA AI could not respond. Please try again."
+            );
+        }
+
+        if (!data.reply) {
+            throw new Error(
+                "NEXA AI returned an empty response."
+            );
+        }
+
+        chatHistory.push({
+            role: "assistant",
+            content: data.reply
+        });
+
+        if (chatHistory.length > 20) {
+            chatHistory.splice(0, chatHistory.length - 20);
+        }
+
+        addChatMessage(data.reply, "assistant");
+
+    } catch (error) {
+        const lastMessage = chatHistory[chatHistory.length - 1];
+
+        if (lastMessage && lastMessage.role === "user") {
+            chatHistory.pop();
+        }
+
+        addChatMessage(
+            error.message || "Something went wrong. Please try again.",
+            "assistant"
+        );
+
+    } finally {
+        removeTyping();
+
+        isSending = false;
+
+        chatInput.disabled = false;
+
+        if (sendButton) {
+            sendButton.disabled = false;
+        }
+
+        chatInput.focus();
+    }
+}
+
+/* CHAT FORM SUBMISSION */
+
+chatForm.addEventListener("submit", event => {
+    event.preventDefault();
+    sendMessage(chatInput.value);
+});
+
+/* QUICK SUGGESTIONS */
+
+chatSuggestions.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => {
+        sendMessage(button.dataset.prompt || "");
+    });
+});
+
+/* ESCAPE KEY CLOSES CHAT */
+
+document.addEventListener("keydown", event => {
+    if (
+        event.key === "Escape" &&
+        nexaChat.classList.contains("open")
+    ) {
+        closeNexaChat();
+    }
+});
+</script>
+
+    <!-- Global NEXA widget intentionally omitted: this page has its own chat or redirects. -->
+</body>
+</html>

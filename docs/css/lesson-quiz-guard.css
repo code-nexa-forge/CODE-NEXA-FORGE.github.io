@@ -1,0 +1,101 @@
+/* CODE NEXA FORGE — shared lesson quiz controls */
+.cnf-quiz-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 43px;
+  margin: 12px 0 0 10px;
+  padding: 11px 17px;
+  border: 1px solid rgba(145, 160, 180, .55);
+  border-radius: 9px;
+  background: rgba(125, 145, 170, .10);
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  cursor: pointer;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+.cnf-quiz-reset:hover {
+  transform: translateY(-2px);
+  background: rgba(125, 145, 170, .18);
+  border-color: currentColor;
+  box-shadow: 0 8px 22px rgba(0,0,0,.12);
+}
+.cnf-quiz-reset:active { transform: translateY(0) scale(.98); }
+.cnf-quiz-reset:focus-visible, .cnf-locked-next:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+.cnf-locked-next {
+  opacity: .38 !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+  filter: grayscale(.35);
+  position: relative;
+}
+.cnf-locked-next::after { content: " 🔒"; }
+.cnf-quiz-status {
+  display: block;
+  margin-top: 9px;
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: .78;
+}
+@media (max-width: 520px) {
+  .cnf-quiz-reset { margin-left: 0; margin-right: 7px; }
+}
+/* CNF — Shared Reset Quiz Button */
+
+.cnf-quiz-reset {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 20px 13px 35px;
+    border: 1px solid var(--reset-border, #e74735);
+    border-radius: 6px;
+    background: var(--reset-bg, #242321);
+    color: var(--reset-text, #ff8b45) !important;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background .3s ease, color .3s ease,
+                border-color .3s ease, transform .3s ease,
+                box-shadow .3s ease;
+}
+
+.cnf-quiz-reset::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--reset-dot, #ff8b45);
+    box-shadow: 0 0 10px var(--reset-dot, #ff8b45);
+    animation: cnfResetDot 1.4s ease-in-out infinite;
+}
+
+.cnf-quiz-reset:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px #00000020;
+    background: var(--reset-text, #ff8b45);
+    color: var(--reset-bg, #242321) !important;
+}
+
+@keyframes cnfResetDot {
+    0%, 100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(7px);
+        opacity: .55;
+    }
+}

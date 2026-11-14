@@ -1,0 +1,2275 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 08 — Async JavaScript | CNF/</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #08090b;
+    --panel: #111317;
+    --panel2: #171a20;
+    --gold: #e7bd65;
+    --gold-light: #ffe2a0;
+    --text: #f3f0e8;
+    --muted: #999da7;
+    --line: rgba(231,189,101,.19);
+    --green: #8bd6a5;
+    --red: #f18a8a;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --display: 'Space Grotesk', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 35px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.65;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: .18;
+    background-image:
+        linear-gradient(rgba(231,189,101,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(231,189,101,.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: .45;
+}
+
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================
+   GLOBAL ANIMATION SYSTEM
+========================= */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(35px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(-45px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeRight {
+    from { opacity: 0; transform: translateX(45px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes softZoom {
+    from { opacity: 0; transform: scale(.88); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes floatPanel {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-13px) rotate(.35deg); }
+    50% { transform: translateY(-19px) rotate(0deg); }
+    75% { transform: translateY(-8px) rotate(-.35deg); }
+}
+
+@keyframes goldPulse {
+    0%, 100% { box-shadow: 0 0 0 rgba(231,189,101,0); }
+    50% { box-shadow: 0 0 28px rgba(231,189,101,.16); }
+}
+
+@keyframes borderFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+@keyframes shine {
+    0% { transform: translateX(-150%) skewX(-20deg); }
+    100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+@keyframes nodeGlow {
+    0%, 100% { border-color: #282b31; }
+    50% { border-color: rgba(231,189,101,.7); }
+}
+
+@keyframes arrowBounce {
+    0%, 100% { transform: translateY(0); opacity: .6; }
+    50% { transform: translateY(6px); opacity: 1; }
+}
+
+@keyframes orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes scan {
+    0% { transform: translateY(-100%); opacity: 0; }
+    20% { opacity: .6; }
+    80% { opacity: .6; }
+    100% { transform: translateY(450px); opacity: 0; }
+}
+
+@keyframes dotBlink {
+    0%, 100% { opacity: .35; }
+    50% { opacity: 1; }
+}
+
+@keyframes lineGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+@keyframes rotateIn {
+    from { opacity: 0; transform: rotate(-12deg) scale(.8); }
+    to { opacity: 1; transform: rotate(0) scale(1); }
+}
+
+@keyframes resultPop {
+    0% { opacity: 0; transform: scale(.94) translateY(12px); }
+    70% { transform: scale(1.015) translateY(-2px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Scroll reveal: content remains visible without JavaScript */
+.reveal {
+    opacity: 1;
+    transform: none;
+}
+
+body.motion-ready .reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity .8s cubic-bezier(.2,.7,.2,1),
+        transform .8s cubic-bezier(.2,.7,.2,1);
+}
+
+body.motion-ready .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+body.motion-ready .reveal-left {
+    transform: translateX(-45px);
+}
+
+body.motion-ready .reveal-right {
+    transform: translateX(45px);
+}
+
+body.motion-ready .reveal-left.visible,
+body.motion-ready .reveal-right.visible {
+    transform: translateX(0);
+}
+
+body.motion-ready .reveal-scale {
+    transform: scale(.9);
+}
+
+body.motion-ready .reveal-scale.visible {
+    transform: scale(1);
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.navbar {
+    height: 76px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    background: rgba(8,9,11,.94);
+    backdrop-filter: blur(18px);
+    position: relative;
+    z-index: 20;
+    animation: fadeUp .8s both;
+}
+
+.navbar::after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    bottom: -1px;
+    left: 7%;
+    width: 0;
+    background: var(--gold);
+    animation: lineGrow 1.4s .5s forwards;
+    transform-origin: left;
+}
+
+.brand {
+    color: var(--gold);
+    text-decoration: none;
+    font: 700 25px var(--display);
+    letter-spacing: -1px;
+    transition: .35s;
+}
+
+.brand:hover {
+    text-shadow: 0 0 20px rgba(231,189,101,.55);
+    transform: translateY(-2px);
+}
+
+.nav-label {
+    color: var(--muted);
+    font: 11px var(--mono);
+    letter-spacing: 2px;
+}
+
+.nav-home {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 13px;
+    border: 1px solid var(--line);
+    padding: 9px 15px;
+    border-radius: 5px;
+    transition: .35s;
+}
+
+.nav-home:hover {
+    background: var(--gold);
+    color: #17130b;
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 22px rgba(231,189,101,.15);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 600px;
+    padding: 90px 8%;
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 65px;
+    align-items: center;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 78% 40%, rgba(231,189,101,.13), transparent 42%),
+        linear-gradient(135deg,#0b0c0f,#111216 65%,#0b0c0f);
+    border-bottom: 1px solid var(--line);
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 440px;
+    height: 440px;
+    border: 1px solid rgba(231,189,101,.08);
+    border-radius: 50%;
+    right: -130px;
+    top: 50px;
+    animation: orbit 35s linear infinite;
+    z-index: -1;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border: 1px dashed rgba(231,189,101,.12);
+    border-radius: 50%;
+    right: -80px;
+    top: 100px;
+    animation: orbit 28s linear infinite reverse;
+    z-index: -1;
+}
+
+.hero-content {
+    animation: fadeLeft 1s .15s both;
+}
+
+.eyebrow {
+    color: var(--gold);
+    font: 11px var(--mono);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font: 700 clamp(42px,6vw,76px)/1.04 var(--display);
+    letter-spacing: -3px;
+    max-width: 650px;
+}
+
+.hero h1 span {
+    color: var(--gold);
+    display: inline-block;
+    animation: goldPulse 4s 1.5s infinite;
+}
+
+.hero-copy {
+    color: var(--muted);
+    max-width: 520px;
+    margin: 25px 0 30px;
+    font-size: 16px;
+    line-height: 1.85;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text);
+    padding: 12px 19px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 13px;
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        background .35s,
+        color .35s,
+        border-color .35s,
+        box-shadow .35s;
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 45%;
+    height: 200%;
+    background: rgba(255,255,255,.22);
+    transform: skewX(-20deg);
+    transition: left .6s;
+}
+
+.btn:hover::after {
+    left: 150%;
+}
+
+.btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(231,189,101,.1);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(-1px) scale(.98);
+}
+
+.btn-gold {
+    background: var(--gold);
+    color: #17130b;
+    border-color: var(--gold);
+}
+
+.btn-gold:hover:not(:disabled) {
+    background: var(--gold-light);
+    color: #17130b;
+    box-shadow: 0 9px 30px rgba(231,189,101,.25);
+}
+
+/* =========================
+   FLOATING COMMAND PANEL
+========================= */
+
+.hero-visual {
+    position: relative;
+    animation: fadeRight 1s .3s both;
+}
+
+.hero-visual::before {
+    content: "";
+    position: absolute;
+    inset: -18px;
+    border: 1px solid rgba(231,189,101,.17);
+    border-radius: 20px;
+    animation: goldPulse 5s infinite;
+    pointer-events: none;
+}
+
+.hero-visual::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    top: -22px;
+    right: 25%;
+    box-shadow: 0 0 20px var(--gold);
+    animation: dotBlink 2s infinite;
+}
+
+.command-panel {
+    background: #0d0f12;
+    border: 1px solid rgba(231,189,101,.38);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.4),
+        0 0 40px rgba(231,189,101,.05);
+    position: relative;
+    overflow: hidden;
+    animation: floatPanel 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+.command-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg,transparent,var(--gold),transparent);
+    background-size: 200% 100%;
+    animation: borderFlow 4s linear infinite;
+}
+
+.command-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(transparent,rgba(231,189,101,.035),transparent);
+    animation: scan 7s ease-in-out infinite;
+}
+
+.panel-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #292b30;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.panel-top span {
+    font: 10px var(--mono);
+    color: var(--muted);
+    letter-spacing: 1px;
+}
+
+.status {
+    color: var(--green) !important;
+}
+
+.flow-node {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 13px;
+    background: #15181d;
+    border: 1px solid #282b31;
+    border-radius: 7px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: .4s;
+    animation: nodeGlow 4s infinite;
+}
+
+.flow-node:nth-of-type(2) { animation-delay: .4s; }
+.flow-node:nth-of-type(3) { animation-delay: .8s; }
+.flow-node:nth-of-type(4) { animation-delay: 1.2s; }
+.flow-node:nth-of-type(5) { animation-delay: 1.6s; }
+
+.flow-node:hover {
+    transform: translateX(7px);
+    border-color: var(--gold);
+    background: #1c1e22;
+}
+
+.node-number {
+    width: 29px;
+    height: 29px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(231,189,101,.12);
+    color: var(--gold);
+    border-radius: 50%;
+    font: 12px var(--mono);
+    transition: .4s;
+}
+
+.flow-node:hover .node-number {
+    background: var(--gold);
+    color: #17130b;
+    transform: rotate(360deg);
+}
+
+.flow-node strong {
+    font-size: 13px;
+    display: block;
+}
+
+.flow-node small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.flow-arrow {
+    text-align: center;
+    color: var(--gold);
+    line-height: 1;
+    margin: 2px 0 7px;
+    animation: arrowBounce 1.8s infinite;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section {
+    max-width: 1160px;
+    margin: auto;
+    padding: 85px 28px;
+    position: relative;
+}
+
+.section + .section {
+    border-top: 1px solid #22252b;
+}
+
+.section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.section-heading h2 {
+    font: 700 clamp(29px,4vw,43px)/1.15 var(--display);
+    letter-spacing: -1.5px;
+    position: relative;
+}
+
+.section-heading h2::after {
+    content: "";
+    display: block;
+    width: 55px;
+    height: 2px;
+    margin-top: 13px;
+    background: var(--gold);
+    transform-origin: left;
+    transition: width .6s;
+}
+
+.section-heading:hover h2::after {
+    width: 110px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    max-width: 400px;
+    font-size: 13px;
+}
+
+.section-index {
+    color: var(--gold);
+    font: 12px var(--mono);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+}
+
+.concept {
+    background: var(--panel);
+    border: 1px solid #25282e;
+    padding: 24px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        border-color .4s,
+        box-shadow .4s;
+}
+
+.concept::before,
+.info-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,transparent,var(--gold),transparent);
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.concept:hover,
+.info-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(231,189,101,.55);
+    box-shadow: 0 18px 40px rgba(0,0,0,.24);
+}
+
+.concept:hover::before,
+.info-card:hover::before {
+    transform: scaleX(1);
+}
+
+.concept .symbol {
+    color: var(--gold);
+    font: 25px var(--mono);
+    margin-bottom: 15px;
+    transition: .4s;
+}
+
+.concept:hover .symbol {
+    transform: translateX(7px);
+    text-shadow: 0 0 18px rgba(231,189,101,.4);
+}
+
+.concept h3 {
+    font: 600 18px var(--display);
+    margin-bottom: 9px;
+}
+
+.concept p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.code {
+    background: #090b0e;
+    border: 1px solid #292c32;
+    border-radius: 8px;
+    padding: 21px;
+    overflow-x: auto;
+    color: #d8dce5;
+    font: 12px/1.9 var(--mono);
+    white-space: pre;
+    position: relative;
+    transition: border-color .4s, box-shadow .4s;
+}
+
+.code::before {
+    content: "CODE";
+    position: absolute;
+    top: 9px;
+    right: 12px;
+    color: #535965;
+    font: 9px var(--mono);
+    letter-spacing: 2px;
+}
+
+.code:hover {
+    border-color: rgba(231,189,101,.42);
+    box-shadow: 0 10px 35px rgba(0,0,0,.2);
+}
+
+.code .comment { color: #747d8d; }
+.code .keyword { color: #d8a8ff; }
+.code .function { color: #83c8ed; }
+.code .string { color: #b8d88a; }
+.code .gold { color: var(--gold); }
+
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    align-items: start;
+}
+
+.info-card {
+    background: var(--panel);
+    border: 1px solid #25282e;
+    border-radius: 9px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    transition: .4s;
+}
+
+.info-card h3 {
+    font: 600 20px var(--display);
+    margin-bottom: 12px;
+}
+
+.info-card p,
+.info-card li {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.info-card ul {
+    padding-left: 19px;
+    margin-top: 12px;
+}
+
+.info-card li {
+    margin: 7px 0;
+    transition: color .3s, transform .3s;
+}
+
+.info-card li:hover {
+    color: var(--text);
+    transform: translateX(4px);
+}
+
+.gold-text { color: var(--gold); }
+
+/* =========================
+   EVENT LOOP LAB
+========================= */
+
+.flow-lab {
+    background: #0d0f12;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 27px;
+    position: relative;
+    overflow: hidden;
+    transition: .4s;
+}
+
+.flow-lab::before {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border: 1px solid rgba(231,189,101,.07);
+    border-radius: 50%;
+    right: -80px;
+    top: -100px;
+    pointer-events: none;
+}
+
+.flow-lab:hover {
+    border-color: rgba(231,189,101,.42);
+    box-shadow: 0 20px 55px rgba(0,0,0,.2);
+}
+
+.flow-track {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.track-step {
+    min-height: 115px;
+    padding: 16px 12px;
+    background: #171a20;
+    border: 1px solid #292d35;
+    border-radius: 7px;
+    text-align: center;
+    opacity: .45;
+    transition: .5s;
+    position: relative;
+    overflow: hidden;
+}
+
+.track-step.active {
+    opacity: 1;
+    border-color: var(--gold);
+    background: rgba(231,189,101,.09);
+    box-shadow: 0 0 25px rgba(231,189,101,.12);
+    transform: translateY(-7px);
+}
+
+.track-step.done {
+    opacity: 1;
+    border-color: #526d5b;
+    background: rgba(139,214,165,.07);
+}
+
+.track-step b {
+    color: var(--gold);
+    font: 12px var(--mono);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.track-step span {
+    font-size: 12px;
+}
+
+.lab-output {
+    background: #080a0d;
+    border: 1px solid #25282e;
+    border-radius: 6px;
+    min-height: 65px;
+    padding: 17px;
+    color: var(--green);
+    font: 12px/1.8 var(--mono);
+    white-space: pre-wrap;
+    transition: border-color .3s;
+}
+
+.lab-output.updated {
+    animation: resultPop .4s both;
+    border-color: rgba(139,214,165,.4);
+}
+
+.lab-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.promise-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.promise-table th,
+.promise-table td {
+    border-bottom: 1px solid #292c32;
+    padding: 13px 10px;
+    text-align: left;
+}
+
+.promise-table th {
+    color: var(--gold);
+    font: 11px var(--mono);
+    text-transform: uppercase;
+}
+
+.promise-table td {
+    color: var(--muted);
+}
+
+.promise-table tbody tr {
+    transition: background .3s, transform .3s;
+}
+
+.promise-table tbody tr:hover {
+    background: rgba(231,189,101,.055);
+}
+
+.warning {
+    padding: 16px 19px;
+    border-left: 3px solid var(--gold);
+    background: rgba(231,189,101,.07);
+    color: #c7c0b2;
+    font-size: 13px;
+    margin-top: 18px;
+    border-radius: 0 6px 6px 0;
+    transition: .35s;
+}
+
+.warning:hover {
+    background: rgba(231,189,101,.11);
+    border-left-width: 6px;
+    transform: translateX(3px);
+}
+
+/* =========================
+   FINAL PROJECT
+========================= */
+
+.project-shell {
+    background: linear-gradient(145deg,#17191e,#0d0f12);
+    border: 1px solid rgba(231,189,101,.3);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow .4s, border-color .4s;
+}
+
+.project-shell:hover {
+    border-color: rgba(231,189,101,.55);
+    box-shadow: 0 25px 65px rgba(0,0,0,.28);
+}
+
+.project-shell::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    top: 0;
+    left: 0;
+    background: linear-gradient(90deg,transparent,var(--gold),transparent);
+    background-size: 200% 100%;
+    animation: borderFlow 5s linear infinite;
+}
+
+.project-head {
+    padding: 27px;
+    border-bottom: 1px solid #2a2d33;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+}
+
+.project-head h3 {
+    font: 700 24px var(--display);
+}
+
+.project-head p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.project-body {
+    padding: 27px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.project-preview {
+    background: #f1eee7;
+    color: #171717;
+    border-radius: 8px;
+    padding: 22px;
+    min-height: 310px;
+    transition: transform .4s, box-shadow .4s;
+}
+
+.project-preview:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 35px rgba(0,0,0,.25);
+}
+
+.project-preview h4 {
+    font: 700 23px var(--display);
+    margin-bottom: 5px;
+}
+
+.project-preview > p {
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: white;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 9px;
+    font-size: 12px;
+    animation: fadeUp .45s both;
+    transition: transform .3s, box-shadow .3s;
+}
+
+.product-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.product-item button {
+    background: #191919;
+    color: white;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.project-message {
+    color: #247347;
+    font: 11px var(--mono);
+    min-height: 23px;
+    margin-top: 10px;
+}
+
+.project-code {
+    min-width: 0;
+}
+
+.project-code h4 {
+    margin-bottom: 12px;
+    font: 600 16px var(--display);
+}
+
+.project-code textarea {
+    width: 100%;
+    height: 220px;
+    resize: vertical;
+    padding: 15px;
+    background: #080a0d;
+    border: 1px solid #30343b;
+    border-radius: 7px;
+    color: #dce1e9;
+    font: 11px/1.7 var(--mono);
+    transition: border-color .3s, box-shadow .3s;
+}
+
+.project-code textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(231,189,101,.08);
+}
+
+.project-code button {
+    margin-top: 12px;
+}
+
+/* =========================
+   QUIZ
+========================= */
+
+.quiz {
+    background: #101216;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .4s, box-shadow .4s;
+}
+
+.quiz:hover {
+    border-color: rgba(231,189,101,.4);
+    box-shadow: 0 20px 55px rgba(0,0,0,.18);
+}
+
+.quiz-question {
+    padding: 21px 0;
+    border-bottom: 1px solid #292c32;
+}
+
+.quiz-question:last-of-type {
+    border: none;
+}
+
+.quiz-question h3 {
+    font: 600 16px var(--display);
+    margin-bottom: 13px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 5px;
+    transition: .3s;
+}
+
+.option:hover {
+    background: rgba(231,189,101,.07);
+    color: var(--text);
+    transform: translateX(5px);
+}
+
+.option input {
+    accent-color: var(--gold);
+    width: 15px;
+    height: 15px;
+}
+
+.quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.quiz-result {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 6px;
+    display: none;
+    font-size: 13px;
+}
+
+.quiz-result.success {
+    display: block;
+    background: rgba(139,214,165,.1);
+    color: var(--green);
+    border: 1px solid rgba(139,214,165,.3);
+    animation: resultPop .45s both;
+}
+
+.quiz-result.fail {
+    display: block;
+    background: rgba(241,138,138,.1);
+    color: var(--red);
+    border: 1px solid rgba(241,138,138,.3);
+    animation: resultPop .45s both;
+}
+
+.completion-message {
+    display: none;
+    margin-top: 16px;
+    color: var(--green);
+    font-size: 13px;
+    animation: fadeUp .4s both;
+}
+
+.completion-message.show {
+    display: block;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    padding: 28px 7%;
+    background: #0b0c0f;
+}
+
+.lesson-navigation a {
+    color: var(--gold);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    padding: 11px 17px;
+    border-radius: 5px;
+    font-size: 12px;
+    transition: .35s;
+}
+
+.lesson-navigation a:hover {
+    background: var(--gold);
+    color: #17130b;
+    transform: translateY(-3px);
+}
+
+.footer {
+    padding: 25px;
+    text-align: center;
+    color: #747780;
+    border-top: 1px solid #22252b;
+    font: 11px var(--mono);
+    transition: color .3s;
+}
+
+.footer:hover {
+    color: var(--gold);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:850px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 70px 7%;
+        gap: 55px;
+    }
+
+    .hero-visual {
+        max-width: 570px;
+        width: 100%;
+        margin: auto;
+    }
+
+    .concept-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .project-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:600px) {
+    .navbar {
+        padding: 0 5%;
+        height: 65px;
+    }
+
+    .nav-label {
+        display: none;
+    }
+
+    .hero {
+        padding: 55px 6%;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .hero-copy {
+        font-size: 14px;
+    }
+
+    .hero-visual::before {
+        inset: -9px;
+    }
+
+    .command-panel {
+        padding: 18px;
+    }
+
+    .section {
+        padding: 60px 18px;
+    }
+
+    .section-heading {
+        display: block;
+    }
+
+    .section-heading p {
+        margin-top: 12px;
+    }
+
+    .concept-grid,
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+
+    .flow-track {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .project-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .project-body {
+        padding: 17px;
+    }
+
+    .quiz {
+        padding: 20px;
+    }
+
+    .lesson-navigation {
+        padding: 22px 5%;
+        flex-wrap: wrap;
+    }
+
+    .lesson-navigation a,
+    .lesson-navigation button {
+        font-size: 11px;
+    }
+
+    .promise-table {
+        font-size: 11px;
+    }
+
+    .promise-table th,
+    .promise-table td {
+        padding: 11px 7px;
+    }
+}
+
+@media(max-width:380px) {
+    .flow-track {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+    }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media(prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+
+    body.motion-ready .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="../../pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="../javascript.html" class="brand">CNF/</a>
+    <span class="nav-label">JAVASCRIPT / FINAL MODULE</span>
+    <a href="../javascript.html" class="nav-home">Course Home ↗</a>
+</nav>
+
+<header class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">MODULE 08 / THE FINAL CHAPTER</div>
+
+        <h1>JavaScript Beyond the <span>Now.</span></h1>
+
+        <p class="hero-copy">
+            Learn how JavaScript handles tasks that take time.
+            Understand Promises, async/await, API requests and
+            build your own asynchronous product loader.
+        </p>
+
+        <div class="hero-actions">
+            <button class="btn btn-gold" id="enterModule">
+                Enter Final Module →
+            </button>
+
+            <button class="btn" id="viewProject">
+                View Final Project
+            </button>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="command-panel">
+            <div class="panel-top">
+                <span>ASYNC COMMAND CENTER</span>
+                <span class="status">● SYSTEM READY</span>
+            </div>
+
+            <div class="flow-node">
+                <div class="node-number">01</div>
+                <div>
+                    <strong>Start JavaScript</strong>
+                    <small>Execute synchronous code</small>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <div class="flow-node">
+                <div class="node-number">02</div>
+                <div>
+                    <strong>Send Async Task</strong>
+                    <small>Start a time-consuming operation</small>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <div class="flow-node">
+                <div class="node-number">03</div>
+                <div>
+                    <strong>Wait for Result</strong>
+                    <small>Promise resolves or rejects</small>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <div class="flow-node">
+                <div class="node-number">04</div>
+                <div>
+                    <strong>Continue with Data</strong>
+                    <small>Handle the completed result</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+
+<section class="section" id="start">
+    <div class="section-heading reveal">
+        <div>
+            <div class="section-index">01 — THE CONCEPT</div>
+            <h2>What is Asynchronous JavaScript?</h2>
+        </div>
+        <p>
+            Not every operation finishes instantly. Async JavaScript helps
+            your application stay responsive while waiting for results.
+        </p>
+    </div>
+
+    <div class="concept-grid">
+        <article class="concept reveal">
+            <div class="symbol">01 /</div>
+            <h3>Synchronous</h3>
+            <p>
+                Code runs one statement at a time. The next statement waits
+                until the current operation finishes.
+            </p>
+        </article>
+
+        <article class="concept reveal">
+            <div class="symbol">02 /</div>
+            <h3>Asynchronous</h3>
+            <p>
+                Some operations can complete later while JavaScript continues
+                executing other available work.
+            </p>
+        </article>
+
+        <article class="concept reveal">
+            <div class="symbol">03 /</div>
+            <h3>Non-blocking</h3>
+            <p>
+                Long-running tasks such as network requests can happen without
+                freezing the entire page.
+            </p>
+        </article>
+    </div>
+
+    <div class="two-column" style="margin-top:24px">
+        <div class="info-card reveal reveal-left">
+            <h3>Synchronous example</h3>
+            <div class="code"><span class="keyword">console</span>.log(<span class="string">"First"</span>);
+<span class="keyword">console</span>.log(<span class="string">"Second"</span>);
+<span class="keyword">console</span>.log(<span class="string">"Third"</span>);
+
+<span class="comment">// Output:</span>
+First
+Second
+Third</div>
+        </div>
+
+        <div class="info-card reveal reveal-right">
+            <h3>Asynchronous example</h3>
+            <div class="code"><span class="keyword">console</span>.log(<span class="string">"First"</span>);
+
+<span class="function">setTimeout</span>(() => {
+    <span class="keyword">console</span>.log(<span class="string">"Second"</span>);
+}, 1000);
+
+<span class="keyword">console</span>.log(<span class="string">"Third"</span>);
+
+<span class="comment">// Output:</span>
+First
+Third
+Second</div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading reveal">
+        <div>
+            <div class="section-index">02 — THE WAITING ROOM</div>
+            <h2>Promises</h2>
+        </div>
+        <p>A Promise represents the eventual result of an asynchronous operation.</p>
+    </div>
+
+    <div class="two-column">
+        <div class="info-card reveal reveal-left">
+            <h3>Three Promise states</h3>
+            <ul>
+                <li><span class="gold-text">Pending:</span> The operation is still running.</li>
+                <li><span class="gold-text">Fulfilled:</span> The operation completed successfully.</li>
+                <li><span class="gold-text">Rejected:</span> The operation failed.</li>
+            </ul>
+            <div class="warning">
+                A Promise starts in the pending state. It eventually settles
+                as fulfilled or rejected.
+            </div>
+        </div>
+
+        <div class="code reveal reveal-right"><span class="keyword">const</span> myPromise = <span class="keyword">new</span> Promise((resolve, reject) => {
+
+    <span class="keyword">const</span> success = <span class="keyword">true</span>;
+
+    <span class="keyword">if</span> (success) {
+        resolve(<span class="string">"Task completed!"</span>);
+    } <span class="keyword">else</span> {
+        reject(<span class="string">"Something went wrong"</span>);
+    }
+});
+
+myPromise
+    .then(result => {
+        <span class="keyword">console</span>.log(result);
+    })
+    .catch(error => {
+        <span class="keyword">console</span>.log(error);
+    });</div>
+    </div>
+
+    <div class="info-card reveal" style="margin-top:25px">
+        <h3>Promise methods</h3>
+
+        <table class="promise-table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="gold-text">then()</td>
+                    <td>Runs when a Promise is fulfilled.</td>
+                </tr>
+                <tr>
+                    <td class="gold-text">catch()</td>
+                    <td>Handles a rejected Promise.</td>
+                </tr>
+                <tr>
+                    <td class="gold-text">finally()</td>
+                    <td>Runs after the Promise settles, either way.</td>
+                </tr>
+                <tr>
+                    <td class="gold-text">Promise.all()</td>
+                    <td>Waits for all supplied Promises to fulfill, or rejects if one rejects.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading reveal">
+        <div>
+            <div class="section-index">03 — THE MODERN APPROACH</div>
+            <h2>Async & Await</h2>
+        </div>
+        <p>Async and await make Promise-based code easier to read and organize.</p>
+    </div>
+
+    <div class="two-column">
+        <div class="info-card reveal reveal-left">
+            <h3>async keyword</h3>
+            <p>
+                Adding <span class="gold-text">async</span> before a function
+                makes that function return a Promise.
+            </p>
+
+            <div class="code" style="margin-top:16px"><span class="keyword">async function</span> <span class="function">greet</span>() {
+    <span class="keyword">return</span> <span class="string">"Hello Student!"</span>;
+}
+
+greet().then(message => {
+    <span class="keyword">console</span>.log(message);
+});</div>
+        </div>
+
+        <div class="info-card reveal reveal-right">
+            <h3>await keyword</h3>
+            <p>
+                <span class="gold-text">await</span> pauses the execution of
+                its surrounding async function until the Promise settles.
+            </p>
+
+            <div class="code" style="margin-top:16px"><span class="keyword">async function</span> <span class="function">getData</span>() {
+    <span class="keyword">const</span> result = <span class="keyword">await</span> fetchData();
+    <span class="keyword">console</span>.log(result);
+}
+
+getData();</div>
+        </div>
+    </div>
+
+    <div class="warning reveal">
+        Remember: await can be used inside an async function. Modern JavaScript
+        also supports top-level await in modules.
+    </div>
+
+    <div class="code reveal" style="margin-top:24px"><span class="keyword">async function</span> <span class="function">loadUser</span>() {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(<span class="string">"https://example.com/users"</span>);
+
+        <span class="keyword">if</span> (!response.ok) {
+            <span class="keyword">throw new</span> Error(<span class="string">"Request failed"</span>);
+        }
+
+        <span class="keyword">const</span> data = <span class="keyword">await</span> response.json();
+        <span class="keyword">console</span>.log(data);
+
+    } <span class="keyword">catch</span> (error) {
+        <span class="keyword">console</span>.error(error.message);
+    }
+}
+
+loadUser();</div>
+</section>
+
+<section class="section">
+    <div class="section-heading reveal">
+        <div>
+            <div class="section-index">04 — UNDER THE HOOD</div>
+            <h2>The Event Loop</h2>
+        </div>
+        <p>See how JavaScript coordinates synchronous code, asynchronous callbacks and the event loop.</p>
+    </div>
+
+    <div class="flow-lab reveal">
+        <div style="display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap">
+            <div>
+                <h3 style="font:600 19px var(--display)">Execution sequence</h3>
+                <p style="color:var(--muted);font-size:12px">
+                    Run the simulation to see the order of execution.
+                </p>
+            </div>
+            <span class="eyebrow" style="margin:0">LIVE SIMULATION</span>
+        </div>
+
+        <div class="flow-track" id="eventTrack">
+            <div class="track-step"><b>01</b><span>Call Stack</span></div>
+            <div class="track-step"><b>02</b><span>Async Task</span></div>
+            <div class="track-step"><b>03</b><span>Callback Queue</span></div>
+            <div class="track-step"><b>04</b><span>Event Loop</span></div>
+        </div>
+
+        <div class="lab-output" id="eventOutput" aria-live="polite">
+            Waiting for simulation...
+        </div>
+
+        <div class="lab-controls">
+            <button class="btn btn-gold" id="runEvent" type="button">Run Simulation</button>
+            <button class="btn" id="resetEvent" type="button">Reset</button>
+        </div>
+    </div>
+
+    <div class="warning reveal">
+        Simplified model: the browser has additional queues and scheduling rules.
+        Promise callbacks (microtasks) are generally processed before timer callbacks
+        (tasks) after the current synchronous work finishes.
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading reveal">
+        <div>
+            <div class="section-index">05 — REAL WORLD SKILLS</div>
+            <h2>Working with APIs</h2>
+        </div>
+        <p>Web applications often request information from servers. The Fetch API helps JavaScript make HTTP requests.</p>
+    </div>
+
+    <div class="two-column">
+        <div class="info-card reveal reveal-left">
+            <h3>What is an API?</h3>
+            <p>
+                An API is a way for different software systems to communicate
+                and exchange information.
+            </p>
+            <ul>
+                <li>Request information from a server.</li>
+                <li>Receive a response.</li>
+                <li>Convert JSON into JavaScript data.</li>
+                <li>Display the result on the page.</li>
+            </ul>
+        </div>
+
+        <div class="info-card reveal reveal-right">
+            <h3>Fetch workflow</h3>
+            <div class="code">fetch(<span class="string">"/api/products"</span>)
+    .then(response => {
+        <span class="keyword">if</span> (!response.ok) {
+            <span class="keyword">throw new</span> Error(<span class="string">"Failed"</span>);
+        }
+        <span class="keyword">return</span> response.json();
+    })
+    .then(data => {
+        <span class="keyword">console</span>.log(data);
+    })
+    .catch(error => {
+        <span class="keyword">console</span>.error(error);
+    });</div>
+        </div>
+    </div>
+
+    <div class="warning reveal">
+        fetch() does not automatically reject for HTTP error responses such as 404
+        or 500. Check response.ok and handle errors yourself.
+    </div>
+</section>
+
+<section class="section" id="final-project">
+    <div class="section-heading reveal">
+        <div>
+            <div class="section-index">06 — FINAL BUILD CHALLENGE</div>
+            <h2>Async Product Loader</h2>
+        </div>
+        <p>Bring your JavaScript knowledge together. Build a small interface that loads products asynchronously.</p>
+    </div>
+
+    <div class="project-shell reveal">
+        <div class="project-head">
+            <div>
+                <div class="eyebrow" style="margin-bottom:7px">YOUR FINAL PROJECT</div>
+                <h3>Product Loading System</h3>
+                <p>Simulated server request • Async/Await • Error handling</p>
+            </div>
+            <span class="status" style="font:11px var(--mono)">● INTERACTIVE</span>
+        </div>
+
+        <div class="project-body">
+            <div class="project-preview">
+                <h4>Mini Store</h4>
+                <p>Explore products loaded through an asynchronous request.</p>
+
+                <div id="productList" aria-live="polite">
+                    <div style="color:#777;font-size:12px">
+                        Products have not been loaded yet.
+                    </div>
+                </div>
+
+                <div class="project-message" id="projectMessage" aria-live="polite">
+                    System ready.
+                </div>
+
+                <button class="btn btn-gold" id="loadProducts" type="button" style="width:100%;margin-top:12px">
+                    Load Products
+                </button>
+            </div>
+
+            <div class="project-code">
+                <h4>Understand the logic</h4>
+
+                <textarea readonly spellcheck="false">const products = [
+  { name: "Keyboard", price: 2500 },
+  { name: "Headphones", price: 3500 },
+  { name: "Mouse", price: 1200 }
+];
+
+function getProducts() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(products);
+    }, 1500);
+  });
+}
+
+async function loadProducts() {
+  try {
+    const data = await getProducts();
+    displayProducts(data);
+  } catch (error) {
+    console.error(error);
+  }
+}</textarea>
+
+                <button class="btn" id="resetProducts" type="button">Reset Project</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading reveal">
+        <div>
+            <div class="section-index">07 — KNOWLEDGE CHECK</div>
+            <h2>Final Assessment</h2>
+        </div>
+        <p>Answer all three questions. Score at least 2 out of 3 to complete this lesson.</p>
+    </div>
+
+    <div class="quiz reveal">
+        <div class="quiz-question">
+            <h3>01. What does an async function always return?</h3>
+            <label class="option">
+                <input type="radio" name="q1" value="a">
+                A normal string
+            </label>
+            <label class="option">
+                <input type="radio" name="q1" value="b">
+                A Promise
+            </label>
+            <label class="option">
+                <input type="radio" name="q1" value="c">
+                An HTML element
+            </label>
+        </div>
+
+        <div class="quiz-question">
+            <h3>02. Which keyword waits for a Promise inside an async function?</h3>
+            <label class="option">
+                <input type="radio" name="q2" value="a">
+                await
+            </label>
+            <label class="option">
+                <input type="radio" name="q2" value="b">
+                return
+            </label>
+            <label class="option">
+                <input type="radio" name="q2" value="c">
+                break
+            </label>
+        </div>
+
+        <div class="quiz-question">
+            <h3>03. Which block is commonly used to handle errors in async/await code?</h3>
+            <label class="option">
+                <input type="radio" name="q3" value="a">
+                if/else
+            </label>
+            <label class="option">
+                <input type="radio" name="q3" value="b">
+                for/while
+            </label>
+            <label class="option">
+                <input type="radio" name="q3" value="c">
+                try/catch
+            </label>
+        </div>
+
+        <div class="quiz-actions">
+            <button class="btn btn-gold" id="submitQuiz" type="button">
+                Submit Assessment
+            </button>
+            <button class="btn" id="resetQuiz" type="button">
+                Reset Quiz
+            </button>
+        </div>
+
+        <div class="quiz-result" id="quizResult" aria-live="polite"></div>
+
+        <div class="completion-message" id="completionMessage" aria-live="polite">
+            Your lesson has been successfully completed and your progress is saved.
+        </div>
+    </div>
+</section>
+
+</main>
+
+<div class="lesson-navigation">
+    <a href="07-dom-events.html">← Previous Lesson</a>
+
+    <button class="btn btn-gold" id="completeLesson" type="button" disabled>
+        Complete Lesson
+    </button>
+
+    <a href="../javascript.html">JavaScript Course Home ↗</a>
+</div>
+
+<footer class="footer">
+    CNF/ — CODE NEXA FORGE · JAVASCRIPT COURSE
+</footer>
+
+<script src="../../assets/cnf-lesson-motion.js" defer></script>
+
+<script>
+// ===============================
+// SCROLL REVEAL ANIMATIONS
+// ===============================
+
+document.body.classList.add("motion-ready");
+
+const revealElements = document.querySelectorAll(".reveal");
+
+if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -45px 0px"
+    });
+
+    revealElements.forEach((element, index) => {
+        element.style.transitionDelay = (index % 3) * 90 + "ms";
+        revealObserver.observe(element);
+    });
+} else {
+    revealElements.forEach(element => element.classList.add("visible"));
+}
+
+
+// ===============================
+// HERO NAVIGATION BUTTONS
+// ===============================
+
+document.getElementById("enterModule").addEventListener("click", () => {
+    document.getElementById("start").scrollIntoView({
+        behavior: "smooth"
+    });
+});
+
+document.getElementById("viewProject").addEventListener("click", () => {
+    document.getElementById("final-project").scrollIntoView({
+        behavior: "smooth"
+    });
+});
+
+
+// ===============================
+// EVENT LOOP SIMULATION
+// ===============================
+
+const eventOutput = document.getElementById("eventOutput");
+const trackSteps = document.querySelectorAll(".track-step");
+const runEvent = document.getElementById("runEvent");
+const resetEvent = document.getElementById("resetEvent");
+
+let eventTimers = [];
+
+function clearEventTimers() {
+    eventTimers.forEach(timer => clearTimeout(timer));
+    eventTimers = [];
+}
+
+function resetEventSimulation() {
+    clearEventTimers();
+
+    trackSteps.forEach(step => {
+        step.classList.remove("active", "done");
+    });
+
+    eventOutput.textContent = "Waiting for simulation...";
+    eventOutput.classList.remove("updated");
+    runEvent.disabled = false;
+}
+
+runEvent.addEventListener("click", () => {
+    resetEventSimulation();
+    runEvent.disabled = true;
+    runEvent.textContent = "Running Simulation...";
+
+    const messages = [
+        "1. Synchronous code starts on the call stack.",
+        "2. A timer is registered as an asynchronous task.",
+        "3. Synchronous code finishes. The timer callback becomes ready.",
+        "4. The event loop allows the callback to run when the stack is clear."
+    ];
+
+    let index = 0;
+
+    function nextStep() {
+        if (index > 0) {
+            trackSteps[index - 1].classList.remove("active");
+            trackSteps[index - 1].classList.add("done");
+        }
+
+        if (index < trackSteps.length) {
+            trackSteps[index].classList.add("active");
+
+            eventOutput.textContent +=
+                (index === 0 ? "" : "\n") + messages[index];
+
+            eventOutput.classList.remove("updated");
+            void eventOutput.offsetWidth;
+            eventOutput.classList.add("updated");
+
+            index++;
+            eventTimers.push(setTimeout(nextStep, 1100));
+        } else {
+            trackSteps[trackSteps.length - 1].classList.remove("active");
+            trackSteps[trackSteps.length - 1].classList.add("done");
+
+            eventOutput.textContent += "\n\nSimulation completed.";
+
+            runEvent.disabled = false;
+            runEvent.textContent = "Run Again";
+        }
+    }
+
+    nextStep();
+});
+
+resetEvent.addEventListener("click", () => {
+    resetEventSimulation();
+    runEvent.textContent = "Run Simulation";
+});
+
+
+// ===============================
+// FINAL PROJECT: PRODUCT LOADER
+// ===============================
+
+const products = [
+    { name: "Mechanical Keyboard", price: 2500 },
+    { name: "Studio Headphones", price: 3500 },
+    { name: "Wireless Mouse", price: 1200 }
+];
+
+const productList = document.getElementById("productList");
+const projectMessage = document.getElementById("projectMessage");
+const loadProductsButton = document.getElementById("loadProducts");
+const resetProductsButton = document.getElementById("resetProducts");
+
+let productRequest = null;
+
+function getProducts() {
+    return new Promise((resolve) => {
+        productRequest = setTimeout(() => {
+            resolve(products);
+        }, 1500);
+    });
+}
+
+function displayProducts(items) {
+    productList.replaceChildren();
+
+    items.forEach((product, index) => {
+        const item = document.createElement("div");
+        item.className = "product-item";
+        item.style.animationDelay = (index * 120) + "ms";
+
+        const name = document.createElement("span");
+        name.textContent = product.name;
+
+        const price = document.createElement("strong");
+        price.textContent = "Rs. " + product.price.toLocaleString();
+
+        item.append(name, price);
+        productList.appendChild(item);
+    });
+}
+
+async function loadProductData() {
+    loadProductsButton.disabled = true;
+    resetProductsButton.disabled = true;
+    loadProductsButton.textContent = "Loading...";
+    projectMessage.textContent = "Request sent. Waiting for server response...";
+
+    productList.textContent = "Loading products...";
+
+    try {
+        const data = await getProducts();
+
+        displayProducts(data);
+
+        projectMessage.textContent =
+            "Success: " + data.length + " products loaded.";
+    } catch (error) {
+        productList.textContent = "Unable to load products.";
+        projectMessage.textContent = "Error: " + error.message;
+    } finally {
+        productRequest = null;
+        loadProductsButton.disabled = false;
+        resetProductsButton.disabled = false;
+        loadProductsButton.textContent = "Load Products";
+    }
+}
+
+loadProductsButton.addEventListener("click", loadProductData);
+
+resetProductsButton.addEventListener("click", () => {
+    if (productRequest) {
+        clearTimeout(productRequest);
+        productRequest = null;
+    }
+
+    productList.innerHTML =
+        '<div style="color:#777;font-size:12px">Products have not been loaded yet.</div>';
+
+    projectMessage.textContent = "System ready.";
+
+    loadProductsButton.disabled = false;
+    resetProductsButton.disabled = false;
+    loadProductsButton.textContent = "Load Products";
+});
+
+
+// ===============================
+// FINAL ASSESSMENT
+// ===============================
+
+const correctAnswers = {
+    q1: "b",
+    q2: "a",
+    q3: "c"
+};
+
+const quizResult = document.getElementById("quizResult");
+const submitQuiz = document.getElementById("submitQuiz");
+const resetQuiz = document.getElementById("resetQuiz");
+const completeLesson = document.getElementById("completeLesson");
+const completionMessage = document.getElementById("completionMessage");
+
+const lessonKey = "javascript-lesson-08-completed";
+const courseKey = "javascript-course-completed";
+
+let quizPassed = false;
+let lessonCompleted = localStorage.getItem(lessonKey) === "true";
+
+function updateCompletionState() {
+    if (lessonCompleted) {
+        completeLesson.disabled = true;
+        completeLesson.textContent = "Lesson Completed ✓";
+        completionMessage.classList.add("show");
+        quizPassed = true;
+        return;
+    }
+
+    completeLesson.disabled = !quizPassed;
+    completeLesson.textContent = quizPassed
+        ? "Complete Lesson ✓"
+        : "Complete Lesson";
+}
+
+function showQuizResult(type, message) {
+    quizResult.className = "quiz-result " + type;
+    quizResult.textContent = message;
+}
+
+submitQuiz.addEventListener("click", () => {
+    let score = 0;
+    let answered = 0;
+
+    Object.keys(correctAnswers).forEach(question => {
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if (selected) {
+            answered++;
+
+            if (selected.value === correctAnswers[question]) {
+                score++;
+            }
+        }
+    });
+
+    if (answered < 3) {
+        showQuizResult(
+            "fail",
+            "Please answer all 3 questions before submitting."
+        );
+        return;
+    }
+
+    if (score >= 2) {
+        quizPassed = true;
+
+        showQuizResult(
+            "success",
+            "Excellent! You scored " + score +
+            "/3. You passed the final assessment. Complete your lesson now."
+        );
+
+        updateCompletionState();
+    } else {
+        quizPassed = false;
+
+        showQuizResult(
+            "fail",
+            "You scored " + score +
+            "/3. You need at least 2 correct answers. Review the lesson and try again."
+        );
+
+        updateCompletionState();
+    }
+});
+
+resetQuiz.addEventListener("click", () => {
+    if (lessonCompleted) {
+        quizResult.className = "quiz-result";
+        quizResult.textContent = "";
+        completionMessage.classList.add("show");
+        return;
+    }
+
+    document.querySelectorAll('.quiz input[type="radio"]').forEach(input => {
+        input.checked = false;
+    });
+
+    quizResult.className = "quiz-result";
+    quizResult.textContent = "";
+
+    quizPassed = false;
+    updateCompletionState();
+});
+
+
+// ===============================
+// SAVE LESSON COMPLETION
+// ===============================
+
+completeLesson.addEventListener("click", () => {
+    if (!quizPassed || lessonCompleted) return;
+
+    localStorage.setItem(lessonKey, "true");
+    localStorage.setItem(courseKey, "true");
+
+    lessonCompleted = true;
+
+    updateCompletionState();
+
+    showQuizResult(
+        "success",
+        "Congratulations! You have completed all 8 JavaScript lessons. Your course progress has been saved."
+    );
+
+    completeLesson.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+});
+
+
+// Restore saved completion when the page opens
+if (lessonCompleted) {
+    quizPassed = true;
+}
+
+updateCompletionState();
+
+</script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

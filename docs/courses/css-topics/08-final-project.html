@@ -1,0 +1,1736 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 08 - Final Project | CNF/</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+    --red: #e74735;
+    --orange: #ff8b45;
+    --dark: #242321;
+    --cream: #fff9f3;
+    --muted: #77736e;
+    --line: #eee2d7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.navbar {
+    height: 72px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    animation: navReveal .7s ease both;
+}
+
+.logo {
+    color: var(--red);
+    font: bold 23px 'Space Mono', monospace;
+    transition: color .3s ease, transform .3s ease;
+}
+
+.logo:hover {
+    color: var(--orange);
+    transform: translateX(4px);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.nav-tag {
+    border: 1px solid #f0b5a7;
+    color: var(--red);
+    padding: 8px 12px;
+    font: 11px 'Space Mono', monospace;
+    transition: .3s ease;
+}
+
+.nav-tag:hover {
+    background: #fff0e7;
+    border-color: var(--red);
+    transform: translateY(-2px);
+}
+
+.hero {
+    background: white;
+    padding: 70px 8%;
+    display: grid;
+    grid-template-columns: 1fr .8fr;
+    gap: 50px;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+    color: var(--red);
+    font: 11px 'Space Mono', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 22px;
+    animation: fadeUp .7s .1s both;
+}
+
+.hero h1 {
+    font-size: clamp(40px, 5.5vw, 68px);
+    line-height: 1.04;
+    letter-spacing: -3px;
+    margin-bottom: 22px;
+    animation: fadeUp .8s .2s both;
+}
+
+.hero h1 span {
+    color: var(--red);
+    display: inline-block;
+    animation: textGlow 4s ease-in-out infinite;
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 560px;
+    animation: fadeUp .8s .3s both;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+    animation: fadeUp .8s .4s both;
+}
+
+.btn {
+    border: 1px solid var(--red);
+    background: var(--red);
+    color: white;
+    padding: 13px 19px;
+    border-radius: 5px;
+    font-weight: 800;
+    font-size: 12px;
+    cursor: pointer;
+    display: inline-block;
+    transition:
+        transform .3s ease,
+        background .3s ease,
+        box-shadow .3s ease,
+        border-color .3s ease;
+}
+
+.btn:hover {
+    background: #c93425;
+    border-color: #c93425;
+    transform: translateY(-4px);
+    box-shadow: 0 9px 20px #e7473530;
+}
+
+.btn:active {
+    transform: translateY(-1px) scale(.98);
+}
+
+.btn.secondary {
+    color: var(--red);
+    background: transparent;
+}
+
+.btn.secondary:hover {
+    color: white;
+    background: var(--red);
+}
+
+.hero-art {
+    min-height: 270px;
+    background: #fff0e7;
+    border-radius: 12px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    animation: artReveal .9s .25s both;
+}
+
+.art-circle {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: var(--orange);
+    right: -35px;
+    top: -50px;
+    opacity: .9;
+    animation: circleFloat 6s ease-in-out infinite;
+}
+
+.art-card {
+    position: relative;
+    z-index: 1;
+    background: white;
+    padding: 22px;
+    width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px #9d513322;
+    animation: cardFloat 5s ease-in-out infinite;
+    transition: box-shadow .3s ease;
+}
+
+.art-card:hover {
+    box-shadow: 0 20px 45px #9d513344;
+}
+
+.art-card small {
+    color: var(--red);
+    font: 10px 'Space Mono', monospace;
+}
+
+.art-card h3 {
+    font-size: 27px;
+    margin: 12px 0 7px;
+}
+
+.art-card p {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+main {
+    max-width: 1180px;
+    padding: 65px 25px;
+    margin: auto;
+}
+
+.kicker {
+    color: var(--red);
+    font: 11px 'Space Mono', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.section-title {
+    font-size: 34px;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+}
+
+.description {
+    color: var(--muted);
+    max-width: 740px;
+    line-height: 1.8;
+    margin-bottom: 32px;
+}
+
+.brief {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 18px;
+    margin-bottom: 65px;
+}
+
+.brief-main {
+    background: var(--dark);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    transition: transform .35s ease, box-shadow .35s ease;
+    animation: fadeUp .7s both;
+}
+
+.brief-main:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px #24232125;
+}
+
+.brief-main h3 {
+    font-size: 24px;
+    margin-bottom: 13px;
+}
+
+.brief-main p {
+    color: #c6c0b8;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.brief-main ul {
+    margin: 20px 0 0 18px;
+    color: #f1e8df;
+    font-size: 13px;
+    line-height: 2.1;
+}
+
+.brief-main li {
+    transition: color .25s ease, transform .25s ease;
+}
+
+.brief-main li:hover {
+    color: var(--orange);
+    transform: translateX(5px);
+}
+
+.brief-side {
+    display: grid;
+    gap: 12px;
+}
+
+.brief-stat {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 19px;
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+    animation: fadeUp .7s both;
+}
+
+.brief-stat:nth-child(2) {
+    animation-delay: .12s;
+}
+
+.brief-stat:nth-child(3) {
+    animation-delay: .24s;
+}
+
+.brief-stat:hover {
+    transform: translateX(6px);
+    border-color: #f0b5a7;
+    box-shadow: 0 8px 22px #e7473510;
+}
+
+.brief-stat strong {
+    display: block;
+    color: var(--red);
+    font: 20px 'Space Mono', monospace;
+    margin-bottom: 6px;
+}
+
+.brief-stat span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.builder {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 65px;
+    transition: box-shadow .35s ease;
+}
+
+.builder:hover {
+    box-shadow: 0 15px 40px #00000009;
+}
+
+.builder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.builder-header h3 {
+    font-size: 21px;
+}
+
+.live-tag {
+    color: #31844b;
+    background: #eaf8ed;
+    border: 1px solid #ccebd2;
+    border-radius: 4px;
+    padding: 7px 10px;
+    font: 10px 'Space Mono', monospace;
+    animation: livePulse 2s ease-in-out infinite;
+}
+
+.builder-grid {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 25px;
+}
+
+.form-panel {
+    background: #fff8f2;
+    border: 1px solid #f1e1d4;
+    border-radius: 8px;
+    padding: 20px;
+    animation: fadeUp .7s both;
+}
+
+.form-panel h4 {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.field {
+    margin-bottom: 16px;
+}
+
+.field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.field input,
+.field textarea,
+.field select {
+    width: 100%;
+    padding: 11px;
+    background: white;
+    border: 1px solid #e6d7ca;
+    border-radius: 5px;
+    outline: none;
+    color: var(--dark);
+    font-size: 13px;
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        transform .25s ease;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px #e7473515;
+    transform: translateY(-1px);
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 75px;
+}
+
+.preview-panel {
+    background: #f0eeeb;
+    padding: 15px;
+    border-radius: 8px;
+    min-width: 0;
+    animation: fadeUp .8s .1s both;
+}
+
+.preview-top {
+    display: flex;
+    justify-content: space-between;
+    color: #777;
+    font: 10px 'Space Mono', monospace;
+    margin-bottom: 12px;
+}
+
+.portfolio-preview {
+    background: white;
+    min-height: 400px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px #0000000b;
+    transition: box-shadow .3s ease;
+}
+
+.portfolio-preview:hover {
+    box-shadow: 0 12px 30px #00000017;
+}
+
+.pv-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 18px;
+    border-bottom: 1px solid #f1eae5;
+    gap: 10px;
+}
+
+.pv-brand {
+    color: var(--red);
+    font-weight: 800;
+    font-size: 13px;
+    transition: color .3s ease;
+}
+
+.pv-nav span {
+    color: #777;
+    font-size: 9px;
+}
+
+.pv-hero {
+    padding: 30px 20px;
+    background: #fff3ec;
+    transition: background .4s ease;
+}
+
+.pv-hero small {
+    color: var(--red);
+    font: 9px 'Space Mono', monospace;
+}
+
+.pv-hero h2 {
+    font-size: 30px;
+    line-height: 1.1;
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+    animation: previewText .4s ease;
+}
+
+.pv-hero p {
+    font-size: 11px;
+    color: #777;
+    line-height: 1.6;
+}
+
+.pv-button {
+    display: inline-block;
+    margin-top: 17px;
+    background: var(--red);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.pv-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px #00000020;
+}
+
+.pv-projects {
+    padding: 20px;
+}
+
+.pv-projects h3 {
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.pv-project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.pv-project {
+    background: #fff0e7;
+    min-height: 65px;
+    border-radius: 4px;
+    padding: 10px 7px;
+    font-size: 10px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+    transition:
+        transform .3s ease,
+        background .3s ease,
+        box-shadow .3s ease;
+}
+
+.pv-project:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 7px 15px #00000010;
+}
+
+.pv-project:nth-child(2) {
+    background: #ffe3d1;
+}
+
+.pv-project:nth-child(3) {
+    background: #f9e9df;
+}
+
+.preview-footer {
+    padding: 13px 20px;
+    background: var(--dark);
+    color: white;
+    font-size: 9px;
+}
+
+.code-section {
+    background: #242321;
+    color: white;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 65px;
+    transition: box-shadow .35s ease;
+}
+
+.code-section:hover {
+    box-shadow: 0 15px 35px #24232125;
+}
+
+.code-section .description {
+    color: #bdb6ae;
+}
+
+.code-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.code-tabs button {
+    border: 1px solid #645a50;
+    color: #e8dcd0;
+    background: #34312d;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: .25s ease;
+}
+
+.code-tabs button:hover {
+    border-color: var(--orange);
+    transform: translateY(-2px);
+}
+
+.code-tabs button.active {
+    background: var(--orange);
+    color: #242321;
+    border-color: var(--orange);
+    font-weight: 800;
+}
+
+.code-output {
+    background: #151513;
+    color: #ffc49e;
+    border: 1px solid #484239;
+    border-radius: 7px;
+    padding: 20px;
+    font: 12px/1.8 'Space Mono', monospace;
+    white-space: pre;
+    overflow-x: auto;
+    min-height: 250px;
+}
+
+.copy-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.copy-row p {
+    color: #aaa39a;
+    font-size: 11px;
+}
+
+.copy-btn {
+    background: var(--orange);
+    color: #242321;
+    border: none;
+    border-radius: 4px;
+    padding: 11px 15px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 800;
+    transition: .3s ease;
+}
+
+.copy-btn:hover {
+    background: #ffab70;
+    transform: translateY(-3px);
+    box-shadow: 0 7px 17px #ff8b4535;
+}
+
+.checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 65px;
+}
+
+.check-item {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 17px;
+    border-radius: 7px;
+    color: #55514b;
+    font-size: 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.6;
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+}
+
+.check-item:hover {
+    transform: translateY(-3px);
+    border-color: #efb4a5;
+    box-shadow: 0 7px 18px #e7473510;
+}
+
+.check-item input {
+    accent-color: var(--red);
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.progress-wrap {
+    background: #eee5dc;
+    height: 8px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 17px;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--red), var(--orange));
+    height: 100%;
+    width: 0%;
+    transition: width .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.progress-text {
+    color: var(--red);
+    font: 11px 'Space Mono', monospace;
+    margin-top: 10px;
+}
+
+.quiz {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 28px;
+    border-radius: 12px;
+    transition: box-shadow .35s ease;
+}
+
+.quiz:hover {
+    box-shadow: 0 12px 30px #00000008;
+}
+
+.question {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    transition: padding-left .3s ease;
+}
+
+.question:hover {
+    padding-left: 7px;
+}
+
+.question h4 {
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+
+.question label {
+    display: block;
+    font-size: 13px;
+    color: #69645e;
+    margin: 11px 0;
+    cursor: pointer;
+    transition: color .25s ease, transform .25s ease;
+}
+
+.question label:hover {
+    color: var(--red);
+    transform: translateX(4px);
+}
+
+.question input {
+    accent-color: var(--red);
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.quiz-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 23px;
+}
+
+#completeBtn:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#quizResult {
+    color: var(--red);
+    margin-top: 17px;
+    font-size: 13px;
+    line-height: 1.7;
+    transition: opacity .3s ease;
+}
+
+.final-banner {
+    background: linear-gradient(120deg, #e74735, #ff8b45);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 35px;
+    position: relative;
+    overflow: hidden;
+    animation: bannerReveal .8s ease both;
+}
+
+.final-banner::after {
+    content: "";
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    border: 1px solid #ffffff35;
+    border-radius: 50%;
+    right: -45px;
+    top: -65px;
+    box-shadow: 0 0 0 20px #ffffff0a, 0 0 0 40px #ffffff08;
+    animation: circleFloat 7s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.final-banner h3 {
+    font-size: 24px;
+    margin-bottom: 9px;
+    position: relative;
+    z-index: 1;
+}
+
+.final-banner p {
+    font-size: 13px;
+    line-height: 1.7;
+    opacity: .9;
+    position: relative;
+    z-index: 1;
+}
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 35px;
+}
+
+.lesson-navigation a {
+    border: 1px solid #e8a89a;
+    color: var(--red);
+    padding: 13px 17px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .3s ease;
+}
+
+.lesson-navigation a:hover {
+    background: var(--red);
+    color: white;
+    border-color: var(--red);
+    transform: translateY(-3px);
+}
+
+footer {
+    background: var(--dark);
+    color: #b8b1a8;
+    padding: 25px 7%;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 12px;
+}
+
+footer strong {
+    color: var(--orange);
+    font: bold 18px 'Space Mono', monospace;
+    transition: color .3s ease;
+}
+
+footer strong:hover {
+    color: white;
+}
+
+/* ANIMATION KEYFRAMES */
+
+@keyframes navReveal {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes artReveal {
+    from { opacity: 0; transform: translateX(30px) scale(.96); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes circleFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-12px, 15px) rotate(8deg); }
+}
+
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-9px); }
+}
+
+@keyframes textGlow {
+    0%, 100% { text-shadow: 0 0 0 transparent; }
+    50% { text-shadow: 0 5px 22px #e7473530; }
+}
+
+@keyframes livePulse {
+    0%, 100% { box-shadow: 0 0 0 0 #31844b20; }
+    50% { box-shadow: 0 0 0 6px #31844b08; }
+}
+
+@keyframes previewText {
+    from { opacity: .4; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bannerReveal {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width: 800px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 55px 7%;
+    }
+
+    .hero-art {
+        min-height: 220px;
+    }
+
+    .brief,
+    .builder-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .checklist {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        padding: 45px 18px;
+    }
+
+    .builder,
+    .code-section,
+    .quiz {
+        padding: 18px;
+    }
+
+    .pv-project-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .nav-tag {
+        display: none;
+    }
+
+    .nav-right {
+        font-size: 10px;
+    }
+}
+
+@media(max-width: 480px) {
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .section-title {
+        font-size: 27px;
+    }
+
+    .hero-actions,
+    .quiz-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-actions .btn,
+    .quiz-actions .btn {
+        text-align: center;
+    }
+
+    .art-card {
+        width: 95%;
+    }
+
+    .pv-nav span {
+        font-size: 8px;
+    }
+
+    .lesson-navigation a {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+
+<link rel="stylesheet" href="../../css/lesson-quiz-guard.css">
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="../../pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="../css.html" target="_blank" rel="noopener" class="logo">CNF/</a>
+
+    <div class="nav-right">
+        <span>CSS COURSE</span>
+        <span class="nav-tag">FINAL LESSON / 08</span>
+    </div>
+</nav>
+
+<header class="hero">
+    <div>
+        <div class="eyebrow">CSS CAPSTONE PROJECT / MODULE 08</div>
+
+        <h1>From learning CSS to <span>building websites.</span></h1>
+
+        <p>
+            You have learned the fundamentals of CSS. Now combine your
+            skills and build a personal portfolio website from scratch.
+        </p>
+
+        <div class="hero-actions">
+            <a href="#project" class="btn">Start Final Project ↓</a>
+            <a href="#checklist" class="btn secondary">View Checklist</a>
+        </div>
+    </div>
+
+    <div class="hero-art">
+        <div class="art-circle"></div>
+
+        <div class="art-card">
+            <small>YOUR NEXT STEP</small>
+            <h3>Build. Design. Launch.</h3>
+            <p>One project. Your complete CSS journey.</p>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <div class="kicker">01 / PROJECT BRIEF</div>
+    <h2 class="section-title">Your final CSS challenge.</h2>
+
+    <p class="description">
+        Build a personal portfolio website that introduces you,
+        displays your work and helps visitors contact you.
+    </p>
+
+    <section class="brief">
+
+        <div class="brief-main">
+            <h3>Personal Portfolio Website</h3>
+
+            <p>
+                Imagine you are a web developer creating your own online
+                portfolio. Your job is to design a clean, attractive and
+                responsive website using HTML and CSS.
+            </p>
+
+            <ul>
+                <li>Create a navigation bar.</li>
+                <li>Design an attractive introduction section.</li>
+                <li>Add a projects section with project cards.</li>
+                <li>Use colors, spacing and typography consistently.</li>
+                <li>Make the website responsive on mobile devices.</li>
+                <li>Add hover effects and smooth transitions.</li>
+            </ul>
+        </div>
+
+        <div class="brief-side">
+            <div class="brief-stat">
+                <strong>HTML + CSS</strong>
+                <span>Technologies required</span>
+            </div>
+
+            <div class="brief-stat">
+                <strong>5 Sections</strong>
+                <span>Recommended website sections</span>
+            </div>
+
+            <div class="brief-stat">
+                <strong>Responsive</strong>
+                <span>Mobile, tablet and desktop</span>
+            </div>
+        </div>
+
+    </section>
+
+    <div id="project" class="kicker">02 / BUILD YOUR DESIGN</div>
+    <h2 class="section-title">Portfolio customization studio.</h2>
+
+    <p class="description">
+        Change the information below and see how your portfolio preview
+        updates. This is a starting point for your own design.
+    </p>
+
+    <section class="builder">
+
+        <div class="builder-header">
+            <h3>Live Portfolio Builder</h3>
+            <span class="live-tag">● LIVE PREVIEW</span>
+        </div>
+
+        <div class="builder-grid">
+
+            <div class="form-panel">
+                <h4>Your Portfolio Details</h4>
+
+                <div class="field">
+                    <label for="nameInput">Your Name</label>
+                    <input id="nameInput" type="text" value="Alex Morgan" maxlength="35">
+                </div>
+
+                <div class="field">
+                    <label for="roleInput">Your Role</label>
+                    <input id="roleInput" type="text" value="Frontend Developer" maxlength="45">
+                </div>
+
+                <div class="field">
+                    <label for="aboutInput">Short Introduction</label>
+                    <textarea id="aboutInput" maxlength="150">I build clean and creative websites using modern web technologies.</textarea>
+                </div>
+
+                <div class="field">
+                    <label for="projectOne">Project One</label>
+                    <input id="projectOne" type="text" value="Landing Page" maxlength="35">
+                </div>
+
+                <div class="field">
+                    <label for="projectTwo">Project Two</label>
+                    <input id="projectTwo" type="text" value="Weather App" maxlength="35">
+                </div>
+
+                <div class="field">
+                    <label for="projectThree">Project Three</label>
+                    <input id="projectThree" type="text" value="Portfolio Website" maxlength="35">
+                </div>
+
+                <div class="field">
+                    <label for="themeInput">Accent Color</label>
+                    <select id="themeInput">
+                        <option value="#e74735">Coral Red</option>
+                        <option value="#356ae6">Electric Blue</option>
+                        <option value="#168b69">Forest Green</option>
+                        <option value="#8c54d9">Purple</option>
+                        <option value="#e58a25">Orange</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="preview-panel">
+                <div class="preview-top">
+                    <span>PORTFOLIO.HTML</span>
+                    <span>PREVIEW</span>
+                </div>
+
+                <div class="portfolio-preview" id="portfolioPreview">
+
+                    <div class="pv-nav">
+                        <div class="pv-brand" id="pvBrand">ALEX.</div>
+                        <span>HOME　 ABOUT　 PROJECTS</span>
+                    </div>
+
+                    <div class="pv-hero" id="pvHero">
+                        <small>HELLO, I'M</small>
+
+                        <h2 id="pvName">Alex Morgan</h2>
+
+                        <p id="pvRole">Frontend Developer</p>
+
+                        <p id="pvAbout" style="margin-top:9px;">
+                            I build clean and creative websites using modern web technologies.
+                        </p>
+
+                        <span class="pv-button" id="pvButton">VIEW MY WORK</span>
+                    </div>
+
+                    <div class="pv-projects">
+                        <h3>My Projects</h3>
+
+                        <div class="pv-project-grid">
+                            <div class="pv-project" id="pvProjectOne">Landing Page</div>
+                            <div class="pv-project" id="pvProjectTwo">Weather App</div>
+                            <div class="pv-project" id="pvProjectThree">Portfolio Website</div>
+                        </div>
+                    </div>
+
+                    <div class="preview-footer">
+                        © 2026 <span id="pvFooter">Alex Morgan</span> · ALL RIGHTS RESERVED
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="kicker">03 / STARTER CODE</div>
+    <h2 class="section-title">Your coding starting point.</h2>
+
+    <p class="description">
+        Here is a simple starter template. Copy the code and improve it
+        by adding your own sections, design and responsive styles.
+    </p>
+
+    <section class="code-section">
+
+        <div class="code-tabs">
+            <button type="button" class="active" data-code="html">HTML</button>
+            <button type="button" data-code="css">CSS</button>
+        </div>
+
+        <pre class="code-output" id="codeOutput"></pre>
+
+        <div class="copy-row">
+            <p>Copy this starter code and experiment with it.</p>
+            <button type="button" class="copy-btn" id="copyCode">Copy Code</button>
+        </div>
+
+    </section>
+
+    <div id="checklist" class="kicker">04 / PROJECT CHECKLIST</div>
+    <h2 class="section-title">Track your project progress.</h2>
+
+    <p class="description">
+        Check each task after completing it. Try to complete all six
+        before moving on to the final knowledge test.
+    </p>
+
+    <div class="checklist">
+
+        <label class="check-item">
+            <input type="checkbox" class="task-check">
+            <span>I created the HTML structure and navigation bar.</span>
+        </label>
+
+        <label class="check-item">
+            <input type="checkbox" class="task-check">
+            <span>I designed the hero and introduction section.</span>
+        </label>
+
+        <label class="check-item">
+            <input type="checkbox" class="task-check">
+            <span>I created project cards using Flexbox or Grid.</span>
+        </label>
+
+        <label class="check-item">
+            <input type="checkbox" class="task-check">
+            <span>I used colors, typography, spacing and the box model.</span>
+        </label>
+
+        <label class="check-item">
+            <input type="checkbox" class="task-check">
+            <span>I added hover effects, transitions or animations.</span>
+        </label>
+
+        <label class="check-item">
+            <input type="checkbox" class="task-check">
+            <span>I tested my website on mobile and desktop screens.</span>
+        </label>
+
+    </div>
+
+    <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <p class="progress-text" id="progressText">0 / 6 TASKS COMPLETED</p>
+
+    <div class="kicker" style="margin-top:65px;">05 / FINAL KNOWLEDGE TEST</div>
+    <h2 class="section-title">Ready to finish CSS?</h2>
+
+    <p class="description">
+        Answer these final questions to complete your CSS learning journey.
+        You need at least 2 correct answers.
+    </p>
+
+    <section class="quiz">
+
+        <div class="question">
+            <h4>1. Which CSS layout system is useful for creating rows and columns together?</h4>
+            <label><input type="radio" name="q1" value="a"> Float</label>
+            <label><input type="radio" name="q1" value="b"> CSS Grid</label>
+            <label><input type="radio" name="q1" value="c"> Text Align</label>
+        </div>
+
+        <div class="question">
+            <h4>2. Which CSS feature helps a website adapt to different screen sizes?</h4>
+            <label><input type="radio" name="q2" value="a"> Media Queries</label>
+            <label><input type="radio" name="q2" value="b"> Text Shadow</label>
+            <label><input type="radio" name="q2" value="c"> Border Style</label>
+        </div>
+
+        <div class="question">
+            <h4>3. Which CSS feature defines animation stages?</h4>
+            <label><input type="radio" name="q3" value="a"> @import</label>
+            <label><input type="radio" name="q3" value="b"> @media</label>
+            <label><input type="radio" name="q3" value="c"> @keyframes</label>
+        </div>
+
+        <div class="quiz-actions">
+            <button class="btn" id="submitQuiz" type="button">Submit Answers</button>
+
+            <button class="btn secondary" id="completeBtn" type="button" disabled>
+                Complete CSS Course
+            </button>
+        </div>
+
+        <p id="quizResult" aria-live="polite"></p>
+
+    </section>
+
+    <div class="final-banner">
+        <h3>Your CSS journey doesn't end here.</h3>
+        <p>
+            You have completed the eight CSS lessons. Keep practicing,
+            build real projects and prepare for the next stage of your
+            web development journey: JavaScript.
+        </p>
+    </div>
+
+    <div class="lesson-navigation">
+        <a href="07-animations.html" target="_blank" rel="noopener">← Previous Lesson</a>
+        <a href="../css.html" target="_blank" rel="noopener">CSS Course Home</a>
+    </div>
+
+</main>
+
+<footer>
+    <strong>CNF/</strong>
+    <span>CODE NEXA FORGE · CSS CAPSTONE PROJECT</span>
+</footer>
+
+<script>
+// LIVE PORTFOLIO BUILDER
+
+const fields = [
+    ['nameInput', 'pvName'],
+    ['roleInput', 'pvRole'],
+    ['aboutInput', 'pvAbout'],
+    ['projectOne', 'pvProjectOne'],
+    ['projectTwo', 'pvProjectTwo'],
+    ['projectThree', 'pvProjectThree']
+];
+
+function updatePortfolio() {
+    fields.forEach(([inputId, previewId]) => {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+
+        preview.textContent = input.value.trim() || 'Your content here';
+    });
+
+    const name = document.getElementById('nameInput').value.trim();
+
+    document.getElementById('pvBrand').textContent =
+        name ? name.split(' ')[0].toUpperCase() + '.' : 'YOUR NAME.';
+
+    document.getElementById('pvFooter').textContent =
+        name || 'Your Name';
+
+    const accent = document.getElementById('themeInput').value;
+
+    document.getElementById('pvBrand').style.color = accent;
+    document.getElementById('pvButton').style.background = accent;
+    document.getElementById('pvHero').style.background = accent + '18';
+    document.getElementById('pvHero').querySelector('small').style.color = accent;
+
+    // Replay a subtle preview text entrance when details change.
+    const previewName = document.getElementById('pvName');
+    previewName.style.animation = 'none';
+    void previewName.offsetWidth;
+    previewName.style.animation = 'previewText .4s ease';
+}
+
+fields.forEach(([inputId]) => {
+    document.getElementById(inputId).addEventListener('input', updatePortfolio);
+});
+
+document.getElementById('themeInput').addEventListener('change', updatePortfolio);
+
+updatePortfolio();
+
+
+// STARTER CODE TABS
+
+const htmlCode = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <h2>MY PORTFOLIO</h2>
+        <div>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <p>Hello, I am</p>
+        <h1>Your Name</h1>
+        <h3>Frontend Developer</h3>
+        <p>I create beautiful websites.</p>
+        <a href="#projects">View My Work</a>
+    </section>
+
+    <section class="projects" id="projects">
+        <h2>My Projects</h2>
+        <div class="project-grid">
+            <article class="card">Project One</article>
+            <article class="card">Project Two</article>
+            <article class="card">Project Three</article>
+        </div>
+    </section>
+
+    <footer>© 2026 Your Name</footer>
+
+</body>
+</html>`;
+
+const cssCode = `* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff9f3;
+    color: #242321;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: white;
+}
+
+.navbar a {
+    text-decoration: none;
+    margin-left: 15px;
+    color: #242321;
+}
+
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    background: #fff0e7;
+}
+
+.hero h1 {
+    font-size: 50px;
+    margin: 15px 0;
+}
+
+.hero a {
+    display: inline-block;
+    background: #e74735;
+    color: white;
+    padding: 12px 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: .3s;
+}
+
+.hero a:hover {
+    transform: translateY(-4px);
+}
+
+.projects {
+    padding: 60px 8%;
+    text-align: center;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.card {
+    background: white;
+    padding: 40px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px #00000010;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #242321;
+    color: white;
+}
+
+@media (max-width: 650px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero {
+        padding: 65px 20px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+}`;
+
+let currentCode = 'html';
+
+const codeOutput = document.getElementById('codeOutput');
+const codeTabs = document.querySelectorAll('[data-code]');
+
+function showCode(type) {
+    currentCode = type;
+
+    codeOutput.textContent =
+        type === 'html' ? htmlCode : cssCode;
+
+    codeTabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.code === type);
+    });
+}
+
+codeTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        showCode(tab.dataset.code);
+    });
+});
+
+showCode('html');
+
+
+// COPY STARTER CODE
+
+document.getElementById('copyCode').addEventListener('click', async () => {
+    const button = document.getElementById('copyCode');
+
+    try {
+        await navigator.clipboard.writeText(
+            currentCode === 'html' ? htmlCode : cssCode
+        );
+
+        button.textContent = '✓ Copied!';
+    } catch (error) {
+        button.textContent = 'Copy unavailable';
+    }
+
+    setTimeout(() => {
+        button.textContent = 'Copy Code';
+    }, 1800);
+});
+
+
+// PROJECT CHECKLIST
+
+const taskChecks = document.querySelectorAll('.task-check');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+
+function updateProgress() {
+    const completed = [...taskChecks].filter(item => item.checked).length;
+    const percentage = (completed / taskChecks.length) * 100;
+
+    progressBar.style.width = percentage + '%';
+
+    progressText.textContent =
+        `${completed} / ${taskChecks.length} TASKS COMPLETED`;
+}
+
+taskChecks.forEach(item => {
+    item.addEventListener('change', updateProgress);
+});
+
+
+// FINAL QUIZ
+
+const correctAnswers = {
+    q1: 'b',
+    q2: 'a',
+    q3: 'c'
+};
+
+const submitQuiz = document.getElementById('submitQuiz');
+const completeBtn = document.getElementById('completeBtn');
+const quizResult = document.getElementById('quizResult');
+
+let quizPassed = false;
+
+submitQuiz.addEventListener('click', () => {
+    let score = 0;
+    let unanswered = false;
+
+    for (const question in correctAnswers) {
+        const selected = document.querySelector(
+            `input[name="${question}"]:checked`
+        );
+
+        if (!selected) {
+            unanswered = true;
+        } else if (selected.value === correctAnswers[question]) {
+            score++;
+        }
+    }
+
+    if (unanswered) {
+        quizPassed = false;
+        completeBtn.disabled = true;
+        quizResult.textContent =
+            'Please answer all three questions first.';
+        return;
+    }
+
+    if (score >= 2) {
+        quizPassed = true;
+        completeBtn.disabled = false;
+
+        quizResult.textContent =
+            `Excellent! You scored ${score}/3. You can now complete the CSS course.`;
+    } else {
+        quizPassed = false;
+        completeBtn.disabled = true;
+
+        quizResult.textContent =
+            `You scored ${score}/3. You need at least 2 correct answers. Try again!`;
+    }
+});
+
+completeBtn.addEventListener('click', () => {
+    if (!quizPassed) return;
+
+    localStorage.setItem('css-lesson-08-completed', 'true');
+    localStorage.setItem('css-course-completed', 'true');
+
+    completeBtn.textContent = '✓ CSS Course Completed';
+    completeBtn.disabled = true;
+
+    quizResult.textContent =
+        'Congratulations! You have completed all 8 CSS lessons. Your progress is saved!';
+});
+
+
+// RESTORE COMPLETION STATE
+
+if (localStorage.getItem('css-lesson-08-completed') === 'true') {
+    completeBtn.textContent = '✓ CSS Course Completed';
+    completeBtn.disabled = true;
+
+    quizResult.textContent =
+        'You have already completed the CSS course. Your progress is saved!';
+}
+
+
+// RESET FINAL COURSE STATE WHEN THE SHARED RESET BUTTON IS USED.
+// The shared guard creates this button after this script has loaded.
+
+document.addEventListener('click', event => {
+    const resetButton = event.target.closest('.cnf-quiz-reset');
+
+    if (!resetButton) return;
+
+    quizPassed = false;
+
+    localStorage.removeItem('css-course-completed');
+
+    completeBtn.disabled = true;
+    completeBtn.textContent = 'Complete CSS Course';
+});
+
+</script>
+
+<!-- Shared animation and quiz guard scripts: load after the lesson scripts. -->
+<script src="../../assets/cnf-lesson-motion.js"></script>
+<script src="../../js/lesson-quiz-guard.js"></script>
+
+<script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1870 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 02 — Variables & Data Types | CNF/</title>
+
+<link rel="stylesheet" href="../../assets/cnf-lesson-motion.css">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#07110e;
+    --bg2:#0b1914;
+    --panel:#10231b;
+    --panel2:#142b21;
+    --green:#42e6a4;
+    --mint:#a1ffd6;
+    --text:#eafff4;
+    --muted:#91aa9d;
+    --line:rgba(161,255,214,.13);
+    --danger:#ff7777;
+    --yellow:#f3d47a;
+    --shadow:0 20px 55px rgba(0,0,0,.25);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+    background:
+        radial-gradient(circle at 85% 5%,rgba(66,230,164,.09),transparent 28%),
+        radial-gradient(circle at 0% 45%,rgba(66,230,164,.05),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    font-family:'DM Sans',sans-serif;
+    overflow-x:hidden;
+}
+
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+::selection{background:var(--green);color:#07110e}
+
+/* NAVBAR */
+
+.navbar{
+    height:74px;
+    padding:0 6%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    background:rgba(7,17,14,.88);
+    backdrop-filter:blur(18px);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.brand{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:25px;
+    font-weight:700;
+    letter-spacing:-1.5px;
+    color:var(--green);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.nav-link{
+    border:1px solid var(--line);
+    padding:10px 16px;
+    border-radius:10px;
+    font-size:12px;
+    color:var(--muted);
+    transition:.3s;
+}
+
+.nav-link:hover{
+    color:var(--green);
+    border-color:var(--green);
+    transform:translateY(-3px);
+}
+
+/* MAIN LAYOUT */
+
+.layout{
+    width:min(1320px,92%);
+    margin:35px auto 90px;
+    display:grid;
+    grid-template-columns:245px 1fr;
+    gap:35px;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:sticky;
+    top:105px;
+    height:max-content;
+    padding:23px 17px;
+    background:rgba(16,35,27,.75);
+    border:1px solid var(--line);
+    border-radius:18px;
+    animation:slideRight .8s ease both;
+}
+
+.sidebar-label{
+    color:var(--muted);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:2px;
+    margin-bottom:17px;
+}
+
+.course-name{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:16px;
+    margin-bottom:20px;
+}
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:9px;
+}
+
+.progress-track{
+    height:5px;
+    background:#20372c;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:25px;
+}
+
+.progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--green),var(--mint));
+    border-radius:20px;
+    transition:width .6s ease;
+}
+
+.lesson-list{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.lesson-item{
+    padding:12px 11px;
+    border-radius:9px;
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    gap:10px;
+    align-items:center;
+    transition:.25s;
+}
+
+.lesson-item:hover{
+    background:rgba(66,230,164,.07);
+    color:var(--green);
+    transform:translateX(4px);
+}
+
+.lesson-item.active{
+    color:var(--green);
+    background:rgba(66,230,164,.1);
+    border:1px solid rgba(66,230,164,.2);
+}
+
+.lesson-number{
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+}
+
+/* CONTENT */
+
+.content{min-width:0}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    color:var(--green);
+    font-family:'DM Mono',monospace;
+    font-size:11px;
+    letter-spacing:1.5px;
+    margin-bottom:17px;
+}
+
+.eyebrow:before{
+    content:"";
+    height:1px;
+    width:25px;
+    background:var(--green);
+}
+
+.hero{
+    min-height:330px;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    align-items:center;
+    gap:25px;
+    padding:35px 0 55px;
+}
+
+.hero h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(39px,5vw,65px);
+    line-height:1.05;
+    letter-spacing:-3px;
+    margin-bottom:22px;
+    animation:fadeUp .8s .1s both;
+}
+
+.hero h1 span{color:var(--green)}
+
+.hero-description{
+    max-width:540px;
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.9;
+    animation:fadeUp .8s .25s both;
+}
+
+.hero-meta{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:25px;
+    animation:fadeUp .8s .4s both;
+}
+
+.meta-chip{
+    border:1px solid var(--line);
+    color:var(--muted);
+    font-size:10px;
+    padding:8px 12px;
+    border-radius:30px;
+}
+
+/* FLOATING SIDE BOX */
+
+.hero-visual{
+    position:relative;
+    min-height:265px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    animation:fadeUp .9s .3s both;
+}
+
+.float-box{
+    width:min(100%,330px);
+    position:relative;
+    animation:floatBox 4s ease-in-out infinite;
+}
+
+.storage-card{
+    background:linear-gradient(145deg,#173b2b,#0c2118);
+    border:1px solid rgba(66,230,164,.3);
+    padding:24px;
+    border-radius:20px;
+    box-shadow:0 25px 70px rgba(0,0,0,.35),0 0 35px rgba(66,230,164,.08);
+    position:relative;
+    overflow:hidden;
+}
+
+.storage-card:before{
+    content:"";
+    position:absolute;
+    width:160px;
+    height:160px;
+    background:rgba(66,230,164,.09);
+    filter:blur(40px);
+    right:-50px;
+    top:-60px;
+    border-radius:50%;
+    animation:glowPulse 3s infinite alternate;
+}
+
+.storage-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+    position:relative;
+}
+
+.storage-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:14px;
+    font-weight:700;
+}
+
+.live-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
+    animation:blink 1.5s infinite;
+}
+
+.variable-row{
+    padding:13px 14px;
+    background:rgba(3,15,10,.45);
+    border:1px solid rgba(161,255,214,.1);
+    border-radius:11px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    animation:rowGlow 3s infinite;
+}
+
+.variable-row:nth-child(3){animation-delay:.5s}
+.variable-row:nth-child(4){animation-delay:1s}
+
+.variable-key{
+    font-family:'DM Mono',monospace;
+    color:var(--mint);
+    font-size:12px;
+}
+
+.variable-value{
+    font-family:'DM Mono',monospace;
+    color:var(--green);
+    font-size:12px;
+}
+
+.storage-footer{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:17px;
+    display:flex;
+    justify-content:space-between;
+}
+
+/* SECTION BASE */
+
+.section{
+    margin-top:35px;
+    padding:30px;
+    background:rgba(16,35,27,.57);
+    border:1px solid var(--line);
+    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+    animation:fadeUp .8s both;
+    transition:border-color .3s,transform .3s,box-shadow .3s;
+}
+
+.section:hover{
+    border-color:rgba(66,230,164,.3);
+    box-shadow:var(--shadow);
+}
+
+.section-heading{
+    display:flex;
+    align-items:flex-start;
+    gap:15px;
+    margin-bottom:23px;
+}
+
+.section-index{
+    min-width:37px;
+    height:37px;
+    display:grid;
+    place-items:center;
+    border-radius:11px;
+    background:rgba(66,230,164,.12);
+    color:var(--green);
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+}
+
+.section h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:25px;
+    letter-spacing:-.8px;
+    margin-bottom:7px;
+}
+
+.section-subtitle{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.7;
+}
+
+.section p{
+    color:var(--muted);
+    line-height:1.85;
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.section strong{color:var(--mint)}
+
+/* CONCEPT CARDS */
+
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:13px;
+    margin-top:22px;
+}
+
+.concept-card{
+    background:var(--bg2);
+    border:1px solid var(--line);
+    padding:19px;
+    border-radius:13px;
+    transition:.3s;
+}
+
+.concept-card:hover{
+    transform:translateY(-7px);
+    border-color:var(--green);
+    background:#11271d;
+}
+
+.card-icon{
+    font-size:22px;
+    margin-bottom:14px;
+}
+
+.concept-card h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:15px;
+    margin-bottom:9px;
+}
+
+.concept-card p{
+    font-size:12px;
+    margin:0;
+}
+
+/* CODE BLOCKS */
+
+.code-block{
+    margin-top:20px;
+    border:1px solid rgba(161,255,214,.14);
+    border-radius:13px;
+    overflow:hidden;
+    background:#06100c;
+    transition:.3s;
+}
+
+.code-block:hover{
+    border-color:rgba(66,230,164,.45);
+    transform:translateY(-3px);
+}
+
+.code-header{
+    background:#102219;
+    padding:12px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color:var(--muted);
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+}
+
+.code-dots{display:flex;gap:5px}
+.code-dots i{
+    height:7px;width:7px;border-radius:50%;background:#355445;
+}
+
+pre{
+    padding:20px;
+    overflow-x:auto;
+    color:#c9f7dc;
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    line-height:2;
+}
+
+.code-comment{color:#688a77}
+.code-keyword{color:#8bd8ff}
+.code-string{color:#b7f28c}
+.code-function{color:#f3d47a}
+
+/* STORAGE EXPLANATION */
+
+.storage-explain{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:20px;
+}
+
+.explain-panel{
+    background:#091710;
+    border:1px solid var(--line);
+    padding:20px;
+    border-radius:13px;
+}
+
+.explain-panel h3{
+    font-size:13px;
+    color:var(--green);
+    margin-bottom:12px;
+}
+
+.explain-panel p{font-size:12px;margin:0}
+
+/* TABLE */
+
+.table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--line);
+    border-radius:13px;
+    margin-top:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:480px;
+}
+
+th,td{
+    padding:14px 16px;
+    text-align:left;
+    border-bottom:1px solid var(--line);
+    font-size:12px;
+}
+
+th{
+    background:#14291f;
+    color:var(--green);
+    font-family:'DM Mono',monospace;
+    font-weight:500;
+}
+
+td{color:var(--muted)}
+td code{
+    color:var(--mint);
+    font-family:'DM Mono',monospace;
+}
+
+tr:last-child td{border-bottom:0}
+
+/* DATA TYPES */
+
+.type-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:11px;
+    margin-top:20px;
+}
+
+.type-card{
+    padding:16px 12px;
+    background:#0a1912;
+    border:1px solid var(--line);
+    border-radius:12px;
+    transition:.3s;
+}
+
+.type-card:hover{
+    transform:translateY(-5px) scale(1.02);
+    border-color:var(--green);
+}
+
+.type-card code{
+    display:block;
+    color:var(--green);
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.type-card span{
+    font-size:11px;
+    color:var(--muted);
+}
+
+/* NOTE */
+
+.note{
+    padding:16px 18px;
+    background:rgba(66,230,164,.07);
+    border-left:3px solid var(--green);
+    border-radius:0 10px 10px 0;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.8;
+    margin-top:20px;
+}
+
+/* VARIABLE LAB */
+
+.lab{
+    background:linear-gradient(145deg,#10291e,#091710);
+    border:1px solid rgba(66,230,164,.25);
+}
+
+.lab-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.lab-form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.field label{
+    display:block;
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:8px;
+}
+
+.field input,.field select{
+    width:100%;
+    padding:13px;
+    background:#06110c;
+    border:1px solid var(--line);
+    border-radius:9px;
+    color:var(--text);
+    outline:none;
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    transition:.25s;
+}
+
+.field input:focus,.field select:focus{
+    border-color:var(--green);
+    box-shadow:0 0 0 3px rgba(66,230,164,.08);
+}
+
+.primary-btn{
+    background:var(--green);
+    color:#06130d;
+    border:0;
+    padding:13px 19px;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:800;
+    transition:.3s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 9px 25px rgba(66,230,164,.2);
+}
+
+.output-panel{
+    background:#06110c;
+    border:1px solid var(--line);
+    border-radius:13px;
+    padding:19px;
+    min-height:210px;
+}
+
+.output-label{
+    color:var(--green);
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    letter-spacing:1px;
+    margin-bottom:15px;
+}
+
+.output-content{
+    color:var(--muted);
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    line-height:2;
+    overflow-wrap:anywhere;
+}
+
+.output-content .success{color:var(--green)}
+.output-content .error{color:var(--danger)}
+
+/* QUIZ */
+
+.quiz-question{
+    padding:20px;
+    border:1px solid var(--line);
+    background:#0a1912;
+    border-radius:13px;
+    margin-bottom:15px;
+    transition:.3s;
+}
+
+.quiz-question:hover{
+    border-color:rgba(66,230,164,.35);
+}
+
+.question-title{
+    font-size:13px;
+    font-weight:700;
+    line-height:1.7;
+    margin-bottom:14px;
+}
+
+.question-number{
+    color:var(--green);
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    margin-bottom:8px;
+}
+
+.option{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--muted);
+    padding:10px;
+    border-radius:8px;
+    font-size:12px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    background:rgba(66,230,164,.06);
+    color:var(--mint);
+}
+
+.option input{
+    accent-color:var(--green);
+}
+
+.quiz-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.secondary-btn{
+    background:transparent;
+    color:var(--muted);
+    border:1px solid var(--line);
+    padding:12px 18px;
+    border-radius:9px;
+    font-size:12px;
+    transition:.3s;
+}
+
+.secondary-btn:hover{
+    color:var(--green);
+    border-color:var(--green);
+}
+
+.quiz-result{
+    margin-top:17px;
+    padding:15px;
+    border-radius:10px;
+    font-size:12px;
+    line-height:1.8;
+    display:none;
+}
+
+.quiz-result.success-result{
+    display:block;
+    color:var(--green);
+    background:rgba(66,230,164,.08);
+    border:1px solid rgba(66,230,164,.2);
+}
+
+.quiz-result.fail-result{
+    display:block;
+    color:var(--yellow);
+    background:rgba(243,212,122,.07);
+    border:1px solid rgba(243,212,122,.2);
+}
+
+/* COMPLETION */
+
+.completion{
+    text-align:center;
+    padding:35px 25px;
+    background:linear-gradient(145deg,rgba(66,230,164,.1),rgba(16,35,27,.7));
+    border:1px solid var(--line);
+}
+
+.completion-icon{
+    font-size:38px;
+    margin-bottom:15px;
+    animation:floatBox 3s ease-in-out infinite;
+}
+
+.completion h2{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.completion p{
+    max-width:470px;
+    margin:0 auto 20px;
+}
+
+.complete-btn{
+    background:var(--green);
+    color:#06130d;
+    border:0;
+    border-radius:10px;
+    padding:14px 24px;
+    font-weight:800;
+    font-size:12px;
+    transition:.3s;
+}
+
+.complete-btn:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+    filter:grayscale(1);
+}
+
+.complete-btn:not(:disabled):hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 25px rgba(66,230,164,.2);
+}
+
+.next-btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:12px 20px;
+    border:1px solid var(--green);
+    color:var(--green);
+    border-radius:9px;
+    font-size:12px;
+    opacity:.35;
+    pointer-events:none;
+    transition:.3s;
+}
+
+.next-btn.unlocked{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.next-btn.unlocked:hover{
+    background:var(--green);
+    color:#06130d;
+    transform:translateY(-3px);
+}
+
+/* FOOTER */
+
+.footer{
+    margin-top:45px;
+    padding:25px 10px;
+    border-top:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    color:var(--muted);
+    font-size:11px;
+}
+
+.footer-brand{
+    color:var(--green);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:17px;
+}
+
+/* ANIMATIONS */
+
+@keyframes floatBox{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-15px)}
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(25px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes slideRight{
+    from{opacity:0;transform:translateX(-25px)}
+    to{opacity:1;transform:translateX(0)}
+}
+
+@keyframes blink{
+    0%,100%{opacity:1}
+    50%{opacity:.3}
+}
+
+@keyframes glowPulse{
+    from{opacity:.4;transform:scale(.8)}
+    to{opacity:1;transform:scale(1.2)}
+}
+
+@keyframes rowGlow{
+    0%,100%{border-color:rgba(161,255,214,.1)}
+    50%{border-color:rgba(66,230,164,.35)}
+}
+
+/* SCROLL REVEAL */
+
+.reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .75s ease,transform .75s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        scroll-behavior:auto!important;
+        transition-duration:.01ms!important;
+    }
+    .reveal{opacity:1;transform:none}
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+    .layout{grid-template-columns:1fr}
+    .sidebar{position:relative;top:auto}
+    .lesson-list{display:grid;grid-template-columns:repeat(2,1fr)}
+    .hero{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:680px){
+    .navbar{padding:0 4%;height:65px}
+    .brand{font-size:21px}
+    .nav-link{padding:8px 10px;font-size:10px}
+    .layout{width:92%;margin-top:20px}
+    .hero{grid-template-columns:1fr;padding:25px 0 35px}
+    .hero-visual{min-height:235px}
+    .hero h1{font-size:45px}
+    .section{padding:21px 17px}
+    .section h2{font-size:21px}
+    .card-grid{grid-template-columns:1fr}
+    .type-grid{grid-template-columns:repeat(2,1fr)}
+    .storage-explain,.lab-layout{grid-template-columns:1fr}
+    .lesson-list{grid-template-columns:1fr}
+    .footer{flex-direction:column;text-align:center}
+}
+
+@media(max-width:390px){
+    .nav-right{gap:5px}
+    .nav-link{font-size:9px;padding:7px}
+    .hero h1{font-size:39px}
+}
+</style>
+    <link rel="stylesheet" href="/css/nexa-widget.css">
+<script src="../../pages-mode.js" defer></script>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="../../index.html" class="brand">CNF/</a>
+
+    <div class="nav-right">
+        <a href="../javascript.html" class="nav-link">Course Home</a>
+        <a href="01-javascript-foundation.html" class="nav-link">← Previous Lesson</a>
+    </div>
+</nav>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-label">JAVASCRIPT COURSE</div>
+        <div class="course-name">JavaScript Fundamentals</div>
+
+        <div class="progress-info">
+            <span>Lesson Progress</span>
+            <span id="progressText">0%</span>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="sidebar-label">COURSE CONTENT</div>
+
+        <div class="lesson-list">
+            <a href="01-javascript-foundation.html" class="lesson-item">
+                <span class="lesson-number">01</span> Introduction
+            </a>
+
+            <a href="02-variables-data-types.html" class="lesson-item active">
+                <span class="lesson-number">02</span> Variables & Data Types
+            </a>
+
+            <a href="03-operators-conditions.html" class="lesson-item">
+                <span class="lesson-number">03</span> Operators
+            </a>
+
+            <a href="04-loops.html" class="lesson-item">
+                <span class="lesson-number">04</span> Conditions
+            </a>
+
+            <a href="05-functions.html" class="lesson-item">
+                <span class="lesson-number">05</span> Functions
+            </a>
+        </div>
+    </aside>
+
+    <main class="content">
+
+        <!-- HERO -->
+
+        <section class="hero">
+            <div>
+                <div class="eyebrow">LESSON 02 / JAVASCRIPT</div>
+
+                <h1>Variables <span>&</span><br>Data Types.</h1>
+
+                <p class="hero-description">
+                    Learn how JavaScript stores information, how variables work,
+                    and how different data types help you build dynamic applications.
+                </p>
+
+                <div class="hero-meta">
+                    <span class="meta-chip">Beginner Friendly</span>
+                    <span class="meta-chip">12–15 Minutes</span>
+                    <span class="meta-chip">Interactive Lab</span>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="float-box">
+                    <div class="storage-card">
+                        <div class="storage-top">
+                            <div class="storage-title">Variable Storage</div>
+                            <div class="live-dot"></div>
+                        </div>
+
+                        <div class="variable-row">
+                            <span class="variable-key">username</span>
+                            <span class="variable-value">"Your Name"</span>
+                        </div>
+
+                        <div class="variable-row">
+                            <span class="variable-key">age</span>
+                            <span class="variable-value">20</span>
+                        </div>
+
+                        <div class="variable-row">
+                            <span class="variable-key">isStudent</span>
+                            <span class="variable-value">true</span>
+                        </div>
+
+                        <div class="storage-footer">
+                            <span>MEMORY STATUS</span>
+                            <span>● ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1 -->
+
+        <section class="section reveal">
+            <div class="section-heading">
+                <div class="section-index">01</div>
+                <div>
+                    <h2>What Is a Variable?</h2>
+                    <div class="section-subtitle">Understanding how JavaScript stores information.</div>
+                </div>
+            </div>
+
+            <p>
+                A <strong>variable</strong> is a named container used to store data.
+                You can think of it as a labeled box where JavaScript keeps information
+                that your program can use later.
+            </p>
+
+            <p>
+                For example, a website might store a user's name, age, email address,
+                or whether someone is logged in. Variables make this information
+                available whenever your code needs it.
+            </p>
+
+            <div class="card-grid">
+                <div class="concept-card">
+                    <div class="card-icon">📦</div>
+                    <h3>Store Data</h3>
+                    <p>Variables keep information available inside your program.</p>
+                </div>
+
+                <div class="concept-card">
+                    <div class="card-icon">🏷️</div>
+                    <h3>Give It a Name</h3>
+                    <p>Every variable has an identifier that helps you access its value.</p>
+                </div>
+
+                <div class="concept-card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Use It Anywhere</h3>
+                    <p>Read or update a variable when your program needs its data.</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>example.js</span>
+                    <span class="code-dots"><i></i><i></i><i></i></span>
+                </div>
+                <pre><span class="code-keyword">let</span> username = <span class="code-string">"Your Name"</span>;
+<span class="code-keyword">let</span> age = <span class="code-function">20</span>;
+
+console.log(username);
+console.log(age);</pre>
+            </div>
+
+            <div class="storage-explain">
+                <div class="explain-panel">
+                    <h3>Variable Name</h3>
+                    <p><strong>username</strong> is the name used to access the stored information.</p>
+                </div>
+                <div class="explain-panel">
+                    <h3>Variable Value</h3>
+                    <p><strong>"Your Name"</strong> is the actual information stored in the variable.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 -->
+
+        <section class="section reveal">
+            <div class="section-heading">
+                <div class="section-index">02</div>
+                <div>
+                    <h2>let, const and var</h2>
+                    <div class="section-subtitle">Three ways to declare variables in JavaScript.</div>
+                </div>
+            </div>
+
+            <p>
+                JavaScript provides three keywords for declaring variables:
+                <strong>let</strong>, <strong>const</strong>, and <strong>var</strong>.
+                Each one behaves differently.
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Keyword</th>
+                            <th>Can Reassign?</th>
+                            <th>Scope</th>
+                            <th>Modern Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>let</code></td>
+                            <td>Yes</td>
+                            <td>Block</td>
+                            <td>Common</td>
+                        </tr>
+                        <tr>
+                            <td><code>const</code></td>
+                            <td>No</td>
+                            <td>Block</td>
+                            <td>Recommended by default</td>
+                        </tr>
+                        <tr>
+                            <td><code>var</code></td>
+                            <td>Yes</td>
+                            <td>Function</td>
+                            <td>Older code</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="margin-top:25px;font-size:16px;color:var(--mint)">Using let</h3>
+            <p>Use <strong>let</strong> when a variable's value needs to change later.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>let-example.js</span>
+                    <span class="code-dots"><i></i><i></i><i></i></span>
+                </div>
+                <pre><span class="code-keyword">let</span> score = <span class="code-function">10</span>;
+
+score = <span class="code-function">25</span>;
+
+console.log(score); <span class="code-comment">// 25</span></pre>
+            </div>
+
+            <h3 style="margin-top:25px;font-size:16px;color:var(--mint)">Using const</h3>
+            <p>Use <strong>const</strong> when you do not intend to reassign the variable.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>const-example.js</span>
+                    <span class="code-dots"><i></i><i></i><i></i></span>
+                </div>
+                <pre><span class="code-keyword">const</span> country = <span class="code-string">"Pakistan"</span>;
+
+console.log(country);</pre>
+            </div>
+
+            <h3 style="margin-top:25px;font-size:16px;color:var(--mint)">Using var</h3>
+            <p>
+                <strong>var</strong> is the older way of declaring variables.
+                It has function scope rather than block scope, so modern JavaScript
+                generally prefers let and const.
+            </p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>var-example.js</span>
+                    <span class="code-dots"><i></i><i></i><i></i></span>
+                </div>
+                <pre><span class="code-keyword">var</span> city = <span class="code-string">"Multan"</span>;
+
+city = <span class="code-string">"Lahore"</span>;
+
+console.log(city);</pre>
+            </div>
+
+            <div class="note">
+                <strong>Remember:</strong> Prefer const when reassignment is not needed.
+                Use let when the value must change. Avoid var in most modern JavaScript code.
+            </div>
+        </section>
+
+        <!-- SECTION 3 -->
+
+        <section class="section reveal">
+            <div class="section-heading">
+                <div class="section-index">03</div>
+                <div>
+                    <h2>Variable Naming Rules</h2>
+                    <div class="section-subtitle">Create clear and valid variable names.</div>
+                </div>
+            </div>
+
+            <p>
+                Variable names are called identifiers. JavaScript has rules that
+                determine which names are valid.
+            </p>
+
+            <div class="storage-explain">
+                <div class="explain-panel">
+                    <h3>✓ Valid Names</h3>
+                    <p>
+                        userName<br>
+                        totalPrice<br>
+                        _counter<br>
+                        $amount<br>
+                        age2
+                    </p>
+                </div>
+
+                <div class="explain-panel">
+                    <h3>✕ Invalid Names</h3>
+                    <p>
+                        2age<br>
+                        user-name<br>
+                        first name<br>
+                        let<br>
+                        total price
+                    </p>
+                </div>
+            </div>
+
+            <div class="note">
+                Variable names cannot start with a number, cannot contain spaces,
+                and cannot use reserved JavaScript keywords. JavaScript identifiers
+                are case-sensitive: <strong>age</strong> and <strong>Age</strong>
+                are different variables.
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>naming-example.js</span>
+                    <span class="code-dots"><i></i><i></i><i></i></span>
+                </div>
+                <pre><span class="code-keyword">let</span> firstName = <span class="code-string">"Your Name"</span>;
+<span class="code-keyword">let</span> totalPrice = <span class="code-function">500</span>;
+<span class="code-keyword">let</span> isLoggedIn = <span class="code-keyword">true</span>;</pre>
+            </div>
+        </section>
+
+        <!-- SECTION 4 -->
+
+        <section class="section reveal">
+            <div class="section-heading">
+                <div class="section-index">04</div>
+                <div>
+                    <h2>JavaScript Data Types</h2>
+                    <div class="section-subtitle">Different kinds of information JavaScript can work with.</div>
+                </div>
+            </div>
+
+            <p>
+                A data type describes what kind of value a variable contains.
+                JavaScript has several built-in data types.
+            </p>
+
+            <div class="type-grid">
+                <div class="type-card">
+                    <code>String</code>
+                    <span>Text values</span>
+                </div>
+
+                <div class="type-card">
+                    <code>Number</code>
+                    <span>Numeric values</span>
+                </div>
+
+                <div class="type-card">
+                    <code>Boolean</code>
+                    <span>True or false</span>
+                </div>
+
+                <div class="type-card">
+                    <code>Undefined</code>
+                    <span>Not assigned</span>
+                </div>
+
+                <div class="type-card">
+                    <code>Null</code>
+                    <span>Intentional empty value</span>
+                </div>
+
+                <div class="type-card">
+                    <code>Object</code>
+                    <span>Structured data</span>
+                </div>
+
+                <div class="type-card">
+                    <code>BigInt</code>
+                    <span>Very large integers</span>
+                </div>
+
+                <div class="type-card">
+                    <code>Symbol</code>
+                    <span>Unique identifiers</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>data-types.js</span>
+                    <span class="code-dots"><i></i><i></i><i></i></span>
+                </div>
+                <pre><span class="code-keyword">let</span> username = <span class="code-string">"Your Name"</span>;  <span class="code-comment">// String</span>
+<span class="code-keyword">let</span> age = <span class="code-function">20</span>;                  <span class="code-comment">// Number</span>
+<span class="code-keyword">let</span> isStudent = <span class="code-keyword">true</span>;          <span class="code-comment">// Boolean</span>
+<span class="code-keyword">let</span> address;                    <span class="code-comment">// Undefined</span>
+<span class="code-keyword">let</span> result = <span class="code-keyword">null</span>;             <span class="code-comment">// Null</span>
+
+<span class="code-keyword">let</span> student = {
+    name: <span class="code-string">"Your Name"</span>,
+    age: <span class="code-function">20</span>
+};                              <span class="code-comment">// Object</span></pre>
+            </div>
+
+            <div class="note">
+                <strong>Important:</strong> JavaScript is dynamically typed.
+                You do not need to declare a variable's data type separately.
+                Its type is determined by the value assigned to it.
+            </div>
+        </section>
+
+        <!-- SECTION 5 -->
+
+        <section class="section reveal">
+            <div class="section-heading">
+                <div class="section-index">05</div>
+                <div>
+                    <h2>The typeof Operator</h2>
+                    <div class="section-subtitle">Find out what type of value a variable contains.</div>
+                </div>
+            </div>
+
+            <p>
+                The <strong>typeof</strong> operator returns a string describing
+                the type of a value. It is useful when checking data in your code.
+            </p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span>typeof-example.js</span>
+                    <span class="code-dots"><i></i><i></i><i></i></span>
+                </div>
+                <pre>console.log(<span class="code-keyword">typeof</span> <span class="code-string">"Hello"</span>); <span class="code-comment">// string</span>
+console.log(<span class="code-keyword">typeof</span> <span class="code-function">25</span>);       <span class="code-comment">// number</span>
+console.log(<span class="code-keyword">typeof</span> <span class="code-keyword">true</span>);     <span class="code-comment">// boolean</span>
+
+<span class="code-keyword">let</span> value;
+console.log(<span class="code-keyword">typeof</span> value);    <span class="code-comment">// undefined</span>
+
+console.log(<span class="code-keyword">typeof</span> {});       <span class="code-comment">// object</span></pre>
+            </div>
+
+            <div class="note">
+                <strong>JavaScript quirk:</strong> <code>typeof null</code>
+                returns <code>"object"</code>. This is a historical behavior
+                in JavaScript, not an indication that null is actually an object.
+            </div>
+        </section>
+
+        <!-- SECTION 6: PLAYGROUND -->
+
+        <section class="section lab reveal">
+            <div class="section-heading">
+                <div class="section-index">06</div>
+                <div>
+                    <h2>Interactive Variable Lab</h2>
+                    <div class="section-subtitle">Create a variable and see how JavaScript handles its value.</div>
+                </div>
+            </div>
+
+            <div class="lab-layout">
+                <div class="lab-form">
+
+                    <div class="field">
+                        <label for="variableName">VARIABLE NAME</label>
+                        <input id="variableName" type="text" value="myVariable" placeholder="Enter variable name">
+                    </div>
+
+                    <div class="field">
+                        <label for="variableValue">VARIABLE VALUE</label>
+                        <input id="variableValue" type="text" value="Hello JavaScript" placeholder="Enter a value">
+                    </div>
+
+                    <div class="field">
+                        <label for="variableType">DATA TYPE</label>
+                        <select id="variableType">
+                            <option value="string">String</option>
+                            <option value="number">Number</option>
+                            <option value="boolean">Boolean</option>
+                            <option value="null">Null</option>
+                            <option value="undefined">Undefined</option>
+                        </select>
+                    </div>
+
+                    <button class="primary-btn" onclick="runPlayground()">
+                        Run Variable →
+                    </button>
+                </div>
+
+                <div class="output-panel">
+                    <div class="output-label">CONSOLE OUTPUT</div>
+                    <div class="output-content" id="playgroundOutput">
+                        <span>Waiting for your variable...</span><br>
+                        <span>Enter some values and click Run Variable.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: QUIZ -->
+
+        <section class="section reveal">
+            <div class="section-heading">
+                <div class="section-index">07</div>
+                <div>
+                    <h2>Knowledge Check</h2>
+                    <div class="section-subtitle">Test what you have learned in this lesson.</div>
+                </div>
+            </div>
+
+            <p>Answer all three questions. You need at least 2 correct answers to pass.</p>
+
+            <div class="quiz-question">
+                <div class="question-number">QUESTION 01</div>
+                <div class="question-title">Which keyword is recommended when a variable should not be reassigned?</div>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="a"> var
+                </label>
+                <label class="option">
+                    <input type="radio" name="q1" value="b"> const
+                </label>
+                <label class="option">
+                    <input type="radio" name="q1" value="c"> let
+                </label>
+            </div>
+
+            <div class="quiz-question">
+                <div class="question-number">QUESTION 02</div>
+                <div class="question-title">What is the data type of the value "Hello"?</div>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="a"> Number
+                </label>
+                <label class="option">
+                    <input type="radio" name="q2" value="b"> Boolean
+                </label>
+                <label class="option">
+                    <input type="radio" name="q2" value="c"> String
+                </label>
+            </div>
+
+            <div class="quiz-question">
+                <div class="question-number">QUESTION 03</div>
+                <div class="question-title">Which operator is used to check the type of a value?</div>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="a"> typeof
+                </label>
+                <label class="option">
+                    <input type="radio" name="q3" value="b"> type
+                </label>
+                <label class="option">
+                    <input type="radio" name="q3" value="c"> checkType
+                </label>
+            </div>
+
+            <div class="quiz-actions">
+                <button class="primary-btn" onclick="checkQuiz()">Submit Answers</button>
+                <button class="secondary-btn" onclick="resetQuiz()">Reset Quiz ↻</button>
+            </div>
+
+            <div class="quiz-result" id="quizResult" aria-live="polite"></div>
+        </section>
+
+        <!-- COMPLETION -->
+
+        <section class="section completion reveal">
+            <div class="completion-icon">✦</div>
+            <h2>Lesson Completion</h2>
+
+            <p>
+                Complete the knowledge check first. Once you pass, mark this lesson
+                as complete to unlock your next JavaScript lesson.
+            </p>
+
+            <button class="complete-btn" id="completeBtn" onclick="completeLesson()" disabled>
+                Complete Lesson
+            </button>
+
+            <br>
+
+            <a href="03-operators-conditions.html" class="next-btn" id="nextBtn">
+                Next Lesson: Operators →
+            </a>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-brand">CNF/</div>
+            <div>Build skills. Write code. Create the future.</div>
+            <div>JavaScript · Lesson 02</div>
+        </footer>
+
+    </main>
+</div>
+
+<script>
+/* =================================
+   VARIABLE PLAYGROUND
+================================= */
+
+function runPlayground(){
+
+    const name = document.getElementById("variableName").value.trim();
+    const rawValue = document.getElementById("variableValue").value;
+    const type = document.getElementById("variableType").value;
+    const output = document.getElementById("playgroundOutput");
+
+    const reservedWords = [
+        "let","const","var","if","else","return","function",
+        "class","new","this","while","for","do","switch",
+        "case","break","continue","try","catch","finally",
+        "throw","delete","typeof","void","in","instanceof",
+        "true","false","null","undefined","import","export",
+        "default","extends","super","yield","await","enum",
+        "implements","interface","package","private","protected",
+        "public","static"
+    ];
+
+    const validIdentifier = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+
+    if(!name){
+        output.innerHTML = '<span class="error">Error: Please enter a variable name.</span>';
+        return;
+    }
+
+    if(!validIdentifier.test(name) || reservedWords.includes(name)){
+        output.innerHTML = '<span class="error">Error: Invalid variable name. Use a valid JavaScript identifier.</span>';
+        return;
+    }
+
+    let value;
+    let detectedType;
+
+    try{
+        switch(type){
+
+            case "string":
+                value = rawValue;
+                detectedType = "string";
+                break;
+
+            case "number":
+                if(rawValue.trim() === "" || !Number.isFinite(Number(rawValue))){
+                    throw new Error("Please enter a valid number.");
+                }
+                value = Number(rawValue);
+                detectedType = "number";
+                break;
+
+            case "boolean":
+                if(rawValue !== "true" && rawValue !== "false"){
+                    throw new Error('Boolean value must be either "true" or "false".');
+                }
+                value = rawValue === "true";
+                detectedType = "boolean";
+                break;
+
+            case "null":
+                value = null;
+                detectedType = "object";
+                break;
+
+            case "undefined":
+                value = undefined;
+                detectedType = "undefined";
+                break;
+        }
+
+        let displayedValue;
+
+        if(type === "string"){
+            displayedValue = '"' + value + '"';
+        }else if(type === "undefined"){
+            displayedValue = "undefined";
+        }else{
+            displayedValue = String(value);
+        }
+
+        output.innerHTML = `
+            <span class="success">✓ Variable created successfully!</span><br><br>
+            <span>Variable: <strong>${escapeHTML(name)}</strong></span><br>
+            <span>Value: <strong>${escapeHTML(displayedValue)}</strong></span><br>
+            <span>typeof: <strong>${detectedType}</strong></span><br><br>
+            <span class="success">Your variable is ready to use.</span>
+        `;
+
+    }catch(error){
+        output.innerHTML = '<span class="error">Error: ' + escapeHTML(error.message) + '</span>';
+    }
+}
+
+function escapeHTML(value){
+    return String(value).replace(/[&<>"']/g,function(char){
+        return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[char];
+    });
+}
+
+/* =================================
+   QUIZ SYSTEM
+================================= */
+
+let quizPassed = false;
+
+function checkQuiz(){
+
+    const answers = {
+        q1:"b",
+        q2:"c",
+        q3:"a"
+    };
+
+    let score = 0;
+    let unanswered = false;
+
+    for(const question in answers){
+
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if(!selected){
+            unanswered = true;
+        }else if(selected.value === answers[question]){
+            score++;
+        }
+    }
+
+    const result = document.getElementById("quizResult");
+
+    if(unanswered){
+        result.className = "quiz-result fail-result";
+        result.textContent = "Please answer all three questions before submitting.";
+        return;
+    }
+
+    if(score >= 2){
+
+        quizPassed = true;
+
+        result.className = "quiz-result success-result";
+        result.textContent =
+            "Excellent! You scored " + score +
+            "/3. You passed the knowledge check. You can now complete this lesson.";
+
+        document.getElementById("completeBtn").disabled = false;
+
+    }else{
+
+        quizPassed = false;
+
+        result.className = "quiz-result fail-result";
+        result.textContent =
+            "You scored " + score +
+            "/3. You need at least 2 correct answers to pass. Review the lesson and try again.";
+
+        document.getElementById("completeBtn").disabled = true;
+    }
+}
+
+/* =================================
+   RESET QUIZ
+================================= */
+
+function resetQuiz(){
+
+    document.querySelectorAll('input[type="radio"]').forEach(input=>{
+        input.checked = false;
+    });
+
+    quizPassed = false;
+
+    const result = document.getElementById("quizResult");
+    result.className = "quiz-result";
+    result.textContent = "";
+
+    document.getElementById("completeBtn").disabled = true;
+
+    updateCompletion(false);
+}
+
+/* =================================
+   LESSON COMPLETION
+================================= */
+
+const STORAGE_KEY = "javascript-lesson-02-completed";
+
+function updateCompletion(completed){
+
+    const completeBtn = document.getElementById("completeBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
+
+    if(completed){
+
+        completeBtn.textContent = "✓ Lesson Completed";
+        completeBtn.disabled = true;
+
+        nextBtn.classList.add("unlocked");
+
+        progressFill.style.width = "100%";
+        progressText.textContent = "100%";
+
+    }else{
+
+        completeBtn.textContent = "Complete Lesson";
+        completeBtn.disabled = !quizPassed;
+
+        nextBtn.classList.remove("unlocked");
+
+        progressFill.style.width = "0%";
+        progressText.textContent = "0%";
+    }
+}
+
+function completeLesson(){
+
+    if(!quizPassed){
+        return;
+    }
+
+    localStorage.setItem(STORAGE_KEY,"true");
+
+    updateCompletion(true);
+}
+
+function restoreProgress(){
+
+    const completed = localStorage.getItem(STORAGE_KEY) === "true";
+
+    if(completed){
+
+        quizPassed = true;
+        updateCompletion(true);
+
+        const result = document.getElementById("quizResult");
+        result.className = "quiz-result success-result";
+        result.textContent =
+            "This lesson has already been completed. Your progress has been restored.";
+
+    }else{
+        updateCompletion(false);
+    }
+}
+
+/* =================================
+   SCROLL REVEAL ANIMATIONS
+================================= */
+
+function initializeAnimations(){
+
+    const elements = document.querySelectorAll(".reveal");
+
+    if(!("IntersectionObserver" in window)){
+        elements.forEach(element=>element.classList.add("visible"));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    },{
+        threshold:0.12
+    });
+
+    elements.forEach(element=>observer.observe(element));
+}
+
+/* =================================
+   INITIALIZE
+================================= */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+    restoreProgress();
+    initializeAnimations();
+
+});
+</script>
+
+<script src="../../assets/cnf-lesson-motion.js"></script>
+
+    <script src="/js/nexa-widget.js" defer></script>
+</body>
+</html>
